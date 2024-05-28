@@ -6,7 +6,7 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 ## Endpoints
 - [List all models available on Bytez](#list-all-models-available-on-Bytez)
 - [Check a model status](#check-a-model-status)
-- [Load a mode](#load-a-model) 
+- [Load a model](#load-a-model) 
 - [Run a model](#run-a-model)
 - [List all running models](#list-all-running-models)
 - [Delete a model prematurely](#delete-a-model-prematurely)
