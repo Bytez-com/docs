@@ -4,7 +4,7 @@
 You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) and a key will be provisioned to you. If you don't have Discord – or don't want to join Discord - send us an email at team@bytez.com and we'll follow up.
 
 ## Endpoints
-- [List all models vailable on Bytez](#list-all-models-available-on-Bytez)
+- [List all models available on Bytez](#list-all-models-available-on-Bytez)
 - [Check a model status](#check-a-model-status)
 - [Load a mode](#load-a-model) 
 - [Run a model](#run-a-model)
