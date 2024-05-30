@@ -42,14 +42,14 @@ curl --location 'https://api.bytez.com/model/load' \
 --header 'Content-Type: application/json' \
 --data '{
     "key": `API_KEY`,
-    "modelId": "openai-community/gpt2",
+    "model": "openai-community/gpt2",
     "concurrency": 1
 }'
 ```
 
 ### Response
 ```
-{"modelId":"openai-community/gpt2","status":"started","concurrency":1}
+{"model":"openai-community/gpt2","status":"started","concurrency":1}
 ```
 
 ## Check a model's status
@@ -60,13 +60,13 @@ curl --location 'https://api.bytez.com/model/status' \
 --header 'Content-Type: application/json' \
 --data '{
     "key": `API_KEY`,
-    "modelId": "openai-community/gpt2"
+    "model": "openai-community/gpt2"
 }'
 ```
 
 ### Response
 ```
-{"modelId":"openai-community/gpt2","status":"RUNNING","concurrency":1,"inferences":0,"expirationPeriodSeconds":1800,"expirationPeriodMinutes":30,"expiresAt":"2024-05-28T00:12:18.738Z","created":"2024-05-27T23:35:35.863Z","modified":"2024-05-27T23:42:19.239Z"}
+{"model":"openai-community/gpt2","status":"RUNNING","concurrency":1,"inferences":0,"expirationPeriodSeconds":1800,"expirationPeriodMinutes":30,"expiresAt":"2024-05-28T00:12:18.738Z","created":"2024-05-27T23:35:35.863Z","modified":"2024-05-27T23:42:19.239Z"}
 ```
 
 ## Run a model
@@ -78,8 +78,8 @@ curl --location 'https://api.bytez.com/model/run' \
 --data '{
     "key": `API_KEY`,
     "app": false,
-    "modelId": "openai-community/gpt2",
-    "text": "Once upon a time there was a",
+    "model": "openai-community/gpt2",
+    "prompt": "Once upon a time there was a",
     "params": {
         "min_length": 30,
         "max_length": 256
@@ -113,7 +113,7 @@ curl --location 'https://api.bytez.com/model/delete' \
 --header 'Content-Type: application/json' \
 --data '{
     "key": `API_KEY`
-    "modelId": "openai-community/gpt2"
+    "model": "openai-community/gpt2"
 }'
 ```
 
