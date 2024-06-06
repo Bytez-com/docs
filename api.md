@@ -23,7 +23,7 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 ## List all models available on Bytez
 
 ### Request
-```
+```bash
 curl --location 'https://api.bytez.com/model/list' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -31,13 +31,13 @@ curl --location 'https://api.bytez.com/model/list' \
 }'
 ```
 ### Response
-```
-[{"name":"EleutherAI/gpt-neo-2.7B","requiredRAM":2.232933128273094,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion","requiredRAM":0.9401917929177755,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion.onnx.8-bit","requiredRAM":null,"benchmarked":false}, .... 
+```json
+[{"name":"EleutherAI/gpt-neo-2.7B","requiredRAM":2.232933128273094,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion","requiredRAM":0.9401917929177755,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion.onnx.8-bit","requiredRAM":null,"benchmarked":false}, ....] 
 ```
 ## Load a model
 
 ### Request
-```
+```bash
 curl --location 'https://api.bytez.com/model/load' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -48,14 +48,14 @@ curl --location 'https://api.bytez.com/model/load' \
 ```
 
 ### Response
-```
+```json
 {"model":"openai-community/gpt2","status":"started","concurrency":1}
 ```
 
 ## Check a model's status
 
 ### Request
-```
+```bash
 curl --location 'https://api.bytez.com/model/status' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -65,14 +65,14 @@ curl --location 'https://api.bytez.com/model/status' \
 ```
 
 ### Response
-```
+```json
 {"model":"openai-community/gpt2","status":"RUNNING","concurrency":1,"inferences":0,"expirationPeriodSeconds":1800,"expirationPeriodMinutes":30,"expiresAt":"2024-05-28T00:12:18.738Z","created":"2024-05-27T23:35:35.863Z","modified":"2024-05-27T23:42:19.239Z"}
 ```
 
 ## Run a model
 
 ### Request
-```
+```bash
 curl --location 'https://api.bytez.com/model/run' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -96,7 +96,7 @@ Once upon a time there was a man upon the throne...But now it is him who must st
 ## List all running models
 
 ### Request
-```
+```bash
 curl --location 'https://api.bytez.com/model/instances' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -108,7 +108,7 @@ curl --location 'https://api.bytez.com/model/instances' \
 ## Delete a model prematurely
 
 ### Request
-```
+```bash
 curl --location 'https://api.bytez.com/model/delete' \
 --header 'Content-Type: application/json' \
 --data '{
