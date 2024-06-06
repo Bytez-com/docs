@@ -27,7 +27,7 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 curl --location 'https://api.bytez.com/model/list' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": `API_KEY`
+    "key": API_KEY
 }'
 ```
 ### Response
@@ -41,7 +41,7 @@ curl --location 'https://api.bytez.com/model/list' \
 curl --location 'https://api.bytez.com/model/load' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": `API_KEY`,
+    "key": API_KEY,
     "model": "openai-community/gpt2",
     "concurrency": 1
 }'
@@ -59,7 +59,7 @@ curl --location 'https://api.bytez.com/model/load' \
 curl --location 'https://api.bytez.com/model/status' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": `API_KEY`,
+    "key": API_KEY,
     "model": "openai-community/gpt2"
 }'
 ```
@@ -76,7 +76,7 @@ curl --location 'https://api.bytez.com/model/status' \
 curl --location 'https://api.bytez.com/model/run' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": `API_KEY`,
+    "key": API_KEY,
     "app": false,
     "model": "openai-community/gpt2",
     "prompt": "Once upon a time there was a",
@@ -100,7 +100,7 @@ Once upon a time there was a man upon the throne...But now it is him who must st
 curl --location 'https://api.bytez.com/model/instances' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": `API_KEY`
+    "key": API_KEY
 }'
 ```
 
@@ -112,7 +112,7 @@ curl --location 'https://api.bytez.com/model/instances' \
 curl --location 'https://api.bytez.com/model/delete' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": `API_KEY`
+    "key": API_KEY
     "model": "openai-community/gpt2"
 }'
 ```
