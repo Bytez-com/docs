@@ -7,7 +7,7 @@ Follow us on X, where we share papers and models trending in the community.
 
 We also hang out in Discord. Join us!
 
-[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.gg/INVITE)
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf)
 
 
 ### Reference
