@@ -5,7 +5,7 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 
 ## Endpoints
 - [List all models available on Bytez](#list-all-models-available-on-bytez)
-- [Request a model that is not immediately available on Bytez](#Request-a-model-that-is-not-immediately-available-on-bytez)
+- [Request a model that is not immediately available on Bytez](#request-a-model-that-is-not-immediately-available-on-bytez)
 - [Check a model's status](#check-a-models-status)
 - [Load a model](#load-a-model) 
 - [Run a model](#run-a-model)
@@ -36,7 +36,7 @@ curl --location 'https://api.bytez.com/model/list' \
 [{"name":"EleutherAI/gpt-neo-2.7B","requiredRAM":2.232933128273094,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion","requiredRAM":0.9401917929177755,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion.onnx.8-bit","requiredRAM":null,"benchmarked":false}, ....] 
 ```
 
-## Reqest a model that is not immediately available on Bytez
+## Request a model that is not immediately available on Bytez
 
 Note, this is an automated process. This will queue up our system to make the model available. Behind the scenes we need to compute things such as the amount of VRAM the model takes up when running.
 
