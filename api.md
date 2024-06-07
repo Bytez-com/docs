@@ -5,6 +5,7 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 
 ## Endpoints
 - [List all models available on Bytez](#list-all-models-available-on-bytez)
+- [Request a model that is not immediately available on Bytez](#Request-a-model-that-is-not-immediately-available-on-bytez)
 - [Check a model's status](#check-a-models-status)
 - [Load a model](#load-a-model) 
 - [Run a model](#run-a-model)
@@ -34,6 +35,52 @@ curl --location 'https://api.bytez.com/model/list' \
 ```json
 [{"name":"EleutherAI/gpt-neo-2.7B","requiredRAM":2.232933128273094,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion","requiredRAM":0.9401917929177755,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion.onnx.8-bit","requiredRAM":null,"benchmarked":false}, ....] 
 ```
+
+## Reqest a model that is not immediately available on Bytez
+
+Note, this is an automated process. This will queue up our system to make the model available. Behind the scenes we need to compute things such as the amount of VRAM the model takes up when running.
+
+```bash
+curl --location 'https://api.bytez.com/model/job' \
+--header 'Content-Type: application/json' \
+--data '{
+    "key": API_KEY,
+    "model": "openai-community/gpt2"
+}'
+```
+
+### Response
+```json
+{"model":"openai-community/gpt2","success":true,"modified":"2024-06-07T22:28:40.122Z"}
+```
+
+Note, you can check the status of the model by repeating the same call. (See the message prop in the response.)
+
+```bash
+curl --location 'https://api.bytez.com/model/job' \
+--header 'Content-Type: application/json' \
+--data '{
+    "key": API_KEY,
+    "model": "openai-community/gpt2"
+}'
+```
+
+### Response
+
+```json
+{"model":"openai-community/gpt2","success":true,"message":"Model is already queued","startTime":null,"modified":"2024-06-07T22:29:22.333Z"}
+```
+
+When the model is ready, you will get the following response:
+
+### Response
+
+Notice how "message" in the response now says "Model is already available"
+
+```json
+{"model":"chavinlo/alpaca-native","success":true,"message":"Model is already available","startTime":"2024-05-30T01:20:37.644Z","endTime":"2024-05-30T01:22:07.804Z","modified":"2024-05-30T01:22:07.804Z"}
+```
+
 ## Load a model
 
 ### Request
