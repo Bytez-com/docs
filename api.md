@@ -75,10 +75,10 @@ When the model is ready, you will get the following response:
 
 ### Response
 
-Notice how "message" in the response now says "Model is already available"
+Notice how "message" in the response now says "Model available"
 
 ```json
-{"model":"chavinlo/alpaca-native","success":true,"message":"Model is already available","startTime":"2024-05-30T01:20:37.644Z","endTime":"2024-05-30T01:22:07.804Z","modified":"2024-05-30T01:22:07.804Z"}
+{"model":"chavinlo/alpaca-native","success":true,"message":"Model available","startTime":"2024-05-30T01:20:37.644Z","endTime":"2024-05-30T01:22:07.804Z","modified":"2024-05-30T01:22:07.804Z"}
 ```
 
 ## Load a model
