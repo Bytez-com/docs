@@ -8,10 +8,16 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 
 ## Boot Times and Billing
 ### Cold Boot Times
-Models have a cold boot time. This is the time it takes for the model to be loaded and ready for use. The range for load times from the smallest to the largest model is 12 minutes to 15 minutes. We're optimizing this to bring cold boot times down to <5 minutes.
+Models have a cold boot time. This is the time it takes for a model's compute resources to be provisioned as well as for the model to be downloaded and loaded into memory. The range for average load times from the smallest to the largest model is 12 minutes to 15 minutes. We're optimizing this to bring cold boot times down to < 5 minutes.
 
 ### Billing 
-At minimum, you will be charged for the first 60 seconds of use. Any usage beyond 60 seconds is rounded up to the nearest minute of usage. We currently charge $0.0000166667 / GB sec for inference on GPUs.
+At a minimum, you will be charged for the first 60 seconds of use. Any usage beyond 60 seconds is rounded up to the nearest minute of usage. We currently charge $0.0000166667 / GB sec for inference on GPUs.
+
+Instance spin down is not instaneous and may take longer than 1 minute from the instance expiring to it actually shutting down. 
+
+Shutdowns should occur within 2 minutes of the specified expiration period for a model instance. The default expiration period is 30 minutes. See [Load a model](#load-a-model) for more details on how to set your expiration period.
+
+Shutting down a model via the [Shutdown a loaded model](#shutdown-a-loaded-model) endpoint is near instantaneous.
 
 ## Endpoints
 - [List models available](#list-models-available)
@@ -37,9 +43,7 @@ At minimum, you will be charged for the first 60 seconds of use. Any usage beyon
 ```bash
 curl --location 'https://api.bytez.com/model/list' \
 --header 'Authorization: Key API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-}'
+--header 'Content-Type: application/json'
 ```
 ### Response
 ```json
@@ -109,6 +113,25 @@ curl --location 'https://api.bytez.com/model/load' \
 {"model":"openai-community/gpt2","status":"started","concurrency":1}
 ```
 
+Note, this endpoint can also take in the param `expirationPeriodSeconds` which will allow for your instance to expire within 2 minutes after expirationPeriodSeconds has been set.
+
+e.g. to make an instance expire 5 minutes after the last request it receives, you would do this:
+
+### Request
+```bash
+curl --location 'https://api.bytez.com/model/load' \
+--header 'Authorization: Key API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "model": "openai-community/gpt2",
+    "concurrency": 1,
+    "expirationPeriodSeconds": 300
+}'
+```
+
+
+Any time a request is sent to run the model, this expiration period resets. Meaning the instance will continue to run as long as you are making requests to it within the specified experiation period.
+
 ## Check a loaded model's status
 
 ### Request
@@ -134,7 +157,6 @@ curl --location 'https://api.bytez.com/model/run' \
 --header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "app": false,
     "model": "openai-community/gpt2",
     "prompt": "Once upon a time there was a",
     "params": {
@@ -156,9 +178,7 @@ Once upon a time there was a man upon the throne...But now it is him who must st
 ```bash
 curl --location 'https://api.bytez.com/model/instances' \
 --header 'Authorization: Key API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-}'
+--header 'Content-Type: application/json'
 ```
 
 
