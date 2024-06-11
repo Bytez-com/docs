@@ -8,7 +8,7 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 
 ## Boot Times and Billing
 ### Cold Boot Times
-Models have a cold boot time. This is the time it takes for a model's compute resources to be provisioned as well as for the model to be downloaded and loaded into memory. The range for average load times from the smallest to the largest model is 12 minutes to 15 minutes. We're optimizing this to bring cold boot times down to < 5 minutes.
+Models have a cold boot time. This is the time it takes for a model's compute resources to be provisioned as well as for the model to be downloaded and loaded into memory. You can expect the time to make a model ready for inference take somehwere between 12 - 15 minutes. Our smallest model on average takes 12 minutes to be ready for inference, and our largest, 15 minutes. We're optimizing this to bring cold boot times down to < 5 minutes.
 
 ### Billing 
 At a minimum, you will be charged for the first 60 seconds of use. Any usage beyond 60 seconds is rounded up to the nearest minute of usage. We currently charge $0.0000166667 / GB sec for inference on GPUs.
