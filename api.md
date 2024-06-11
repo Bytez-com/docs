@@ -113,9 +113,11 @@ curl --location 'https://api.bytez.com/model/load' \
 {"model":"openai-community/gpt2","status":"started","concurrency":1}
 ```
 
-Note, this endpoint can also take in the param `expirationPeriodSeconds` which will allow for your instance to expire within 2 minutes after expirationPeriodSeconds has been set.
+Note, this endpoint also takes in a param, `expirationPeriodSeconds`, which allows for your instance to expire within 2 minutes after the expirationPeriodSeconds has been reached.
 
-e.g. to make an instance expire 5 minutes after the last request it receives, you would do this:
+Any time a request is sent to run the model, this expiration period resets. Meaning the instance will continue to run as long as you are making requests to it within the specified expiriation period.
+
+To make an instance expire 5 minutes after the last request it receives, you would do this:
 
 ### Request
 ```bash
@@ -128,9 +130,6 @@ curl --location 'https://api.bytez.com/model/load' \
     "expirationPeriodSeconds": 300
 }'
 ```
-
-
-Any time a request is sent to run the model, this expiration period resets. Meaning the instance will continue to run as long as you are making requests to it within the specified experiation period.
 
 ## Check a loaded model's status
 
