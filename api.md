@@ -1,16 +1,26 @@
-# API
+# API Documentation
+
+## Intro
+Welcome to the Bytez API docs! This API gives you access to various models for your machine learning needs. Please review the info on boot times, billing, and other advanced details.
 
 ## Getting your key
-You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) and a key will be provisioned to you. If you don't have Discord – or don't want to join Discord - send us an email at team@bytez.com and we'll follow up.
+You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) to get your key. If you don't have Discord – or don't want to join Discord - send us an email at team@bytez.com and we'll follow up.
+
+## Boot Times and Billing
+### Cold Boot Times
+Models have a cold boot time. This is the time it takes for the model to be loaded and ready for use. The range for load times from the smallest to the largest model is 12 minutes to 15 minutes. We're optimizing this to bring cold boot times down to <5 minutes.
+
+### Billing 
+At minimum, you will be charged for the first 60 seconds of use. Any usage beyond 60 seconds is rounded up to the nearest minute of usage. We currently charge $0.0000166667 / GB sec for inference on GPUs.
 
 ## Endpoints
-- [List all models available on Bytez](#list-all-models-available-on-bytez)
-- [Request a model that is not immediately available on Bytez](#request-a-model-that-is-not-immediately-available-on-bytez)
-- [Check a model's status](#check-a-models-status)
+- [List models available](#list-models-available)
+- [Request a model](#request-a-model)
 - [Load a model](#load-a-model) 
-- [Run a model](#run-a-model)
+- [Check a loaded model's status](#check-a-loaded-models-status)
+- [Run a loaded model](#run-a-model)
 - [List all running models](#list-all-running-models)
-- [Delete a model prematurely](#delete-a-model-prematurely)
+- [Shutdown a loaded model](#shutdown-a-loaded-model)
 
 ## Parameters
 - `model`: (required) the model name
@@ -21,14 +31,14 @@ You need a key to use this API. Join the [Bytez Discord](https://discord.gg/Zrd5
 
 # Commands
 
-## List all models available on Bytez
+## List models available
 
 ### Request
 ```bash
 curl --location 'https://api.bytez.com/model/list' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY
 }'
 ```
 ### Response
@@ -36,15 +46,15 @@ curl --location 'https://api.bytez.com/model/list' \
 [{"name":"EleutherAI/gpt-neo-2.7B","requiredRAM":2.232933128273094,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion","requiredRAM":0.9401917929177755,"benchmarked":true},{"name":"Gustavosta/MagicPrompt-Stable-Diffusion.onnx.8-bit","requiredRAM":null,"benchmarked":false}, ....] 
 ```
 
-## Request a model that is not immediately available on Bytez
+## Request a model
 
 Note, this is an automated process. This will queue up our system to make the model available. Behind the scenes we need to compute things such as the amount of VRAM the model takes up when running.
 
 ```bash
 curl --location 'https://api.bytez.com/model/job' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY,
     "model": "openai-community/gpt2"
 }'
 ```
@@ -58,9 +68,9 @@ Note, you can check the status of the model by repeating the same call. (See the
 
 ```bash
 curl --location 'https://api.bytez.com/model/job' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY,
     "model": "openai-community/gpt2"
 }'
 ```
@@ -86,9 +96,9 @@ Notice how "message" in the response now says "Model available"
 ### Request
 ```bash
 curl --location 'https://api.bytez.com/model/load' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY,
     "model": "openai-community/gpt2",
     "concurrency": 1
 }'
@@ -99,14 +109,14 @@ curl --location 'https://api.bytez.com/model/load' \
 {"model":"openai-community/gpt2","status":"started","concurrency":1}
 ```
 
-## Check a model's status
+## Check a loaded model's status
 
 ### Request
 ```bash
 curl --location 'https://api.bytez.com/model/status' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY,
     "model": "openai-community/gpt2"
 }'
 ```
@@ -121,9 +131,9 @@ curl --location 'https://api.bytez.com/model/status' \
 ### Request
 ```bash
 curl --location 'https://api.bytez.com/model/run' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY,
     "app": false,
     "model": "openai-community/gpt2",
     "prompt": "Once upon a time there was a",
@@ -145,21 +155,21 @@ Once upon a time there was a man upon the throne...But now it is him who must st
 ### Request
 ```bash
 curl --location 'https://api.bytez.com/model/instances' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY
 }'
 ```
 
 
-## Delete a model prematurely
+## Shutdown a loaded model
 
 ### Request
 ```bash
 curl --location 'https://api.bytez.com/model/delete' \
+--header 'Authorization: Key API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "key": API_KEY
     "model": "openai-community/gpt2"
 }'
 ```
@@ -219,5 +229,5 @@ Here's a list of models available on Bytez with their required RAM.
 | MediaTek-Research/Breeze-7B-Instruct-v1_0                | 29.84                   
 
 
-## Requesting a model that isn't available
-If you don't see a model you want to use, ping us on Discord or via email. We'll do our best to process your request within 24 hours.
+## Help us make this better
+At Bytez, we want to build the best DX for AI builders. We value your feedback! If you have suggestions for improving our docs, please let us know on Discord or via email.
