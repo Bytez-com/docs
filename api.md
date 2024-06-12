@@ -28,10 +28,12 @@ Shutting down a model via the [Shutdown a loaded model](#shutdown-a-loaded-model
 - [List all running models](#list-all-running-models)
 - [Shutdown a loaded model](#shutdown-a-loaded-model)
 
+## Auth
+- Your api key should be added to an Authorization header, e.g. Authorization: `Key API_KEY`
+
 ## Parameters
 - `model`: (required) the model name
-- `key`: (required) your API key
-- `concurrency`: (required) for `/load` endpoint 
+- `concurrency`: (default = 1) for `/load` endpoint 
 - `prompt`: the prompt to generate a response
 
 
