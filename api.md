@@ -29,7 +29,7 @@ Shutting down a model via the [Shutdown a loaded model](#shutdown-a-loaded-model
 - [Shutdown a loaded model](#shutdown-a-loaded-model)
 
 ## Auth
-- Your api key should be added to an Authorization header, e.g. Authorization: `Key API_KEY`
+- Your api key should be added to an Authorization header, e.g. Authorization: Key API_KEY
 
 ## Parameters
 - `model`: (required) the model name
