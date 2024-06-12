@@ -249,4 +249,4 @@ Here's a list of models available on Bytez with their required RAM.
 
 
 ## Help us make this better
-At Bytez, we want to build the best DX for AI builders. We value your feedback! If you have suggestions for improving our docs, please let us know on Discord or via email.
+At Bytez, we want to build the best DX for AI builders. We value your feedback! If you have suggestions for improving our docs, please let us know on [Discord](https://discord.gg/Zrd5UbMEBA) or via team@bytez.com.
