@@ -3,23 +3,22 @@
   "version": "0.0.1",
   "type": "module",
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint ./src/*.ts"
   },
-  "author": "",
+  "author": "Bytez",
   "license": "ISC",
   "devDependencies": {
-    "bytez.js": "^1.0.0",
-    "dotenv": "^16.4.5",
-    "nodemon": "^3.1.3",
-    "ts-node": "^10.9.2",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "bytez.js": "latest",
+    "eslint": "^8.57.0",
+    "tsx": "^4.15.5",
     "typescript": "^5.4.5"
-  },
-  "dependencies": {
-    "openai": "^4.51.0"
   }
 }
