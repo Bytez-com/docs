@@ -48,21 +48,15 @@ export default class Bytez {
 
   list = {
     /** Lists the currently available models, and provides basic information about each one, such as RAM required */
-    models() {
-      return this.#client._request("model/list");
-    },
-    /** List running serverless instances */
-    runningInstances() {
-      return this.#client._request("model/instances");
-    }
+    models: () => this.#client._request("model/list"),
+    /** List your serverless instances */
+    instances: () => this.#client._request("model/instances")
   };
   /**
    * Make a HuggingFace model serverless + available on this API! Running this command queues a job. You'll receive an email when the model is ready.
    * @param modelId The HuggingFace modelId, for example `openai-community/gpt2`
    */
-  process() {
-    return this.#client._request("model/job");
-  }
+  process = () => this.#client._request("model/job");
   /**
    * Get a model, so you can check its status, load, run, or shut it down
    * @param modelId The HuggingFace modelId, for example `openai-community/gpt2`
@@ -94,11 +88,8 @@ class Model {
    * @param modelId The HuggingFace modelId, for example `openai-community/gpt2`
    * @param options Serverless configuration
    */
-  async load(
-    modelId: string,
-    options: Partial<ModelOptions> = {}
-  ): Promise<any> {
-    await this.start(modelId, options);
+  async load(options?: ModelOptions): Promise<any> {
+    await this.start(options);
 
     do {
       await new Promise(resolve => setTimeout(resolve, 10e3));
@@ -111,14 +102,11 @@ class Model {
    * @param modelId The HuggingFace modelId, for example `openai-community/gpt2`
    * @param options Serverless configuration
    */
-  async start(
-    modelId: string,
-    options: Partial<ModelOptions> = {}
-  ): Promise<any> {
+  start(options?: ModelOptions) {
     this.options = { ...this.options, ...options };
 
-    await this.#client._request("model/load", {
-      model: modelId,
+    return this.#client._request("model/load", {
+      ...this.#body,
       ...modelOptionMapper(this.options)
     });
   }
@@ -135,7 +123,7 @@ class Model {
     if (typeof input !== "string") {
       throw "Sorry, only text inputs are allowed for now";
     }
-    const { stream = true, ...params } = options;
+    const { stream = false, ...params } = options;
 
     return this.#client._request(
       "model/run",
