@@ -1,7 +1,6 @@
-import Bytez from "./index.js";
+import Bytez from "./index.ts";
 
-const client = new Bytez(process.env);
-console.log(client);
+const client = new Bytez(process.env.BYTEZ_KEY);
 
-const model = await client.load("openai", { precision });
+// const model = await client.load("openai", { precision });
 // client.list.models().then(console.log);

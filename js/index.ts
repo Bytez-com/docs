@@ -32,7 +32,10 @@ class Client {
     }
   }
 }
-
+/**
+ * API Client for interfacing with the Bytez API.
+ * @param apiKey Your Bytez API key
+ */
 export default class Bytez {
   constructor(apiKey: string) {
     this.#client = new Client(apiKey);
@@ -40,7 +43,7 @@ export default class Bytez {
   #client: Client;
 
   list = {
-    /** List models available via this API, and shows their RAM requirements */
+    /** Lists the currently available models, and provides basic information about each one, such as RAM required */
     models: () => this.#client._request("model/list"),
     /** List running serverless instances */
     runningInstances: () => this.#client._request("model/instances")
