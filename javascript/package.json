@@ -1,0 +1,24 @@
+{
+  "name": "bytez.js",
+  "version": "0.0.1",
+  "type": "module",
+  "engines": {
+    "node": "22"
+  },
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint ./src/*.ts"
+  },
+  "author": "Bytez",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "bytez.js": "latest",
+    "eslint": "^8.57.0",
+    "tsx": "^4.15.5",
+    "typescript": "^5.4.5"
+  }
+}
