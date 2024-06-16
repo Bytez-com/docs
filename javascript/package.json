@@ -1,14 +1,16 @@
 {
   "name": "bytez.js",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "engines": {
-    "node": "22"
+    "node": "20"
   },
   "description": "",
-  "main": "index.ts",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "build": "pkgroll",
+    "dev": "tsx src/index.ts",
+    "deploy": "node deploy.js",
+    "test": "tsx test.ts",
     "lint": "eslint ./src/*.ts"
   },
   "author": "Bytez",
@@ -18,7 +20,23 @@
     "@typescript-eslint/parser": "^7.13.0",
     "bytez.js": "latest",
     "eslint": "^8.57.0",
+    "inquirer": "^9.2.23",
+    "pkgroll": "^2.1.1",
+    "semver": "^7.6.2",
     "tsx": "^4.15.5",
     "typescript": "^5.4.5"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    "require": {
+      "types": "./dist/index.d.cts",
+      "default": "./dist/index.cjs"
+    },
+    "import": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
   }
 }

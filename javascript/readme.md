@@ -82,10 +82,10 @@ model = client.model("openai-community/gpt2");
 
 Convenience method for running model.start(), and then awaiting model to be ready.
 
-@param options Serverless configuration
+@param options Serverless configuration, defaults: { concurrency: 1, timeout: 300 }
 
 ```js
-await model.load({ concurrency: 1, timeout: 300 });
+await model.load();
 
 console.log(results);
 

@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 //
-import Bytez from "./src/index.js";
+import Bytez from "bytez.js";
+// import Bytez from "./dist/index.cjs";
 
 const client = new Bytez(process.env.BYTEZ_KEY ?? "");
 
