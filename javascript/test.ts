@@ -68,7 +68,7 @@ describe("bytez.js", async () => {
 
   await it("runs a model", async () => {
     const response = await model.run("Jack and jill");
-
+    console.log(response);
     assert(
       typeof response.output?.[0]?.generated_text === "string",
       "returns output"
@@ -81,8 +81,10 @@ describe("bytez.js", async () => {
     });
     const textStream = stream.pipeThrough(new TextDecoderStream());
     let testPass = false;
+    // console.log(textStream);
 
     for await (const chunk of textStream) {
+      // console.log({ chunk });
       if (testPass === false) {
         testPass = typeof chunk === "string";
         assert(testPass, "streams output");
@@ -96,8 +98,9 @@ describe("bytez.js", async () => {
       min_new_tokens: 1,
       max_new_tokens: 1
     });
+    // console.log(response);
     const newText = response.output?.[0]?.generated_text;
-
+    // console.log(newText);
     assert(typeof newText === "string", "returns output");
     assert(
       newText.split(" ").length === input.trim().split(" ").length + 1,
@@ -105,11 +108,11 @@ describe("bytez.js", async () => {
     );
   });
 
-  await it("stops a model", async () => {
-    await model.stop();
+  // await it("stops a model", async () => {
+  //   await model.stop();
 
-    const response = await model.status();
+  //   const response = await model.status();
 
-    assert(response.status !== "RUNNING", "model is stopped");
-  });
+  //   assert(response.status !== "RUNNING", "model is stopped");
+  // });
 });

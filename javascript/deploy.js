@@ -10,7 +10,7 @@ const runCommand = command =>
   new Promise((resolve, reject) => {
     const [process, ...args] = command.split(" ");
 
-    spawn(process, args).once("close", exitCode =>
+    spawn(process, args, { stdio: "inherit" }).once("close", exitCode =>
       exitCode === 0 ? resolve() : reject(exitCode)
     );
   });

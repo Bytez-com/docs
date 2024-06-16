@@ -4,27 +4,13 @@
 
 Welcome to the Bytez API documentation! This API provides access to various machine learning models for serverless operation. Below, you will find examples demonstrating how to interact with the API using our Python client library.
 
-## Getting Your Key
-
-To use this API, you need an API key. Obtain your key by joining the [Bytez Discord](https://discord.gg/Zrd5UbMEBA). If you prefer not to use Discord, email us at team@bytez.com.
-
-## Boot Times and Billing
-
-### Cold Boot Times
-
-Expect the following boot times for models:
-
-- Smallest model: ~12 minutes.
-- Largest model: ~15 minutes.
-  We are working on reducing these boot times to under 5 minutes.
-
-### Billing
-
-Billing begins from the first 60 seconds of use, with subsequent usage rounded to the nearest minute. Charges are based on $0.0000166667 per GB-second on GPUs. The default expiration period for a model instance is 30 minutes.
-
 ## Python Client Library Usage Examples
 
 ## Authentication
+
+### Getting Your Key
+
+To use this API, you need an API key. Obtain your key by joining the [Bytez Discord](https://discord.gg/Zrd5UbMEBA). If you prefer not to use Discord, email us at team@bytez.com.
 
 Always include your API key when initializing the client:
 

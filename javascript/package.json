@@ -1,6 +1,6 @@
 {
   "name": "bytez.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "engines": {
     "node": "20"
@@ -38,5 +38,6 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     }
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
