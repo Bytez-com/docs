@@ -12,15 +12,6 @@ Run large AI models affordably with Bytez – achieve GPU performance at CPU pri
 
 You need a key to use our API. Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or send us an [email](mailto:team@bytez.com) to get your key. 
 
-## Cold Boot Times & Billing
-### Cold Boot Times
-Models have a cold boot time. This is the time it takes for a model's compute resources to be provisioned, as well as for the model to be downloaded and loaded into memory. This takes between 1.5 to 5 minutes - even for the largest models (those with 70B+ params). We're continuously optimizing our pipeline to bring cold boot times down to near zero.
-
-### Billing 
-At a minimum, you'll be charged for the first 60 seconds of use. Usage beyond 60 seconds is rounded up to the nearest minute of usage. We charge $0.0000166667 / GB sec for inference on GPUs. Instance spin down is not instaneous and may take longer than 1 minute from the instance expiring to it actually shutting down. 
-
-Shutdowns occur within 2 minutes of the specified expiration period for a model instance. The default expiration period is 30 minutes. See [Load a model](./api.md/#load-a-model) for more details on how to set your expiration period. Shutting down a model via the [Shutdown a loaded model](./api.md/#shutdown-a-loaded-model) endpoint is near instantaneous.
-
 ## Docker 
 
 All Byetz models are available on our [Docker Hub](https://hub.docker.com/u/bytez). 
@@ -124,23 +115,6 @@ curl --location 'https://api.bytez.com/model/job' \
 
 See the [API Documentation](./api.md) for all enpoints.
 
-## About Us
-### Our background
-
-Bytez started as community project out of NeurIPS. Thank you to Lee Campbell who believed in us during idea stage. Thank you to the volunteers at NeurIPS, CVPR, and the entire ML community. Your support and your contributions are the foundation of Bytez and the future of open science.
-
-### Our mission
-
-The mission of Bytez is to make open source AI easy to discover, understand, and use.
-
-We've already transformed research papers into interactive media. Now, we are running verified benchmarks on models. This makes every model directly comparable for the first time ever.
-
-We believe there is an opportunity to make open models as trusted and ready-to-use as closed models, to the benefit of all developers and researchers.
-
-### Join our Community
-[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf) [![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
-
-We hang out in Discord, come chat with us. You can also follow us on Twitter for the latest models and research.
-
-### Help us make this better
-We want to build the best DX for AI builders. We value your feedback! If you have suggestions for improving our docs, please let us know on [Discord](https://discord.gg/Zrd5UbMEBA) or via team@bytez.com.
+## Resources
+- [About Us](./about.md)
+- [Cold Boot Times and Billing](./cold-boot-billing.md)
