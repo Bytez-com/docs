@@ -8,17 +8,105 @@
 
 Run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
 
-## API Key
+# Quickstart
+Two steps to run inference in minutes:
+1. Get your API Key
+2. Choose your path: run inference locally via Docker or use our API (javascript, python, REST API)
 
-You need a key to use our API. Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or send us an [email](mailto:team@bytez.com) to get your key. 
+## API Key
+Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or send us an [email](mailto:team@bytez.com) to get your key. 
 
 ## Docker 
-
-All Byetz models are available on our [Docker Hub](https://hub.docker.com/u/bytez). 
+All Byetz models are available on our [Docker Hub](https://hub.docker.com/u/bytez) 🤙
 
 ## Libraries
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
+
+## Python
+Load and run a model after installing our python library: `pip install Bytez`.
+### Load and run a model
+```python
+import os
+from bytez import Bytez
+client = Bytez(api_key=os.environ.get("YOUR_API_KEY")
+
+# Grab a model
+model = client.model('openai-community/gpt2')
+
+# Start a model
+model.load()
+
+# Run a model
+output = model.run("Once upon a time there was a", model_params={"max_new_tokens":1,"min_new_tokens":1})
+print(output)
+```
+
+See the [API Documentation](./python/readme.md) for all examples.
+
+## Javascript
+Load and run a model after installing our Typescript library (`npm i bytez.js`)
+### Load and run a model
+```javascript
+import Bytez from "bytez.js";
+client = new Bytez("YOUR_API_KEY");
+
+// Grab a model
+model = client.model("openai-community/gpt2");
+
+// Start a model
+await model.load();
+console.log(results);
+
+// Run a model
+output = await model.run("Once upon a time there was a");
+console.log(output);
+```
+
+See the [API Documentation](./javascript/readme.md) for all examples.
+
+## REST API
+
+Bytez has a REST API for loading, running, and requesting new models.
+
+### Load a model
+```bash
+curl --location 'https://api.bytez.com/model/load' \
+--header 'Authorization: Key API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "model": "openai-community/gpt2",
+    "concurrency": 1
+}'
+```
+
+### Run a model
+```bash
+curl --location 'https://api.bytez.com/model/run' \
+--header 'Authorization: Key API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "model": "openai-community/gpt2",
+    "prompt": "Once upon a time there was a",
+    "params": {
+        "min_length": 30,
+        "max_length": 256
+    },
+    "stream": true
+}'
+```
+
+### Request a model 
+```bash
+curl --location 'https://api.bytez.com/model/job' \
+--header 'Authorization: Key API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "model": "openai-community/gpt2"
+}'
+```
+
+See the [API Documentation](./api.md) for all endpoints.
 
 ## Model Library
 
@@ -72,48 +160,6 @@ Here are some models that can be run, with their required RAM.
 | occiglot/occiglot-7b-eu5-instruct                        | 28.94                   
 | MediaTek-Research/Breeze-7B-Instruct-v1_0                | 29.84                   
 
-## REST API
-
-Bytez has a REST API for loading, running, and requesting new models.
-
-### Load a model
-```bash
-curl --location 'https://api.bytez.com/model/load' \
---header 'Authorization: Key API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-    "model": "openai-community/gpt2",
-    "concurrency": 1
-}'
-```
-
-### Run a model
-```bash
-curl --location 'https://api.bytez.com/model/run' \
---header 'Authorization: Key API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-    "model": "openai-community/gpt2",
-    "prompt": "Once upon a time there was a",
-    "params": {
-        "min_length": 30,
-        "max_length": 256
-    },
-    "stream": true
-}'
-```
-
-### Request a model 
-```bash
-curl --location 'https://api.bytez.com/model/job' \
---header 'Authorization: Key API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-    "model": "openai-community/gpt2"
-}'
-```
-
-See the [API Documentation](./api.md) for all enpoints.
 
 ## Resources
 - [About Us](./about.md)
