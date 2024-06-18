@@ -6,7 +6,7 @@
 
 [![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf) [![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
 
-Run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
+Evaluate and run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
 
 # Quickstart
 Two steps to run inference in minutes:
@@ -108,11 +108,11 @@ curl --location 'https://api.bytez.com/model/job' \
 
 See the [API Documentation](./api.md) for all endpoints.
 
-## Model Library
+# Model Library
 
 We currently support text generation and chat models. See our [model library](./models.md) for the full list.
 
-Here are some models that can be run, with their required RAM.
+Here are some models that can be run - with their required RAM.
 
 | Model Name                                               | Required RAM (GB)       
 |----------------------------------------------------------|-------------------------|
@@ -161,6 +161,6 @@ Here are some models that can be run, with their required RAM.
 | MediaTek-Research/Breeze-7B-Instruct-v1_0                | 29.84                   
 
 
-## Resources
+# Resources
 - [About Us](./about.md)
 - [Cold Boot Times and Billing](./cold-boot-billing.md)
