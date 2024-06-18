@@ -4,7 +4,7 @@
 
 # Bytez
 
-[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf)
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf) [![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
 
 Run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
 
@@ -23,7 +23,7 @@ Shutdowns occur within 2 minutes of the specified expiration period for a model 
 
 ## Docker 
 
-All Byetz models are available on our [Docker Hub(https://hub.docker.com/u/bytez). 
+All Byetz models are available on our [Docker Hub](https://hub.docker.com/u/bytez). 
 
 ## Libraries
 - [Python](./python/readme.md)
@@ -138,13 +138,9 @@ We've already transformed research papers into interactive media. Now, we are ru
 We believe there is an opportunity to make open models as trusted and ready-to-use as closed models, to the benefit of all developers and researchers.
 
 ### Join our Community
-You can also follow us on X, for the latest models and research.
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf) [![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
 
-[![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
-
-We also hang out in Discord. Join the chatter!
-
-[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf)
+We hang out in Discord, come chat with us. You can also follow us on Twitter for the latest models and research.
 
 ### Help us make this better
 We want to build the best DX for AI builders. We value your feedback! If you have suggestions for improving our docs, please let us know on [Discord](https://discord.gg/Zrd5UbMEBA) or via team@bytez.com.
