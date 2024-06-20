@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 //
 import Bytez from "bytez.js";
-// import Bytez from "./dist/index.cjs";
+// import Bytez from "./src/index";
 
 const client = new Bytez(process.env.BYTEZ_KEY ?? "");
 
@@ -50,15 +50,14 @@ describe("bytez.js", async () => {
 
   it("returns model status", async () => {
     const { status } = await model.status();
-    // console.log(status);
+
     assert(
-      status === "DEPLOYING" || status === "RUNNING",
+      ["STARTING", "RUNNING", "INSTANTIATING"].includes(status),
       "returns status deploying"
     );
   });
 
   await it("awaits model load", async () => {
-    console.log("model loading...");
     await model.load();
 
     const { status } = await model.status();
@@ -108,11 +107,11 @@ describe("bytez.js", async () => {
     );
   });
 
-  // await it("stops a model", async () => {
-  //   await model.stop();
+  await it("stops a model", async () => {
+    await model.stop();
 
-  //   const response = await model.status();
+    const response = await model.status();
 
-  //   assert(response.status !== "RUNNING", "model is stopped");
-  // });
+    assert(response.status !== "RUNNING", "model is stopped");
+  });
 });

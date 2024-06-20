@@ -89,15 +89,23 @@ class Model {
    * @param options Serverless configuration
    */
   async load(options?: ModelOptions): Promise<any> {
-    await this.start(options);
+    let { status, error } = await this.start(options);
 
-    do {
-      var { status } = await this.status();
+    status ??= error.includes("already loaded") ? "RUNNING" : "";
+
+    while (status !== "FAILED" && status !== "RUNNING") {
+      ({ status } = await this.status());
 
       if (status !== "RUNNING") {
-        await new Promise(resolve => setTimeout(resolve, 10e3));
+        if (status !== lastStatus) {
+          var lastStatus = status;
+
+          console.log(status);
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 5e3));
       }
-    } while (status === "DEPLOYING");
+    }
   }
   /**
    * Start a serverless model

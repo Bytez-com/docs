@@ -127,13 +127,18 @@ class Model:
         options (dict, optional): Options to configure the model loading.
     """ 
     self.start(options)
-    status = 'DEPLOYING'
+    status_last = ''
+    status = ''
     
-    while status == 'DEPLOYING':
+    while status != "FAILED" and status != "RUNNING":
       status = self.status().get("status")
       
-      if status == "DEPLOYING":
-        time.sleep(10)
+      if status != "RUNNING":
+        if status != status_last:
+          status_last = status
+          print(status)
+          
+        time.sleep(5)
 
   def start(self, options=None):
     """
