@@ -15,9 +15,9 @@ To use this API, you need an API key. Obtain your key by joining the [Bytez Disc
 Always include your API key when initializing the client:
 
 ```julia
-using BytezJL
+using BytezAPI
 
-client = BytezJL.init("YOUR_API_KEY");
+client = BytezAPI.init("YOUR_API_KEY");
 ```
 
 ### List Available Models
