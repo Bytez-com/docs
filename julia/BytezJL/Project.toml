@@ -1,4 +1,4 @@
-name = "Bytez"
+name = "BytezJL"
 uuid = "aeec0939-83cf-4f14-8c49-2dc7569399f2"
 version = "0.0.1"
 authors = ["Bytez <support@bytez.com>"]
@@ -10,5 +10,6 @@ JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+julia = "1.10"
 HTTP = "1"
 JSON3 = "1"

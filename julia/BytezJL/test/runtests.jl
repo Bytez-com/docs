@@ -1,8 +1,8 @@
 using Test
-using Bytez
+using BytezJL
 using JSON3
 
-const client = Bytez.init(get(ENV, "BYTEZ_KEY", ""))
+const client = BytezJL.init(get(ENV, "BYTEZ_KEY", ""))
 
 @testset "Bytez.jl" begin
     @testset "list models" begin
