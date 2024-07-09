@@ -1,0 +1,25 @@
+# Use the official Julia image from the Docker Hub
+FROM julia:1.10.4
+
+# Set the working directory in the container
+WORKDIR /Bytez
+ARG BYTEZ_KEY
+ENV BYTEZ_KEY=${BYTEZ_KEY}
+# Set the environment to include the current project
+ENV JULIA_PROJECT=@.
+
+COPY ./Bytez/Project.toml ./Bytez/Manifest.toml ./
+
+# Install packages and handle all package-related processing in a single RUN command
+RUN julia -e 'using Pkg;  Pkg.instantiate();'
+# Develop the local package and precompile
+# RUN julia -e 'using Pkg; Pkg.develop(PackageSpec(path=".")); Pkg.precompile()'
+
+COPY ./Bytez/test ./test
+COPY ./Bytez/src ./src
+
+# Run tests
+CMD ["julia", "test/runtests.jl"]
+# docker build -t julia-test .
+# docker run --rm julia-test
+# docker build -t julia-test .; docker run --rm julia-test
