@@ -1,4 +1,4 @@
-module BytezJL
+module BytezAPI
   using HTTP
   using JSON3
 
