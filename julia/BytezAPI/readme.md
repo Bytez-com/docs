@@ -45,17 +45,8 @@ Get a model, so you can check its status, load, run, or shut it down.
 @param modelId The HuggingFace modelId, for example `openai-community/gpt2`
 
 ```julia
+# args => modelId, concurrency = 1, timeout = 300 secs
 model = client.model("openai-community/gpt2")
-```
-
-### Start the model
-
-Convenience method for running model.start(), and then awaiting model to be ready.
-
-@param options Serverless configuration, defaults: { concurrency: 1, timeout: 300 }
-
-```julia
-model.load()
 ```
 
 Concurrency
@@ -67,6 +58,14 @@ Seconds to wait before serverless instance auto-shuts down.
 By default, if an instance doesn't receive a request after `300` seconds, then it shuts down.
 Receiving a request resets this timer.
 Default: `300`
+
+### Start the model
+
+Convenience method for running model.start(), and then awaiting model to be ready.
+
+```julia
+model.load()
+```
 
 ### Check Model Status
 
