@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Welcome to the Bytez API documentation! This API provides access to various machine learning models for serverless operation. Below, you will find examples demonstrating how to interact with the API using our js client library.
+Welcome to the Bytez API documentation! This API provides access to various machine learning models for serverless operation. Below, you will find examples demonstrating how to interact with the API.
 
-## JavaScript Client Library Usage Examples
+## Julia Library Usage Examples
 
 ## Authentication
 
