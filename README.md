@@ -17,14 +17,15 @@ Two steps to run inference in minutes:
 Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or send us an [email](mailto:team@bytez.com) to get your key. 
 
 ## Docker 
-All Byetz models are available on our [Docker Hub](https://hub.docker.com/u/bytez) 🤙
+All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [About](https://bytez.com/about) page 🤙
 
 ## Libraries
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
+- [Julia](./julia/Bytez/readme.md)
 
 ## Python
-Load and run a model after installing our python library: `pip install Bytez`.
+Load and run a model after installing our python library (`pip install Bytez`).
 ### Load and run a model
 ```python
 import os
@@ -45,7 +46,7 @@ print(output)
 See the [API Documentation](./python/readme.md) for all examples.
 
 ## Javascript
-Load and run a model after installing our Typescript library (`npm i bytez.js`)
+Load and run a model after installing our Typescript library (`npm i bytez.js`).
 ### Load and run a model
 ```javascript
 import Bytez from "bytez.js";
@@ -64,6 +65,26 @@ console.log(output);
 ```
 
 See the [API Documentation](./javascript/readme.md) for all examples.
+
+## Julia
+Load and run a model after installing our Bytez library (`add Bytez`).
+### Load and run a model
+```julia
+using Bytez
+client = Bytez.init("YOUR_API_KEY");
+
+# Grab a model
+# args => modelId, concurrency = 1, timeout = 300 secs
+model = client.model("openai-community/gpt2")
+
+# Start a model
+model.load()
+
+# Run a model
+output = model.run("Roses are")
+println(output)
+
+```
 
 ## REST API
 
