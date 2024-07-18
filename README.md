@@ -131,7 +131,7 @@ See the [API Documentation](./api.md) for all endpoints.
 
 # Model Library
 
-We currently support text generation and chat models. See our [model library](./models.md) for the full list.
+We currently support text generation and chat models. See our [model library](https://bytez.com/about) on our website for the full list.
 
 Here are some models that can be run - with their required RAM.
 
