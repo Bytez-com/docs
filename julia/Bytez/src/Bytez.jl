@@ -43,7 +43,7 @@ module Bytez
               () -> status(json_body),
               () -> start(json_body_model_start),
               () -> stop(json_body),
-              (text, params = Dict()) -> run(text, body_with_model_id, params),
+              (input, params = Dict()) -> run(input, body_with_model_id, params),
               () -> load(json_body_model_start)
           )
 
@@ -72,12 +72,12 @@ module Bytez
   const start = (body::String) -> request("model/load", body)
   const stop = (body::String) -> request("model/delete", body)
 
-  function run(text::String, body_with_model_id::Dict, params::Dict)
+  function run(input::Any, body_with_model_id::Dict, params::Dict)
         body = JSON3.write(
             merge(
                 body_with_model_id,
                 Dict("stream"=> false),
-                Dict("prompt" => text),
+                Dict("input" => input),
                 Dict("params"=> params)
             )
         )

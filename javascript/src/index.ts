@@ -1,4 +1,5 @@
 import Inference from "./interface/inference";
+import PostBody from "./interface/postBody";
 import {
   modelOptionDefaults,
   modelOptionMapper,
@@ -7,20 +8,21 @@ import {
 
 class Client {
   constructor(apiKey: string) {
-    this.auth = { Authorization: `Key ${apiKey}` };
+    this.headers = {
+      Authorization: `Key ${apiKey}`,
+      "content-type": "application/json"
+    };
   }
-  auth = {};
-  async _request(path = "", body?: object | undefined, stream = false) {
+  headers = {};
+  async _request(path = "", body?: PostBody) {
     try {
       const res = await fetch(`https://api.bytez.com/${path}`, {
-        method: body ? "POST" : "GET",
-        body: body ? JSON.stringify(body) : undefined,
-        headers: body
-          ? { ...this.auth, "Content-Type": "application/json" }
-          : this.auth
+        headers: this.headers,
+        method: body ? "POST" : undefined,
+        body: body ? JSON.stringify(body) : undefined
       });
 
-      if (stream) {
+      if (body?.stream) {
         return res.body;
       } else {
         const json = await res.json();
@@ -77,7 +79,7 @@ class Model {
     this.#body = { model: this.id };
   }
   #client: Client;
-  #body: object;
+  #body: PostBody;
   /** The HuggingFace modelId, for example `openai-community/gpt2` */
   id: string;
   /** The serverless configuration */
@@ -128,16 +130,10 @@ class Model {
     return this.#client._request("model/delete", this.#body);
   }
   /** Run model */
-  run(input: string, options: Inference = {}) {
-    if (typeof input !== "string") {
-      throw "Sorry, only text inputs are allowed for now";
-    }
+  run(input: any, options: Inference = {}) {
     const { stream = false, ...params } = options;
+    const postBody = { ...this.#body, input, params, stream };
 
-    return this.#client._request(
-      "model/run",
-      { ...this.#body, prompt: input, params, stream },
-      stream
-    );
+    return this.#client._request("model/run", postBody);
   }
 }

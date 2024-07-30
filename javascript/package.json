@@ -1,6 +1,6 @@
 {
   "name": "bytez.js",
-  "version": "0.0.6",
+  "version": "0.4.0",
   "type": "module",
   "engines": {
     "node": "20"
@@ -10,7 +10,7 @@
     "build": "pkgroll",
     "dev": "tsx src/index.ts",
     "deploy": "node deploy.js",
-    "test": "tsx test.ts",
+    "test": "tsx tests.ts",
     "lint": "eslint ./src/*.ts"
   },
   "author": "Bytez",

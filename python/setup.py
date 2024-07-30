@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bytez',  # Name of your package
-    version='0.2.11',
+    version='0.2.13',
     packages=find_packages(),
     description='Python API client for Bytez service',
     long_description=open('./readme.md').read(),
@@ -10,7 +10,7 @@ setup(
     author='Bytez',
     url='https://github.com/bytez-com/docs',
     install_requires=[
-        'requests>=2.32.1',  # Assuming 'requests' is a dependency
+        'requests>=2.0.0,<3.0.0',  # Allow any 2.x version of requests
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

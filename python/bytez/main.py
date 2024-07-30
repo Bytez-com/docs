@@ -184,10 +184,7 @@ class Model:
     Returns:
         Output from the model based on the provided input.
     """
-    if not isinstance(input, str):
-      raise ValueError("Sorry, only text inputs are allowed for now")
-
-    body = {**self._body, "prompt": input, "params": model_params, "stream": stream}
+    body = {**self._body, "input": input, "params": model_params, "stream": stream}
 
     return self._client._request("model/run", body=body, stream=stream)
 

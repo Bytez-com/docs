@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
-import { describe, it } from "node:test";
+import { describe, it, after } from "node:test";
 //
 import Bytez from "bytez.js";
 // import Bytez from "./src/index";
 
 const client = new Bytez(process.env.BYTEZ_KEY ?? "");
 
-describe("bytez.js", async () => {
+describe("text generation", async () => {
   it("list models", async () => {
     const list = await client.list.models();
 
@@ -14,7 +14,7 @@ describe("bytez.js", async () => {
     assert(list.length !== 0, "array is not empty");
     assert(
       list.every(
-        model => model.name !== undefined && model.requiredRamGB !== undefined
+        model => model.modelId !== undefined && model.ramRequired !== undefined
       ),
       "all models should have name and RAM"
     );
@@ -114,4 +114,48 @@ describe("bytez.js", async () => {
 
     assert(response.status !== "RUNNING", "model is stopped");
   });
+});
+describe("chat models", async () => {
+  const model = client.model("microsoft/Phi-3-mini-4k-instruct");
+  const messages = [
+    {
+      role: "system",
+      content:
+        "You are a friendly chatbot who always responds in the style of a pirate"
+    },
+    {
+      role: "user",
+      content: "How many helicopters can a human eat in one sitting?"
+    }
+  ];
+
+  await model.load();
+
+  await it("runs a model", async () => {
+    const response = await model.run(messages, { max_length: 40 });
+    const generatedMessages = response.output?.[0]?.generated_text;
+    console.log(generatedMessages);
+    assert(
+      Array.isArray(generatedMessages) &&
+        generatedMessages.length === messages.length + 1,
+      "returns output"
+    );
+  });
+
+  await it("streams text", async () => {
+    const stream = await model.run(messages, { stream: true, max_length: 40 });
+    const textStream = stream.pipeThrough(new TextDecoderStream());
+    let testPass = false;
+    // console.log(textStream);
+
+    for await (const chunk of textStream) {
+      // console.log({ chunk });
+      if (testPass === false) {
+        testPass = typeof chunk === "string";
+        assert(testPass, "streams output");
+      }
+    }
+  });
+
+  after(() => model.stop());
 });
