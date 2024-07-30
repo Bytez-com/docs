@@ -27,5 +27,7 @@ jobs:
     steps:
       - uses: JuliaRegistries/TagBot@v1
         with:
-          token: ${{ secrets.BOT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           # Edit the following line to reflect the actual name of the GitHub Secret containing your private key
+          #ssh: ${{ secrets.BOT_KEY }}
+          # ssh: ${{ secrets.NAME_OF_MY_SSH_PRIVATE_KEY_SECRET }}
