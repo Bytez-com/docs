@@ -13,7 +13,7 @@ class TestBytez(unittest.TestCase):
 
     self.assertIsInstance(model_list, list, "should return array of models")
     self.assertNotEqual(len(model_list), 0, "array is not empty")
-    self.assertTrue(all('name' in model and 'requiredRamGB' in model for model in model_list),
+    self.assertTrue(all('modelId' in model and 'ramRequired' in model for model in model_list),
                     "all models should have name and RAM")
 
   def test_lists_running_instances(self):

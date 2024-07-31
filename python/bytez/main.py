@@ -15,12 +15,12 @@ class Client:
     Args:
         api_key (str): Your Bytez API key.
     """
-    self.auth = {"authorization": f"Key {api_key}"}
+    self.headers = {"authorization": f"Key {api_key}", "content-type": "application/json" }
 
   def _request(self, path="", body=None, stream=False):
     try:
       url = "https://api.bytez.com/" + path
-      headers = {**self.auth, "content-type": "application/json"} if body else self.auth
+      headers = self.headers
       method = "POST" if body else "GET"
       data = json.dumps(body) if body else None
 
