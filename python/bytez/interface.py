@@ -1,4 +1,5 @@
 from typing import TypedDict, Optional
+from typing import Literal
 
 class InferenceOptions(TypedDict, total=False):
     max_length: int
@@ -45,3 +46,37 @@ class InferenceOptions(TypedDict, total=False):
     encoder_no_repeat_ngram_size: int
     decoder_start_token_id: int
     generation_kwargs: dict
+    
+    
+Task = Literal[
+    "audio-classification",
+    "automatic-speech-recognition",
+    "depth-estimation",
+    "document-question-answering",
+    "feature-extraction",
+    "fill-mask",
+    "image-classification",
+    "image-feature-extraction",
+    "image-segmentation",
+    "image-to-text",
+    "mask-generation",
+    "object-detection",
+    "question-answering",
+    "sentence-similarity",
+    "summarization",
+    "text-classification",
+    "text-generation",
+    "text-to-audio",
+    "text-to-image",
+    "text-to-speech",
+    "text-to-video",
+    "text2text-generation",
+    "token-classification",
+    "translation",
+    "unconditional-image-generation",
+    "video-classification",
+    "visual-question-answering",
+    "zero-shot-classification",
+    "zero-shot-image-classification",
+    "zero-shot-object-detection"
+]

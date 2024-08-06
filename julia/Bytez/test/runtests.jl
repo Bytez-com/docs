@@ -11,6 +11,14 @@ const client = Bytez.init(get(ENV, "BYTEZ_KEY", ""))
         @test length(list) != 0
         @test all(model -> haskey(model, "modelId") && haskey(model, "ramRequired"), list)
     end
+    
+    # @testset "list models" begin
+    #     list = client.list.models("text-to-image")
+    #     println(list)
+    #     @test isa(list, JSON3.Array)
+    #     @test length(list) != 0
+    #     @test all(model -> haskey(model, "modelId") && haskey(model, "ramRequired"), list)
+    # end
 
     @testset "lists running instances" begin
         instances = client.list.instances()

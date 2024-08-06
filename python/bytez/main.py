@@ -1,5 +1,6 @@
 import json, time, requests
-from .interface import InferenceOptions
+from .interface import InferenceOptions, Task
+from typing import Optional
 
 class Client:
   """
@@ -56,14 +57,14 @@ class Bytez:
     """
     self._client = Client(api_key)
 
-  def list_models(self):
+  def list_models(self, task: Optional[Task] = None):
     """
     List the currently available models, providing basic information about each one.
 
     Returns:
         List of available models with details.
     """
-    return self._client._request("model/list")
+    return self._client._request(f"model/list{'?task=' + task if task else ''}")
 
   def list_instances(self):
     """
@@ -139,6 +140,9 @@ class Model:
           print(status)
           
         time.sleep(5)
+    
+    if status == "FAILED":
+      print(f"Error: {self.status().get('error')}")
 
   def start(self, options=None):
     """
@@ -184,7 +188,13 @@ class Model:
     Returns:
         Output from the model based on the provided input.
     """
-    body = {**self._body, "input": input, "params": model_params, "stream": stream}
+    body = {**self._body, "params": model_params, "stream": stream}
+
+    # Check if input is a dictionary
+    if isinstance(input, dict):
+        body.update(input)
+    else:
+        body["input"] = input
 
     return self._client._request("model/run", body=body, stream=stream)
 

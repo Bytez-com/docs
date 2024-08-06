@@ -19,7 +19,7 @@ COPY ./Bytez/test ./test
 COPY ./Bytez/src ./src
 
 # Run tests
-CMD ["julia", "test/runtests.jl"]
+CMD ["julia", "--project", "test/runtests.jl"]
 # docker build -t julia-test .
 # docker run --rm julia-test
 # docker build -t julia-test .; docker run --rm julia-test

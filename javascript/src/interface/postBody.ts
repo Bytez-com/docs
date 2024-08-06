@@ -11,7 +11,7 @@ export default interface PostBody {
    * text-generation: string
    * chat-model: [role: string, message: string]
    */
-  input?: string | any;
+  input?: any;
   /**
    * Stream back text
    *

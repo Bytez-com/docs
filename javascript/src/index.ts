@@ -5,6 +5,7 @@ import {
   modelOptionMapper,
   ModelOptions
 } from "./interface/model";
+import { Task } from "./interface/task";
 
 class Client {
   constructor(apiKey: string) {
@@ -49,8 +50,11 @@ export default class Bytez {
   #client: Client;
 
   list = {
-    /** Lists the currently available models, and provides basic information about each one, such as RAM required */
-    models: () => this.#client._request("model/list"),
+    models: {
+      /** Lists the currently available models, and provides basic information about each one, such as RAM required */
+      all: () => this.#client._request("model/list"),
+      byTask: (task: Task) => this.#client._request(`model/list?task=${task}`)
+    },
     /** List your serverless instances */
     instances: () => this.#client._request("model/instances")
   };
@@ -77,8 +81,13 @@ class Model {
     this.id = modelId;
     this.options = modelOptionDefaults;
     this.#body = { model: this.id };
+
+    // this.#client._request(`model/get/${modelId}`).then(({ task }) => {
+    //   this.#task = task;
+    // });
   }
   #client: Client;
+  // #task: string;
   #body: PostBody;
   /** The HuggingFace modelId, for example `openai-community/gpt2` */
   id: string;
@@ -93,7 +102,7 @@ class Model {
   async load(options?: ModelOptions): Promise<any> {
     let { status, error } = await this.start(options);
 
-    status ??= error.includes("already loaded") ? "RUNNING" : "";
+    status ??= error?.includes?.("already loaded") ? "RUNNING" : "";
 
     while (status !== "FAILED" && status !== "RUNNING") {
       ({ status } = await this.status());
@@ -132,7 +141,13 @@ class Model {
   /** Run model */
   run(input: any, options: Inference = {}) {
     const { stream = false, ...params } = options;
-    const postBody = { ...this.#body, input, params, stream };
+    let postBody = { stream, params, ...this.#body };
+
+    if (input?.constructor === Object) {
+      postBody = { ...postBody, ...input };
+    } else {
+      postBody.input = input;
+    }
 
     return this.#client._request("model/run", postBody);
   }

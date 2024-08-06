@@ -1,0 +1,32 @@
+@enum Task begin
+    audio_classification
+    automatic_speech_recognition
+    depth_estimation
+    document_question_answering
+    feature_extraction
+    fill_mask
+    image_classification
+    image_feature_extraction
+    image_segmentation
+    image_to_text
+    mask_generation
+    object_detection
+    question_answering
+    sentence_similarity
+    summarization
+    text_classification
+    text_generation
+    text_to_audio
+    text_to_image
+    text_to_speech
+    text_to_video
+    text2text_generation
+    token_classification
+    translation
+    unconditional_image_generation
+    video_classification
+    visual_question_answering
+    zero_shot_classification
+    zero_shot_image_classification
+    zero_shot_object_detection
+end

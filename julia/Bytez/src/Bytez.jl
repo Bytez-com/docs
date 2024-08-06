@@ -1,6 +1,7 @@
 module Bytez
   using HTTP
   using JSON3
+  include("types.jl")
 
   global API_KEY = ""
 
@@ -73,16 +74,20 @@ module Bytez
   const stop = (body::String) -> request("model/delete", body)
 
   function run(input::Any, body_with_model_id::Dict, params::Dict)
-        body = JSON3.write(
-            merge(
-                body_with_model_id,
-                Dict("stream"=> false),
-                Dict("input" => input),
-                Dict("params"=> params)
-            )
+        body = merge(
+            body_with_model_id,
+            Dict("stream"=> false),
+            Dict("params"=> params)
         )
+        
+        # Check if input is a dictionary
+        if isa(input, Dict)
+            body = merge(body, input)
+        else
+            body["input"] = input
+        end
     
-        return request("model/run", body)
+        return request("model/run", JSON3.write(body))
     end
     function load(body::String)
         json = nothing
@@ -114,7 +119,10 @@ module Bytez
   #
   # list functions
   #
-  const list_models = () -> request("model/list")
+  # const list_models = () -> request("model/list")
+  function list_models(task::Union{Task,Nothing} = nothing)
+    return request(task === nothing ? "model/list" : "model/list?task=$task")
+  end
   const list_instances = () -> request("model/instances")
   #
   # bytez
