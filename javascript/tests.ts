@@ -302,7 +302,7 @@ describe.skip("question-answering", async () => {
 
   after(() => model.stop());
 });
-describe.skip("visual-question-answering", async () => {
+describe("visual-question-answering", async () => {
   const model = client.model("aqachun/Vilt_fine_tune_2000");
   const [{ url, base64 }] = await Promise.all([
     getImageData(
@@ -313,7 +313,7 @@ describe.skip("visual-question-answering", async () => {
 
   await it("passes - input url", async () => {
     const response = await model.run({
-      b64ImageBufferPng: url,
+      image: url,
       question: "What kind of animal is this?"
     });
     const output = response.output;
@@ -326,7 +326,7 @@ describe.skip("visual-question-answering", async () => {
   });
   await it("passes - input -> png base64 encoded", async () => {
     const response = await model.run({
-      b64ImageBufferPng: base64,
+      image: base64,
       question: "What kind of animal is this?"
     });
     const output = response.output;
@@ -338,7 +338,7 @@ describe.skip("visual-question-answering", async () => {
     );
   });
 
-  after(() => model.stop());
+  // after(() => model.stop());
 });
 describe.skip("document-question-answering", async () => {
   const model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0");
@@ -351,7 +351,7 @@ describe.skip("document-question-answering", async () => {
 
   await it("passes - input url", async () => {
     const response = await model.run({
-      b64ImageBufferPng: url,
+      image: url,
       question: "What's the total cost?"
     });
     const output = response.output;
@@ -366,7 +366,7 @@ describe.skip("document-question-answering", async () => {
   });
   await it("passes - input -> png base64 encoded", async () => {
     const response = await model.run({
-      b64ImageBufferPng: base64,
+      image: base64,
       question: "What's the total cost?"
     });
     const output = response.output;
@@ -524,7 +524,7 @@ describe.skip("zero-shot-image-classification", async () => {
 
   await it("passes - input url", async () => {
     const response = await model.run({
-      b64ImageBufferPng: url,
+      image: url,
       candidate_labels: ["squid", "octopus", "human", "cat"]
     });
     const output = response.output;
@@ -533,7 +533,7 @@ describe.skip("zero-shot-image-classification", async () => {
   });
   await it("passes - input -> png base64 encoded", async () => {
     const response = await model.run({
-      b64ImageBufferPng: base64,
+      image: base64,
       candidate_labels: ["squid", "octopus", "human", "cat"]
     });
     const output = response.output;
@@ -599,7 +599,7 @@ describe.skip("zero-shot-object-detection", async () => {
 
   await it("passes - input url", async () => {
     const response = await model.run({
-      b64ImageBufferPng: url,
+      image: url,
       candidate_labels: ["squid", "octopus", "human", "cat"]
     });
     const output = response.output;
@@ -608,7 +608,7 @@ describe.skip("zero-shot-object-detection", async () => {
   });
   await it("passes - input -> png base64 encoded", async () => {
     const response = await model.run({
-      b64ImageBufferPng: base64,
+      image: base64,
       candidate_labels: ["squid", "octopus", "human", "cat"]
     });
 
@@ -807,7 +807,7 @@ describe.skip("text-to-speech", async () => {
     const response = await model.run("Hello");
     const output = response.output_wav;
 
-    assert(!!response.output_wav);
+    assert(!!output);
   });
 
   after(() => model.stop());

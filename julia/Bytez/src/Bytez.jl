@@ -119,10 +119,10 @@ module Bytez
   #
   # list functions
   #
-  # const list_models = () -> request("model/list")
-  function list_models(task::Union{Task,Nothing} = nothing)
-    return request(task === nothing ? "model/list" : "model/list?task=$task")
-  end
+  const list_models = () -> request("model/list")
+#   function list_models(task::Union{Task,Nothing} = nothing)
+#     return request(task === nothing ? "model/list" : "model/list?task=$task")
+#   end
   const list_instances = () -> request("model/instances")
   #
   # bytez
