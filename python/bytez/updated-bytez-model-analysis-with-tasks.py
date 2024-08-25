@@ -180,7 +180,7 @@ def update_model_metadata(model_metadata: Dict[str, ModelMetadata], df: pd.DataF
 # Main execution
 if __name__ == "__main__":
     # Initialize Bytez client
-    client = Bytez("8cc150a1f936fb01446e483f9d2c37aa")
+    client = Bytez("BYTEZ_API_KEY")
     model_list = client.list_models()
     df = pd.DataFrame(model_list)
 
