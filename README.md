@@ -72,7 +72,7 @@ output = await model.run("Once upon a time there was a");
 console.log(output);
 ```
 
-See the [API Documentation](./javascript/readme.md) for all examples.
+See [API Documentation](./javascript/readme.md) for all examples.
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
@@ -142,9 +142,51 @@ See the [API Documentation](./api.md) for all endpoints.
 
 # Model Library
 
-We currently support 10,000+ open source AI models across 35+ ML tasks. See our [model library](https://bytez.com/about) for the full list.
+We currently support 14K+ open source AI models across 30+ ML tasks. 
 
-Here are some models that can be run - with their required RAM.
+| Task   | Total Models    
+|------------|-----|                               
+| Total Available  | 14559
+| Text-generation | 5765
+| Summarization | 380
+| Unconditional-image-generation | 416
+| Text2text-generation | 393
+| Audio-classification | 390
+| Image-classification | 533
+| Zero-shot-classification | 213
+| Token-classification | 546
+| Video-classification | 419
+| Text-classification | 474
+| Fill-mask | 358
+| Text-to-image | 467
+| Depth-estimation | 53
+| Object-detection | 405
+| Sentence-similarity | 457
+| Image-segmentation | 322
+| Image-to-text | 249
+| Zero-shot-image-classification | 174
+| Translation | 592
+| Automatic-speech-recognition | 455
+| Question-answering | 563
+| Image-feature-extraction | 114
+| Visual-question-answering | 105
+| Feature-extraction | 399
+| Mask-generation | 77
+| Zero-shot-object-detection | 27
+| Text-to-video | 11
+| Text-to-speech | 173
+| Document-question-answering | 18
+| Text-to-audio | 11
+
+## Examples 
+
+To see the full list, run:
+```python
+models = client.list_models()
+print(models)
+```
+
+Here are some models that can be run - with their required RAM. 
 
 | Model Name                                               | Required RAM (GB)       
 |----------------------------------------------------------|-------------------------|
