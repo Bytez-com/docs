@@ -8,16 +8,18 @@ import {
 import { Task } from "./interface/task";
 
 class Client {
-  constructor(apiKey: string) {
+  constructor(apiKey: string, dev = false) {
+    this.host = dev ? "http://localhost:8080/" : "https://api.bytez.com/";
     this.headers = {
       Authorization: `Key ${apiKey}`,
       "content-type": "application/json"
     };
   }
+  host = "";
   headers = {};
   async _request(path = "", body?: PostBody) {
     try {
-      const res = await fetch(`https://api.bytez.com/${path}`, {
+      const res = await fetch(this.host + path, {
         headers: this.headers,
         method: body ? "POST" : undefined,
         body: body ? JSON.stringify(body) : undefined
@@ -44,8 +46,8 @@ class Client {
  * @param apiKey Your Bytez API key
  */
 export default class Bytez {
-  constructor(apiKey: string) {
-    this.#client = new Client(apiKey);
+  constructor(apiKey: string, dev = false) {
+    this.#client = new Client(apiKey, dev);
   }
   #client: Client;
 
