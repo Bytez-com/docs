@@ -1,20 +1,25 @@
 <div align="center">
- <img alt="bytez" height="200px" src="https://github.com/Bytez-com/docs/assets/9612780/610ae3a1-65b5-4f8a-8ed5-0bae9134ab5f">
+ <img alt="bytez" height="250px" src="https://github.com/Bytez-com/docs/assets/9612780/610ae3a1-65b5-4f8a-8ed5-0bae9134ab5f">
+
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf) 
+[![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
+[![Discord](https://img.shields.io/discord/844731722700816395)](https://discord.com/invite/Z723PfCFWf) 
+[![NPM Version](https://img.shields.io/npm/v/bytez.js)](https://www.npmjs.com/package/bytez.js)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
+
 </div>
 
-# Bytez
-
-[![](https://dcbadge.limes.pink/api/server/https://discord.gg/Zrd5UbMEBA)](https://discord.com/invite/Z723PfCFWf) [![](https://img.shields.io/badge/Bytez-000000?style=for-the-badge&logo=x&=logoColor=white)](https://x.com/Bytez)
+# ✨ Bytez
 
 Evaluate and run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
 
-# Quickstart
+# 🚀 Quickstart
 Two steps to run inference in minutes:
 1. Get your API Key
 2. Choose your path: run inference locally via Docker or use our API (javascript, python, REST API)
 
-## API Key
-Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or send us an [email](mailto:team@bytez.com) to get your key. 
+## 🔑 API Key
+Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or go to [Bytez.com](http://bytez.com), sign in, and visit user settings to get your key. 
 
 ## Docker 
 All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [About](https://bytez.com/about) page 🤙
@@ -24,8 +29,11 @@ All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) o
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-## Python
+## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install Bytez`).
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
+
 ### Load and run a model
 ```python
 import os
@@ -45,7 +53,7 @@ print(output)
 
 See the [API Documentation](./python/readme.md) for all examples.
 
-## Javascript
+## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
 ### Load and run a model
 ```javascript
@@ -64,10 +72,13 @@ output = await model.run("Once upon a time there was a");
 console.log(output);
 ```
 
-See the [API Documentation](./javascript/readme.md) for all examples.
+See [API Documentation](./javascript/readme.md) for all examples.
 
-## Julia
+## <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
+
+<img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
+
 ### Load and run a model
 ```julia
 using Bytez
@@ -86,7 +97,7 @@ println(output)
 
 ```
 
-## REST API
+## <img src="https://www.svgrepo.com/show/305922/curl.svg" height=15 /> REST API
 
 Bytez has a REST API for loading, running, and requesting new models.
 
@@ -131,9 +142,51 @@ See the [API Documentation](./api.md) for all endpoints.
 
 # Model Library
 
-We currently support text generation and chat models. See our [model library](https://bytez.com/about) on our website for the full list.
+We currently support 14K+ open source AI models across 30+ ML tasks. 
 
-Here are some models that can be run - with their required RAM.
+| Task   | Total Models    
+|------------|-----|                               
+| Total Available  | 14559
+| Text-generation | 5765
+| Summarization | 380
+| Unconditional-image-generation | 416
+| Text2text-generation | 393
+| Audio-classification | 390
+| Image-classification | 533
+| Zero-shot-classification | 213
+| Token-classification | 546
+| Video-classification | 419
+| Text-classification | 474
+| Fill-mask | 358
+| Text-to-image | 467
+| Depth-estimation | 53
+| Object-detection | 405
+| Sentence-similarity | 457
+| Image-segmentation | 322
+| Image-to-text | 249
+| Zero-shot-image-classification | 174
+| Translation | 592
+| Automatic-speech-recognition | 455
+| Question-answering | 563
+| Image-feature-extraction | 114
+| Visual-question-answering | 105
+| Feature-extraction | 399
+| Mask-generation | 77
+| Zero-shot-object-detection | 27
+| Text-to-video | 11
+| Text-to-speech | 173
+| Document-question-answering | 18
+| Text-to-audio | 11
+
+## Examples 
+
+To see the full list, run:
+```python
+models = client.list_models()
+print(models)
+```
+
+Here are some models that can be run - with their required RAM. 
 
 | Model Name                                               | Required RAM (GB)       
 |----------------------------------------------------------|-------------------------|
