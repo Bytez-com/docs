@@ -10,7 +10,7 @@ Welcome to the Bytez API documentation! This API provides access to various mach
 
 ### Getting Your Key
 
-To use this API, you need an API key. Obtain your key by joining the [Bytez Discord](https://discord.gg/Zrd5UbMEBA). If you prefer not to use Discord, email us at team@bytez.com.
+To use this API, you need an API key. Obtain your key by visitng the settings page on [Bytez](https://bytez.com/settings).
 
 Always include your API key when initializing the client:
 
