@@ -1,81 +1,110 @@
 # API Documentation
 
-## Introduction
+- [Installation](#installation)
+- [JavaScript Client Library Usage Examples](#javascript-client-library-usage-examples)
+- [Authentication / Getting Your Key](#authentication-/-getting-your-key)
+- [List Available Models](#list-available-models)
+- [List Serverless Instances](#list-serverless-instances)
+- [Make a Model Serverless](#make-a-model-serverless)
+- [Get a Model](#get-a-model)
+- [Start the Model](#start-the-model)
+- [Check Model Status](#check-model-status)
+- [Run a Model](#run-a-model)
+- [Run a Model with HuggingFace Params](#run-a-model-with-huggingface-params)
+- [Stream the Response](#stream-the-response)
+- [Shutdown a Model](#shutdown-a-model)
+- [Feedback](#feedback)
 
-Welcome to the Bytez API documentation! This API provides access to various machine learning models for serverless operation. Below, you will find examples demonstrating how to interact with the API using our js client library.
 
-## JavaScript Client Library Usage Examples
-
-## Authentication
-
-### Getting Your Key
-
-To use this API, you need an API key. Obtain your key by visitng the settings page on [Bytez](https://bytez.com/settings).
-
-Always include your API key when initializing the client:
-
+Basic usage
 ```js
 import Bytez from "bytez.js";
 
-client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR_API_KEY");
+
+const model_id = "openai-community/gpt2";
+
+const model = client.model("openai-community/gpt2");
+
+await model.load();
+
+const output = await model.run("Once upon a time there was a", {
+// huggingface params
+  max_new_tokens: 1,
+  min_new_tokens: 1
+});
+
+console.log(output);
 ```
 
-### List Available Models
+Streaming usage (only text-generation models support streaming currently)
+```js
+const stream = await model.run("Jack and Jill", { stream: true });
+const textStream = stream.pipeThrough(new TextDecoderStream());
+
+for await (const chunk of textStream) {
+  console.log(chunk);
+}
+```
+
+
+## Installation
+
+`npm i bytez.js`
+
+## Authentication / Getting Your Key
+
+To use this API, you need an API key. Obtain your key by visitng the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+
+![image](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
+
+To then use it in code:
+```js
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_API_KEY");
+```
+
+## List Available Models
 
 Lists the currently available models, and provides basic information about each one, such as RAM required
 
 ```js
-models = await client.list.models();
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_API_KEY");
+
+const models = await client.list.models();
 
 console.log(models);
 ```
 
-### List Serverless Instances
+## Initialize the model api
 
-List your serverless instances
-
-```js
-instances = await client.list.instances();
-
-console.log(instances);
-```
-
-### Make a Model Serverless
-
-Make a HuggingFace model serverless + available on this API! Running this command queues a job. You'll receive an email when the model is ready.
+Initialize a model, so you can check its status, load, run, or shut it down.
 
 @param modelId The HuggingFace modelId, for example `openai-community/gpt2`
 
 ```js
-model_id = "openai-community/gpt2";
-
-job_status = await client.process(model_id);
-
-console.log(job_status);
+const model = client.model("openai-community/gpt2");
 ```
 
-### Get a Model
+## Load a model
 
-Get a model, so you can check its status, load, run, or shut it down.
-
-@param modelId The HuggingFace modelId, for example `openai-community/gpt2`
-
-```js
-model = client.model("openai-community/gpt2");
-```
-
-### Start the model
-
-Convenience method for running model.start(), and then awaiting model to be ready.
-
-@param options Serverless configuration, defaults: { concurrency: 1, timeout: 300 }
+Convenience method for running model.start(), and then awaiting model to be ready. Progress is printed as it executes.
 
 ```js
 await model.load();
+```
 
-console.log(results);
+The options argument is *optional* and has two properties, concurrency, and timeout.
+```js
+await model.load({
+  concurrency: 1,
+  timeout: 300
+});
 
-/** Concurrency
+/** concurrency
  * Number of serverless instances.
  *
  * For example, if you set to `3`, then you can do 3 parallel inferences.
@@ -84,7 +113,7 @@ console.log(results);
  *
  * Default: `1`
  */
-/** Timeout
+/** timeout
  * Seconds to wait before serverless instance auto-shuts down.
  *
  * By default, if an instance doesn't receive a request after `300` seconds, then it shuts down.
@@ -95,32 +124,32 @@ console.log(results);
  */
 ```
 
-### Check Model Status
+## Check Model Status
 
 Check on the status of the model, to see if its deploying, running, or stopped
 
 ```js
-status = await model.status();
+const status = await model.status();
 
 console.log(status);
 ```
 
-### Run a Model
+## Run a Model
 
 Run inference
 
 ```js
-output = await model.run("Once upon a time there was a");
+const output = await model.run("Once upon a time there was a");
 
 console.log(output);
 ```
 
-### Run a Model with HuggingFace params
+## Run a Model with HuggingFace params
 
 Run inference with HuggingFace parameters.
 
 ```js
-output = await model.run("Once upon a time there was a", {
+const output = await model.run("Once upon a time there was a", {
   max_new_tokens: 1,
   min_new_tokens: 1
 });
@@ -128,7 +157,7 @@ output = await model.run("Once upon a time there was a", {
 console.log(output);
 ```
 
-### Stream the response
+## Stream the response
 
 Streaming text
 
@@ -141,12 +170,34 @@ for await (const chunk of textStream) {
 }
 ```
 
-### Shutdown a Model
+## Shutdown a Model
 
 Serverless models auto-shutdown, though you can early stop with this method
 
 ```js
 await model.stop();
+```
+
+## List Your Running Instances
+
+```js
+const instances = await client.list.instances();
+
+console.log(instances);
+```
+
+## How to request a hugginface model not yet on Bytez
+
+You can queue a model so that it can be made avail this command queues a job. You'll receive an email when the model is ready.
+
+@param modelId The HuggingFace modelId, for example `openai-community/gpt2`
+
+```js
+const model_id = "openai-community/gpt2";
+
+const job_status = await client.process(model_id);
+
+console.log(job_status);
 ```
 
 ## Feedback
