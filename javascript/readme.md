@@ -67,7 +67,7 @@ const client = new Bytez("YOUR_API_KEY");
 
 ## List Available Models
 
-Lists the currently available models, and provides basic information about each one, such as RAM required
+Lists the currently available models, and provides basic information about each one, such as the RAM required to run an instance.
 
 ```js
 import Bytez from "bytez.js";
@@ -81,7 +81,7 @@ console.log(models);
 
 ## Initialize the model api
 
-Initialize a model, so you can check its status, load, run, or shut it down.
+Initialize a model, so you can check its status, load, run, or shut it down
 
 ```js
 const model = client.model("openai-community/gpt2");
@@ -89,7 +89,9 @@ const model = client.model("openai-community/gpt2");
 
 ## Load a model
 
-Convenience method for `model.start()`. Automatically waits for the instance to become ready before resolving. Progress is printed as it executes.
+Convenience method for `model.start()`. Automatically waits for the instance to become ready before resolving.
+
+Progress is printed as it executes.
 
 ```js
 await model.load();
@@ -144,7 +146,7 @@ console.log(output);
 
 ## Run a Model with HuggingFace params
 
-Run inference with HuggingFace parameters.
+Run inference with HuggingFace parameters
 
 ```js
 const output = await model.run("Once upon a time there was a", {
@@ -157,7 +159,7 @@ console.log(output);
 
 ## Stream the response
 
-Note, this is only supported for text-generation.
+Note, this is only supported for text-generation
 
 ```js
 const stream = await model.run("Jack and Jill", { stream: true });
@@ -170,7 +172,7 @@ for await (const chunk of textStream) {
 
 ## Shutdown a Model
 
-By default, models will shutdown based on their timeout (seconds) when loaded via `model.start()` or `model.load`.
+By default, models will shutdown based on their timeout (seconds) when loaded via `model.start()` or `model.load`
 
 To shutdown and save costs early, run the following:
 
@@ -204,8 +206,8 @@ This sends a job to an automated queue. When the job completes, you'll receive a
 
 Please reach out to us and we'll do what's necessary to make other models available!
 
-Please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](help@bytez.com).
+Please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](help@bytez.com)
 
 ## Feedback
 
-We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](help@bytez.com).
+We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](help@bytez.com)
