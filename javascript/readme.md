@@ -1,18 +1,18 @@
 # API Documentation
 
 - [Installation](#installation)
-- [JavaScript Client Library Usage Examples](#javascript-client-library-usage-examples)
-- [Authentication / Getting Your Key](#authentication-/-getting-your-key)
+- [Authentication and Getting Your Key](#authentication-and-getting-your-key)
 - [List Available Models](#list-available-models)
-- [List Serverless Instances](#list-serverless-instances)
-- [Make a Model Serverless](#make-a-model-serverless)
-- [Get a Model](#get-a-model)
-- [Start the Model](#start-the-model)
+- [Initialize the Model Api](#initialize-the-model-api)
+- [Load a Model](#load-a-model)
 - [Check Model Status](#check-model-status)
 - [Run a Model](#run-a-model)
 - [Run a Model with HuggingFace Params](#run-a-model-with-huggingface-params)
 - [Stream the Response](#stream-the-response)
 - [Shutdown a Model](#shutdown-a-model)
+- [List Your Running Instances](#list-your-running-instances)
+- [Request a Huggingface model not yet on Bytez](#request-a-huggingface-model-not-yet-on-bytez)
+- [Request a model not on Huggingface or Bytez](#request-a-model-not-on-huggingface-or-bytez)
 - [Feedback](#feedback)
 
 
@@ -52,7 +52,7 @@ for await (const chunk of textStream) {
 
 `npm i bytez.js`
 
-## Authentication / Getting Your Key
+## Authentication and Getting Your Key
 
 To use this API, you need an API key. Obtain your key by visitng the settings page -> [Bytez Settings Page](https://bytez.com/settings).
 
@@ -186,7 +186,7 @@ const instances = await client.list.instances();
 console.log(instances);
 ```
 
-## How to request a hugginface model not yet on Bytez
+## Request a Huggingface model not yet on Bytez
 
 To request a model that exists on Huggingface, but does not yet on bytez, you can do the following:
 
@@ -200,6 +200,12 @@ console.log(job_status);
 
 This sends a job to an automated queue. When the job completes, you'll receive an email indicating the model is ready for use with the models api.
 
+## Request a model not on Huggingface or Bytez
+
+Please reach out to us and we'll do what's necessary to make other models available!
+
+Please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](help@bytez.com).
+
 ## Feedback
 
-We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email.
+We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](help@bytez.com).
