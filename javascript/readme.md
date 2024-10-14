@@ -83,15 +83,13 @@ console.log(models);
 
 Initialize a model, so you can check its status, load, run, or shut it down.
 
-@param modelId The HuggingFace modelId, for example `openai-community/gpt2`
-
 ```js
 const model = client.model("openai-community/gpt2");
 ```
 
 ## Load a model
 
-Convenience method for running model.start(), and then awaiting model to be ready. Progress is printed as it executes.
+Convenience method for `model.start()`. Automatically waits for the instance to become ready before resolving. Progress is printed as it executes.
 
 ```js
 await model.load();
@@ -103,6 +101,7 @@ await model.load({
   concurrency: 1,
   timeout: 300
 });
+```
 
 /** concurrency
  * Number of serverless instances.
@@ -122,11 +121,10 @@ await model.load({
  *
  * Default: `300`
  */
-```
 
 ## Check Model Status
 
-Check on the status of the model, to see if its deploying, running, or stopped
+Check on the status of the model, to see if its deploying, running, or stopped.
 
 ```js
 const status = await model.status();
@@ -159,7 +157,7 @@ console.log(output);
 
 ## Stream the response
 
-Streaming text
+Note, this is only supported for text-generation.
 
 ```js
 const stream = await model.run("Jack and Jill", { stream: true });
@@ -172,7 +170,9 @@ for await (const chunk of textStream) {
 
 ## Shutdown a Model
 
-Serverless models auto-shutdown, though you can early stop with this method
+By default, models will shutdown based on their timeout (seconds) when loaded via `model.start()` or `model.load`.
+
+To shutdown and save costs early, run the following:
 
 ```js
 await model.stop();
@@ -188,9 +188,7 @@ console.log(instances);
 
 ## How to request a hugginface model not yet on Bytez
 
-You can queue a model so that it can be made avail this command queues a job. You'll receive an email when the model is ready.
-
-@param modelId The HuggingFace modelId, for example `openai-community/gpt2`
+To request a model that exists on Huggingface, but does not yet on bytez, you can do the following:
 
 ```js
 const model_id = "openai-community/gpt2";
@@ -199,6 +197,8 @@ const job_status = await client.process(model_id);
 
 console.log(job_status);
 ```
+
+This sends a job to an automated queue. When the job completes, you'll receive an email indicating the model is ready for use with the models api.
 
 ## Feedback
 
