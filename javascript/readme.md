@@ -104,7 +104,7 @@ await model.load({
   timeout: 300
 });
 ```
-
+```
 /** concurrency
  * Number of serverless instances.
  *
@@ -123,6 +123,7 @@ await model.load({
  *
  * Default: `300`
  */
+```
 
 ## Check Model Status
 
