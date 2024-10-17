@@ -142,7 +142,7 @@ See the [API Documentation](./api.md) for all endpoints.
 
 # Model Library
 
-We currently support 14K+ open source AI models across 30+ ML tasks. 
+We currently support 20K+ open source AI models across 30+ ML tasks. 
 
 | Task   | Total Models    
 |------------|-----|                               
