@@ -3,7 +3,7 @@
 - [Installation](#installation)
 - [Authentication and Getting Your Key](#authentication-and-getting-your-key)
 - [List Available Models](#list-available-models)
-- [Initialize the Model API](#initialize-the-model-api)
+- [Initialize the Model Api](#initialize-the-model-api)
 - [Load a Model](#load-a-model)
 - [Check Model Status](#check-model-status)
 - [Run a Model](#run-a-model)
@@ -11,8 +11,8 @@
 - [Stream the Response](#stream-the-response)
 - [Shutdown a Model](#shutdown-a-model)
 - [List Your Running Instances](#list-your-running-instances)
-- [Request a Huggingface Model Not Yet on Bytez](#request-a-huggingface-model-not-yet-on-bytez)
-- [Request a Model Not on Huggingface or Bytez](#request-a-model-not-on-huggingface-or-bytez)
+- [Request a Huggingface model not yet on Bytez](#request-a-huggingface-model-not-yet-on-bytez)
+- [Request a model not on Huggingface or Bytez](#request-a-model-not-on-huggingface-or-bytez)
 - [Examples](#examples)
   - [Token Classification](#token-classification)
   - [Depth Estimation](#depth-estimation)
@@ -46,6 +46,37 @@
   - [Chat Models](#chat-models)
   - [Models with Function Calling](#models-with-function-calling)
 - [Feedback](#feedback)
+
+Basic usage
+```js
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_API_KEY");
+
+const model_id = "openai-community/gpt2";
+
+const model = client.model("openai-community/gpt2");
+
+await model.load();
+
+const output = await model.run("Once upon a time there was a", {
+// huggingface params
+  max_new_tokens: 1,
+  min_new_tokens: 1
+});
+
+console.log(output);
+```
+
+Streaming usage (only text-generation models support streaming currently)
+```js
+const stream = await model.run("Jack and Jill", { stream: true });
+const textStream = stream.pipeThrough(new TextDecoderStream());
+
+for await (const chunk of textStream) {
+  console.log(chunk);
+}
+```
 
 ## Installation
 
