@@ -1,6 +1,7 @@
 # API Documentation
 
 - [Installation](#installation)
+- [Basic Usage](#basic-usage)
 - [Authentication and Getting Your Key](#authentication-and-getting-your-key)
 - [List Available Models](#list-available-models)
 - [Initialize the Model Api](#initialize-the-model-api)
@@ -47,7 +48,7 @@
   - [Models with Function Calling](#models-with-function-calling)
 - [Feedback](#feedback)
 
-Basic usage
+## Basic Usage
 ```js
 import Bytez from "bytez.js";
 
