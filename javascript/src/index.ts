@@ -7,6 +7,13 @@ import {
 } from "./interface/model";
 import { Task } from "./interface/task";
 
+class HttpError extends Error {
+  constructor(...args) {
+    super(...args);
+  }
+  httpStatus: number;
+}
+
 class Client {
   constructor(apiKey: string, dev = false) {
     this.host = dev ? "http://localhost:8080/" : "https://api.bytez.com/";
@@ -33,7 +40,9 @@ class Client {
         if (res.ok) {
           return json;
         } else {
-          throw json.error;
+          const error = new HttpError(json.error);
+          error.httpStatus = res.status;
+          throw error;
         }
       }
     } catch (error) {
@@ -101,33 +110,33 @@ class Model {
    *
    * @param options Serverless configuration
    */
-  async load(options?: ModelOptions): Promise<any> {
-    let { status, error } = await this.start(options);
-
-    if (error?.includes("already loaded")) {
-      return;
-    }
+  async load(options?: ModelOptions): Promise<void> {
+    const { error }: { error: HttpError } = await this.start(options);
 
     if (error) {
-      throw new Error(error);
-    }
-
-    // reset the status, as a model may have preserved its failed state from a previous run
-    status = "";
-
-    while (status !== "FAILED" && status !== "RUNNING") {
-      ({ status } = await this.status());
-
-      if (status !== "RUNNING") {
-        if (status !== lastStatus) {
-          var lastStatus = status;
-
-          console.log(status);
-        }
-
-        await new Promise(resolve => setTimeout(resolve, 5e3));
+      // Model is already loaded
+      if (error.httpStatus === 409) {
+        return;
+      }
+      // We allow 429's to proceed, that means that a loading operation is already in progress
+      if (error.httpStatus !== 429) {
+        throw error;
       }
     }
+
+    let status = "UNSET";
+    const stopOnStatuses = ["FAILED", "RUNNING"];
+
+    do {
+      const { status: newStatus } = await this.status();
+
+      if (status !== newStatus) {
+        status = newStatus;
+        console.log(status);
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 5e3));
+    } while (stopOnStatuses.includes(status) === false);
   }
   /**
    * Start a serverless model
