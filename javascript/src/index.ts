@@ -119,7 +119,11 @@ class Model {
         return;
       }
       // We allow 429's to proceed, that means that a loading operation is already in progress
-      if (error.httpStatus !== 429) {
+      if (
+        error.httpStatus !== 429 ||
+        // TODO remove this when the backend uses the correct status code, 402
+        error.message.includes("credits")
+      ) {
         throw error;
       }
     }
