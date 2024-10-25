@@ -104,7 +104,7 @@ class Model {
   async load(options?: ModelOptions): Promise<any> {
     let { status, error } = await this.start(options);
 
-    if (error.includes("already loaded")) {
+    if (error?.includes("already loaded")) {
       return;
     }
 
