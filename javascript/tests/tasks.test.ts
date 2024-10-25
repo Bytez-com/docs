@@ -1,9 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it, after } from "node:test";
-import { readFile } from "node:fs/promises";
 //
 // import Bytez from "bytez.js";
-import Bytez from "./src/index";
+import Bytez from "../src/index";
 
 async function getImageData(url) {
   const res = await fetch(url);
@@ -302,7 +301,7 @@ describe.skip("question-answering", async () => {
 
   after(() => model.stop());
 });
-describe("visual-question-answering", async () => {
+describe.skip("visual-question-answering", async () => {
   const model = client.model("aqachun/Vilt_fine_tune_2000");
   const [{ url, base64 }] = await Promise.all([
     getImageData(

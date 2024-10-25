@@ -104,7 +104,16 @@ class Model {
   async load(options?: ModelOptions): Promise<any> {
     let { status, error } = await this.start(options);
 
-    status ??= error?.includes?.("already loaded") ? "RUNNING" : "";
+    if (error.includes("already loaded")) {
+      return;
+    }
+
+    if (error) {
+      throw new Error(error);
+    }
+
+    // reset the status, as a model may have preserved its failed state from a previous run
+    status = "";
 
     while (status !== "FAILED" && status !== "RUNNING") {
       ({ status } = await this.status());
