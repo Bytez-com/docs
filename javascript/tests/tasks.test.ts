@@ -62,9 +62,9 @@ describe.skip("text generation", async () => {
       assert(status === "started", "model starts");
     } else {
       assert(
-        error.includes("already loaded") ||
-          (error.includes(modelId) &&
-            error.includes("operation already in progress: load")),
+        error.message.includes("already loaded") ||
+          (error.message.includes(modelId) &&
+            error.message.includes("operation already in progress: load")),
         "model already started"
       );
     }

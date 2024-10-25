@@ -13,8 +13,9 @@ describe("model.load()", async () => {
 
     const mockResponse = {
       status: undefined,
-      error:
+      error: new Error(
         "Out of free monthly credits. Wait until next month for more free credits, or upgrade to premium for immediate access"
+      )
     };
 
     model.start = async () => mockResponse;
@@ -23,7 +24,7 @@ describe("model.load()", async () => {
       await model.load();
     } catch (error) {
       assert(
-        error.message === mockResponse.error,
+        error.message === mockResponse.error.message,
         "an error should be throw when out of credits"
       );
       return;
