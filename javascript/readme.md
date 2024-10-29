@@ -251,6 +251,8 @@ Please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email
 
 Below are examples of using various models with the Bytez API in JavaScript.
 
+All examples are also located [here](https://github.com/Bytez-com/docs/tree/inf3rnus-patch-1/examples/javascript) under the `tasks` directory.
+
 ## Token Classification
 
 Token classification involves identifying and categorizing tokens in a text. Common use cases include Named Entity Recognition (NER), Part-of-Speech tagging, and other NLP tasks.
@@ -258,15 +260,25 @@ Token classification involves identifying and categorizing tokens in a text. Com
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("dslim/bert-base-NER");
 
 await model.load();
 
-const output = await model.run("John Doe is a software engineer at Google.");
+const { output: wordObjects } = await model.run(
+  "John Doe is a software engineer at Google."
+);
 
-console.log(output);
+for (const wordObject of wordObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(wordObject);
+
+  const { word, entity, score, index, start, end } = wordObject;
+
+  console.log({ word, entity, score, index, start, end });
+}
+
 ```
 
 ## Depth Estimation
@@ -275,18 +287,59 @@ Depth estimation involves predicting the distance of objects from the camera. Us
 
 ```js
 import Bytez from "bytez.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { writeFileSync } from "fs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const inputImage = "https://example.com/image.jpg";
+const client = new Bytez("YOUR BYTEZ KEY HERE");
+
+const inputImage =
+  "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";
 
 const model = client.model("vinvino02/glpn-nyu");
 
 await model.load();
 
-const output = await model.run(inputImage);
+const { output } = await model.run(inputImage);
 
-console.log(output);
+const { depth_png, formatted_predicted_depth_array } = output;
+
+///// Decode and view the image /////
+const imgBuffer = Buffer.from(depth_png, "base64");
+
+const imagePath = `${__dirname}/testImage.png`;
+
+writeFileSync(imagePath, imgBuffer);
+
+// write the original image for comparison, you could also just ctrl+click the url
+
+const originalImagePath = `${__dirname}/originalImage.jpg`;
+
+const response = await fetch(inputImage);
+
+const arrayBuffer = await response.arrayBuffer();
+
+const buffer = Buffer.from(arrayBuffer);
+
+writeFileSync(originalImagePath, buffer);
+
+// compare the two images by opening theme where they were written
+console.log("Wrote the original image to: ", originalImagePath);
+console.log("Wrote the inference image to: ", imagePath);
+
+///// 2d depth map, object representation of the pixel values for the depth map /////
+const rows = formatted_predicted_depth_array;
+for (let j = 0; j < rows.length; j++) {
+  const row = formatted_predicted_depth_array[j];
+
+  for (let i = 0; i < row.length; i++) {
+    // insert code here if you need these values directly
+    const pixel = row[i];
+  }
+}
 ```
 
 ## Image Classification
@@ -296,17 +349,26 @@ Image classification involves categorizing images into predefined classes. Use c
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const imgUrl = "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg";
+const imgUrl =
+  "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg";
 
 const model = client.model("google/vit-base-patch16-224");
 
 await model.load();
 
-const output = await model.run(imgUrl);
+const { output: labelObjects } = await model.run(imgUrl);
 
-console.log(output);
+for (const labelObject of labelObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(labelObject);
+
+  const { label, score } = labelObject;
+
+  console.log({ label, score });
+}
+
 ```
 
 ## Sentence Similarity
@@ -315,16 +377,62 @@ Sentence similarity involves measuring how similar two sentences are. Use cases 
 
 ```js
 import Bytez from "bytez.js";
+import * as tf from "@tensorflow/tfjs"; // Import TensorFlow.js
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("sentence-transformers/all-MiniLM-L6-v2");
 
 await model.load();
 
-const output = await model.run("What is the weather like today?");
+const sentences = [
+  "What is the weather like today?",
+  "Is it sunny today?",
+  "The e39 BMW M5 was one of the best production sport sedans ever produced."
+];
 
-console.log(output);
+const results = [];
+
+for (const sentence of sentences) {
+  const { output: embedding } = await model.run(sentence);
+
+  console.log({ embedding });
+
+  results.push({
+    embedding,
+    sentence
+  });
+}
+
+// Extract the original sentence's embedding and the embeddings to compare
+const [originalSentenceWithEmbedding] = results;
+const sentencesToCompare = results.slice(1);
+
+function cosineSimilarity(embedding1, embedding2) {
+  const tensor1 = tf.tensor(embedding1);
+  const tensor2 = tf.tensor(embedding2);
+
+  const dotProduct = tf.sum(tf.mul(tensor1, tensor2));
+  const magnitude1 = tf.sqrt(tf.sum(tf.square(tensor1)));
+  const magnitude2 = tf.sqrt(tf.sum(tf.square(tensor2)));
+
+  const similarity = dotProduct.div(magnitude1.mul(magnitude2));
+
+  return similarity.dataSync()[0]; // Extract the similarity value
+}
+
+// Calculate and display cosine similarity for each comparison
+for (const sentenceObject of sentencesToCompare) {
+  const similarity = cosineSimilarity(
+    originalSentenceWithEmbedding.embedding,
+    sentenceObject.embedding
+  );
+  console.log(
+    `Cosine similarity between "${originalSentenceWithEmbedding.sentence}" and "${sentenceObject.sentence}":`,
+    similarity
+  );
+}
+
 ```
 
 ## Image to Text
@@ -334,17 +442,24 @@ Image to text involves generating textual descriptions of images. Use cases incl
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputImage = "https://example.com/image.jpg";
+const inputImage =
+  "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";
 
 const model = client.model("Salesforce/blip-image-captioning-base");
 
 await model.load();
 
-const output = await model.run(inputImage);
+const { output } = await model.run(inputImage);
 
+// depending on the model, there may be additional props returned
 console.log(output);
+
+const [{ generated_text }] = output;
+
+console.log(generated_text);
+
 ```
 
 ## Image Feature Extraction
@@ -354,17 +469,18 @@ Image feature extraction involves extracting features from images for tasks like
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputImage = "https://example.com/image.jpg";
+const inputImage =
+  "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";
 
 const model = client.model("nomic-ai/nomic-embed-vision-v1");
 
 await model.load();
 
-const output = await model.run(inputImage);
+const { output: embedding } = await model.run(inputImage);
 
-console.log(output);
+console.log(embedding);
 ```
 
 ## Mask Generation
@@ -373,34 +489,95 @@ Mask generation involves generating masks for objects in images. Use cases inclu
 
 ```js
 import Bytez from "bytez.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { writeFileSync, readFileSync } from "node:fs";
+import { PNG } from "pngjs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const inputImageBase64 = await getBase64Image("https://example.com/image.png");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
+
+const inputImageBase64 = await getBase64Image(
+  "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
+);
 
 const model = client.model("facebook/sam-vit-base");
 
 await model.load();
 
-const output = await model.run({ b64ImageBufferPng: inputImageBase64 });
+const { output } = await model.run({ b64ImageBufferPng: inputImageBase64 });
 
 console.log(output);
-```
 
-Helper function to convert image URL to base64:
+const { input_image_dimensions, masks, scores } = output;
 
-```js
+console.log({ input_image_dimensions, masks, scores });
+
+// to then visualize the masks:
+const testMasksPath = `${__dirname}/testMasks.json`;
+
+writeFileSync(testMasksPath, JSON.stringify(masks, null, 2));
+
+const testMasks = JSON.parse(readFileSync(testMasksPath));
+
+writeMasksToImage(inputImageBase64, testMasks);
+
+function writeMasksToImage(inputImageBase64, masks) {
+  // Decode the base64 image buffer
+  const srcImgBuffer = Buffer.from(inputImageBase64, "base64");
+  const srcPng = PNG.sync.read(srcImgBuffer);
+
+  // Function to apply masks to the image
+  function applyMasks(srcPng, masks) {
+    const colors = [
+      { r: 255, g: 0, b: 0, a: 50 }, // Red
+      { r: 0, g: 255, b: 0, a: 50 }, // Green
+      { r: 0, g: 0, b: 255, a: 50 }, // Blue
+      { r: 255, g: 255, b: 0, a: 50 } // Yellow
+      // Add more colors if needed
+    ];
+
+    masks.forEach((mask, maskIndex) => {
+      const color = colors[maskIndex % colors.length]; // Cycle through colors if more masks than colors
+
+      for (let i = 0; i < mask.length; i++) {
+        const row = mask[i];
+        for (let j = 0; j < row.length; j++) {
+          if (row[j]) {
+            // Assuming mask contains 1 for masked pixel and 0 for non-masked
+            const idx = (i * srcPng.width + j) << 2;
+            srcPng.data[idx] = color.r;
+            srcPng.data[idx + 1] = color.g;
+            srcPng.data[idx + 2] = color.b;
+            srcPng.data[idx + 3] = color.a;
+          }
+        }
+      }
+    });
+
+    return srcPng;
+  }
+
+  // Apply masks to the image
+  const imgWithMasks = applyMasks(srcPng, masks);
+
+  // Encode the image back to buffer
+  const imgBuffer = PNG.sync.write(imgWithMasks);
+
+  const imagePath = `${__dirname}/testImage.png`;
+
+  writeFileSync(imagePath, imgBuffer);
+}
+
 async function getBase64Image(url) {
   const response = await fetch(url);
-  const blob = await response.blob();
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onloadend = function () {
-      resolve(reader.result.split(",")[1]);
-    };
-    reader.readAsDataURL(blob);
-  });
+  const arrayBuffer = await response.arrayBuffer(); // Get the image as arrayBuffer
+  const buffer = Buffer.from(arrayBuffer); // Convert it to a Buffer
+  return buffer.toString("base64"); // Convert the buffer to base64
 }
+
 ```
 
 ## Summarization
@@ -410,17 +587,27 @@ Summarization involves creating concise summaries of longer texts. Use cases inc
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputText = "Your long text goes here...";
+const inputText = `
+The Big Bang is a physical theory that describes how the universe expanded from an initial state of high density and temperature.[1] The notion of an expanding universe was first scientifically originated by physicist Alexander Friedmann in 1922 with the mathematical derivation of the Friedmann equations.[2][3][4][5]
+
+Independent of Friedmann's work, the Big Bang was first proposed in 1931 by Roman Catholic priest and physicist Georges Lemaître when he suggested the universe emerged from a "primeval atom". Various cosmological models of the Big Bang explain the evolution of the observable universe from the earliest known periods through its subsequent large-scale form.[6][7][8] These models offer a comprehensive explanation for a broad range of observed phenomena, including the abundance of light elements, the cosmic microwave background (CMB) radiation, and large-scale structure. The uniformity of the universe, known as the flatness problem, is explained through cosmic inflation: a sudden and very rapid expansion of space during the earliest moments.
+
+Crucially, these models are compatible with the Hubble–Lemaître law—the observation that the farther away a galaxy is, the faster it is moving away from Earth. Extrapolating this cosmic expansion backward in time using the known laws of physics, the models describe an increasingly concentrated cosmos preceded by a singularity in which space and time lose meaning (typically named "the Big Bang singularity").[9] Physics lacks a widely accepted theory of quantum gravity that can model the earliest conditions of the Big Bang. In 1964 the CMB was discovered, which convinced many cosmologists that the competing steady-state model of cosmic evolution was falsified, since the Big Bang models predict a uniform background radiation caused by high temperatures and densities in the distant past.[10] A wide range of empirical evidence strongly favors the Big Bang event, which is now essentially universally accepted.[11] Detailed measurements of the expansion rate of the universe place the Big Bang singularity at an estimated 13.787±0.020 billion years ago, which is considered the age of the universe.[12]
+
+There remain aspects of the observed universe that are not yet adequately explained by the Big Bang models. After its initial expansion, the universe cooled sufficiently to allow the formation of subatomic particles, and later atoms. The unequal abundances of matter and antimatter that allowed this to occur is an unexplained effect known as baryon asymmetry. These primordial elements—mostly hydrogen, with some helium and lithium—later coalesced through gravity, forming early stars and galaxies. Astronomers observe the gravitational effects of an unknown dark matter surrounding galaxies. Most of the gravitational potential in the universe seems to be in this form, and the Big Bang models and various observations indicate that this excess gravitational potential is not created by baryonic matter, such as normal atoms. Measurements of the redshifts of supernovae indicate that the expansion of the universe is accelerating, an observation attributed to an unexplained phenomenon known as dark energy.[13]
+`;
 
 const model = client.model("ainize/bart-base-cnn");
 
 await model.load();
 
-const output = await model.run(inputText, { max_length: 40 });
+const { output: [{ summary_text } = {}] = [] } = await model.run(inputText, {
+  max_length: 40
+});
 
-console.log(output);
+console.log(summary_text);
 ```
 
 ## Text Classification
@@ -430,17 +617,27 @@ Text classification involves categorizing text into predefined classes. Use case
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputText = "Your text for classification goes here...";
+const inputText = "We are furious with the results of the experiment!";
 
-const model = client.model("AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon");
+const model = client.model(
+  "AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon"
+);
 
 await model.load();
 
-const output = await model.run(inputText);
+const { output: labelObjects } = await model.run(inputText);
 
-console.log(output);
+for (const labelObject of labelObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(labelObject);
+
+  const { label, score } = labelObject;
+
+  console.log({ label, score });
+}
+
 ```
 
 ## Feature Extraction
@@ -450,7 +647,7 @@ Feature extraction involves extracting features from data for further processing
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const inputText = "Your text for feature extraction goes here...";
 
@@ -458,9 +655,11 @@ const model = client.model("Salesforce/SFR-Embedding-2_R");
 
 await model.load();
 
-const output = await model.run(inputText);
+const {
+  output: [embedding]
+} = await model.run(inputText);
 
-console.log(output);
+console.log(embedding);
 ```
 
 ## Translation
@@ -470,7 +669,7 @@ Translation involves translating text from one language to another. Use cases in
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const inputText = "Hello, how are you? Beautiful day today, isn't it?";
 
@@ -478,9 +677,9 @@ const model = client.model("Helsinki-NLP/opus-mt-en-zh");
 
 await model.load();
 
-const output = await model.run(inputText);
+const { output: [{ translation_text } = {}] = [] } = await model.run(inputText);
 
-console.log(output);
+console.log(translation_text);
 ```
 
 ## Question Answering
@@ -490,20 +689,31 @@ Question answering involves answering questions based on a given context. Use ca
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("deepset/roberta-base-squad2");
 
 await model.load();
 
 const QA_input = {
-  question: 'Where does Holly live?',
-  context: 'My name is Holly and I live in NYC',
+  question: "Where does Holly live?",
+  context: "My name is Holly and I live in NYC"
 };
 
-const output = await model.run(QA_input);
+const { output } = await model.run(QA_input);
 
+// depending on the model, there may be additional props returned
 console.log(output);
+
+const { answer, score, start, end } = output;
+
+console.log({
+  answer,
+  score,
+  start,
+  end
+});
+
 ```
 
 ## Text to Video
@@ -512,16 +722,27 @@ Text to video involves generating videos from textual descriptions. Use cases in
 
 ```js
 import Bytez from "bytez.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("ali-vilab/text-to-video-ms-1.7b");
 
 await model.load();
 
-const output = await model.run("A cat playing with a rose");
+const { output_mp4 } = await model.run("A cat playing with a rose");
 
-console.log(output);
+const buffer = Buffer.from(output_mp4, "base64");
+
+// Write the image to the local file system
+writeFileSync(`${__dirname}/output.mp4`, buffer);
+
+const a = 2;
 ```
 
 ## Fill Mask
@@ -531,15 +752,24 @@ Fill mask involves predicting missing words in a sentence. Use cases include tex
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("almanach/camembert-base");
 
 await model.load();
 
-const output = await model.run("The capital of France is <mask>.");
+const { output: sequenceObjects } = await model.run(
+  "The capital of France is <mask>."
+);
 
-console.log(output);
+for (const sequenceObject of sequenceObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(sequenceObject);
+
+  const { sequence, score, token, token_str } = sequenceObject;
+
+  console.log({ sequence, score, token, token_str });
+}
 ```
 
 ## Audio Classification
@@ -549,26 +779,38 @@ Audio classification involves categorizing audio clips into predefined classes. 
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputAudioBase64 = await getBase64Audio("https://example.com/audio.wav");
+const inputAudioBase64 = await getBase64Audio(
+  "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+);
 
 const model = client.model("aaraki/wav2vec2-base-finetuned-ks");
 
 await model.load();
 
-const output = await model.run({ b64AudioBufferWav: inputAudioBase64 });
+const { output: labelObjects } = await model.run({
+  b64AudioBufferWav: inputAudioBase64
+});
 
-console.log(output);
-```
+for (const labelObject of labelObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(labelObject);
 
-Helper function to convert audio URL to base64:
+  const { score, label } = labelObject;
 
-```js
+  console.log({ score, label });
+}
+
 async function getBase64Audio(url) {
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
-  return btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+
+  // Convert the ArrayBuffer to a Buffer
+  const buffer = Buffer.from(arrayBuffer);
+
+  // Convert the binary data in the buffer to a base64 string
+  return buffer.toString("base64");
 }
 ```
 
@@ -578,18 +820,35 @@ Image segmentation involves dividing an image into multiple segments. Use cases 
 
 ```js
 import Bytez from "bytez.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { writeFileSync } from "node:fs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const imgUrl = "https://example.com/image.jpg";
+const imgUrl =
+  "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9";
 
 const model = client.model("sayeed99/segformer-b3-fashion");
 
 await model.load();
 
-const output = await model.run(imgUrl);
+const { output: maskObjects } = await model.run(imgUrl);
 
-console.log(output);
+for (let i = 0; i < maskObjects.length; i++) {
+  // depending on the model, there may be additional props returned
+  const maskObject = maskObjects[i];
+  console.log(maskObject);
+
+  const { label, score, mask_png } = maskObject;
+  console.log({ label, score });
+
+  const maskBufferPng = Buffer.from(mask_png, "base64");
+
+  writeFileSync(`${__dirname}/mask-${i}.png`, maskBufferPng);
+}
 ```
 
 ## Visual Question Answering
@@ -599,20 +858,23 @@ Visual question answering involves answering questions based on an image. Use ca
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("Salesforce/blip-vqa-base");
 
 await model.load();
 
 const input = {
-  image: "https://example.com/image.jpg",
-  question: "What kind of animal is this?",
+  image:
+    "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+  question: "What kind of animal is this?"
 };
 
-const output = await model.run(input);
+const { output: outputs } = await model.run(input);
 
-console.log(output);
+const [{ answer }] = outputs;
+
+console.log(answer);
 ```
 
 ## Text to Speech
@@ -621,16 +883,25 @@ Text to speech involves converting text into spoken words. Use cases include vir
 
 ```js
 import Bytez from "bytez.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("suno/bark-small");
 
 await model.load();
 
-const output = await model.run("Hello, how are you today?");
+const { output_wav } = await model.run("Hello, how are you today?");
 
-console.log(output);
+const buffer = Buffer.from(output_wav, "base64");
+
+// Write the image to the local file system
+writeFileSync(`${__dirname}/output.wav`, buffer);
 ```
 
 ## Video Classification
@@ -640,17 +911,30 @@ Video classification involves categorizing videos into predefined classes. Use c
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const videoUrl = "https://example.com/video.mp4";
+const videoUrl =
+  "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4";
 
 const model = client.model("ahmedabdo/video-classifier");
 
 await model.load();
 
-const output = await model.run(videoUrl);
+const { output: outputs } = await model.run(videoUrl);
 
-console.log(output);
+const [labelObjects] = outputs;
+
+// sort desc
+labelObjects.sort((a, b) => (a.score < b.score ? 1 : -1));
+
+for (const labelObject of labelObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(labelObject);
+
+  const { score, label } = labelObject;
+
+  console.log({ score, label });
+}
 ```
 
 ## Object Detection
@@ -659,18 +943,102 @@ Object detection involves identifying and locating objects in an image or video.
 
 ```js
 import Bytez from "bytez.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { writeFileSync, rmSync } from "node:fs";
+import { PNG } from "pngjs";
+import sharp from "sharp";
+import { createCanvas } from "canvas";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const imgUrl = "https://example.com/image.jpg";
+const client = new Bytez("YOUR BYTEZ KEY HERE");
+const imgUrl =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg";
 
 const model = client.model("facebook/detr-resnet-50");
 
 await model.load();
 
-const output = await model.run(imgUrl);
+const { output: boxObjects, error } = await model.run(imgUrl);
 
-console.log(output);
+console.log(boxObjects);
+
+for (const boxObject of boxObjects) {
+  console.log(boxObject);
+  const {
+    score,
+    label,
+    box: { xmin, ymin, xmax, ymax }
+  } = boxObject;
+
+  console.log({ score, label, box: { xmin, ymin, xmax, ymax } });
+}
+
+const res = await fetch(imgUrl);
+
+const arrayBuffer = await res.arrayBuffer();
+
+const b64ImageBufferJpg = Buffer.from(arrayBuffer);
+
+const imageBufferPng = await sharp(b64ImageBufferJpg).png().toBuffer();
+
+debugImage(imageBufferPng, boxObjects);
+
+function debugImage(srcImgBuffer, boxObjects) {
+  // writeFileSync(`${__dirname}/testBoxes.json`, JSON.stringify(boxObjects, null, 2));
+
+  const srcPng = PNG.sync.read(srcImgBuffer);
+  const width = srcPng.width;
+  const height = srcPng.height;
+
+  // Create a canvas and get the context
+  const canvas = createCanvas(width, height);
+  const ctx = canvas.getContext("2d");
+
+  // Draw the image onto the canvas
+  const imgData = ctx.createImageData(width, height);
+
+  imgData.data.set(srcPng.data);
+
+  ctx.putImageData(imgData, 0, 0);
+
+  const colors = [
+    { r: 255, g: 0, b: 0, a: 0.5, colorString: "rgba(255, 0, 0, 0.5)" }, // Red
+    { r: 0, g: 255, b: 0, a: 0.5, colorString: "rgba(0, 255, 0, 0.5)" }, // Green
+    { r: 0, g: 0, b: 255, a: 0.5, colorString: "rgba(0, 0, 255, 0.5)" }, // Blue
+    { r: 255, g: 255, b: 0, a: 0.5, colorString: "rgba(255, 255, 0, 0.5)" } // Yellow
+    // Add more colors if needed
+  ];
+
+  boxObjects.forEach((boxObject, index) => {
+    const { box, score, label } = boxObject;
+    const color = colors[index % colors.length]; // Cycle through colors if more boxObjects than colors
+
+    // Draw the bounding box
+    ctx.strokeStyle = color.colorString;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(
+      box.xmin,
+      box.ymin,
+      box.xmax - box.xmin,
+      box.ymax - box.ymin
+    );
+
+    // Draw the label and score
+    ctx.font = "16px Arial";
+    ctx.fillStyle = color.colorString;
+    ctx.fillText(`${label} (${score.toFixed(2)})`, box.xmin, box.ymin - 5);
+  });
+
+  // Encode the image back to buffer
+  const imgBuffer = canvas.toBuffer("image/png");
+
+  const imagePath = `${__dirname}/testImage.png`;
+
+  writeFileSync(imagePath, imgBuffer);
+}
 ```
 
 ## Text to Text Generation
@@ -680,7 +1048,7 @@ Text to text generation involves generating text from input text. Use cases incl
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const modelParams = { max_new_tokens: 20, temperature: 2 };
 
@@ -688,9 +1056,12 @@ const model = client.model("google/flan-t5-base");
 
 await model.load();
 
-const output = await model.run("Once upon a time there was a small little man who", modelParams);
+const { output: [{ generated_text } = {}] = [] } = await model.run(
+  "Once upon a time there was a small little man who",
+  modelParams
+);
 
-console.log(output);
+console.log(generated_text);
 ```
 
 ## Zero-Shot Image Classification
@@ -700,20 +1071,31 @@ Zero-shot image classification involves classifying images into classes not seen
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("BilelDJ/clip-hugging-face-finetuned");
 
 await model.load();
 
 const input = {
-  image: "https://example.com/image.jpg",
-  candidate_labels: ["squid", "octopus", "human", "cat"],
+  image:
+    "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+  candidate_labels: ["squid", "octopus", "human", "cat"]
 };
 
-const output = await model.run(input);
+const { output: labelObjects } = await model.run(input);
 
-console.log(output);
+// sort desc
+labelObjects.sort((a, b) => (a.score < b.score ? 1 : -1));
+
+for (const labelObject of labelObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(labelObject);
+
+  const { score, label } = labelObject;
+
+  console.log({ score, label });
+}
 ```
 
 ## Zero-Shot Classification
@@ -723,7 +1105,7 @@ Zero-shot classification involves classifying text into classes not seen during 
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("facebook/bart-large-mnli");
 
@@ -731,12 +1113,30 @@ await model.load();
 
 const input = {
   text: "One day I will see the world",
-  candidate_labels: ["travel", "cooking", "dancing"],
+  candidate_labels: ["travel", "cooking", "dancing"]
 };
 
-const output = await model.run(input);
+const { output } = await model.run(input);
 
+// depending on the model, there may be additional props returned
 console.log(output);
+
+const { sequence, labels, scores } = output;
+
+const labelObjects = labels.map((v, i) => ({
+  sequence,
+  label: v,
+  score: scores[i]
+}));
+
+// sort desc
+labelObjects.sort((a, b) => (a.score < b.score ? 1 : -1));
+
+for (const labelObject of labelObjects) {
+  const { sequence, label, score } = labelObject;
+
+  console.log({ sequence, label, score });
+}
 ```
 
 ## Document Question Answering
@@ -746,7 +1146,7 @@ Document question answering involves answering questions based on the content of
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0");
 
@@ -754,12 +1154,17 @@ await model.load();
 
 const input = {
   image: "https://templates.invoicehome.com/invoice-template-us-neat-750px.png",
-  question: "What's the total cost?",
+  question: "How many hours of labor?"
 };
 
-const output = await model.run(input);
+const { output } = await model.run(input);
 
-console.log(output.output[0].answer);
+// depending on the model, there may be additional props returned
+console.log(output);
+
+const [{ answer, score, start, end }] = output;
+
+console.log({ answer, score, start, end });
 ```
 
 ## Text Generation
@@ -769,19 +1174,22 @@ Text generation involves generating coherent text from an initial prompt. Use ca
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const modelParams = {
   max_new_tokens: 500,
   min_new_tokens: 50,
-  temperature: 0.5,
+  temperature: 0.5
 };
 
 const model = client.model("Qwen/Qwen2-7B-Instruct");
 
 await model.load();
 
-const stream = await model.run("Once upon a time there was a beautiful home where", modelParams, { stream: true });
+const stream = await model.run(
+  "Once upon a time there was a beautiful home where",
+  { stream: true, ...modelParams }
+);
 
 const reader = stream.getReader();
 
@@ -798,22 +1206,25 @@ Unconditional image generation involves generating images without any specific c
 
 ```js
 import Bytez from "bytez.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("afshr/cam_finetune");
 
 await model.load();
 
-const output = await model.run("A rose");
+const { output_png } = await model.run("A rose");
 
-console.log(output);
+const buffer = Buffer.from(output_png, "base64");
 
-// Display the image (assuming in a browser environment)
-const base64String = output.output_png;
-const img = new Image();
-img.src = 'data:image/png;base64,' + base64String;
-document.body.appendChild(img);
+// Write the image to the local file system
+writeFileSync(`${__dirname}/output.png`, buffer);
 ```
 
 ## Automatic Speech Recognition
@@ -823,17 +1234,37 @@ Automatic speech recognition involves converting spoken language into written te
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputAudioBase64 = await getBase64Audio("https://example.com/input.flac");
+const inputAudioBase64 = await getBase64Audio(
+  "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
+);
 
 const model = client.model("facebook/data2vec-audio-base-960h");
 
 await model.load();
 
-const output = await model.run({ b64AudioBufferWav: inputAudioBase64 });
+const { output } = await model.run({ b64AudioBufferWav: inputAudioBase64 });
 
+// depending on the model, there may be additional props returned
 console.log(output);
+
+const { text } = output;
+
+console.log("Inference is: ", text);
+
+await model.stop();
+
+async function getBase64Audio(url) {
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+
+  // Convert the ArrayBuffer to a Buffer
+  const buffer = Buffer.from(arrayBuffer);
+
+  // Convert the binary data in the buffer to a base64 string
+  return buffer.toString("base64");
+}
 ```
 
 ## Zero-Shot Object Detection
@@ -843,9 +1274,11 @@ Zero-shot object detection involves detecting objects in images without prior tr
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
-const inputImageBase64 = await getBase64Image("https://example.com/image.png");
+const inputImageBase64 = await getBase64Image(
+  "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+);
 
 const model = client.model("BilelDJ/clip-hugging-face-finetuned");
 
@@ -853,12 +1286,29 @@ await model.load();
 
 const input = {
   b64ImageBufferPng: inputImageBase64,
-  candidate_labels: ["squid", "octopus", "human", "cat"],
+  candidate_labels: ["squid", "octopus", "human", "cat"]
 };
 
-const output = await model.run(input);
+const { output: labelObjects } = await model.run(input);
 
-console.log(output);
+// sort desc
+labelObjects.sort((a, b) => (a.score < b.score ? 1 : -1));
+
+for (const labelObject of labelObjects) {
+  // depending on the model, there may be additional props returned
+  console.log(labelObject);
+
+  const { score, label } = labelObject;
+
+  console.log({ score, label });
+}
+
+async function getBase64Image(url) {
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer(); // Get the image as arrayBuffer
+  const buffer = Buffer.from(arrayBuffer); // Convert it to a Buffer
+  return buffer.toString("base64"); // Convert the buffer to base64
+}
 ```
 
 ## Text to Image
@@ -867,22 +1317,27 @@ Text to image involves generating images from textual descriptions. Use cases in
 
 ```js
 import Bytez from "bytez.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
 
-const client = new Bytez("YOUR_API_KEY");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const model = client.model("dreamlike-art/dreamlike-photoreal-2.0");
 
 await model.load();
 
-const output = await model.run("A beautiful landscape with mountains and a river");
+const { output_png } = await model.run(
+  "A beautiful landscape with mountains and a river"
+);
 
-console.log(output);
+const buffer = Buffer.from(output_png, "base64");
 
-// Display the image (assuming in a browser environment)
-const base64String = output.output_png;
-const img = new Image();
-img.src = 'data:image/png;base64,' + base64String;
-document.body.appendChild(img);
+// Write the image to the local file system
+writeFileSync(`${__dirname}/output.png`, buffer);
 ```
 
 ## Chat Models
@@ -892,7 +1347,7 @@ Chat models are used to create interactive conversational agents. These models c
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const messages = [
   {
@@ -909,9 +1364,18 @@ const model = client.model("microsoft/Phi-3-mini-4k-instruct");
 
 await model.load();
 
-const output = await model.run(messages, { max_length: 100 });
+const { output } = await model.run(messages, { max_length: 100 });
 
-console.log(output.output[0].generated_text);
+const [{ generated_text }] = output;
+
+for (const message of generated_text) {
+  // depending on the model, there may be additional props returned
+  console.log(message);
+
+  const { content, role } = message;
+
+  console.log({ content, role });
+}
 ```
 
 ## Models with Function Calling
@@ -921,7 +1385,7 @@ Some models support function calling, allowing them to interact with user-define
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const inputText = "What's the weather like in Seattle right now?";
 
@@ -929,7 +1393,7 @@ const modelParams = {
   max_new_tokens: 500,
   min_new_tokens: 50,
   temperature: 0.001,
-  do_sample: false,
+  do_sample: false
 };
 
 const promptTemplate = `
@@ -966,7 +1430,7 @@ await model.load();
 
 const prompt = promptTemplate.replace("{query}", inputText);
 
-const stream = await model.run(prompt, modelParams, { stream: true });
+const stream = await model.run(prompt, { stream: true, params: modelParams });
 
 const reader = stream.getReader();
 
