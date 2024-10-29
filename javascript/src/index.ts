@@ -7,6 +7,18 @@ import {
 } from "./interface/model";
 import { Task } from "./interface/task";
 
+const ONE_MINUTE_MS = 1e3 * 60;
+const MODEL_LOAD_TIMEOUT_MINUTES = 15;
+const MODEL_LOAD_TIMEOUT_MINUTES_AS_MS =
+  ONE_MINUTE_MS * MODEL_LOAD_TIMEOUT_MINUTES;
+
+class HttpError extends Error {
+  constructor(...args) {
+    super(...args);
+  }
+  httpStatus: number;
+}
+
 class Client {
   constructor(apiKey: string, dev = false) {
     this.host = dev ? "http://localhost:8080/" : "https://api.bytez.com/";
@@ -33,7 +45,9 @@ class Client {
         if (res.ok) {
           return json;
         } else {
-          throw json.error;
+          const error = new HttpError(json.error);
+          error.httpStatus = res.status;
+          throw error;
         }
       }
     } catch (error) {
@@ -101,24 +115,49 @@ class Model {
    *
    * @param options Serverless configuration
    */
-  async load(options?: ModelOptions): Promise<any> {
-    let { status, error } = await this.start(options);
+  async load(options?: ModelOptions): Promise<void> {
+    const { error }: { error: HttpError } = await this.start(options);
 
-    status ??= error?.includes?.("already loaded") ? "RUNNING" : "";
-
-    while (status !== "FAILED" && status !== "RUNNING") {
-      ({ status } = await this.status());
-
-      if (status !== "RUNNING") {
-        if (status !== lastStatus) {
-          var lastStatus = status;
-
-          console.log(status);
-        }
-
-        await new Promise(resolve => setTimeout(resolve, 5e3));
+    if (error) {
+      // Model is already loaded
+      if (error.httpStatus === 409) {
+        return;
+      }
+      // We allow 429's to proceed, that means that a loading operation is already in progress
+      if (
+        error.httpStatus !== 429 ||
+        // TODO remove this when the backend uses the correct status code, 402
+        error.message.includes("credits")
+      ) {
+        throw error;
       }
     }
+
+    const timeToTimeOut = Date.now() + MODEL_LOAD_TIMEOUT_MINUTES_AS_MS;
+
+    let status = "UNSET";
+    while (Date.now() < timeToTimeOut) {
+      const { status: newStatus, error } = await this.status();
+
+      if (status !== newStatus) {
+        status = newStatus;
+        console.log(status);
+      }
+
+      if (status === "RUNNING") {
+        return;
+      }
+
+      if (status === "FAILED") {
+        throw new Error(error);
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 5e3));
+    }
+
+    throw new Error(
+      `Model loading timed out after: ${MODEL_LOAD_TIMEOUT_MINUTES} minutes`
+    );
   }
   /**
    * Start a serverless model
@@ -141,7 +180,7 @@ class Model {
     return this.#client._request("model/delete", this.#body);
   }
   /** Run model */
-  run(input: any, options: Inference = {}) {
+  async run(input: any, options: Inference = {}) {
     const { stream = false, ...params } = options;
     let postBody = { stream, params, ...this.#body };
 
@@ -151,6 +190,12 @@ class Model {
       postBody.input = input;
     }
 
-    return this.#client._request("model/run", postBody);
+    const results = await this.#client._request("model/run", postBody);
+
+    if (results.error !== undefined) {
+      throw new Error(results.error);
+    }
+
+    return results;
   }
 }

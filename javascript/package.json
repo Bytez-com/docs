@@ -1,6 +1,6 @@
 {
   "name": "bytez.js",
-  "version": "0.5.0",
+  "version": "0.5.6",
   "type": "module",
   "engines": {
     "node": "20"
@@ -9,8 +9,9 @@
   "scripts": {
     "build": "pkgroll",
     "dev": "tsx src/index.ts",
-    "test": "tsx tests.ts",
-    "lint": "eslint ./src/*.ts"
+    "test": "tsx tests/tasks.test.ts && tsx tests/tasks.test.ts",
+    "lint": "eslint ./src/*.ts",
+    "deploy": "node deploy.js"
   },
   "author": "Bytez",
   "license": "ISC",
