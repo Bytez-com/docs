@@ -7,6 +7,11 @@ import {
 } from "./interface/model";
 import { Task } from "./interface/task";
 
+const ONE_MINUTE_MS = 1e3 * 60;
+const MODEL_LOAD_TIMEOUT_MINUTES = 15;
+const MODEL_LOAD_TIMEOUT_MINUTES_AS_MS =
+  ONE_MINUTE_MS * MODEL_LOAD_TIMEOUT_MINUTES;
+
 class HttpError extends Error {
   constructor(...args) {
     super(...args);
@@ -128,19 +133,31 @@ class Model {
       }
     }
 
-    let status = "UNSET";
-    const stopOnStatuses = ["FAILED", "RUNNING"];
+    const timeToTimeOut = Date.now() + MODEL_LOAD_TIMEOUT_MINUTES_AS_MS;
 
-    do {
-      const { status: newStatus } = await this.status();
+    let status = "UNSET";
+    while (Date.now() < timeToTimeOut) {
+      const { status: newStatus, error } = await this.status();
 
       if (status !== newStatus) {
         status = newStatus;
         console.log(status);
       }
 
+      if (status === "RUNNING") {
+        return;
+      }
+
+      if (status === "FAILED") {
+        throw new Error(error);
+      }
+
       await new Promise(resolve => setTimeout(resolve, 5e3));
-    } while (stopOnStatuses.includes(status) === false);
+    }
+
+    throw new Error(
+      `Model loading timed out after: ${MODEL_LOAD_TIMEOUT_MINUTES} minutes`
+    );
   }
   /**
    * Start a serverless model
@@ -163,7 +180,7 @@ class Model {
     return this.#client._request("model/delete", this.#body);
   }
   /** Run model */
-  run(input: any, options: Inference = {}) {
+  async run(input: any, options: Inference = {}) {
     const { stream = false, ...params } = options;
     let postBody = { stream, params, ...this.#body };
 
@@ -173,6 +190,12 @@ class Model {
       postBody.input = input;
     }
 
-    return this.#client._request("model/run", postBody);
+    const results = await this.#client._request("model/run", postBody);
+
+    if (results.error !== undefined) {
+      throw new Error(results.error);
+    }
+
+    return results;
   }
 }
