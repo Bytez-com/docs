@@ -21,7 +21,7 @@ class Client:
       auth (dict): Authorization headers containing API key.
     """
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, dev=False):
         """
         Initialize the client with an API key.
 
@@ -32,10 +32,11 @@ class Client:
             "authorization": f"Key {api_key}",
             "content-type": "application/json",
         }
+        self.host = "http://localhost:8080" if dev else "https://api.bytez.com"
 
     def _request(self, path="", body=None, stream=False):
         try:
-            url = f"https://api.bytez.com/{path}"
+            url = f"{self.host}/{path}"
             headers = self.headers
             method = "POST" if body else "GET"
             data = json.dumps(body) if body else None
@@ -69,14 +70,14 @@ class Bytez:
         model(model_id): Access a specific model.
     """
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, dev=False):
         """
         Initialize the Bytez API client with an API key.
 
         Args:
             api_key (str): Your Bytez API key.
         """
-        self._client = Client(api_key)
+        self._client = Client(api_key, dev)
 
     def list_models(self, task: Optional[Task] = None):
         """
