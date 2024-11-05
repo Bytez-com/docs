@@ -4,3 +4,4 @@ build
 dist
 *.hidden
 .vscode/launch.json
+*.pyc
