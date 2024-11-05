@@ -180,6 +180,8 @@ class Model:
             if status == "FAILED":
                 raise Exception(error)
 
+            time.sleep(5)
+
         raise Exception(
             f"Model loading timed out after: {MODEL_LOAD_TIMEOUT_MINUTES} minutes"
         )
