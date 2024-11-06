@@ -27,10 +27,33 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
   - [Run a model](#run-a-model)
   - [Request a model](#request-a-model)
 - [Docker](#docker)
-  - [Image Source Code](#source-code)
+  - [Image Source Code](#image-source-code)
 - [Model Library](#model-library)
 - [Resources](#resources)
 - [Feedback](#feedback)
+
+# Basic Usage
+```py
+from bytez import Bytez
+
+client = Bytez("YOUR BYTEZ KEY HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+
+result = model.run(input_text, model_params=model_params)
+
+output = result["output"]
+
+generated_text = output[0]["generated_text"]
+
+print(generated_text)
+```
 
 # 🚀 Quickstart
 Two steps to run inference in minutes:
