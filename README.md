@@ -17,10 +17,10 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 Two steps to run inference in minutes:
 1. Get your API Key
 2. Choose your path:
-   - Client libraries
-     - javascript
-     - python
-     - julia
+- Client libraries
+  - javascript
+  - python
+  - julia
  - REST API
  - Run inference locally via Docker
 
