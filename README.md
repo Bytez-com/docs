@@ -16,22 +16,18 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 # Table of Contents
 - [Basic Usage](#basic-usage)
 - [Quickstart](#quickstart)
-- [Get an API Key](#get-an-api-key)
-- [Bytez Model Library](#bytez-model-library)
-- [Libraries](#libraries)
-  - [Python](./python/readme.md)
-  - [Javascript](./javascript/readme.md)
-  - [Julia](./julia/Bytez/readme.md)
-- [Quick Code Examples](#quick-code-examples)
-  - [Python](#-python)
-  - [Javascript](#-javascript)
-  - [Julia](#-julia)
-- [REST API](#-rest-api)
-  - [Load a model](#load-a-model)
-  - [Run a model](#run-a-model)
-  - [Request a model](#request-a-model)
-- [Docker](#docker)
-  - [Image Source Code](#image-source-code)
+  - [Get an API Key](#get-an-api-key)
+  - [Bytez Model Library](#bytez-model-library)
+  - [Libraries](#libraries)
+    - [Python](#-python)
+    - [Javascript](#-javascript)
+    - [Julia](#-julia)
+  - [REST API](#-rest-api)
+    - [Load a model](#load-a-model)
+    - [Run a model](#run-a-model)
+    - [Request a model](#request-a-model)
+  - [Docker](#docker)
+    - [Image Source Code](#image-source-code)
 - [Model Library](#model-library)
 - [Resources](#resources)
 - [Feedback](#feedback)
@@ -100,7 +96,7 @@ Two steps to run inference in minutes:
    - Directly hit the REST API
    - Run inference locally via Docker
  
-# Get an API Key
+## Get an API Key
 To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
@@ -113,7 +109,7 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-# Bytez Model Library
+## Bytez Model Library
 You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
 ![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
 
@@ -122,20 +118,18 @@ Models can also be explored:
 
 
 
-# Libraries
+## Libraries
 Each link below has a quickstart and examples for all supported ML tasks by the clients
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-# Quick Code Examples
-
-## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
+### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
-### Load and run a model (python)
+#### Load and run a model (python)
 ```py
 import os
 from bytez import Bytez
@@ -155,9 +149,9 @@ print(output)
 
 See the [API Documentation](./python/readme.md) for all examples.
 
-## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
+### <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
-### Load and run a model (javascript)
+#### Load and run a model (javascript)
 ```js
 import Bytez from "bytez.js";
 
@@ -179,12 +173,12 @@ console.log(output);
 
 See [API Documentation](./javascript/readme.md) for all examples.
 
-## <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
+### <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
 
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 
-### Load and run a model (julia)
+#### Load and run a model (julia)
 ```julia
 using Bytez
 client = Bytez.init("YOUR_API_KEY");
