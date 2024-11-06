@@ -17,7 +17,8 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 Two steps to run inference in minutes:
 1. Get your API Key
 2. Choose your path:
-  - Client libraries (Easiest)
+  - Models Playground [Models](https://bytez.com/models) (To get started with exploration)
+  - Client libraries (To integrate into your code)
     - javascript
     - python
     - julia
@@ -37,13 +38,15 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-## Docker 
-All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [Models](https://bytez.com/models) page 🤙
+All users are provided with $1 worth of free compute per month!
 
 ## Libraries
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
+
+## Docker 
+All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
