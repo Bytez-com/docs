@@ -1,0 +1,2 @@
+requests==2.32.3
+numpy==2.1.3
