@@ -3,6 +3,7 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("BilelDJ/clip-hugging-face-finetuned")
+
 model.load()
 
 input_data = {

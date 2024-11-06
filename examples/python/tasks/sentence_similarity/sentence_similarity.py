@@ -3,8 +3,8 @@ import numpy as np
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 
-# Load and run the model
 model = client.model("sentence-transformers/all-MiniLM-L6-v2")
+
 model.load()
 
 sentences = [

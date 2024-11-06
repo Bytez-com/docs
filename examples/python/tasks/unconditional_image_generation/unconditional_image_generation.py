@@ -1,15 +1,19 @@
-from bytez import Bytez
-import base64
 import os
+import base64
+from bytez import Bytez
+
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("afshr/cam_finetune")
+
 model.load()
 
-result = model.run("A rose")
+input_text = "A rose"
+
+result = model.run(input_text)
 
 output_png = result.get("output_png")
 

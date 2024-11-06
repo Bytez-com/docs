@@ -1,10 +1,13 @@
 from bytez import Bytez
 
 client = Bytez("YOUR BYTEZ KEY HERE")
+
 model = client.model("Nexusflow/NexusRaven-V2-13B")
+
 model.load()
 
 input_text = "What's the weather like in Seattle right now?"
+
 model_params = {
     "max_new_tokens": 500,
     "min_new_tokens": 50,

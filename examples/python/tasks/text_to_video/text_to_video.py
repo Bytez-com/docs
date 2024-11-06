@@ -1,15 +1,19 @@
-from bytez import Bytez
-import base64
 import os
+import base64
+from bytez import Bytez
+
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("ali-vilab/text-to-video-ms-1.7b")
+
 model.load()
 
-result = model.run("A cat playing with a rose")
+input_text = "A cat playing with a rose"
+
+result = model.run(input_text)
 
 output_mp4 = result.get("output_mp4")
 

@@ -5,10 +5,14 @@ import os
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 client = Bytez("YOUR BYTEZ KEY HERE")
+
 model = client.model("dreamlike-art/dreamlike-photoreal-2.0")
+
 model.load()
 
-result = model.run("A beautiful landscape with mountains and a river")
+input_text = "A beautiful landscape with mountains and a river"
+
+result = model.run(input_text)
 
 output_png = result.get("output_png")
 

@@ -2,12 +2,13 @@ from bytez import Bytez
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 
-video_url = "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4"
-
 model = client.model("ahmedabdo/video-classifier")
+
 model.load()
 
-result = model.run(video_url)
+input_video_url = "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4"
+
+result = model.run(input_video_url)
 
 outputs = result["output"]
 

@@ -2,8 +2,8 @@ from bytez import Bytez
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 
-# Load and run the model
 model = client.model("deepset/roberta-base-squad2")
+
 model.load()
 
 qa_input = {
@@ -12,6 +12,7 @@ qa_input = {
 }
 
 result = model.run(qa_input)
+
 output = result.get("output")
 
 # depending on the model, there may be additional props returned

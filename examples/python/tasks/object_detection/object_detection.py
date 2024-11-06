@@ -7,13 +7,17 @@ import io
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 client = Bytez("YOUR BYTEZ KEY HERE")
+
 model = client.model("facebook/detr-resnet-50")
+
 model.load()
 
 img_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg"
+
 result = model.run(img_url)
 
 box_objects = result.get("output")
+
 print(box_objects)
 
 for box_object in box_objects:

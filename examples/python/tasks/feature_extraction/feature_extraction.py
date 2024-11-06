@@ -8,7 +8,7 @@ model.load()
 
 input_text = "Your text for feature extraction goes here..."
 
-result = model.run(input_text)
+result = model.run(input)
 
 output = result.get("output")
 

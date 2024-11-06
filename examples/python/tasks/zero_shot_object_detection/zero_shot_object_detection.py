@@ -1,8 +1,6 @@
-import base64
 import requests
+import base64
 from bytez import Bytez
-
-client = Bytez("YOUR BYTEZ KEY HERE")
 
 
 def get_base64_image(url):
@@ -16,8 +14,10 @@ input_image_base64 = get_base64_image(
     "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
 )
 
-# Load and run the model
+client = Bytez("YOUR BYTEZ KEY HERE")
+
 model = client.model("BilelDJ/clip-hugging-face-finetuned")
+
 model.load()
 
 input_data = {
@@ -27,7 +27,6 @@ input_data = {
 
 result = model.run(input_data)
 
-# Extract the output label objects
 label_objects = result["output"]
 
 # Sort label objects by score in descending order

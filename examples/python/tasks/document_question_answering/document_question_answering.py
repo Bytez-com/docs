@@ -3,18 +3,18 @@ from bytez import Bytez
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-# Replace with your actual Bytez API key
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0")
+
 model.load()
 
-input = {
+input_data = {
     "image": "https://templates.invoicehome.com/invoice-template-us-neat-750px.png",
     "question": "What's the total cost?",
 }
 
-result = model.run(input)
+result = model.run(input_data)
 
 output = result.get("output")
 

@@ -3,6 +3,7 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("Salesforce/blip-vqa-base")
+
 model.load()
 
 input_data = {
@@ -13,6 +14,7 @@ input_data = {
 result = model.run(input_data)
 
 outputs = result["output"]
+
 answer = outputs[0]["answer"]
 
 print(answer)

@@ -1,6 +1,6 @@
 import os
-import base64
 import requests
+import base64
 from bytez import Bytez
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -8,14 +8,14 @@ WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 # Replace with your actual Bytez API key
 client = Bytez("YOUR BYTEZ KEY HERE")
 
-input_image = "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg"
-
-# Load the model
 model = client.model("vinvino02/glpn-nyu")
+
 model.load()
 
+input_image_url = "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg"
+
 # Run the model with the input image
-result = model.run(input_image)
+result = model.run(input_image_url)
 
 output = result.get("output")
 
@@ -32,7 +32,7 @@ with open(image_path, "wb") as f:
 
 # write the original image for comparison, you could also just ctrl+click the url
 original_image_path = f"{WORKING_DIR}/originalImage.jpg"
-response = requests.get(input_image)
+response = requests.get(input_image_url)
 
 with open(original_image_path, "wb") as f:
     f.write(response.content)

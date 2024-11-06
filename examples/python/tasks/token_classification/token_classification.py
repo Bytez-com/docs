@@ -3,9 +3,12 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("dslim/bert-base-NER")
+
 model.load()
 
-result = model.run("John Doe is a software engineer at Google.")
+input_text = "John Doe is a software engineer at Google."
+
+result = model.run(input_text)
 
 word_objects = result["output"]
 

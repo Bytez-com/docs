@@ -1,6 +1,11 @@
 from bytez import Bytez
 
+
 client = Bytez("YOUR BYTEZ KEY HERE")
+
+model = client.model("ainize/bart-base-cnn")
+
+model.load()
 
 input_text = """
 The Big Bang is a physical theory that describes how the universe expanded from an initial state of high density and temperature.[1] The notion of an expanding universe was first scientifically originated by physicist Alexander Friedmann in 1922 with the mathematical derivation of the Friedmann equations.[2][3][4][5]
@@ -11,10 +16,6 @@ Crucially, these models are compatible with the Hubble–Lemaître law—the obs
 
 There remain aspects of the observed universe that are not yet adequately explained by the Big Bang models. After its initial expansion, the universe cooled sufficiently to allow the formation of subatomic particles, and later atoms. The unequal abundances of matter and antimatter that allowed this to occur is an unexplained effect known as baryon asymmetry. These primordial elements—mostly hydrogen, with some helium and lithium—later coalesced through gravity, forming early stars and galaxies. Astronomers observe the gravitational effects of an unknown dark matter surrounding galaxies. Most of the gravitational potential in the universe seems to be in this form, and the Big Bang models and various observations indicate that this excess gravitational potential is not created by baryonic matter, such as normal atoms. Measurements of the redshifts of supernovae indicate that the expansion of the universe is accelerating, an observation attributed to an unexplained phenomenon known as dark energy.[13]
 """
-
-# Load and run the model
-model = client.model("ainize/bart-base-cnn")
-model.load()
 
 result = model.run(input_text, model_params={"max_length": 40})
 

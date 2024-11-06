@@ -10,9 +10,6 @@ from bytez import Bytez
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-client = Bytez("YOUR BYTEZ KEY HERE")
-
-
 def get_base64_image(url):
     response = requests.get(url)
     response.raise_for_status()  # Ensure the request was successful
@@ -20,12 +17,14 @@ def get_base64_image(url):
     return base64.b64encode(image_bytes).decode("utf-8")
 
 
-# Load and run the model
 input_image_base64 = get_base64_image(
     "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
 )
 
+client = Bytez("YOUR BYTEZ KEY HERE")
+
 model = client.model("facebook/sam-vit-base")
+
 model.load()
 
 result = model.run({"b64ImageBufferPng": input_image_base64})
@@ -74,14 +73,12 @@ def write_masks_to_image(input_image_base64, masks):
         color = colors[mask_index % len(colors)]
         for i in range(len(mask)):
             for j in range(len(mask[i])):
-                if mask[i][
-                    j
-                ]:  # Assuming mask contains 1 for masked pixel and 0 for non-masked
+                if mask[i][j]:
                     src_img_np[i, j] = color
 
     # Create an image from the modified array
     img_with_masks = Image.fromarray(src_img_np, "RGBA")
-    image_path = os.path.join(WORKING_DIR, "testImage.png")
+    image_path = f"{WORKING_DIR}/testImage.png"
     img_with_masks.save(image_path)
 
 

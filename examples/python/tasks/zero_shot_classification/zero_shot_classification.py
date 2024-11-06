@@ -2,8 +2,8 @@ from bytez import Bytez
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 
-
 model = client.model("facebook/bart-large-mnli")
+
 model.load()
 
 input_data = {

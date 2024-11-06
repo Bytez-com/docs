@@ -7,9 +7,12 @@ WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 client = Bytez("YOUR BYTEZ KEY HERE")
 
 model = client.model("suno/bark-small")
+
 model.load()
 
-result = model.run("Hello, how are you today?")
+input_text = "Hello, how are you today?"
+
+result = model.run(input_text)
 
 output_wav = result.get("output_wav")
 
