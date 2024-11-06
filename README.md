@@ -15,8 +15,8 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 
 # Table of Contents
 - [Basic Usage](#basic-usage)
-- [🚀 Quickstart](#🚀-quickstart)
-- [🔑 Get an API Key](#🔑-api-key)
+- [Quickstart](#quickstart)
+- [Get an API Key](#get-an-api-key)
 - [Bytez App](#bytez-app)
 - [Libraries](#libraries)
   - [Python](#-python)
@@ -80,7 +80,7 @@ for chunk in stream:
     print(f"Output: {chunk}")
 ```
 
-# 🚀 Quickstart
+# Quickstart
 Two steps to run inference in minutes:
 - Get your API Key
   - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
@@ -94,7 +94,7 @@ Two steps to run inference in minutes:
    - Directly hit the REST API
    - Run inference locally via Docker
  
-# 🔑 API Key
+# Get an API Key
 To use this API, you need an API key. 
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
@@ -116,7 +116,7 @@ Models can also be explored:
 
 
 
-# Client Libraries
+# Libraries
 Each link below has a quickstart and examples for all supported ML tasks by the clients
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
