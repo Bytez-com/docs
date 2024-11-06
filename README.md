@@ -22,7 +22,7 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
   - [Python](./python/readme.md)
   - [Javascript](./javascript/readme.md)
   - [Julia](./julia/Bytez/readme.md)
-- [Library Code Examples](#library-code-examples)
+- [Quick Code Examples](#quick-code-examples)
   - [Python](#-python)
   - [Javascript](#-javascript)
   - [Julia](#-julia)
@@ -128,7 +128,7 @@ Each link below has a quickstart and examples for all supported ML tasks by the 
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-# Library Code Examples
+# Quick Code Examples
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
