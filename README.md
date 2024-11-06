@@ -93,18 +93,21 @@ Each link below has a quickstart and detailed examples for all supported ML task
 - [Julia](./julia/Bytez/readme.md)
 
 # Quickstart
-Two steps to run inference in minutes:
+Two steps to run inference in seconds:
 
-- Get your API Key
-  - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+- Get your API Key by visiting the Bytez settings page -> [Bytez Settings Page](https://bytez.com/settings).
     
-- Choose how you want to run a model:
-  - [Bytez Model Playground](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (Great for exploring and trying models)
-  - Client library:
+- Choose how you want to perform inference with Bytez:
+
+  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (Great for exploring and trying models)
+
+  - Install a client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
     - [python](https://github.com/Bytez-com/docs/tree/main/python)
     - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
-   - [REST API](#rest-api)
+
+   - Hit the [REST API](#rest-api) directly
+
    - Run inference locally via [Docker](#docker)
  
 ## Get an API Key
