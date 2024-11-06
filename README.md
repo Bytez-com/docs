@@ -14,9 +14,9 @@
 Evaluate and run large AI models easily and affordably with Bytez, treating models as functions – achieve GPU performance at CPU pricing.
 
 # Table of Contents
-
+- [Basic Usage](#basic-usage)
 - [🚀 Quickstart](#🚀-quickstart)
-- [🔑 API Key](#🔑-api-key)
+- [🔑 Get an API Key](#🔑-api-key)
 - [Bytez App](#bytez-app)
 - [Libraries](#libraries)
   - [Python](#-python)
@@ -27,14 +27,17 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
   - [Run a model](#run-a-model)
   - [Request a model](#request-a-model)
 - [Docker](#docker)
+  - [Image Source Code](#source-code)
 - [Model Library](#model-library)
 - [Resources](#resources)
 - [Feedback](#feedback)
 
 # 🚀 Quickstart
 Two steps to run inference in minutes:
-1. Get your API Key
-2. Choose your path:
+- Get your API Key
+  - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+  - All users are provided with $1 worth of free compute per month!
+- Choose your path:
   - Use the [Model Playground](https://bytez.com/models) (To get started with exploration)
   - Install a client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
@@ -42,9 +45,9 @@ Two steps to run inference in minutes:
     - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
    - Directly hit the REST API
    - Run inference locally via Docker
-
-## 🔑 API Key
-To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+ 
+# 🔑 API Key
+To use this API, you need an API key. 
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
 
@@ -56,20 +59,28 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-All users are provided with $1 worth of free compute per month!
-
-## Bytez App
-You can play with models without having to write any code by visiting [Bytez](https://bytez.com/)
+# Bytez App
+You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
 ![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
 
+Models can also be explored:
+![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
 
-## Libraries
+
+
+# Client Libraries
+Each link below has a quickstart and examples for all supported ML tasks by the clients
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-## Docker 
+# Docker 
 All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
+
+## Image Source Code
+The source code that runs in the docker image can be found [here](https://github.com/Bytez-com/models)
+
+# Code Examples
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
