@@ -18,6 +18,10 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 - [Quickstart](#quickstart)
   - [Get an API Key](#get-an-api-key)
   - [Bytez Model Playground](#bytez-model-playground)
+  - [Libraries](#libraries)
+    - [Python](./python/readme.md)
+    - [Javascript](./javascript/readme.md)
+    - [Julia](./julia/Bytez/readme.md)
   - [Library Examples](#library-examples)
     - [Python](#-python)
     - [Javascript](#-javascript)
@@ -117,6 +121,11 @@ Models can also be explored:
 ![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
 
 
+## Libraries
+Each link below has a quickstart and detailed examples for all supported ML tasks for a given client
+- [Python](./python/readme.md)
+- [Javascript](./javascript/readme.md)
+- [Julia](./julia/Bytez/readme.md)
 
 ## Library Examples
 
