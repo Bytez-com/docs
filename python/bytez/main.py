@@ -241,7 +241,12 @@ class Model:
         else:
             body["input"] = input
 
-        return self._client._request("model/run", body=body, stream=stream)
+        results = self._client._request("model/run", body=body, stream=stream)
+
+        if isinstance(results, dict) and results.get("error") is not None:
+            raise Exception(results.get("error"))
+
+        return results
 
 
 def modelOptionMapper(options):
