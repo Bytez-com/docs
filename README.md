@@ -13,14 +13,21 @@
 
 Evaluate and run large AI models easily and affordably with Bytez, treating models as functions – achieve GPU performance at CPU pricing.
 
+- [🚀 Quickstart](#🚀-quickstart)
+- [Installation](#installation)
+- [🔑 API Key](#🔑-api-key)
+- [Resources](#resources)
+- [Feedback](#feedback)
+
 # 🚀 Quickstart
 Two steps to run inference in minutes:
 1. Get your API Key
 2. Choose your path:
-  - Client libraries (Easiest)
-    - javascript
-    - python
-    - julia
+  - [Model Playground](https://bytez.com/models) (To get started with exploration)
+  - Client libraries (To integrate into your code)
+    - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
+    - [python](https://github.com/Bytez-com/docs/tree/main/python)
+    - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
    - REST API
    - Run inference locally via Docker
 
@@ -37,26 +44,29 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-## Docker 
-All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [Models](https://bytez.com/models) page 🤙
+All users are provided with $1 worth of free compute per month!
 
 ## Libraries
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
+## Docker 
+All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
+
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
-### Load and run a model
-```python
+### Load and run a model (python)
+```py
 import os
 from bytez import Bytez
-client = Bytez(api_key=os.environ.get("YOUR_API_KEY")
 
-# Grab a model
+client = Bytez("YOUR_API_KEY")
+
+# Initalize a model
 model = client.model('openai-community/gpt2')
 
 # Start a model
@@ -71,9 +81,10 @@ See the [API Documentation](./python/readme.md) for all examples.
 
 ## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
-### Load and run a model
-```javascript
+### Load and run a model (javascript)
+```js
 import Bytez from "bytez.js";
+
 client = new Bytez("YOUR_API_KEY");
 
 // Grab a model
@@ -81,10 +92,12 @@ model = client.model("openai-community/gpt2");
 
 // Start a model
 await model.load();
+
 console.log(results);
 
 // Run a model
 output = await model.run("Once upon a time there was a");
+
 console.log(output);
 ```
 
@@ -95,7 +108,7 @@ Load and run a model after installing our Bytez library (`add Bytez`).
 
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 
-### Load and run a model
+### Load and run a model (julia)
 ```julia
 using Bytez
 client = Bytez.init("YOUR_API_KEY");
@@ -197,7 +210,7 @@ We currently support 20K+ open source AI models across 30+ ML tasks.
 ## Examples 
 
 To see the full list, run:
-```python
+```py
 models = client.list_models()
 print(models)
 ```
@@ -254,3 +267,7 @@ Here are some models that can be run - with their required RAM.
 # Resources
 - [About Us](./about.md)
 - [Cold Boot Times and Billing](./cold-boot-billing.md)
+
+# Feedback
+
+We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](mailto:help@bytez.com)
