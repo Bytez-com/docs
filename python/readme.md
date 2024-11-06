@@ -1,7 +1,7 @@
 # API Documentation
 
-- [Installation](#installation)
 - [Basic Usage](#basic-usage)
+- [Installation](#installation)
 - [Authentication and Getting Your Key](#authentication-and-getting-your-key)
 - [List Available Models](#list-available-models)
 - [Initialize the Model Api](#initialize-the-model-api)
