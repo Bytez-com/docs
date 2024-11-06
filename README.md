@@ -15,13 +15,13 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 
 # Table of Contents
 - [Basic Usage](#basic-usage)
-- [Quickstart](#quickstart)
-  - [Get an API Key](#get-an-api-key)
-  - [Bytez Model Playground](#bytez-model-playground)
-  - [Libraries](#libraries)
+- [Libraries](#libraries)
     - [Python](./python/readme.md)
     - [Javascript](./javascript/readme.md)
     - [Julia](./julia/Bytez/readme.md)
+- [Quickstart](#quickstart)
+  - [Get an API Key](#get-an-api-key)
+  - [Bytez Model Playground](#bytez-model-playground)
   - [Library Examples](#library-examples)
     - [Python](#-python)
     - [Javascript](#-javascript)
@@ -86,6 +86,12 @@ for chunk in stream:
     print(f"Output: {chunk}")
 ```
 
+# Libraries
+Each link below has a quickstart and detailed examples for all supported ML tasks for a given client
+- [Python](./python/readme.md)
+- [Javascript](./javascript/readme.md)
+- [Julia](./julia/Bytez/readme.md)
+
 # Quickstart
 Two steps to run inference in minutes:
 - Get your API Key
@@ -119,13 +125,6 @@ You can play with models without having to write any code by visiting [Bytez](ht
 
 Models can also be explored:
 ![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
-
-
-## Libraries
-Each link below has a quickstart and detailed examples for all supported ML tasks for a given client
-- [Python](./python/readme.md)
-- [Javascript](./javascript/readme.md)
-- [Julia](./julia/Bytez/readme.md)
 
 ## Library Examples
 
