@@ -21,7 +21,7 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 - [Libraries](#libraries)
   - [Python](#-python)
   - [Javascript](#-javascript)
-  - [Julia](#-julia)
+- [Library Code Examples](#library-code-examples)
 - [REST API](#-rest-api)
   - [Load a model](#load-a-model)
   - [Run a model](#run-a-model)
@@ -124,14 +124,14 @@ Each link below has a quickstart and examples for all supported ML tasks by the 
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-## Code Examples
+# Library Code Examples
 
-### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
+## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
-#### Load and run a model (python)
+### Load and run a model (python)
 ```py
 import os
 from bytez import Bytez
@@ -151,7 +151,7 @@ print(output)
 
 See the [API Documentation](./python/readme.md) for all examples.
 
-### <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
+## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
 ### Load and run a model (javascript)
 ```js
