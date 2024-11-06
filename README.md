@@ -94,17 +94,18 @@ Each link below has a quickstart and detailed examples for all supported ML task
 
 # Quickstart
 Two steps to run inference in minutes:
+
 - Get your API Key
   - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
-  - All users are provided with $1 worth of free compute per month!
-- Choose your path:
-  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (To get started with exploration)
-  - Install a client library:
+    
+- Choose how you want to run a model:
+  - [Bytez Model Playground](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (Great for exploring and trying models)
+  - Client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
     - [python](https://github.com/Bytez-com/docs/tree/main/python)
     - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
-   - Directly hit the REST API
-   - Run inference locally via Docker
+   - [REST API](#rest-api)
+   - Run inference locally via [Docker](#docker)
  
 ## Get an API Key
 To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
@@ -118,6 +119,8 @@ from bytez import Bytez
 
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
+
+All users are provided with 100 credits worth of free compute per month!
 
 ## Bytez Model Playground
 You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
