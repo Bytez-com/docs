@@ -88,7 +88,7 @@ Two steps to run inference in minutes:
   - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
   - All users are provided with $1 worth of free compute per month!
 - Choose your path:
-  - Use the [Model Playground](https://bytez.com/models) (To get started with exploration)
+  - Use the [Bytez Model Library](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (To get started with exploration)
   - Install a client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
     - [python](https://github.com/Bytez-com/docs/tree/main/python)
