@@ -23,11 +23,11 @@ Two steps to run inference in minutes:
 1. Get your API Key
 2. Choose your path:
   - Use the [Model Playground](https://bytez.com/models) (To get started with exploration)
-  - Install a client library
+  - Install a client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
     - [python](https://github.com/Bytez-com/docs/tree/main/python)
     - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
-   - REST API
+   - Directly hit the REST API
    - Run inference locally via Docker
 
 ## 🔑 API Key
@@ -44,6 +44,11 @@ client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
 All users are provided with $1 worth of free compute per month!
+
+## Bytez App
+You can play with models without having to write any code by visiting [Bytez](https://bytez.com/)
+![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
+
 
 ## Libraries
 - [Python](./python/readme.md)
@@ -206,7 +211,7 @@ We currently support 20K+ open source AI models across 30+ ML tasks.
 | Document-question-answering | 18
 | Text-to-audio | 11
 
-Here are some models that can be run - with their required RAM. 
+Here's a sample of some models that can be run - with their required RAM.
 
 | Model Name                                               | Required RAM (GB)       
 |----------------------------------------------------------|-------------------------|
