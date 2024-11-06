@@ -17,7 +17,7 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 - [Basic Usage](#basic-usage)
 - [Quickstart](#quickstart)
 - [Get an API Key](#get-an-api-key)
-- [Bytez App](#bytez-app)
+- [Bytez Model Library](#bytez-model-library)
 - [Libraries](#libraries)
   - [Python](#-python)
   - [Javascript](#-javascript)
@@ -109,7 +109,7 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-# Bytez App
+# Bytez Model Library
 You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
 ![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
 
