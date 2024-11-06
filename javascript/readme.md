@@ -278,7 +278,6 @@ for (const wordObject of wordObjects) {
 
   console.log({ word, entity, score, index, start, end });
 }
-
 ```
 
 ## Depth Estimation
@@ -368,7 +367,6 @@ for (const labelObject of labelObjects) {
 
   console.log({ label, score });
 }
-
 ```
 
 ## Sentence Similarity
@@ -432,7 +430,6 @@ for (const sentenceObject of sentencesToCompare) {
     similarity
   );
 }
-
 ```
 
 ## Image to Text
@@ -459,7 +456,6 @@ console.log(output);
 const [{ generated_text }] = output;
 
 console.log(generated_text);
-
 ```
 
 ## Image Feature Extraction
@@ -577,7 +573,6 @@ async function getBase64Image(url) {
   const buffer = Buffer.from(arrayBuffer); // Convert it to a Buffer
   return buffer.toString("base64"); // Convert the buffer to base64
 }
-
 ```
 
 ## Summarization
@@ -637,7 +632,6 @@ for (const labelObject of labelObjects) {
 
   console.log({ label, score });
 }
-
 ```
 
 ## Feature Extraction
@@ -713,7 +707,6 @@ console.log({
   start,
   end
 });
-
 ```
 
 ## Text to Video
@@ -741,8 +734,6 @@ const buffer = Buffer.from(output_mp4, "base64");
 
 // Write the image to the local file system
 writeFileSync(`${__dirname}/output.mp4`, buffer);
-
-const a = 2;
 ```
 
 ## Fill Mask
