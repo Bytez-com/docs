@@ -33,6 +33,8 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 - [Feedback](#feedback)
 
 # Basic Usage
+Below is the basic usage for the python client library. See [Libraries](#libraries) for javascript and julia examples.
+
 ```py
 from bytez import Bytez
 
@@ -95,7 +97,7 @@ Two steps to run inference in minutes:
    - Run inference locally via Docker
  
 # Get an API Key
-To use this API, you need an API key. 
+To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
 
