@@ -128,7 +128,7 @@ Each link below has a quickstart and examples for all supported ML tasks by the 
 All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
 
 ## Image Source Code
-The source code that runs in the docker image can be found [here](https://github.com/Bytez-com/models)
+The source code that runs for a given model in the docker image can be found [here](https://github.com/Bytez-com/models)
 
 # Code Examples
 
