@@ -98,7 +98,7 @@ for chunk in stream:
 ## Installation
 
 ```bash
-pip install bytez
+pip install Bytez
 ```
 
 ## Authentication and Getting Your Key
