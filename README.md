@@ -13,6 +13,8 @@
 
 Evaluate and run large AI models easily and affordably with Bytez, treating models as functions – achieve GPU performance at CPU pricing.
 
+# Table of Contents
+
 - [🚀 Quickstart](#🚀-quickstart)
 - [🔑 API Key](#🔑-api-key)
 - [Resources](#resources)
