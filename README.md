@@ -16,7 +16,13 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 # 🚀 Quickstart
 Two steps to run inference in minutes:
 1. Get your API Key
-2. Choose your path: run inference locally via Docker or use our API (javascript, python, REST API)
+2. Choose your path:
+   - Client libraries
+     - javascript
+     - python
+     - julia
+ - REST API
+ - Run inference locally via Docker
 
 ## 🔑 API Key
 To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
