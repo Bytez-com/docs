@@ -124,20 +124,14 @@ Each link below has a quickstart and examples for all supported ML tasks by the 
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-# Docker 
-All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
+## Code Examples
 
-## Image Source Code
-The source code that runs for a given model in the docker image can be found [here](https://github.com/Bytez-com/models)
-
-# Code Examples
-
-## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
+### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
-### Load and run a model (python)
+#### Load and run a model (python)
 ```py
 import os
 from bytez import Bytez
@@ -157,7 +151,7 @@ print(output)
 
 See the [API Documentation](./python/readme.md) for all examples.
 
-## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
+### <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
 ### Load and run a model (javascript)
 ```js
@@ -246,6 +240,12 @@ curl --location 'https://api.bytez.com/model/job' \
 ```
 
 See the [API Documentation](./api.md) for all endpoints.
+
+# Docker 
+All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
+
+## Image Source Code
+The source code that runs for a given model in the docker image can be found [here](https://github.com/Bytez-com/models)
 
 # Model Library
 
