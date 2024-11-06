@@ -17,8 +17,8 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 - [Basic Usage](#basic-usage)
 - [Quickstart](#quickstart)
   - [Get an API Key](#get-an-api-key)
-  - [Bytez Model Library](#bytez-model-library)
-  - [Libraries](#libraries)
+  - [Bytez Model Playground](#bytez-model-playground)
+  - [Library Examples](#library-examples)
     - [Python](#-python)
     - [Javascript](#-javascript)
     - [Julia](#-julia)
@@ -88,7 +88,7 @@ Two steps to run inference in minutes:
   - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
   - All users are provided with $1 worth of free compute per month!
 - Choose your path:
-  - Use the [Bytez Model Library](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (To get started with exploration)
+  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (To get started with exploration)
   - Install a client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
     - [python](https://github.com/Bytez-com/docs/tree/main/python)
@@ -109,7 +109,7 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-## Bytez Model Library
+## Bytez Model Playground
 You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
 ![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
 
@@ -118,11 +118,7 @@ Models can also be explored:
 
 
 
-## Libraries
-Each link below has a quickstart and examples for all supported ML tasks by the clients
-- [Python](./python/readme.md)
-- [Javascript](./javascript/readme.md)
-- [Julia](./julia/Bytez/readme.md)
+## Library Examples
 
 ### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
