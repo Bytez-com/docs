@@ -11,7 +11,7 @@
 
 # ✨ Bytez
 
-Evaluate and run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
+Evaluate and run large AI models easily and affordably with Bytez, treating models as functions – achieve GPU performance at CPU pricing.
 
 # 🚀 Quickstart
 Two steps to run inference in minutes:
@@ -19,10 +19,20 @@ Two steps to run inference in minutes:
 2. Choose your path: run inference locally via Docker or use our API (javascript, python, REST API)
 
 ## 🔑 API Key
-Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or go to [Bytez.com](http://bytez.com), sign in, and visit user settings to get your key. 
+To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+
+![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
+
+To then use it in code:
+
+```py
+from bytez import Bytez
+
+client = Bytez("YOUR BYTEZ KEY HERE")
+```
 
 ## Docker 
-All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [About](https://bytez.com/about) page 🤙
+All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [Models](https://bytez.com/models) page 🤙
 
 ## Libraries
 - [Python](./python/readme.md)
@@ -30,7 +40,7 @@ All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) o
 - [Julia](./julia/Bytez/readme.md)
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
-Load and run a model after installing our python library (`pip install Bytez`).
+Load and run a model after installing our python library (`pip install bytez`).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
