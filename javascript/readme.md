@@ -1,7 +1,7 @@
 # API Documentation
 
-- [Installation](#installation)
 - [Basic Usage](#basic-usage)
+- [Installation](#installation)
 - [Authentication and Getting Your Key](#authentication-and-getting-your-key)
 - [List Available Models](#list-available-models)
 - [Initialize the Model Api](#initialize-the-model-api)
@@ -251,7 +251,7 @@ Please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email
 
 Below are examples of using various models with the Bytez API in JavaScript.
 
-All examples are also located [here](https://github.com/Bytez-com/docs/tree/inf3rnus-patch-1/examples/javascript) under the `tasks` directory.
+All examples are also located [here](https://github.com/Bytez-com/docs/tree/main/examples/javascript) under the `tasks` directory.
 
 ## Token Classification
 
