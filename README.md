@@ -13,24 +13,95 @@
 
 Evaluate and run large AI models easily and affordably with Bytez, treating models as functions – achieve GPU performance at CPU pricing.
 
-# 🚀 Quickstart
-Two steps to run inference in minutes:
-1. Get your API Key
-2. Choose your path:
-  - Models Playground [Models](https://bytez.com/models) (To get started with exploration)
-  - Client libraries (To integrate into your code)
-    - javascript
-    - python
-    - julia
-   - REST API
-   - Run inference locally via Docker
+# Table of Contents
+- [Basic Usage](#basic-usage)
+- [Quickstart](#quickstart)
+- [Get an API Key](#get-an-api-key)
+- [Bytez App](#bytez-app)
+- [Libraries](#libraries)
+  - [Python](#-python)
+  - [Javascript](#-javascript)
+  - [Julia](#-julia)
+- [REST API](#-rest-api)
+  - [Load a model](#load-a-model)
+  - [Run a model](#run-a-model)
+  - [Request a model](#request-a-model)
+- [Docker](#docker)
+  - [Image Source Code](#image-source-code)
+- [Model Library](#model-library)
+- [Resources](#resources)
+- [Feedback](#feedback)
 
-## 🔑 API Key
+# Basic Usage
+Below is the basic usage for the python client library. See [Libraries](#libraries) for javascript and julia examples.
+
+```py
+from bytez import Bytez
+
+client = Bytez("YOUR BYTEZ KEY HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+
+result = model.run(input_text, model_params=model_params)
+
+output = result["output"]
+
+generated_text = output[0]["generated_text"]
+
+print(generated_text)
+```
+
+Streaming usage (only text-generation models support streaming currently)
+
+```py
+from bytez import Bytez
+
+client = Bytez("YOUR BYTEZ KEY HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+
+stream = model.run(
+    input_text,
+    stream=True,
+    model_params=model_params,
+)
+
+for chunk in stream:
+    print(f"Output: {chunk}")
+```
+
+# Quickstart
+Two steps to run inference in minutes:
+- Get your API Key
+  - Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+  - All users are provided with $1 worth of free compute per month!
+- Choose your path:
+  - Use the [Model Playground](https://bytez.com/models) (To get started with exploration)
+  - Install a client library:
+    - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
+    - [python](https://github.com/Bytez-com/docs/tree/main/python)
+    - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
+   - Directly hit the REST API
+   - Run inference locally via Docker
+ 
+# Get an API Key
 To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
 
-To then use it in code:
+To then use it in code (python example):
 
 ```py
 from bytez import Bytez
@@ -38,28 +109,42 @@ from bytez import Bytez
 client = Bytez("YOUR BYTEZ KEY HERE")
 ```
 
-All users are provided with $1 worth of free compute per month!
+# Bytez App
+You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
+![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
 
-## Libraries
+Models can also be explored:
+![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
+
+
+
+# Libraries
+Each link below has a quickstart and examples for all supported ML tasks by the clients
 - [Python](./python/readme.md)
 - [Javascript](./javascript/readme.md)
 - [Julia](./julia/Bytez/readme.md)
 
-## Docker 
+# Docker 
 All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
+
+## Image Source Code
+The source code that runs in the docker image can be found [here](https://github.com/Bytez-com/models)
+
+# Code Examples
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
-### Load and run a model
-```python
+### Load and run a model (python)
+```py
 import os
 from bytez import Bytez
-client = Bytez(api_key=os.environ.get("YOUR_API_KEY")
 
-# Grab a model
+client = Bytez("YOUR_API_KEY")
+
+# Initalize a model
 model = client.model('openai-community/gpt2')
 
 # Start a model
@@ -74,9 +159,10 @@ See the [API Documentation](./python/readme.md) for all examples.
 
 ## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
-### Load and run a model
-```javascript
+### Load and run a model (javascript)
+```js
 import Bytez from "bytez.js";
+
 client = new Bytez("YOUR_API_KEY");
 
 // Grab a model
@@ -84,10 +170,12 @@ model = client.model("openai-community/gpt2");
 
 // Start a model
 await model.load();
+
 console.log(results);
 
 // Run a model
 output = await model.run("Once upon a time there was a");
+
 console.log(output);
 ```
 
@@ -98,7 +186,7 @@ Load and run a model after installing our Bytez library (`add Bytez`).
 
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 
-### Load and run a model
+### Load and run a model (julia)
 ```julia
 using Bytez
 client = Bytez.init("YOUR_API_KEY");
@@ -197,15 +285,7 @@ We currently support 20K+ open source AI models across 30+ ML tasks.
 | Document-question-answering | 18
 | Text-to-audio | 11
 
-## Examples 
-
-To see the full list, run:
-```python
-models = client.list_models()
-print(models)
-```
-
-Here are some models that can be run - with their required RAM. 
+Here's a sample of some models that can be run - with their required RAM.
 
 | Model Name                                               | Required RAM (GB)       
 |----------------------------------------------------------|-------------------------|
@@ -214,46 +294,33 @@ Here are some models that can be run - with their required RAM.
 | succinctly/text2image-prompt-generator                   | 1.04                    
 | ai-forever/mGPT                                          | 9.59                    
 | microsoft/phi-1                                          | 9.16                    
-| facebook/opt-1.3b                                        | 8.06                    
-| openai-community/gpt2                                    | 0.50                                     
-| bigscience/bloom-1b7                                     | 7.82                    
-| databricks/dolly-v2-3b                                   | 11.09                   
+| facebook/opt-1.3b                                        | 8.06                                   
 | tiiuae/falcon-40b-instruct                               | 182.21                  
 | tiiuae/falcon-7b-instruct                                | 27.28                   
 | codellama/CodeLlama-7b-Instruct-hf                       | 26.64                   
 | deepseek-ai/deepseek-coder-6.7b-instruct                 | 26.50                   
 | upstage/SOLAR-10.7B-Instruct-v1.0                        | 57.63                   
 | elyza/ELYZA-japanese-Llama-2-7b-instruct                 | 38.24                   
-| NousResearch/Meta-Llama-3-8B-Instruct                    | 30.93                   
-| VAGOsolutions/SauerkrautLM-Mixtral-8x7B-Instruct         | 211.17                  
-| codellama/CodeLlama-34b-Instruct-hf                      | 186.52                  
-| deepseek-ai/deepseek-coder-7b-instruct-v1.5              | 27.05                   
-| Equall/Saul-Instruct-v1                                  | 2.44                    
-| Equall/Saul-7B-Instruct-v1                               | 10.20                   
-| microsoft/Phi-3-mini-128k-instruct                       | 14.66                   
-| microsoft/Phi-3-mini-4k-instruct                         | 14.65                   
-| victor/CodeLlama-34b-Instruct-hf                         | 127.37                  
-| gradientai/Llama-3-8B-Instruct-262k                      | 30.80                   
-| gradientai/Llama-3-8B-Instruct-Gradient-1048k            | 30.59                   
-| yanolja/EEVE-Korean-Instruct-10.8B-v1.0                  | 54.30                   
-| codellama/CodeLlama-13b-Instruct-hf                      | 50.38                   
-| deepseek-ai/deepseek-coder-1.3b-instruct                 | 6.16                    
-| deepseek-ai/deepseek-coder-33b-instruct                  | 158.74                  
-| filipealmeida/Mistral-7B-Instruct-v0.1-sharded           | 27.42                   
-| unsloth/llama-3-8b-Instruct                              | 30.77                   
-| speakleash/Bielik-7B-Instruct-v0.1                       | 27.52                   
-| Deci/DeciLM-7B-instruct                                  | 26.90                   
-| tokyotech-llm/Swallow-70b-instruct-hf                    | 242.23                  
-| tokyotech-llm/Swallow-7b-NVE-instruct-hf                 | 26.89                                     
-| codellama/CodeLlama-70b-Instruct-hf                      | 372.52                  
-| togethercomputer/Llama-2-7B-32K-Instruct                 | 25.65                   
-| beomi/Llama-3-Open-Ko-8B-Instruct-preview                | 30.81                   
-| abhishekchohan/SOLAR-10.7B-Instruct-Forest-DPO-v1        | 15.38                   
-| deepseek-ai/deepseek-math-7b-instruct                    | 28.08                   
-| occiglot/occiglot-7b-eu5-instruct                        | 28.94                   
-| MediaTek-Research/Breeze-7B-Instruct-v1_0                | 29.84                   
+| NousResearch/Meta-Llama-3-8B-Instruct                    | 30.93                                                                     
+| codellama/CodeLlama-70b-Instruct-hf                      | 372.52           
 
+To see the full list, run:
+```py
+models = client.list_models()
+print(models)
+```
+
+To see a task specific list, run:
+
+```py
+models = client.list_models(task="text-generation")
+print(models)
+```
 
 # Resources
 - [About Us](./about.md)
 - [Cold Boot Times and Billing](./cold-boot-billing.md)
+
+# Feedback
+
+We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](mailto:help@bytez.com)
