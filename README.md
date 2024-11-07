@@ -25,7 +25,7 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
   - [Library Examples](#library-examples)
     - [Python](#-python)
     - [Javascript](#-javascript)
-    - [Julia](#-julia)
+    - [Julia](#julia)
   - [REST API](#-rest-api)
     - [Load a model](#load-a-model)
     - [Run a model](#run-a-model)
@@ -188,7 +188,7 @@ console.log(output);
 
 See [API Documentation](./javascript/readme.md) for all examples.
 
-### <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 /> Julia
+### Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
 
 Full documentation can be found [here](./julia/Bytez/readme.md).
