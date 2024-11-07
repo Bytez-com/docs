@@ -135,7 +135,9 @@ Models can also be explored:
 ## Library Examples
 
 ### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
-Load and run a model after installing our python library (`pip install bytez`). Full documentation can be found [here](./python/readme.md)
+Load and run a model after installing our python library (`pip install bytez`). 
+
+Full documentation can be found [here](./python/readme.md).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
@@ -161,7 +163,9 @@ See the [API Documentation](./python/readme.md) for all examples.
 
 ### <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
-Full documentation can be found [here](./javascript/readme.md)
+
+Full documentation can be found [here](./javascript/readme.md).
+
 #### Load and run a model (javascript)
 ```js
 import Bytez from "bytez.js";
@@ -186,7 +190,8 @@ See [API Documentation](./javascript/readme.md) for all examples.
 
 ### <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
-Full documentation can be found [here](./julia/Bytez/readme.md)
+
+Full documentation can be found [here](./julia/Bytez/readme.md).
 
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 
