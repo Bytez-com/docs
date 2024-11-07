@@ -99,7 +99,7 @@ Two steps to run inference in seconds:
     
 - Choose how you want to perform inference with Bytez:
 
-  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](httpss://bytez.com) (Great for exploring and trying models)
+  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez](httpss://bytez.com) (Great for exploring and trying models)
 
   - Install a client library:
     - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
