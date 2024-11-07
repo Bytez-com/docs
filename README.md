@@ -187,6 +187,7 @@ See [API Documentation](./javascript/readme.md) for all examples.
 ### <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
 Full documentation can be found [here](./julia/Bytez/readme.md)
+
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 
 #### Load and run a model (julia)
