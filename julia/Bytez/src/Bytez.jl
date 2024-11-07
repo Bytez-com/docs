@@ -55,7 +55,7 @@ module Bytez
   function request(path::String, body::String = "")
       response = HTTP.request( 
           body == "" ? "GET" : "POST", 
-          "https://api.bytez.com/$path",
+          "$HOST/$path",
           status_exception = false,
           body = body,
           headers =  Dict(
@@ -95,7 +95,7 @@ module Bytez
         status = ""
         
         try
-            json = request("model/start", body)
+            json = start(body)
         catch
             json = request("model/status", body)
         finally
@@ -127,8 +127,16 @@ module Bytez
   #
   # bytez
   #
-  function init(key::String)
+  function init(key::String, dev::Bool = false)
       global API_KEY = key
+
+      global HOST
+
+      if dev
+        HOST = "http://localhost:8080"
+      else
+        HOST = "https://bytez.com"
+      end
 
       function create_new_model(model_id::String; concurrency::Int = 1, timeout::Int = 300)
           return Model(model_id, concurrency, timeout)
