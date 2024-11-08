@@ -136,7 +136,7 @@ print(model_list)
 Initialize a model, so you can check its status, load, run, or shut it down.
 
 ```py
-model = client.model("openai-community/gpt2");
+model = client.model("openai-community/gpt2")
 ```
 
 ## Load a Model
@@ -146,7 +146,7 @@ Convenience method for `model.start()`. Automatically waits for the instance to 
 Progress is printed as it executes.
 
 ```py
-model.load();
+model.load()
 ```
 
 The options argument is _optional_ and has two properties, concurrency, and timeout.
@@ -155,7 +155,7 @@ The options argument is _optional_ and has two properties, concurrency, and time
 model.load({
   "concurrency": 1,
   "timeout": 300,
-});
+})
 ```
 
 ```
@@ -186,7 +186,7 @@ Check on the status of the model, to see if it's deploying, running, or stopped.
 ```py
 status = model.status()
 
-print(status);
+print(status)
 ```
 
 ## Run a Model
@@ -194,9 +194,9 @@ print(status);
 Run inference.
 
 ```py
-output = model.run("Once upon a time there was a");
+output = model.run("Once upon a time there was a")
 
-print(output);
+print(output)
 ```
 
 ## Run a Model with HuggingFace Params
@@ -239,15 +239,15 @@ By default, models will shut down based on their timeout (seconds) when loaded v
 To shut down and save costs early, run the following:
 
 ```py
-model.stop();
+model.stop()
 ```
 
 ## List Your Running Instances
 
 ```py
-instances = client.list_instances();
+instances = client.list_instances()
 
-print(instances);
+print(instances)
 ```
 
 ## Request a Huggingface Model Not Yet on Bytez
@@ -255,11 +255,11 @@ print(instances);
 To request a model that exists on Huggingface but not yet on Bytez, you can do the following:
 
 ```py
-model_id = "openai-community/gpt2";
+model_id = "openai-community/gpt2"
 
-job_status = client.process(model_id);
+job_status = client.process(model_id)
 
-print(job_status);
+print(job_status)
 ```
 
 This sends a job to an automated queue. When the job completes, you'll receive an email indicating the model is ready for use with the models API.
