@@ -75,7 +75,6 @@ function request(path::String, body::Union{Dict, Nothing} = nothing)
 					"Content-type" => "application/json",
 				),
 			) do http_io
-
 				write(http_io, JSON3.write(body))
 				startread(http_io)
 
@@ -85,6 +84,10 @@ function request(path::String, body::Union{Dict, Nothing} = nothing)
 
 					put!(data_channel, chunk)  # Write chunk to channel
 				end
+
+				# get the last chunk once you've reached the end
+				chunk = String(readavailable(http_io))
+				put!(data_channel, chunk)
 			end
 			# always make the status code available via a channel for non streaming calls
 			status_code = response.status
@@ -102,7 +105,13 @@ function request(path::String, body::Union{Dict, Nothing} = nothing)
 		return data_channel
 	end
 
-	result = JSON3.read(String(take!(data_channel)))
+	json_string = ""
+	while isopen(data_channel)
+		item = String(take!(data_channel))
+		json_string *= item
+	end
+
+	result = JSON3.read(json_string)
 
 	error = get(result, "error", nothing)
 
@@ -145,7 +154,7 @@ function run(input::Any, model_id_dict::Dict, options::Dict)
 	error = get(results, "error", nothing)
 
 	if error !== nothing
-		throw(Exception(error))
+		throw(error)
 	end
 
 	return results
