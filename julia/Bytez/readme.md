@@ -72,7 +72,7 @@ result = model.run(input_text, options)
 
 output = result["output"]
 
-generated_text = output[0]["generated_text"]
+generated_text = output[1]["generated_text"]
 
 println(generated_text)
 ```
