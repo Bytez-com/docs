@@ -60,70 +60,79 @@ end
 
 function request(path::String, body::Union{Dict, Nothing} = nothing)
 	is_streaming = get(body, "stream", false)
-	data_channel = Channel{Any}(Inf)
-	status_code_channel = Channel{Any}(Inf)
 
-	@async begin
-		try
-			response = HTTP.open(
-				body === nothing ? "GET" : "POST",
-				"$HOST/$path",
-				status_exception = false,
-				body = JSON3.write(body),
-				headers = Dict(
-					"Authorization" => "Key $API_KEY",
-					"Content-type" => "application/json",
-				),
-			) do http_io
-				write(http_io, JSON3.write(body))
-				startread(http_io)
+	args = (
+		body === nothing ? "GET" : "POST",
+		"$HOST/$path",
+	)
 
-				# Stream the http_io in chunks and write each to the channel
-				while !eof(http_io)
-					chunk = String(readavailable(http_io))  # Read available chunk as a string
+	kwargs = (
+		status_exception = false,
+		body = JSON3.write(body),
+		headers = Dict(
+			"Authorization" => "Key $API_KEY",
+			"Content-type" => "application/json",
+		),
+	)
 
-					put!(data_channel, chunk)  # Write chunk to channel
-				end
-
-				# get the last chunk once you've reached the end
-				chunk = String(readavailable(http_io))
-				put!(data_channel, chunk)
-			end
-			# always make the status code available via a channel for non streaming calls
-			status_code = response.status
-			put!(status_code_channel, status_code)
-		catch error
-			println(error)
-		finally
-			close(data_channel)
-			close(status_code_channel)
-		end
-	end
-
-	# just return the data channel directly if streaming
 	if is_streaming
-		return data_channel
+		return streaming_request(args...; kwargs...)
 	end
 
-	json_string = ""
-	while isopen(data_channel)
-		item = String(take!(data_channel))
-		json_string *= item
-	end
+	response = HTTP.request(args...; kwargs...)
 
-	result = JSON3.read(json_string)
+	result = JSON3.read(response.body)
 
 	error = get(result, "error", nothing)
 
 	if error !== nothing
-		http_status = take!(status_code_channel)
-		http_error = HttpError(error, http_status)
+		http_error = HttpError(error, response.status)
 
 		return Dict("error" => http_error)
 	end
 
 	return result
 end
+
+function streaming_request(args...; kwargs...)
+	data_channel = Channel{Any}(Inf)
+	@async begin
+		try
+			response = HTTP.open(
+				args...;
+				kwargs...,
+			) do http_io
+				try
+					write(http_io, kwargs[:body])
+					startread(http_io)
+
+					# Read the http_io stream in chunks and write each to the channel
+					while !eof(http_io)
+						chunk = String(readavailable(http_io))  # Read available chunk as a string
+						put!(data_channel, chunk)  # Write chunk to channel
+					end
+
+				catch error
+					println(error)
+				end
+
+			end
+			# NOTE for debug, uncomment
+			# status_code = response.status
+			# println("STATUS CODE IS: $status_code")
+		catch error
+			# this is async, so if anything goes wrong, it's wise to print out what went wrong, as the rest of the program will not halt on thread crashes
+			println(error)
+			throw(error)
+		finally
+			close(data_channel)
+		end
+	end
+
+	return data_channel
+end
+
+
 #
 # model methods
 #
