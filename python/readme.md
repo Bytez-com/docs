@@ -49,6 +49,7 @@
 - [Feedback](#feedback)
 
 ## Basic Usage
+
 ```py
 from bytez import Bytez
 
@@ -72,6 +73,7 @@ print(generated_text)
 ```
 
 Streaming usage (only text-generation models support streaming currently)
+
 ```py
 from bytez import Bytez
 
@@ -147,7 +149,7 @@ Progress is printed as it executes.
 model.load();
 ```
 
-The options argument is *optional* and has two properties, concurrency, and timeout.
+The options argument is _optional_ and has two properties, concurrency, and timeout.
 
 ```py
 model.load({
@@ -294,7 +296,7 @@ result = model.run(input_text)
 word_objects = result["output"]
 
 for word_object in word_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(word_object)
 
     word = word_object.get("word")
@@ -393,7 +395,7 @@ result = model.run(input_image_url)
 labelObjects = result.get("output")
 
 for labelObject in labelObjects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(labelObject)
 
     label = labelObject["label"]
@@ -478,7 +480,7 @@ model.load()
 
 result = model.run(input_image_url)
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 output = result.get("output")
 
 print(output)
@@ -507,7 +509,7 @@ result = model.run(input_image_url)
 
 output = result.get("output")
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 embedding = output[0]
@@ -662,7 +664,7 @@ result = model.run(input_text)
 label_objects = result["output"]
 
 for label_object in label_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(label_object)
 
     # Extract and print label and score
@@ -691,7 +693,7 @@ result = model.run(input)
 
 output = result.get("output")
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 embedding = output[0]
@@ -746,7 +748,7 @@ result = model.run(qa_input)
 
 output = result.get("output")
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 answer = output.get("answer")
@@ -813,7 +815,7 @@ sequence_objects = result.get("output")
 
 
 for sequence_object in sequence_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(sequence_object)
 
     sequence = sequence_object["sequence"]
@@ -856,7 +858,7 @@ result = model.run({"b64AudioBufferWav": input_audio_base64})
 label_objects = result["output"]
 
 for label_object in label_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(label_object)
 
     score = label_object["score"]
@@ -889,7 +891,7 @@ result = model.run(input_image_url)
 mask_objects = result.get("output")
 
 for index, mask_object in enumerate(mask_objects):
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(mask_object)
 
     label = mask_object.get("label")
@@ -1028,7 +1030,7 @@ box_objects = result.get("output")
 print(box_objects)
 
 for box_object in box_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(box_object)
 
     score = box_object["score"]
@@ -1156,7 +1158,7 @@ label_objects = result["output"]
 label_objects.sort(key=lambda x: x["score"], reverse=True)
 
 for label_object in label_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(label_object)
 
     # Extract and print score and label
@@ -1232,7 +1234,7 @@ result = model.run(input_data)
 
 output = result.get("output")
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 output_object: dict = output[0]
@@ -1336,7 +1338,7 @@ result = model.run({"b64AudioBufferWav": input_audio_base64})
 
 output = result["output"]
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 text = output["text"]
@@ -1454,7 +1456,7 @@ generated_text = output[0]["generated_text"]
 
 
 for message in generated_text:
-    #  depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(message)
 
     content = message["content"]

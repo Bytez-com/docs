@@ -13,7 +13,7 @@ result = model.run(input_image_url)
 labelObjects = result["output"]
 
 for labelObject in labelObjects
-	#  depending on the model, there may be additional props returned
+	# Depending on the model, there may be additional props returned
 	println(labelObject)
 
 	label = labelObject["label"]

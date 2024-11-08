@@ -21,12 +21,10 @@ result = model.run(Dict("b64AudioBufferWav" => input_audio_base64))
 
 output = result["output"]
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 println(output)
 
 text = output["text"]
 
 println("Inference is: $text")
-
-a = 2
 

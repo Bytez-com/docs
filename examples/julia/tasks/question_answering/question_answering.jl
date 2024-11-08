@@ -15,12 +15,13 @@ result = model.run(qa_input)
 
 output = result["output"]
 
-#  depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 println(output)
 
 answer = output["answer"]
 score = output["score"]
 start = output["start"]
+# End is a reserved keyword in julia
 _end = output["end"]
 
 println(Dict("answer" => answer, "score" => score, "start" => start, "end" => _end))

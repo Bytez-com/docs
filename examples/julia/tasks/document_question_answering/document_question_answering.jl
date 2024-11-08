@@ -18,7 +18,7 @@ result = model.run(input_data)
 
 output = result["output"]
 
-#  depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 println(output)
 
 output_object = output[1]
@@ -26,7 +26,7 @@ output_object = output[1]
 answer = output_object["answer"]
 score = output_object["score"]
 start = output_object["start"]
-# end is a reserved keyword in julia
+# End is a reserved keyword in julia
 _end = output_object["end"]
 
 println(Dict("answer" => answer, "score" => score, "start" => start, "end" => _end))

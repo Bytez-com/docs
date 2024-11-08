@@ -20,7 +20,7 @@ label_objects = result["output"]
 label_objects.sort(key=lambda x: x["score"], reverse=True)
 
 for label_object in label_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(label_object)
 
     # Extract and print score and label

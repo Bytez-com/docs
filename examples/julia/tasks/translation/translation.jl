@@ -10,7 +10,6 @@ input_text = "Hello, how are you? Beautiful day today, isn't it?"
 
 result = model.run(input_text)
 
-# Extract the translation text
 output = result["output"]
 
 translation_text = output[1]["translation_text"]

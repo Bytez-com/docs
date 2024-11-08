@@ -10,9 +10,9 @@ model.load()
 
 result = model.run(input_image_url)
 
-#  depending on the model, there may be additional props returned
 output = result["output"]
 
+# Depending on the model, there may be additional props returned
 println(output)
 
 generated_text = output[1]["generated_text"]

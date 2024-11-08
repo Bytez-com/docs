@@ -13,7 +13,7 @@ result = model.run(input_text)
 word_objects = result["output"]
 
 for word_object in word_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(word_object)
 
     word = word_object.get("word")

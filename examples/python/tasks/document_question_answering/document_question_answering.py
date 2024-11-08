@@ -18,7 +18,7 @@ result = model.run(input_data)
 
 output = result.get("output")
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 output_object: dict = output[0]

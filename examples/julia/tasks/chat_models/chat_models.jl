@@ -18,7 +18,7 @@ output = result["output"]
 generated_text = output[1]["generated_text"]
 
 for message in generated_text
-	# depending on the model, there may be additional props returned
+	# Depending on the model, there may be additional props returned
 	println(message)
 
 	content = message["content"]

@@ -12,7 +12,7 @@ result = model.run(input_image_url)
 
 output = result["output"]
 
-#  depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 println(output)
 
 embedding = output[1]

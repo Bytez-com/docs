@@ -14,7 +14,7 @@ sequence_objects = result.get("output")
 
 
 for sequence_object in sequence_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(sequence_object)
 
     sequence = sequence_object["sequence"]

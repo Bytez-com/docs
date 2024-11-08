@@ -23,7 +23,7 @@ result = model.run({"b64AudioBufferWav": input_audio_base64})
 label_objects = result["output"]
 
 for label_object in label_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(label_object)
 
     score = label_object["score"]

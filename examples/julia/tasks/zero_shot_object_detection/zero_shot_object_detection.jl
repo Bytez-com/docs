@@ -2,7 +2,6 @@ using Bytez
 using HTTP
 using Base64
 
-# Function to fetch an image and convert it to a base64-encoded string
 function get_base64_image(url::String)::String
 	response = HTTP.get(url)
 	image_bytes = response.body
@@ -32,7 +31,7 @@ label_objects = result["output"]
 sorted_label_objects = sort(label_objects, by = x -> x["score"], rev = true)
 
 for label_object in sorted_label_objects
-	# Print each label object (for debugging or review)
+	# Depending on the model, there may be additional props returned
 	println(label_object)
 
 	# Extract and print score and label

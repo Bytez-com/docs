@@ -21,7 +21,7 @@ box_objects = result.get("output")
 print(box_objects)
 
 for box_object in box_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(box_object)
 
     score = box_object["score"]

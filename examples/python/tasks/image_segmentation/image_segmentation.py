@@ -17,7 +17,7 @@ result = model.run(input_image_url)
 mask_objects = result.get("output")
 
 for index, mask_object in enumerate(mask_objects):
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(mask_object)
 
     label = mask_object.get("label")

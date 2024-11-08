@@ -18,7 +18,6 @@ There remain aspects of the observed universe that are not yet adequately explai
 
 result = model.run(input_text, Dict("max_length" => 40))
 
-# Extract the summary text
 output = result["output"]
 
 summary_text = output[1]["summary_text"]

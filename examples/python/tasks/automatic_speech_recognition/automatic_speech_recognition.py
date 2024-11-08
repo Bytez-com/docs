@@ -22,7 +22,7 @@ result = model.run({"b64AudioBufferWav": input_audio_base64})
 
 output = result["output"]
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 text = output["text"]

@@ -10,7 +10,7 @@ model.load()
 
 result = model.run(input_image_url)
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 output = result.get("output")
 
 print(output)

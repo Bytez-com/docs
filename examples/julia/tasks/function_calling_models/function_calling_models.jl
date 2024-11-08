@@ -51,6 +51,6 @@ prompt = replace(prompt_template, "{query}" => input_text)
 stream = model.run(prompt, options)
 
 while isopen(stream)
-	item = take!(stream)  # Take each item as it enters the channel
-	println(item)  # Print the item
+	item = take!(stream)
+	println(item)
 end

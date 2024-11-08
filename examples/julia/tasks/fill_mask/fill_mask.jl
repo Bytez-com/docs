@@ -13,7 +13,7 @@ result = model.run(input_text)
 sequence_objects = result["output"]
 
 for sequence_object in sequence_objects
-	#  depending on the model, there may be additional props returned
+	# Depending on the model, there may be additional props returned
 	println(sequence_object)
 
 	sequence = sequence_object["sequence"]

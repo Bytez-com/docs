@@ -14,7 +14,7 @@ result = model.run(input_text)
 label_objects = result["output"]
 
 for label_object in label_objects:
-    # depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(label_object)
 
     # Extract and print label and score

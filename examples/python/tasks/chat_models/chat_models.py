@@ -19,7 +19,7 @@ generated_text = output[0]["generated_text"]
 
 
 for message in generated_text:
-    #  depending on the model, there may be additional props returned
+    # Depending on the model, there may be additional props returned
     print(message)
 
     content = message["content"]

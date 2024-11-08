@@ -31,6 +31,8 @@ for box_object in box_objects
 	println(Dict("score" => score, "label" => label, "box" => box))
 end
 
+###### Visualizing the boxes ######
+
 # Fetch image from URL
 response = HTTP.get(img_url)
 image_bytes = response.body

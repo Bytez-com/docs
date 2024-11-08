@@ -18,7 +18,7 @@ label_objects = outputs[1]
 sorted_label_objects = sort(label_objects, by = x -> x["score"], rev = true)
 
 for label_object in sorted_label_objects
-	# Print each label object (for debugging or review)
+	# Depending on the model, there may be additional props returned
 	println(label_object)
 
 	# Extract and print score and label

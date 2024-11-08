@@ -15,7 +15,7 @@ result = model.run(qa_input)
 
 output = result.get("output")
 
-# depending on the model, there may be additional props returned
+# Depending on the model, there may be additional props returned
 print(output)
 
 answer = output.get("answer")

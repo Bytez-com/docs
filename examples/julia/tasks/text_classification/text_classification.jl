@@ -10,11 +10,10 @@ input_text = "We are furious with the results of the experiment!"
 
 result = model.run(input_text)
 
-# Extract the output labels
 label_objects = result["output"]
 
 for label_object in label_objects
-	#  depending on the model, there may be additional props returned
+	# Depending on the model, there may be additional props returned
 	println(label_object)
 
 	# Extract and print label and score
