@@ -255,9 +255,9 @@ print(instances);
 To request a model that exists on Huggingface but not yet on Bytez, you can do the following:
 
 ```py
-const model_id = "openai-community/gpt2";
+model_id = "openai-community/gpt2";
 
-const job_status = client.process(model_id);
+job_status = client.process(model_id);
 
 print(job_status);
 ```
