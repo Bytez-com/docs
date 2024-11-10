@@ -16,7 +16,7 @@ const model = client.model("ainize/bart-base-cnn");
 
 await model.load();
 
-const { output: [{ summary_text } = {}] = [] } = await model.run(inputText, {
+const { output: [{ summary_text }] } = await model.run(inputText, {
   max_length: 40
 });
 

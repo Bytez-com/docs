@@ -596,7 +596,7 @@ const model = client.model("ainize/bart-base-cnn");
 
 await model.load();
 
-const { output: [{ summary_text } = {}] = [] } = await model.run(inputText, {
+const { output: [{ summary_text }] } = await model.run(inputText, {
   max_length: 40
 });
 
@@ -669,7 +669,7 @@ const model = client.model("Helsinki-NLP/opus-mt-en-zh");
 
 await model.load();
 
-const { output: [{ translation_text } = {}] = [] } = await model.run(inputText);
+const { output: [{ translation_text }]} = await model.run(inputText);
 
 console.log(translation_text);
 ```
@@ -1045,7 +1045,7 @@ const model = client.model("google/flan-t5-base");
 
 await model.load();
 
-const { output: [{ generated_text } = {}] = [] } = await model.run(
+const { output: [{ generated_text }] } = await model.run(
   "Once upon a time there was a small little man who",
   modelParams
 );

@@ -8,7 +8,7 @@ const model = client.model("google/flan-t5-base");
 
 await model.load();
 
-const { output: [{ generated_text } = {}] = [] } = await model.run(
+const { output: [{ generated_text }] } = await model.run(
   "Once upon a time there was a small little man who",
   modelParams
 );

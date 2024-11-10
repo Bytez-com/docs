@@ -8,6 +8,6 @@ const model = client.model("Helsinki-NLP/opus-mt-en-zh");
 
 await model.load();
 
-const { output: [{ translation_text } = {}] = [] } = await model.run(inputText);
+const { output: [{ translation_text }] } = await model.run(inputText);
 
 console.log(translation_text);
