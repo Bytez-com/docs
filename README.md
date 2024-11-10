@@ -248,11 +248,11 @@ curl --location 'https://api.bytez.com/model/run' \
 --data '{
     "model": "openai-community/gpt2",
     "prompt": "Once upon a time there was a",
+    "stream": true,
     "params": {
         "min_length": 30,
         "max_length": 256
-    },
-    "stream": true
+    }
 }'
 ```
 
