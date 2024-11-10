@@ -871,6 +871,7 @@ label_objects = result["output"]
 for label_object in label_objects
 	# Depending on the model, there may be additional props returned
 	println(label_object)
+
 	score = label_object["score"]
 	label = label_object["label"]
 	println("Score: $score, Label: $label")
