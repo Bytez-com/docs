@@ -61,7 +61,7 @@ model.load()
 
 input_text = "Once upon a time there was a beautiful home where"
 
-model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+model_params = {"max_new_tokens": 20, "max_new_tokens": 5, "temperature": 0.5}
 
 result = model.run(input_text, model_params=model_params)
 
@@ -85,7 +85,7 @@ model.load()
 
 input_text = "Once upon a time there was a beautiful home where"
 
-model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+model_params = {"max_new_tokens": 20, "max_new_tokens": 5, "temperature": 0.5}
 
 stream = model.run(
     input_text,
@@ -220,7 +220,7 @@ Note: This is only supported for text-generation models.
 ```py
 input_text = "Once upon a time there was a beautiful home where"
 
-model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+model_params = {"max_new_tokens": 20, "max_new_tokens": 5, "temperature": 0.5}
 
 stream = model.run(
     input_text,
@@ -1262,7 +1262,7 @@ model.load()
 
 input_text = "Once upon a time there was a beautiful home where"
 
-model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+model_params = {"max_new_tokens": 20, "max_new_tokens": 5, "temperature": 0.5}
 
 stream = model.run(
     input_text,
@@ -1481,8 +1481,8 @@ model.load()
 input_text = "What's the weather like in Seattle right now?"
 
 model_params = {
-    "max_new_tokens": 500,
-    "min_new_tokens": 50,
+    "max_new_tokens": 20,
+    "max_new_tokens": 5,
     "temperature": 0.001,
     "do_sample": False,
 }

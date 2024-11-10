@@ -62,8 +62,8 @@ input_text = "Once upon a time there was a beautiful home where"
 
 options = Dict(
 	"params" => Dict(
-		"max_new_tokens" => 500,
-		"min_new_tokens" => 50,
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
 		"temperature" => 0.5,
 	)
 )
@@ -91,8 +91,8 @@ input_text = "Once upon a time there was a beautiful home where"
 
 options = Dict(
 	"params" => Dict(
-		"max_new_tokens" => 500,
-		"min_new_tokens" => 50,
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
 		"temperature" => 0.5,
 	),
 	"stream" => true,
@@ -221,8 +221,8 @@ input_text = "Once upon a time there was a small little man who"
 
 options = Dict(
 	"params" => Dict(
-		"max_new_tokens" => 500,
-		"min_new_tokens" => 50,
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
 		"temperature" => 0.5,
 	)
 )
@@ -241,8 +241,8 @@ input_text = "Once upon a time there was a beautiful home where"
 
 options = Dict(
 	"params" => Dict(
-		"max_new_tokens" => 500,
-		"min_new_tokens" => 50,
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
 		"temperature" => 0.5,
 	),
 	"stream" => true,
@@ -1282,8 +1282,8 @@ input_text = "Once upon a time there was a beautiful home where"
 
 options = Dict(
 	"params" => Dict(
-		"max_new_tokens" => 500,
-		"min_new_tokens" => 50,
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
 		"temperature" => 0.5,
 	),
 	"stream" => true,
@@ -1505,7 +1505,7 @@ input_text = "What's the weather like in Seattle right now?"
 options = Dict(
 	"params" => Dict(
 		"max_new_tokens" => 20,
-		"min_new_tokens" => 50,
+		"min_new_tokens" => 5,
 		"temperature" => 0.001,
 		"do_sample" => false),
 	"stream" => true,
