@@ -16,9 +16,9 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
 # Table of Contents
 - [Basic Usage](#basic-usage)
 - [Libraries](#libraries)
-    - [Python](./python/readme.md)
-    - [Javascript](./javascript/readme.md)
-    - [Julia](./julia/Bytez/readme.md)
+    - [Python](./python/README.md)
+    - [Javascript](./javascript/README.md)
+    - [Julia](./julia/Bytez/README.md)
 - [Quickstart](#quickstart)
   - [Get an API Key](#get-an-api-key)
   - [Bytez Model Playground](#bytez-model-playground)
@@ -88,9 +88,9 @@ for chunk in stream:
 
 # Libraries
 Each link below has a quickstart and detailed examples for all supported ML tasks for a given client
-- [Python](./python/readme.md)
-- [Javascript](./javascript/readme.md)
-- [Julia](./julia/Bytez/readme.md)
+- [Python](./python/README.md)
+- [Javascript](./javascript/README.md)
+- [Julia](./julia/Bytez/README.md)
 
 # Quickstart
 Two steps to run inference in seconds:
@@ -137,7 +137,7 @@ Models can also be explored:
 ### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
 Load and run a model after installing our python library (`pip install bytez`). 
 
-Full documentation can be found [here](./python/readme.md).
+Full documentation can be found [here](./python/README.md).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
@@ -160,12 +160,12 @@ output = model.run("Once upon a time there was a", model_params={"max_new_tokens
 print(output)
 ```
 
-See the [API Documentation](./python/readme.md) for all examples.
+See the [API Documentation](./python/README.md) for all examples.
 
 ### <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
 
-Full documentation can be found [here](./javascript/readme.md).
+Full documentation can be found [here](./javascript/README.md).
 
 #### Load and run a model (javascript)
 ```js
@@ -189,12 +189,12 @@ const output = await model.run("Once upon a time there was a", {
 console.log(output);
 ```
 
-See [API Documentation](./javascript/readme.md) for all examples.
+See [API Documentation](./javascript/README.md) for all examples.
 
 ### Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
 
-Full documentation can be found [here](./julia/Bytez/readme.md).
+Full documentation can be found [here](./julia/Bytez/README.md).
 
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 

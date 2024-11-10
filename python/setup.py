@@ -5,7 +5,7 @@ setup(
     version="0.2.26",
     packages=find_packages(),
     description="Python API client for Bytez service",
-    long_description=open("./readme.md").read(),
+    long_description=open("./README.md").read(),
     long_description_content_type="text/markdown",
     author="Bytez",
     url="https://github.com/bytez-com/docs",
