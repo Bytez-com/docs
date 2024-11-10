@@ -95,9 +95,9 @@ Each link below has a quickstart and detailed examples for all supported ML task
 # Quickstart
 Two steps to run inference in seconds:
 
-- Get your API Key by visiting the Bytez settings page -> [Bytez Settings Page](https://bytez.com/settings).
+1. Get your API Key by visiting the Bytez settings page -> [Bytez Settings Page](https://bytez.com/settings).
     
-- Choose how you want to perform inference with Bytez:
+2. Choose how you want to perform inference with Bytez:
 
   - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](https://bytez.com) (Great for exploring and trying models)
 
