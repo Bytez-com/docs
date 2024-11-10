@@ -111,7 +111,7 @@ Two steps to run inference in seconds:
    - Run inference locally via [Docker](#docker)
  
 ## Get an API Key
-To use this API, you need an API key. Obtain your key by visiting the settings page -> [Bytez Settings Page](https://bytez.com/settings).
+To use this API, you need an API key. Obtain your key by visiting the settings page [Bytez Settings Page](https://bytez.com/settings).
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
 
