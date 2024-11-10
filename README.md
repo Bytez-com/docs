@@ -155,7 +155,7 @@ model = client.model('openai-community/gpt2')
 model.load()
 
 # Run a model
-output = model.run("Once upon a time there was a", model_params={"max_new_tokens":1,"min_new_tokens":1})
+output = model.run("Once upon a time there was a", model_params={"max_new_tokens": 20,"min_new_tokens": 5})
 print(output)
 ```
 
