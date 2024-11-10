@@ -126,9 +126,15 @@ from bytez import Bytez
 
 client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
-model_list = client.list_models()
+# To list all models
+models = client.list_models()
 
-print(model_list)
+println(models)
+
+# To list models by task
+models_by_task = client.list_models("object-detection")
+
+println(models_by_task)
 ```
 
 ## Initialize the Model API

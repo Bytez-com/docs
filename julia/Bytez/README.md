@@ -139,6 +139,7 @@ from bytez import Bytez
 
 client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
+# To list all models
 model_list = client.list_models()
 
 println(model_list)

@@ -108,9 +108,15 @@ import Bytez from "bytez.js";
 
 const client = new Bytez("YOUR_API_KEY");
 
-const models = await client.list.models();
+// lists all models
+const models = await client.list.models.all();
 
 console.log(models);
+
+// to list models by task
+const modelsByTask = await client.list.models.byTask("object-detection");
+
+console.log(modelsByTask);
 ```
 
 ## Initialize the Model API
