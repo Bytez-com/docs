@@ -202,7 +202,7 @@ console.log(output);
 
 ## Stream the Response
 
-Note: This is only supported for text-generation models.
+Note: This is only supported for `text-generation` models.
 
 ```js
 const stream = await model.run("Jack and Jill", { stream: true });

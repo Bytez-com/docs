@@ -221,7 +221,7 @@ print(result)
 
 ## Stream the Response
 
-Note: This is only supported for text-generation models.
+Note: This is only supported for `text-generation` models.
 
 ```py
 input_text = "Once upon a time there was a beautiful home where"
