@@ -7,7 +7,7 @@ import { PNG } from "pngjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImageBase64 = await getBase64Image(
   "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"

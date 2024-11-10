@@ -6,7 +6,7 @@ import { writeFileSync } from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImage =
   "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";

@@ -3,7 +3,7 @@ using Printf
 
 WORKING_DIR = dirname(@__FILE__)
 
-client = Bytez.init("YOUR BYTEZ KEY HERE")
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0")
 

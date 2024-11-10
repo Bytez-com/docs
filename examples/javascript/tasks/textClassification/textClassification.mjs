@@ -1,6 +1,6 @@
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = "We are furious with the results of the experiment!";
 

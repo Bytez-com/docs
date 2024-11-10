@@ -4,7 +4,7 @@ import os
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("suno/bark-small")
 

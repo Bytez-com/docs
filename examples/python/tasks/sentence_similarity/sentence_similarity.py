@@ -1,7 +1,7 @@
 from bytez import Bytez
 import numpy as np
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("sentence-transformers/all-MiniLM-L6-v2")
 

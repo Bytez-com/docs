@@ -1,6 +1,6 @@
 using Bytez
 
-client = Bytez.init("YOUR BYTEZ KEY HERE")
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon")
 

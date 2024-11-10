@@ -11,7 +11,7 @@ input_audio_base64 = get_base64_audio(
 	"https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav",
 )
 
-client = Bytez.init("YOUR BYTEZ KEY HERE")
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("aaraki/wav2vec2-base-finetuned-ks")
 

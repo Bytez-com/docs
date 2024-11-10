@@ -14,7 +14,7 @@ input_image_base64 = get_base64_image(
     "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
 )
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("BilelDJ/clip-hugging-face-finetuned")
 

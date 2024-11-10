@@ -4,7 +4,7 @@ using Printf
 
 WORKING_DIR = dirname(@__FILE__)
 
-client = Bytez.init("YOUR BYTEZ KEY HERE")
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("sayeed99/segformer-b3-fashion")
 

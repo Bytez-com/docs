@@ -5,7 +5,7 @@ import { writeFileSync } from "node:fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const imgUrl =
   "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9";

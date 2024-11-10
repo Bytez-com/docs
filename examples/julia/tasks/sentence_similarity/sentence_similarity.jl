@@ -1,7 +1,7 @@
 using Bytez
 using LinearAlgebra
 
-client = Bytez.init("YOUR BYTEZ KEY HERE")
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("sentence-transformers/all-MiniLM-L6-v2")
 

@@ -1,6 +1,6 @@
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = `
 The Big Bang is a physical theory that describes how the universe expanded from an initial state of high density and temperature.[1] The notion of an expanding universe was first scientifically originated by physicist Alexander Friedmann in 1922 with the mathematical derivation of the Friedmann equations.[2][3][4][5]

@@ -21,7 +21,7 @@ input_image_base64 = get_base64_image(
     "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
 )
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("facebook/sam-vit-base")
 

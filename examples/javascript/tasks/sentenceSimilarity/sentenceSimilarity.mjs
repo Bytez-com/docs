@@ -1,7 +1,7 @@
 import Bytez from "bytez.js";
 import * as tf from "@tensorflow/tfjs"; // Import TensorFlow.js
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("sentence-transformers/all-MiniLM-L6-v2");
 

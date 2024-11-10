@@ -1,6 +1,6 @@
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("google/vit-base-patch16-224")
 

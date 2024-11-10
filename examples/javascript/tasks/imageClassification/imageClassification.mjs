@@ -1,6 +1,6 @@
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const imgUrl =
   "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg";

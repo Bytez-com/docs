@@ -1,6 +1,6 @@
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0");
 

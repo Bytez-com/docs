@@ -42,7 +42,7 @@ Below is the basic usage for the python client library. See [Libraries](#librari
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Qwen/Qwen2-7B-Instruct")
 
@@ -66,7 +66,7 @@ Streaming usage (only text-generation models support streaming currently)
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Qwen/Qwen2-7B-Instruct")
 
@@ -120,7 +120,7 @@ To then use it in code (python example):
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 ```
 
 All users are provided with 100 credits worth of free compute per month!

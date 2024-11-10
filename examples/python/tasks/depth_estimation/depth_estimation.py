@@ -6,7 +6,7 @@ from bytez import Bytez
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # Replace with your actual Bytez API key
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("vinvino02/glpn-nyu")
 

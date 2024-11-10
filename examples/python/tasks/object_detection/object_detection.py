@@ -6,7 +6,7 @@ import io
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("facebook/detr-resnet-50")
 

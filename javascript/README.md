@@ -258,7 +258,7 @@ Token classification involves identifying and categorizing tokens in a text. Com
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("dslim/bert-base-NER");
 
@@ -291,7 +291,7 @@ import { writeFileSync } from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImage =
   "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";
@@ -346,7 +346,7 @@ Image classification involves categorizing images into predefined classes. Use c
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const imgUrl =
   "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg";
@@ -375,7 +375,7 @@ Sentence similarity involves measuring how similar two sentences are. Use cases 
 import Bytez from "bytez.js";
 import * as tf from "@tensorflow/tfjs"; // Import TensorFlow.js
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("sentence-transformers/all-MiniLM-L6-v2");
 
@@ -437,7 +437,7 @@ Image to text involves generating textual descriptions of images. Use cases incl
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImage =
   "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";
@@ -463,7 +463,7 @@ Image feature extraction involves extracting features from images for tasks like
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImage =
   "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg";
@@ -491,7 +491,7 @@ import { PNG } from "pngjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImageBase64 = await getBase64Image(
   "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
@@ -580,7 +580,7 @@ Summarization involves creating concise summaries of longer texts. Use cases inc
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = `
 The Big Bang is a physical theory that describes how the universe expanded from an initial state of high density and temperature.[1] The notion of an expanding universe was first scientifically originated by physicist Alexander Friedmann in 1922 with the mathematical derivation of the Friedmann equations.[2][3][4][5]
@@ -610,7 +610,7 @@ Text classification involves categorizing text into predefined classes. Use case
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = "We are furious with the results of the experiment!";
 
@@ -639,7 +639,7 @@ Feature extraction involves extracting features from data for further processing
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = "Your text for feature extraction goes here...";
 
@@ -661,7 +661,7 @@ Translation involves translating text from one language to another. Use cases in
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = "Hello, how are you? Beautiful day today, isn't it?";
 
@@ -681,7 +681,7 @@ Question answering involves answering questions based on a given context. Use ca
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("deepset/roberta-base-squad2");
 
@@ -720,7 +720,7 @@ import { writeFileSync } from "node:fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("ali-vilab/text-to-video-ms-1.7b");
 
@@ -741,7 +741,7 @@ Fill mask involves predicting missing words in a sentence. Use cases include tex
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("almanach/camembert-base");
 
@@ -768,7 +768,7 @@ Audio classification involves categorizing audio clips into predefined classes. 
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputAudioBase64 = await getBase64Audio(
   "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
@@ -815,7 +815,7 @@ import { writeFileSync } from "node:fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const imgUrl =
   "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9";
@@ -847,7 +847,7 @@ Visual question answering involves answering questions based on an image. Use ca
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("Salesforce/blip-vqa-base");
 
@@ -879,7 +879,7 @@ import { writeFileSync } from "node:fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("suno/bark-small");
 
@@ -900,7 +900,7 @@ Video classification involves categorizing videos into predefined classes. Use c
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const videoUrl =
   "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4";
@@ -942,7 +942,7 @@ import { createCanvas } from "canvas";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 const imgUrl =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg";
 
@@ -1037,7 +1037,7 @@ Text to text generation involves generating text from input text. Use cases incl
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const modelParams = { max_new_tokens: 20, temperature: 2 };
 
@@ -1060,7 +1060,7 @@ Zero-shot image classification involves classifying images into classes not seen
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("BilelDJ/clip-hugging-face-finetuned");
 
@@ -1094,7 +1094,7 @@ Zero-shot classification involves classifying text into classes not seen during 
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("facebook/bart-large-mnli");
 
@@ -1135,7 +1135,7 @@ Document question answering involves answering questions based on the content of
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0");
 
@@ -1163,7 +1163,7 @@ Text generation involves generating coherent text from an initial prompt. Use ca
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const modelParams = {
   max_new_tokens: 2000,
@@ -1200,7 +1200,7 @@ import { writeFileSync } from "node:fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("afshr/cam_finetune");
 
@@ -1221,7 +1221,7 @@ Automatic speech recognition involves converting spoken language into written te
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputAudioBase64 = await getBase64Audio(
   "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
@@ -1261,7 +1261,7 @@ Zero-shot object detection involves detecting objects in images without prior tr
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputImageBase64 = await getBase64Image(
   "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
@@ -1311,7 +1311,7 @@ import { writeFileSync } from "node:fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model = client.model("dreamlike-art/dreamlike-photoreal-2.0");
 
@@ -1334,7 +1334,7 @@ Chat models are used to create interactive conversational agents. These models c
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const messages = [
   {
@@ -1372,7 +1372,7 @@ Some models support function calling, allowing them to interact with user-define
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR BYTEZ KEY HERE");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const inputText = "What's the weather like in Seattle right now?";
 

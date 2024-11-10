@@ -53,7 +53,7 @@
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Qwen/Qwen2-7B-Instruct")
 
@@ -77,7 +77,7 @@ Streaming usage (only text-generation models support streaming currently)
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Qwen/Qwen2-7B-Instruct")
 
@@ -114,7 +114,7 @@ To then use it in code:
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 ```
 
 ## List Available Models
@@ -124,7 +124,7 @@ Lists the currently available models and provides basic information about each o
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model_list = client.list_models()
 
@@ -283,7 +283,7 @@ Token classification involves identifying and categorizing tokens in a text. Com
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("dslim/bert-base-NER")
 
@@ -331,7 +331,7 @@ from bytez import Bytez
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # Replace with your actual Bytez API key
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("vinvino02/glpn-nyu")
 
@@ -380,7 +380,7 @@ Image classification involves categorizing images into predefined classes. Use c
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("google/vit-base-patch16-224")
 
@@ -412,7 +412,7 @@ Sentence similarity involves measuring how similar two sentences are. Use cases 
 from bytez import Bytez
 import numpy as np
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("sentence-transformers/all-MiniLM-L6-v2")
 
@@ -470,7 +470,7 @@ Image to text involves generating textual descriptions of images. Use cases incl
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 input_image_url = "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg"
 
@@ -497,7 +497,7 @@ Image feature extraction involves extracting features from images for tasks like
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("nomic-ai/nomic-embed-vision-v1")
 
@@ -545,7 +545,7 @@ input_image_base64 = get_base64_image(
     "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
 )
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("facebook/sam-vit-base")
 
@@ -617,7 +617,7 @@ Summarization involves creating concise summaries of longer texts. Use cases inc
 from bytez import Bytez
 
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("ainize/bart-base-cnn")
 
@@ -650,7 +650,7 @@ Text classification involves categorizing text into predefined classes. Use case
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon")
 
@@ -681,7 +681,7 @@ Feature extraction involves extracting features from data for further processing
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Salesforce/SFR-Embedding-2_R")
 
@@ -708,7 +708,7 @@ Translation involves translating text from one language to another. Use cases in
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Helsinki-NLP/opus-mt-en-zh")
 
@@ -733,7 +733,7 @@ Question answering involves answering questions based on a given context. Use ca
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("deepset/roberta-base-squad2")
 
@@ -771,7 +771,7 @@ from bytez import Bytez
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("ali-vilab/text-to-video-ms-1.7b")
 
@@ -801,7 +801,7 @@ Fill mask involves predicting missing words in a sentence. Use cases include tex
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("almanach/camembert-base")
 
@@ -847,7 +847,7 @@ input_audio_base64 = get_base64_audio(
     "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
 )
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("aaraki/wav2vec2-base-finetuned-ks")
 
@@ -878,7 +878,7 @@ from bytez import Bytez
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("sayeed99/segformer-b3-fashion")
 
@@ -913,7 +913,7 @@ Visual question answering involves answering questions based on an image. Use ca
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Salesforce/blip-vqa-base")
 
@@ -944,7 +944,7 @@ import os
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("suno/bark-small")
 
@@ -974,7 +974,7 @@ Video classification involves categorizing videos into predefined classes. Use c
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("ahmedabdo/video-classifier")
 
@@ -1015,7 +1015,7 @@ import io
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("facebook/detr-resnet-50")
 
@@ -1112,7 +1112,7 @@ Text to text generation involves generating text from input text. Use cases incl
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("google/flan-t5-base")
 
@@ -1138,7 +1138,7 @@ Zero-shot image classification involves classifying images into classes not seen
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("BilelDJ/clip-hugging-face-finetuned")
 
@@ -1175,7 +1175,7 @@ Zero-shot classification involves classifying text into classes not seen during 
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("facebook/bart-large-mnli")
 
@@ -1219,7 +1219,7 @@ from bytez import Bytez
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0")
 
@@ -1254,7 +1254,7 @@ Text generation involves generating coherent text from an initial prompt. Use ca
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Qwen/Qwen2-7B-Instruct")
 
@@ -1286,7 +1286,7 @@ from bytez import Bytez
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("afshr/cam_finetune")
 
@@ -1328,7 +1328,7 @@ input_audio_base64 = get_base64_audio(
     "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
 )
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("facebook/data2vec-audio-base-960h")
 
@@ -1367,7 +1367,7 @@ input_image_base64 = get_base64_image(
     "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
 )
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("BilelDJ/clip-hugging-face-finetuned")
 
@@ -1407,7 +1407,7 @@ import os
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("dreamlike-art/dreamlike-photoreal-2.0")
 
@@ -1437,7 +1437,7 @@ Chat models are used to create interactive conversational agents. These models c
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("microsoft/Phi-3-mini-4k-instruct")
 
@@ -1472,7 +1472,7 @@ Some models support function calling, allowing them to interact with user-define
 ```py
 from bytez import Bytez
 
-client = Bytez("YOUR BYTEZ KEY HERE")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 model = client.model("Nexusflow/NexusRaven-V2-13B")
 
