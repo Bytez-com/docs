@@ -1,4 +1,4 @@
-# Setting Up the Julia Environment
+# Installation
 
 To set up the required environment with the specified packages, follow these steps in the Julia REPL.
 
@@ -36,3 +36,9 @@ To start the Julia REPL, simply run the command `julia`
    ```julia
    using Bytez, HTTP, Images, Colors, FileIO, Luxor, Base64
    ```
+
+# Run the code
+
+Pick a file from the `tasks` subdirectory and run the code provided. 
+
+Enjoy!
