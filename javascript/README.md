@@ -200,12 +200,10 @@ Note: This is only supported for text-generation models.
 
 ```js
 const stream = await model.run("Jack and Jill", { stream: true });
-const reader = stream.getReader();
+const textStream = stream.pipeThrough(new TextDecoderStream());
 
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
-  console.log(new TextDecoder().decode(value));
+for await (const chunk of textStream) {
+  console.log(chunk);
 }
 ```
 
@@ -1182,12 +1180,10 @@ const stream = await model.run(
   { stream: true, ...modelParams }
 );
 
-const reader = stream.getReader();
+const textStream = stream.pipeThrough(new TextDecoderStream());
 
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
-  console.log(new TextDecoder().decode(value));
+for await (const chunk of textStream) {
+  console.log(chunk);
 }
 ```
 
@@ -1423,12 +1419,10 @@ const prompt = promptTemplate.replace("{query}", inputText);
 
 const stream = await model.run(prompt, { stream: true, params: modelParams });
 
-const reader = stream.getReader();
+const textStream = stream.pipeThrough(new TextDecoderStream());
 
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
-  console.log(new TextDecoder().decode(value));
+for await (const chunk of textStream) {
+  console.log(chunk);
 }
 ```
 
