@@ -50,7 +50,7 @@ model.load()
 
 input_text = "Once upon a time there was a beautiful home where"
 
-model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+model_params = {"max_new_tokens": 20, "min_new_tokens": 5, "temperature": 0.5}
 
 result = model.run(input_text, model_params=model_params)
 
@@ -74,7 +74,7 @@ model.load()
 
 input_text = "Once upon a time there was a beautiful home where"
 
-model_params = {"max_new_tokens": 500, "min_new_tokens": 50, "temperature": 0.5}
+model_params = {"max_new_tokens": 20, "min_new_tokens": 5, "temperature": 0.5}
 
 stream = model.run(
     input_text,
@@ -214,8 +214,8 @@ model.load()
 # Run a model
 options = Dict(
 	"params" => Dict(
-		"max_new_tokens" => 500,
-		"min_new_tokens" => 50,
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
 		"temperature" => 0.5,
 	)
 )
