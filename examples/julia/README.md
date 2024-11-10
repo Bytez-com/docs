@@ -1,6 +1,8 @@
 # Setting Up the Julia Environment
 
-To set up the required environment with the specified packages, follow these steps in the Julia REPL:
+To set up the required environment with the specified packages, follow these steps in the Julia REPL.
+
+To start the Julia REPL, simply run the command `julia`
 
 1. **Activate a New Project Environment**:
    
