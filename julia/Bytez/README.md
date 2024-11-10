@@ -322,6 +322,7 @@ for word_object in word_objects
 	score = get(word_object, "score", 0.0)
 	index = get(word_object, "index", 0)
 	start = get(word_object, "start", 0)
+	# End is a reserved keyword in julia
 	_end = get(word_object, "end", 0)
 
 	println(
