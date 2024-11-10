@@ -52,7 +52,7 @@
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 const model_id = "openai-community/gpt2";
 
@@ -96,7 +96,7 @@ To then use it in code:
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 ```
 
 ## List Available Models
@@ -106,7 +106,7 @@ Lists the currently available models and provides basic information about each o
 ```js
 import Bytez from "bytez.js";
 
-const client = new Bytez("YOUR_API_KEY");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 // lists all models
 const models = await client.list.models.all();

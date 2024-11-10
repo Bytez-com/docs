@@ -146,7 +146,7 @@ Full documentation can be found [here](./python/readme.md).
 import os
 from bytez import Bytez
 
-client = Bytez("YOUR_API_KEY")
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
 # Initalize a model
 model = client.model('openai-community/gpt2')
@@ -170,7 +170,7 @@ Full documentation can be found [here](./javascript/readme.md).
 ```js
 import Bytez from "bytez.js";
 
-client = new Bytez("YOUR_API_KEY");
+client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 // Grab a model
 model = client.model("openai-community/gpt2");
@@ -202,7 +202,7 @@ Full documentation can be found [here](./julia/Bytez/readme.md).
 #### Load and run a model (julia)
 ```julia
 using Bytez
-client = Bytez.init("YOUR_API_KEY");
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE");
 
 # Grab a model
 # args => modelId, concurrency = 1, timeout = 300 secs
