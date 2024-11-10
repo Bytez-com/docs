@@ -181,7 +181,11 @@ await model.load();
 console.log(results);
 
 // Run a model
-output = await model.run("Once upon a time there was a");
+const output = await model.run("Once upon a time there was a", {
+// huggingface params
+  max_new_tokens: 20,
+  min_new_tokens: 5
+});
 
 console.log(output);
 ```
