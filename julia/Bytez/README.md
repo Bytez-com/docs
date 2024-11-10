@@ -118,7 +118,7 @@ add Bytez
 
 ## Authentication and Getting Your Key
 
-To use this API, you need an API key. Obtain your key by visiting the [Bytez Settings Page](https://bytez.com/settings).
+To use this API, you need an API key. Obtain your key by visiting the [Bytez Settings Page](https://bytez.com/settings)
 
 ![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
 
