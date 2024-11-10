@@ -1,6 +1,6 @@
 # Cold Boot Times & Billing
 ## Cold Boot Times
-Models have a cold boot time. This is the time it takes for a model's compute resources to be provisioned, as well as for the model to be downloaded and loaded into memory. This takes between 1.5 to 5 minutes - even for the largest models (those with 70B+ params). 
+Models have a cold boot time. This is the time it takes for a model's compute resources to be provisioned, as well as for the model to be downloaded and loaded into memory. This takes between 0.5 to 5 minutes - even for the largest models (those with 70B+ params). 
 
 We're continuously optimizing our pipeline to bring cold boot times down to near zero.
 
