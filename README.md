@@ -156,6 +156,7 @@ model.load()
 
 # Run a model
 output = model.run("Once upon a time there was a", model_params={"max_new_tokens": 20,"min_new_tokens": 5})
+
 print(output)
 ```
 
@@ -177,8 +178,6 @@ model = client.model("openai-community/gpt2");
 
 // Start a model
 await model.load();
-
-console.log(results);
 
 // Run a model
 const output = await model.run("Once upon a time there was a", {
@@ -202,10 +201,10 @@ Full documentation can be found [here](./julia/Bytez/readme.md).
 #### Load and run a model (julia)
 ```julia
 using Bytez
+
 client = Bytez.init("YOUR_BYTEZ_KEY_HERE");
 
 # Grab a model
-# args => modelId, concurrency = 1, timeout = 300 secs
 model = client.model("openai-community/gpt2")
 
 # Start a model
