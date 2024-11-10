@@ -62,8 +62,8 @@ await model.load();
 
 const output = await model.run("Once upon a time there was a", {
 // huggingface params
-  max_new_tokens: 1,
-  min_new_tokens: 1
+  max_new_tokens: 20,
+  min_new_tokens: 5
 });
 
 console.log(output);
@@ -187,8 +187,8 @@ Run inference with HuggingFace parameters.
 
 ```js
 const output = await model.run("Once upon a time there was a", {
-  max_new_tokens: 1,
-  min_new_tokens: 1,
+  max_new_tokens: 20,
+  min_new_tokens: 5,
 });
 
 console.log(output);
@@ -1168,7 +1168,7 @@ import Bytez from "bytez.js";
 const client = new Bytez("YOUR BYTEZ KEY HERE");
 
 const modelParams = {
-  max_new_tokens: 500,
+  max_new_tokens: 2000,
   min_new_tokens: 50,
   temperature: 0.5
 };
@@ -1381,7 +1381,7 @@ const client = new Bytez("YOUR BYTEZ KEY HERE");
 const inputText = "What's the weather like in Seattle right now?";
 
 const modelParams = {
-  max_new_tokens: 500,
+  max_new_tokens: 2000,
   min_new_tokens: 50,
   temperature: 0.001,
   do_sample: false
