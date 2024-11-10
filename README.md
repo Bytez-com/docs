@@ -212,7 +212,16 @@ model = client.model("openai-community/gpt2")
 model.load()
 
 # Run a model
-output = model.run("Roses are")
+options = Dict(
+	"params" => Dict(
+		"max_new_tokens" => 500,
+		"min_new_tokens" => 50,
+		"temperature" => 0.5,
+	)
+)
+
+output = model.run(input_text, options)
+
 println(output)
 
 ```
