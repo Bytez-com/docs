@@ -135,7 +135,7 @@ client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
 Lists the currently available models and provides basic information about each one, such as the RAM required to run an instance.
 
 ```jl
-from bytez import Bytez
+using Bytez
 
 client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
