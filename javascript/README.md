@@ -129,7 +129,7 @@ const model = client.model("openai-community/gpt2");
 
 ## Load a Model
 
-Convenience method for `model.start()`. Automatically waits for the instance to become ready before resolving.
+Convenience method for `model.start()`. Automatically waits for the instance to become ready.
 
 Progress is printed as it executes.
 
