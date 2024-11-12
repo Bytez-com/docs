@@ -21,6 +21,7 @@ Evaluate and run large AI models easily and affordably with Bytez, treating mode
     - [Julia](./julia/Bytez/README.md)
 - [Quickstart](#quickstart)
   - [Get an API Key](#get-an-api-key)
+  - [API Playground](#api-playground)
   - [Bytez Model Playground](#bytez-model-playground)
   - [Library Examples](#library-examples)
     - [Python](#-python)
@@ -131,6 +132,9 @@ You can play with models without having to write any code by visiting [Bytez](ht
 
 Models can also be explored:
 ![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
+
+## API Playground
+We've set up a [public sandbox in Postman to demo our API](https://www.postman.com/bytez7/bytez-api-v2/overview). _Note: this is the v2 endpoint, which allows you to demo both closed and open source AI models_.
 
 ## Library Examples
 
