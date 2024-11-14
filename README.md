@@ -134,7 +134,18 @@ Models can also be explored:
 ![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
 
 ## API Playground
-We've set up a [public sandbox in Postman to demo our API](https://www.postman.com/bytez7/bytez-api-v2/overview). _Note: this is the v2 endpoint, which allows you to demo both closed and open source AI models_.
+We've set up a [public sandbox in Postman to demo our API](https://www.postman.com/bytez-api/v2/overview). _Note: this is the v2 endpoint, which allows you to demo both closed and open source AI models_. 
+
+| Category                           | Description                                                                                              |
+|------------------------------------|----------------------------------------------------------------------------------------------------------|
+| **[Closed Source Examples](https://www.postman.com/bytez-api/v2/collection/81i1xjy/closed-source)**         | Examples for using closed-source models from leading providers (Anthropic, OpenAI, Cohere and more!)                                          |
+| **[Open Source Examples](https://www.postman.com/bytez-api/v2/collection/kpuvtya/open-source)**      | Examples demonstrating how to use HTTP requests to interact with 23k+ open-source models on the platform.   |
+| **[Open Source Examples - Image as Input](https://www.postman.com/bytez-api/v2/collection/v7r0059/open-source-examples-image-as-input)**     | Examples using images as input across various tasks, including classification and segmentation.       |
+| **[Open Source Examples - Messages as Input](https://www.postman.com/bytez-api/v2/collection/3kumojr/open-source-examples-messages-as-input)**  | Examples using messages as input, ideal for chat-based applications and sentiment analysis.           |
+| **[Open Source Examples - Text as Input](https://www.postman.com/bytez-api/v2/collection/9ahlkt9/open-source-examples-text-as-input)**      | Examples for handling text input, such as summarization, translation, and general NLP tasks.          |
+| **[Open Source Examples - Multi-Input](https://www.postman.com/bytez-api/v2/collection/fm920bu/open-source-examples-multi-input)**        | Examples that handle multiple types of input simultaneously, such as text and images.                 |
+| **[Useful Functions & Model Library](https://www.postman.com/bytez-api/v2/collection/71imd9f/useful-functions-model-library)**          | Explore utility functions to list models by task, clusters, and more for streamlined model selection. |
+
 
 ## Library Examples
 
