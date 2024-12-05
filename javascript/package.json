@@ -1,10 +1,6 @@
 {
   "name": "bytez.js",
-<<<<<<< HEAD
   "version": "1.0.1",
-=======
-  "version": "0.5.7",
->>>>>>> bde0891a7e55ef0e7e361de77664398ed96a72af
   "type": "module",
   "packageManager": "yarn@4.5.3",
   "engines": {
@@ -14,15 +10,9 @@
   "scripts": {
     "build": "pkgroll",
     "dev": "tsx src/index.ts",
-<<<<<<< HEAD
     "test": "tsx ./src/v1/tests.ts",
     "lint": "eslint ./src/*.ts",
     "update": "yarn upgrade-interactive"
-=======
-    "test": "tsx tests/tasks.test.ts && tsx tests/tasks.test.ts",
-    "lint": "eslint ./src/*.ts",
-    "deploy": "node deploy.js"
->>>>>>> bde0891a7e55ef0e7e361de77664398ed96a72af
   },
   "author": "Bytez",
   "license": "ISC",
@@ -49,10 +39,5 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     }
-<<<<<<< HEAD
   }
-=======
-  },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
->>>>>>> bde0891a7e55ef0e7e361de77664398ed96a72af
 }
