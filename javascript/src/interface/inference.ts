@@ -1,4 +1,6 @@
 export default interface Inference {
+  /** Send back pure media or JSON. Default: `true` */
+  json?: boolean;
   /** Stream results back. Default: `false` */
   stream?: boolean;
 

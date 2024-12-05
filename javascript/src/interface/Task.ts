@@ -1,6 +1,7 @@
 export type Task =
   | "audio-classification"
   | "automatic-speech-recognition"
+  | "chat"
   | "depth-estimation"
   | "document-question-answering"
   | "feature-extraction"

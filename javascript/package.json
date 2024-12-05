@@ -1,7 +1,8 @@
 {
   "name": "bytez.js",
-  "version": "0.5.0",
+  "version": "1.0.1",
   "type": "module",
+  "packageManager": "yarn@4.5.3",
   "engines": {
     "node": "20"
   },
@@ -9,21 +10,22 @@
   "scripts": {
     "build": "pkgroll",
     "dev": "tsx src/index.ts",
-    "test": "tsx tests.ts",
-    "lint": "eslint ./src/*.ts"
+    "test": "tsx ./src/v1/tests.ts",
+    "lint": "eslint ./src/*.ts",
+    "update": "yarn upgrade-interactive"
   },
   "author": "Bytez",
   "license": "ISC",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
-    "bytez.js": "latest",
-    "eslint": "^8.57.0",
-    "inquirer": "^9.2.23",
-    "pkgroll": "^2.1.1",
-    "semver": "^7.6.2",
-    "tsx": "^4.15.5",
-    "typescript": "^5.4.5"
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "bytez.js": "^0.5.7",
+    "eslint": "^9.16.0",
+    "inquirer": "^12.1.0",
+    "pkgroll": "^2.5.1",
+    "semver": "^7.6.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -37,6 +39,5 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     }
-  },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  }
 }
