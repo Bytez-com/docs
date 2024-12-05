@@ -11,88 +11,231 @@
 
 # ✨ Bytez
 
-Evaluate and run large AI models affordably with Bytez – achieve GPU performance at CPU pricing.
+Evaluate and run large AI models easily and affordably with Bytez, treating models as functions – achieve GPU performance at CPU pricing.
 
-# 🚀 Quickstart
-Two steps to run inference in minutes:
-1. Get your API Key
-2. Choose your path: run inference locally via Docker or use our API (javascript, python, REST API)
+# Table of Contents
+- [Basic Usage](#basic-usage)
+- [Libraries](#libraries)
+    - [Python](./python/README.md)
+    - [Javascript](./javascript/README.md)
+    - [Julia](./julia/Bytez/README.md)
+- [Quickstart](#quickstart)
+  - [Get an API Key](#get-an-api-key)
+  - [API Playground](#api-playground)
+  - [Bytez Model Playground](#bytez-model-playground)
+  - [Library Examples](#library-examples)
+    - [Python](#-python)
+    - [Javascript](#-javascript)
+    - [Julia](#julia)
+  - [REST API](#-rest-api)
+    - [Load a model](#load-a-model)
+    - [Run a model](#run-a-model)
+    - [Request a model](#request-a-model)
+  - [Docker](#docker)
+    - [Image Source Code](#image-source-code)
+- [Model Library](#model-library)
+- [Resources](#resources)
+- [Feedback](#feedback)
 
-## 🔑 API Key
-Join the [Bytez Discord](https://discord.gg/Zrd5UbMEBA) or go to [Bytez.com](http://bytez.com), sign in, and visit user settings to get your key. 
+# Basic Usage
+Below is the basic usage for the python client library. See [Libraries](#libraries) for javascript and julia examples.
 
-## Docker 
-All Bytez models are available on [Docker Hub](https://hub.docker.com/u/bytez) or our [About](https://bytez.com/about) page 🤙
+```py
+from bytez import Bytez
 
-## Libraries
-- [Python](./python/readme.md)
-- [Javascript](./javascript/readme.md)
-- [Julia](./julia/Bytez/readme.md)
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
 
-## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
-Load and run a model after installing our python library (`pip install Bytez`).
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+model_params = {"max_new_tokens": 20, "min_new_tokens": 5, "temperature": 0.5}
+
+result = model.run(input_text, model_params=model_params)
+
+output = result["output"]
+
+generated_text = output[0]["generated_text"]
+
+print(generated_text)
+```
+
+Streaming usage (only text-generation models support streaming currently)
+
+```py
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+model_params = {"max_new_tokens": 20, "min_new_tokens": 5, "temperature": 0.5}
+
+stream = model.run(
+    input_text,
+    stream=True,
+    model_params=model_params,
+)
+
+for chunk in stream:
+    print(f"Output: {chunk}")
+```
+
+# Libraries
+Each link below has a quickstart and detailed examples for all supported ML tasks for a given client
+- [Python](./python/README.md)
+- [Javascript](./javascript/README.md)
+- [Julia](./julia/Bytez/README.md)
+
+# Quickstart
+Two steps to run inference in seconds:
+
+1. Get your API Key by visiting the [Bytez Settings Page](https://bytez.com/settings)
+    
+2. Choose how you want to perform inference with Bytez:
+
+  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](https://bytez.com) (Great for exploring and trying models)
+
+  - Install a client library:
+    - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
+    - [python](https://github.com/Bytez-com/docs/tree/main/python)
+    - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
+
+   - Hit the [REST API](#rest-api) directly
+
+   - Run inference locally via [Docker](#docker)
+ 
+## Get an API Key
+To use this API, you need an API key. Obtain your key by visiting the settings page [Bytez Settings Page](https://bytez.com/settings)
+
+![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
+
+To then use it in code (python example):
+
+```py
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+```
+
+All users are provided with 100 credits worth of free compute per month!
+
+## Bytez Model Playground
+You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
+![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
+
+Models can also be explored:
+![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
+
+## API Playground
+We've set up a [public sandbox in Postman to demo our API](https://www.postman.com/bytez-api/v2/overview). _Note: this is the v2 endpoint, which allows you to demo both closed and open source AI models_. 
+
+| Category                           | Description                                                                                              |
+|------------------------------------|----------------------------------------------------------------------------------------------------------|
+| **[Closed Source Examples](https://www.postman.com/bytez-api/v2/collection/81i1xjy/closed-source)**         | Examples for using closed-source models from leading providers (Anthropic, OpenAI, Cohere and more!)                                          |
+| **[Open Source Examples](https://www.postman.com/bytez-api/v2/collection/kpuvtya/open-source)**      | Examples demonstrating how to use HTTP requests to interact with 23k+ open-source models on the platform.   |
+| **[Open Source Examples - Image as Input](https://www.postman.com/bytez-api/v2/collection/v7r0059/open-source-examples-image-as-input)**     | Examples using images as input across various tasks, including classification and segmentation.       |
+| **[Open Source Examples - Messages as Input](https://www.postman.com/bytez-api/v2/collection/3kumojr/open-source-examples-messages-as-input)**  | Examples using messages as input, ideal for chat-based applications and sentiment analysis.           |
+| **[Open Source Examples - Text as Input](https://www.postman.com/bytez-api/v2/collection/9ahlkt9/open-source-examples-text-as-input)**      | Examples for handling text input, such as summarization, translation, and general NLP tasks.          |
+| **[Open Source Examples - Multi-Input](https://www.postman.com/bytez-api/v2/collection/fm920bu/open-source-examples-multi-input)**        | Examples that handle multiple types of input simultaneously, such as text and images.                 |
+| **[Useful Functions & Model Library](https://www.postman.com/bytez-api/v2/collection/71imd9f/useful-functions-model-library)**          | Explore utility functions to list models by task, clusters, and more for streamlined model selection. |
+
+
+## Library Examples
+
+### <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
+Load and run a model after installing our python library (`pip install bytez`). 
+
+Full documentation can be found [here](./python/README.md).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
 
-### Load and run a model
-```python
+#### Load and run a model (python)
+```py
 import os
 from bytez import Bytez
-client = Bytez(api_key=os.environ.get("YOUR_API_KEY")
 
-# Grab a model
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+# Initalize a model
 model = client.model('openai-community/gpt2')
 
 # Start a model
 model.load()
 
 # Run a model
-output = model.run("Once upon a time there was a", model_params={"max_new_tokens":1,"min_new_tokens":1})
+output = model.run("Once upon a time there was a", model_params={"max_new_tokens": 20,"min_new_tokens": 5})
+
 print(output)
 ```
 
-See the [API Documentation](./python/readme.md) for all examples.
+See the [API Documentation](./python/README.md) for all examples.
 
-## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
+### <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
 Load and run a model after installing our Typescript library (`npm i bytez.js`).
-### Load and run a model
-```javascript
+
+Full documentation can be found [here](./javascript/README.md).
+
+#### Load and run a model (javascript)
+```js
 import Bytez from "bytez.js";
-client = new Bytez("YOUR_API_KEY");
+
+client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
 // Grab a model
 model = client.model("openai-community/gpt2");
 
 // Start a model
 await model.load();
-console.log(results);
 
 // Run a model
-output = await model.run("Once upon a time there was a");
+const output = await model.run("Once upon a time there was a", {
+// huggingface params
+  max_new_tokens: 20,
+  min_new_tokens: 5
+});
+
 console.log(output);
 ```
 
-See [API Documentation](./javascript/readme.md) for all examples.
+See [API Documentation](./javascript/README.md) for all examples.
 
-## <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Julia_Programming_Language_Logo.svg" height=15 />Julia
+### Julia
 Load and run a model after installing our Bytez library (`add Bytez`).
+
+Full documentation can be found [here](./julia/Bytez/README.md).
 
 <img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
 
-### Load and run a model
+#### Load and run a model (julia)
 ```julia
 using Bytez
-client = Bytez.init("YOUR_API_KEY");
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE");
 
 # Grab a model
-# args => modelId, concurrency = 1, timeout = 300 secs
 model = client.model("openai-community/gpt2")
 
 # Start a model
 model.load()
 
 # Run a model
-output = model.run("Roses are")
+options = Dict(
+	"params" => Dict(
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
+		"temperature" => 0.5,
+	)
+)
+
+output = model.run(input_text, options)
+
 println(output)
 
 ```
@@ -123,8 +266,7 @@ curl --location 'https://api.bytez.com/model/run' \
     "params": {
         "min_length": 30,
         "max_length": 256
-    },
-    "stream": true
+    }
 }'
 ```
 
@@ -140,9 +282,15 @@ curl --location 'https://api.bytez.com/model/job' \
 
 See the [API Documentation](./api.md) for all endpoints.
 
+# Docker 
+All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
+
+## Image Source Code
+The source code that runs for a given model in the docker image can be found [here](https://github.com/Bytez-com/models)
+
 # Model Library
 
-We currently support 14K+ open source AI models across 30+ ML tasks. 
+We currently support 20K+ open source AI models across 30+ ML tasks. 
 
 | Task   | Total Models    
 |------------|-----|                               
@@ -178,15 +326,7 @@ We currently support 14K+ open source AI models across 30+ ML tasks.
 | Document-question-answering | 18
 | Text-to-audio | 11
 
-## Examples 
-
-To see the full list, run:
-```python
-models = client.list_models()
-print(models)
-```
-
-Here are some models that can be run - with their required RAM. 
+Here's a sample of some models that can be run - with their required RAM.
 
 | Model Name                                               | Required RAM (GB)       
 |----------------------------------------------------------|-------------------------|
@@ -195,46 +335,33 @@ Here are some models that can be run - with their required RAM.
 | succinctly/text2image-prompt-generator                   | 1.04                    
 | ai-forever/mGPT                                          | 9.59                    
 | microsoft/phi-1                                          | 9.16                    
-| facebook/opt-1.3b                                        | 8.06                    
-| openai-community/gpt2                                    | 0.50                                     
-| bigscience/bloom-1b7                                     | 7.82                    
-| databricks/dolly-v2-3b                                   | 11.09                   
+| facebook/opt-1.3b                                        | 8.06                                   
 | tiiuae/falcon-40b-instruct                               | 182.21                  
 | tiiuae/falcon-7b-instruct                                | 27.28                   
 | codellama/CodeLlama-7b-Instruct-hf                       | 26.64                   
 | deepseek-ai/deepseek-coder-6.7b-instruct                 | 26.50                   
 | upstage/SOLAR-10.7B-Instruct-v1.0                        | 57.63                   
 | elyza/ELYZA-japanese-Llama-2-7b-instruct                 | 38.24                   
-| NousResearch/Meta-Llama-3-8B-Instruct                    | 30.93                   
-| VAGOsolutions/SauerkrautLM-Mixtral-8x7B-Instruct         | 211.17                  
-| codellama/CodeLlama-34b-Instruct-hf                      | 186.52                  
-| deepseek-ai/deepseek-coder-7b-instruct-v1.5              | 27.05                   
-| Equall/Saul-Instruct-v1                                  | 2.44                    
-| Equall/Saul-7B-Instruct-v1                               | 10.20                   
-| microsoft/Phi-3-mini-128k-instruct                       | 14.66                   
-| microsoft/Phi-3-mini-4k-instruct                         | 14.65                   
-| victor/CodeLlama-34b-Instruct-hf                         | 127.37                  
-| gradientai/Llama-3-8B-Instruct-262k                      | 30.80                   
-| gradientai/Llama-3-8B-Instruct-Gradient-1048k            | 30.59                   
-| yanolja/EEVE-Korean-Instruct-10.8B-v1.0                  | 54.30                   
-| codellama/CodeLlama-13b-Instruct-hf                      | 50.38                   
-| deepseek-ai/deepseek-coder-1.3b-instruct                 | 6.16                    
-| deepseek-ai/deepseek-coder-33b-instruct                  | 158.74                  
-| filipealmeida/Mistral-7B-Instruct-v0.1-sharded           | 27.42                   
-| unsloth/llama-3-8b-Instruct                              | 30.77                   
-| speakleash/Bielik-7B-Instruct-v0.1                       | 27.52                   
-| Deci/DeciLM-7B-instruct                                  | 26.90                   
-| tokyotech-llm/Swallow-70b-instruct-hf                    | 242.23                  
-| tokyotech-llm/Swallow-7b-NVE-instruct-hf                 | 26.89                                     
-| codellama/CodeLlama-70b-Instruct-hf                      | 372.52                  
-| togethercomputer/Llama-2-7B-32K-Instruct                 | 25.65                   
-| beomi/Llama-3-Open-Ko-8B-Instruct-preview                | 30.81                   
-| abhishekchohan/SOLAR-10.7B-Instruct-Forest-DPO-v1        | 15.38                   
-| deepseek-ai/deepseek-math-7b-instruct                    | 28.08                   
-| occiglot/occiglot-7b-eu5-instruct                        | 28.94                   
-| MediaTek-Research/Breeze-7B-Instruct-v1_0                | 29.84                   
+| NousResearch/Meta-Llama-3-8B-Instruct                    | 30.93                                                                     
+| codellama/CodeLlama-70b-Instruct-hf                      | 372.52           
 
+To see the full list, run:
+```py
+models = client.list_models()
+print(models)
+```
+
+To see a task specific list, run:
+
+```py
+models = client.list_models(task="text-generation")
+print(models)
+```
 
 # Resources
 - [About Us](./about.md)
 - [Cold Boot Times and Billing](./cold-boot-billing.md)
+
+# Feedback
+
+We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](mailto:help@bytez.com)

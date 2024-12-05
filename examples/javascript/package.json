@@ -1,0 +1,13 @@
+{
+  "engines": {
+    "node": "20"
+  },
+  "version": "1.0.0",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
+    "bytez.js": "^0.5.6",
+    "canvas": "^2.11.2",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.33.5"
+  }
+}

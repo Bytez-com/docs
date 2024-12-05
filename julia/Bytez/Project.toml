@@ -1,6 +1,6 @@
 name = "Bytez"
 uuid = "aeec0939-83cf-4f14-8c49-2dc7569399f2"
-version = "0.0.4"
+version = "0.0.10"
 authors = ["Bytez <support@bytez.com>"]
 license = "MIT"
 

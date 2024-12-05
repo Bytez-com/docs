@@ -3,3 +3,5 @@ build
 *.egg-info
 dist
 *.hidden
+.vscode/launch.json
+*.pyc
