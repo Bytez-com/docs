@@ -10,7 +10,7 @@
   "scripts": {
     "build": "pkgroll",
     "dev": "tsx src/index.ts",
-    "test": "tsx ./src/v1/tests.ts",
+    "test": "tsx ./tests/tasks.test.ts",
     "lint": "eslint ./src/*.ts",
     "update": "yarn upgrade-interactive"
   },
