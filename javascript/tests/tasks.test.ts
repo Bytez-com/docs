@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it, after } from "node:test";
 //
-import Bytez from "bytez.js";
-// import Bytez from "../src/index";
+// import Bytez from "bytez.js";
+import Bytez from "../src/index";
 
 async function getDataUrl(url: string) {
   const response = await fetch(url);
@@ -68,7 +68,7 @@ describe.skip("text generation", async () => {
     );
   });
 
-  await it.skip("CRUD - reads cluster", async () => {
+  await it("CRUD - reads cluster", async () => {
     const { error, output } = await model.read();
 
     assert(error === null);
@@ -159,17 +159,17 @@ describe.skip("text generation", async () => {
     assert(error === null);
     assert(typeof output === "string", "returns output");
 
-    // ({ error, output } = await model.run(
-    //   "Jack and jill",
-    //   { max_length: 100 },
-    //   false
-    // ));
+    ({ error, output } = await model.run(
+      "Jack and jill",
+      { max_length: 100 },
+      false
+    ));
 
     assert(error === null);
     assert(typeof output === "string", "returns output");
   });
 
-  await it.skip("CRUD - deletes cluster", async () => {
+  await it("CRUD - deletes cluster", async () => {
     const { error, output } = await model.delete();
 
     assert(error === null);
