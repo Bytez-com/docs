@@ -1064,20 +1064,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bytez.js@npm:^0.5.7":
-  version: 0.5.7
-  resolution: "bytez.js@npm:0.5.7"
-  checksum: 10c0/45caf9c86df4dac8dab861523e5f1684be238d90f951f45b63f1349355fdafd4b79f7311856143eb895e35ddb45a2096dce124605fc92378eb5d99e1c6a5b8d0
-  languageName: node
-  linkType: hard
-
-"bytez.js@workspace:.":
+"bytez.js@npm:^1.0.1, bytez.js@workspace:.":
   version: 0.0.0-use.local
   resolution: "bytez.js@workspace:."
   dependencies:
     "@typescript-eslint/eslint-plugin": "npm:^8.17.0"
     "@typescript-eslint/parser": "npm:^8.17.0"
-    bytez.js: "npm:^0.5.7"
+    bytez.js: "npm:^1.0.1"
     eslint: "npm:^9.16.0"
     inquirer: "npm:^12.1.0"
     pkgroll: "npm:^2.5.1"

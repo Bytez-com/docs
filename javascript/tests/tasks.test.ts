@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it, after } from "node:test";
 //
-// import Bytez from "bytez.js";
-import Bytez from "../src/index";
+import Bytez from "bytez.js";
+// import Bytez from "../src/index";
 
 async function getDataUrl(url: string) {
   const response = await fetch(url);

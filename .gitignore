@@ -5,3 +5,4 @@ dist
 *.hidden
 .vscode/launch.json
 *.pyc
+.yarn

@@ -19,7 +19,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
-    "bytez.js": "^0.5.7",
+    "bytez.js": "^1.0.1",
     "eslint": "^9.16.0",
     "inquirer": "^12.1.0",
     "pkgroll": "^2.5.1",
