@@ -1,6 +1,6 @@
 import Client from "./client";
 import Model from "./model";
-import { Pipeline, DAG } from "./workflow";
+// import { Pipeline, DAG } from "./workflow";
 // interfaces
 import { ListModels } from "./interface/List";
 import { Response } from "./interface/Client";
@@ -39,8 +39,8 @@ export default class Bytez {
   model = (modelId: string, params?: Inference): Model =>
     new Model(modelId, this, this.#client, params);
 
-  workflow = {
-    pipeline: (sequence: Model[]) => new Pipeline(sequence),
-    dag: (nodes, edges) => new DAG(nodes, edges)
-  };
+  // workflow = {
+  //   pipeline: (sequence: Model[]) => new Pipeline(sequence),
+  //   dag: (nodes, edges) => new DAG(nodes, edges)
+  // };
 }

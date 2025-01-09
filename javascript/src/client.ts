@@ -1,7 +1,12 @@
 import { Response, Method, RequestBody } from "./interface/Client";
 
 export default class Client {
-  constructor(apiKey: string, dev = false, browser?: boolean) {
+  constructor(
+    apiKey: string,
+    dev = false,
+    isBrowser = typeof window !== "undefined"
+  ) {
+    this.#isBrowser = isBrowser;
     this.host = `http${
       dev ? "://localhost:8080" : "s://api.bytez.com"
     }/models/v2/`;
@@ -9,10 +14,9 @@ export default class Client {
       Authorization: `Key ${apiKey}`,
       "content-type": "application/json"
     };
-    this.#isBrowser = browser || typeof window !== "undefined";
 
-    if (this.#isBrowser === false) {
-      import("node:stream").then(({ Readable }) => {
+    if (isBrowser === false) {
+      import("stream").then(({ Readable }) => {
         this.#Readable = Readable;
       });
     }
