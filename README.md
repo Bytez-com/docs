@@ -666,13 +666,7 @@ Each API response includes:
 Explore our API endpoints in the documentation [here](https://docs.bytez.com/model-api/playground/overview).
 
 ## Status
-<iframe
-  src="https://status.bytez.com"
-  title="API Status"
-  height="500"
-  allowFullScreen
-  style={{ width: '100%', borderRadius: '0.5rem' }}
-></iframe>
+Check out the status of our [API](https://status.bytez.com)
 
 ## Resources
 Get to know our story, our mission, and our roadmap [here](https://docs.bytez.com/company/about).
