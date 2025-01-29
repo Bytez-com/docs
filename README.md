@@ -9,255 +9,81 @@
 
 </div>
 
-# ✨ Bytez
+# Bytez Model API
 
-Access 33,000+ AI models across 33 tasks, including text, image, audio generation, and chat. The Bytez API has a standard protocol for open-source and closed-source models – delivering GPU performance at CPU pricing. 
+✨ Access 40k+ open-source and proprietary AI models through a standard API. Achieve GPU-backed performance at CPU pricing ✨
 
-# Table of Contents
-- [Quickstart](#quickstart)
-  - [Get an API Key](#get-an-api-key)
-  - [Model Playground](#bytez-model-playground)	
-  - [API Playground](#api-playground)
-- [Basic Usage](#basic-usage)
-  - [Python](#-python)
-  - [Javascript](#-javascript)
-  - [Julia](#julia)
-  - [REST API](#rest-api)
-    - [Generate Text from Text-Only Input](#generate-text-from-text-only-input)
-    - [Generate Images](#generate-images)
-    - [Generate Audio from Text](#generate-audio-from-text)
-    - [Interactive Chat](#interactive-chat)
-    - [Useful Functions](#useful-functions)
-  - [Docker](#docker)
-    - [Image Source Code](#image-source-code)
-- [Supported Tasks & Models](#model-library)
-  - [Open Source Models](#open-source-models)
-  - [Closed Source Providers](#closed-source-providers)
-- [Resources](#resources)
-- [Feedback](#feedback)
+## Table of Contents
 
-# Quickstart
-Two steps to run inference in seconds:
+1. [Introduction](#introduction)
+2. [Quickstart](#quickstart)
+3. [API Documentation](#api-documentation)
+   - [Get a Bytez API Key](#get-a-bytez-api-key)
+   - [List Models & Tasks](#list-models--tasks)
+   - [Play with Trending Models on Bytez](#play-with-trending-models-on-bytez)
+4. [Libraries](#libraries)
+5. [Docker](#docker)
+6. [Capabilities](#capabilities)
+   - [Chat (Text Generation)](#chat)
+   - [Chat + Vision](#chat--vision)
+   - [Chat + Video](#chat--video)
+   - [Chat + Audio](#chat--audio)
+   - [Image Generation](#image-generation)
+   - [Embeddings](#embeddings)
+   - [Function Calling](#function-calling)
+   - [Streaming](#streaming)
+   - [All Model Tasks](#all-model-tasks)
+7. [Proprietary Models](#proprietary-models)
+8. [Pricing](#pricing)
+9. [API Playground](#api-playground)
+10. [Status](#status)
+11. [Resources](#resources)
+12. [Feedback](#feedback)
 
-1. Get your API Key by visiting the [Bytez Settings Page](https://bytez.com/settings)
-    
-2. Choose how you want to perform inference with Bytez:
+---
 
-  - Use the [Bytez Model Playground](https://bytez.com/models) on [bytez.com](https://bytez.com) (Great for exploring and trying models)
+## Introduction
 
-  - Install a client library:
-    - [javascript](https://github.com/Bytez-com/docs/tree/main/javascript)
-    - [python](https://github.com/Bytez-com/docs/tree/main/python)
-    - [julia](https://github.com/Bytez-com/docs/tree/main/julia/Bytez)
-    - Hit the [REST API](#rest-api) directly
-    - Run inference locally via [Docker](#docker)
- 
-## Get an API Key
-To use this API, you need an API key. Obtain your key by visiting the settings page [Bytez Settings Page](https://bytez.com/settings)
+Bytez Model API streamlines integration with 40k+ open-source and proprietary AI models across 33 ML tasks. By standardizing inputs for `text`, `images`, `audio`, and more, it eliminates the complexity of inconsistent formats, enabling developers to effortlessly interact with models for tasks like `chat`, `text generation`, `image generation`, `video generation`, and beyond.
 
-![Bytez Settings Page](https://github.com/user-attachments/assets/884b92b1-021a-4aa4-a150-312ae89f80d0)
+---
 
-To then use it in code (python example):
+## Quickstart
+Get your API Key by signing up on [Bytez](http://bytez.com), then navigating to Settings in your account.
 
-```py
-from bytez import Bytez
+Validate by running an inference:
 
-client = Bytez("YOUR_BYTEZ_KEY_HERE")
-```
-
-All users are provided with 100 credits worth of free compute per month!
-
-## Bytez Model Playground
-You can play with models without having to write any code by visiting [Bytez](https://bytez.com/models)
-![image](https://github.com/user-attachments/assets/6aa2335d-9f31-43ea-99d2-34891eac808e)
-
-Models can also be explored:
-![image](https://github.com/user-attachments/assets/623f1808-5d0f-4d74-9864-6106444f6311)
-
-## API Playground
-We've set up a [public sandbox in Postman to demo our API](https://www.postman.com/bytez-api/v2/overview). 
-
-| Category                           | Description                                                                                              |
-|------------------------------------|----------------------------------------------------------------------------------------------------------|
-| **[Closed Source](https://www.postman.com/bytez-api/v2/collection/81i1xjy/closed-source)**         | Examples for using closed-source models from leading providers (Anthropic, OpenAI, Cohere and more!)                                          |
-| **[Open Source](https://www.postman.com/bytez-api/v2/collection/kpuvtya/open-source)**      | Examples demonstrating how to use HTTP requests to interact with 23k+ open-source models on the platform.   |
-| **[Open Source - Image as Input](https://www.postman.com/bytez-api/v2/collection/v7r0059/open-source-examples-image-as-input)**     | Examples using images as input across various tasks, including classification and segmentation.       |
-| **[Open Source - Messages as Input](https://www.postman.com/bytez-api/v2/collection/3kumojr/open-source-examples-messages-as-input)**  | Examples using messages as input, ideal for chat-based applications and sentiment analysis.           |
-| **[Open Source - Text as Input](https://www.postman.com/bytez-api/v2/collection/9ahlkt9/open-source-examples-text-as-input)**      | Examples for handling text input, such as summarization, translation, and general NLP tasks.          |
-| **[Open Source - Multi-Input](https://www.postman.com/bytez-api/v2/collection/fm920bu/open-source-examples-multi-input)**        | Examples that handle multiple types of input simultaneously, such as text and images.                 |
-| **[Useful Functions & Model Library](https://www.postman.com/bytez-api/v2/collection/71imd9f/useful-functions-model-library)**          | Explore utility functions to list models by task, clusters, and more for streamlined model selection. |
-
-
-# Basic Usage
-
-## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" height=15 /> Python
-Load and run a model after installing our python library (`pip install bytez`). 
-
-Full documentation can be found [here](./python/README.md).
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oZ4_yQoryL9a3CCLiY29JpEI1L5uwqO-?authuser=1#scrollTo=3LRTz2egUNh7&uniqifier=3)
-
-Below is the basic usage for the python client library. See [Libraries](#libraries) for javascript and julia examples.
-
-```py
-from bytez import Bytez
-
-client = Bytez("YOUR_BYTEZ_KEY_HERE")
-
-model = client.model("Qwen/Qwen2-7B-Instruct")
-
-model.load()
-
-input_text = "Once upon a time there was a beautiful home where"
-
-model_params = {"max_new_tokens": 20, "min_new_tokens": 5, "temperature": 0.5}
-
-result = model.run(input_text, model_params=model_params)
-
-output = result["output"]
-
-generated_text = output[0]["generated_text"]
-
-print(generated_text)
-```
-
-Streaming usage (only text-generation models support streaming currently)
-
-```py
-from bytez import Bytez
-
-client = Bytez("YOUR_BYTEZ_KEY_HERE")
-
-model = client.model("Qwen/Qwen2-7B-Instruct")
-
-model.load()
-
-input_text = "Once upon a time there was a beautiful home where"
-
-model_params = {"max_new_tokens": 20, "min_new_tokens": 5, "temperature": 0.5}
-
-stream = model.run(
-    input_text,
-    stream=True,
-    model_params=model_params,
-)
-
-for chunk in stream:
-    print(f"Output: {chunk}")
-```
-
-See the [API Documentation](./python/README.md) for all examples.
-
-## <img src="https://cdn-icons-png.flaticon.com/512/5968/5968322.png" height=15 /> Javascript
-Load and run a model after installing our Typescript library (`npm i bytez.js`).
-
-Full documentation can be found [here](./javascript/README.md).
-
-### Load and run a model (javascript)
-```js
-import Bytez from "bytez.js";
-
-client = new Bytez("YOUR_BYTEZ_KEY_HERE");
-
-// Grab a model
-model = client.model("openai-community/gpt2");
-
-// Start a model
-await model.load();
-
-// Run a model
-const output = await model.run("Once upon a time there was a", {
-// huggingface params
-  max_new_tokens: 20,
-  min_new_tokens: 5
-});
-
-console.log(output);
-```
-
-See [API Documentation](./javascript/README.md) for all examples.
-
-## Julia
-Load and run a model after installing our Bytez library (`add Bytez`).
-
-Full documentation can be found [here](./julia/Bytez/README.md).
-
-<img src="https://cdn.jsdelivr.net/gh/fonsp/Pluto.jl@0.15.1/frontend/img/logo.svg" height=15 /> <b>[Interactive Notebook!](#)</b> <i>(Coming Soon)</i>
-
-### Load and run a model (julia)
-```julia
-using Bytez
-
-client = Bytez.init("YOUR_BYTEZ_KEY_HERE");
-
-# Grab a model
-model = client.model("openai-community/gpt2")
-
-# Start a model
-model.load()
-
-# Run a model
-options = Dict(
-	"params" => Dict(
-		"max_new_tokens" => 20,
-		"min_new_tokens" => 5,
-		"temperature" => 0.5,
-	)
-)
-
-output = model.run(input_text, options)
-
-println(output)
-
-```
-
-## <img src="https://www.svgrepo.com/show/305922/curl.svg" height=15 />REST API
-
-### Generate Text from Text-Only Input
-The simplest way to generate text using the Bytez API is to send a single text-only input:
+#### REST
 ```bash
 curl --location 'https://api.bytez.com/models/v2/openai-community/gpt2' \
 --header 'Authorization: Key BYTEZ_API_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "text": "Once upon a time, there was a magical forest."
+    "text": "Dreams are messages from the "
 }'
-
 ```
-This zero-shot approach provides the model with a basic prompt. You can refine your output using one-shot or few-shot techniques.
 
-### Generate Images
-Generate images from text prompts. Below is an example using Stable Diffusion:
+## API Documentation
+
+### Get a Bytez API Key
+
+1. Log into [Bytez](http://bytez.com).
+2. Navigate to the `Settings` page.
+3. Locate your API key under the **API Keys** section and copy it.
+
+Use this key in the `Authorization` header for all API requests:
+
+```http
+Authorization: Key your-key-here
+```
+
+### Send Your First API Request
+You can use a `curl` command to verify your setup:
 
 ```bash
-curl --location 'https://api.bytez.com/models/v2/stabilityai/stable-diffusion-xl-base-1.0' \
+curl --location 'https://api.bytez.com/models/v2/NousResearch/Hermes-3-Llama-3.1-8B' \
 --header 'Authorization: Key BYTEZ_API_KEY' \
 --header 'Content-Type: application/json' \
---data '{
-    "text": "A serene lake surrounded by mountains during sunset."
-}'
-
-```
-For advanced use cases, provide additional parameters to adjust style, resolution, or other attributes.
-
-### Generate Audio from Text
-Convert text into audio:
-```bash
-curl --location 'https://api.bytez.com/models/v2/facebook/mms-tts-eng' \
---header 'Authorization: Key BYTEZ_API_KEY' \
---header 'Content-Type: application/json' \
---data '{
-    "text": "Welcome to the future of AI-powered audio synthesis!"
-}'
-```
-The API returns a downloadable audio file corresponding to your input text.
-
-### Interactive Chat
-
-You can build interactive chat experiences by sending structured inputs and receiving model responses:
-```bash
-curl --location 'localhost:8080/models/v2/Qwen/Qwen2-7B-Instruct' \
---header 'Authorization: Key BYTEZ_API_KEY' \
 --data '{
     "messages": [
         {
@@ -266,147 +92,590 @@ curl --location 'localhost:8080/models/v2/Qwen/Qwen2-7B-Instruct' \
         },
         {
             "role": "user",
-            "content": "Can you generate code?"
+            "content": "Dreams are messages from the "
         }
     ]
 }'
 ```
-### Useful Functions
 
-#### List All Models
+Something not right or need another API Key? DM our team in [Discord](https://discord.com/invite/Z723PfCFWf) and we'll resolve.
+
+### Accessing Closed Source Models
+You can interact with proprietary [chat](chat/text#proprietary-models) models by `OpenAI`, `Anthropic`, `Cohere`, `Google`, and `Mistral`
+
+To use these models, you'll need two keys:
+
+1. Your `Bytez API Key`: Obtained as described above.
+2. `Provider Key`: The key specific to the provider you want to access (e.g., OpenAI API key).
+
+Example Headers
+```http
+Authorization: Key your-bytez-api-key
+Provider-key: your-provider-key
+```
+
+### Notes
+1. `No Additional Charges`: Bytez does not charge for accessing proprietary models; however, the respective provider's billing applies.
+2. `Seamless Integration`: You can interact with closed-source models using the same standardized input structure as open-source models.
+
+
+### List Models & Tasks
+#### Python
+```python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+## List all models
+models = client.list_models()
+println(models)
+
+## List models by task
+models_by_task = client.list_models("object-detection")
+println(models_by_task)
+```
+#### Javascript
+```javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+// List all models
+const models = await client.list.models.all();
+console.log(models);
+// List models by task
+const modelsByTask = await client.list.models.byTask("object-detection");
+
+console.log(modelsByTask);
+```
+#### Julia
+```julia
+using Bytez
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+model_list = client.list_models()
+
+println(model_list)
+```
+#### REST
 ```bash
 curl --location 'https://api.bytez.com/models/v2/list/models' \
---header 'Authorization: Key BYTEZ_API_KEY'
-```
-#### List All Tasks
-```bash
-curl --location 'https://api.bytez.com/models/v2/list/tasks' \
---header 'Authorization: Key BYTEZ_API_KEY'
-```
-#### List All Models by Task
-```bash
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE'
+
 curl --location 'https://api.bytez.com/models/v2/list/models?task=chat' \
---header 'Authorization: Key BYTEZ_API_KEY'
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE'
 ```
-#### List Clusters
-```bash
-curl --location 'https://api.bytez.com/models/v2/list/clusters' \
---header 'Authorization: Key BYTEZ_API_KEY'
+### Play with Trending Models on Bytez
+We have an [API playground](https://docs.bytez.com/model-api/playground/overview) to demo over 40k models across 33 tasks. Or, feel free to play with models on the [Bytez platform](https://bytez.com/).
+
+## Libraries
+Using `Python 3.9+`, `JavaScript`, or `Julia`, install the appropriate package:
+
+### Python
+```python 
+pip install bytez
 ```
 
-See the [API Documentation](./api.md) for all endpoints.
+### Javascript
+```javascript 
+npm install bytez.js
+```
+### Julia
+```julia julia
+// Run the command julia
+// Press ]
+// Run the command below
+add Bytez
+```
 
-# Docker 
+### Run Inference
+
+#### Python
+```python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+model = client.model("Qwen/Qwen2-7B-Instruct")
+model.load()
+
+input_text = "Dreams are messages from the "
+model_params = {"max_new_tokens": 20, "max_new_tokens": 5, "temperature": 0.5}
+
+result = model.run(input_text, model_params=model_params)
+output = result["output"]
+generated_text = output[0]["generated_text"]
+print(generated_text)
+```
+
+#### JavaScript
+```javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model_id = "openai-community/gpt2";
+const model = client.model("openai-community/gpt2");
+
+await model.load();
+
+const output = await model.run("Dreams are messages from the ", {
+  max_new_tokens: 20,
+  min_new_tokens: 5
+});
+
+console.log(output);
+```
+#### Julia
+```julia
+using Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Dreams are messages from the "
+
+options = Dict(
+	"params" => Dict(
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
+		"temperature" => 0.5,
+	)
+)
+
+result = model.run(input_text, options)
+output = result["output"]
+generated_text = output[1]["generated_text"]
+println(generated_text)
+```
+## Docker
 All Bytez model images are available on [Docker Hub](https://hub.docker.com/u/bytez), models can be played with via our [Models](https://bytez.com/models) page 🤙
 
-## Image Source Code
+### Image Source Code
 The source code that runs for a given model in the docker image can be found [here](https://github.com/Bytez-com/models)
 
-# Model Library
+## Capabilities 
+### Chat
+Generate text with chat models using structured inputs.
 
-## Open Source Models
+#### Javascript
+```javascript javascript
 
-We currently support 30K+ open source AI models across 30+ ML tasks. 
+import Bytez from "bytez.js";
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
-| Task   | Total Models    
-|------------|-----|                               
-| Available models| 39428
-| Chat| 2402
-| Text-generation| 6450
-| Summarization| 847
-| Unconditional-image-generation| 766
-| Image-classification| 2957
-| Text-classification| 3082
-| Audio-classification| 1949
-| Object-detection| 664
-| Token-classification| 2070
-| Text2text-generation|1764
-| Text-to-image| 1539
-| Sentence-similarity| 1731
-| Feature-extraction| 1737
-| Translation| 1258
-| Automatic-speech-recognition| 3319
-| Zero-shot-classification| 222
-| Question-answering| 1967
-| Video-classification| 926
-| Fill-mask| 1760
-| Depth-estimation| 69
-| Image-segmentation| 425
-| Image-to-text| 281
-| Zero-shot-image-classification| 202
-| Image-feature-extraction| 131
-| Visual-question-answering| 117
-| Mask-generation| 80
-| Zero-shot-object-detection| 27
-| Text-to-video| 11
-| Text-to-speech| 644
-| Image-text-to-text| 1
-| Document-question-answering| 19
-| Text-to-audio| 11
+const messages = [
+  {
+    role: "system",
+    content: "You are a friendly chatbot",
+  },
+  {
+    role: "user",
+    content: "What is the capital of England?",
+  },
+];
 
-Here's a sample of some models that can be run - with their required RAM.
+const model = client.model("microsoft/Phi-3-mini-4k-instruct");
 
-| Model Name                                               | Required RAM (GB)       
-|----------------------------------------------------------|-------------------------|
-| EleutherAI/gpt-neo-2.7B                                  | 2.23                                       
-| bigscience/bloom-560m                                    | 3.78                    
-| succinctly/text2image-prompt-generator                   | 1.04                    
-| ai-forever/mGPT                                          | 9.59                    
-| microsoft/phi-1                                          | 9.16                    
-| facebook/opt-1.3b                                        | 8.06                                   
-| tiiuae/falcon-40b-instruct                               | 182.21                  
-| tiiuae/falcon-7b-instruct                                | 27.28                   
-| codellama/CodeLlama-7b-Instruct-hf                       | 26.64                   
-| deepseek-ai/deepseek-coder-6.7b-instruct                 | 26.50                   
-| upstage/SOLAR-10.7B-Instruct-v1.0                        | 57.63                    
-| NousResearch/Meta-Llama-3-8B-Instruct                    | 30.93                                                                     
-| codellama/CodeLlama-70b-Instruct-hf                      | 372.52           
+await model.load();
 
-To see the full list, run:
-```py
-models = client.list_models()
-print(models)
+const { output } = await model.run(messages, { max_length: 100 });
+const [{ generated_text }] = output;
+
+for (const message of generated_text) {
+  console.log(message);
+  const { content, role } = message;
+  console.log({ content, role });
+}
+```
+Full documentation [here](https://docs.bytez.com/model-api/docs/chat/text)
+
+
+### Chat + Vision
+Use chat models with images as input to generate text-based responses.
+
+#### Javascript
+```javascript javascript
+const Bytez = require("bytez.js");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+const model = client.model("meta-llama/Llama-3.2-11B-Vision-Instruct");
+await model.load();
+
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "What is this image?" },
+      { type: "image", url: "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
+    ]
+  }
+];
+
+const { output } = await model.run(textInput);
+console.log(output);
 ```
 
-To see a task specific list, run:
+Full documentation [here](https://docs.bytez.com/model-api/docs/chat/vision)
 
-```py
-models = client.list_models(task="text-generation")
-print(models)
+### Chat + Video
+Use chat models with video input to generate insightful responses.
+
+#### Javascript
+```javascript javascript
+const Bytez = require("bytez.js");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+const model = client.model("llava-hf/LLaVA-NeXT-Video-7B-hf");
+await model.load();
+
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Why is this video funny?" },
+      { type: "video", url: "https://example.com/path-to-video.mp4" }
+    ]
+  }
+];
+
+const { output } = await model.run(textInput);
+console.log(output);
+
 ```
 
-## Closed Source Providers
+Full documentation [here](https://docs.bytez.com/model-api/docs/chat/video)
 
-We currently support the major CS providers. 
+### Chat + Audio
+Process and analyze audio inputs with chat models.
 
-| Model Provider   | Status     
-|-------------|-----|
-| Open AI  | ✅                                       
-| Google Gemini | ✅                   
-| Cohere | ✅                    
-| Mistral | ✅                    
-| Anthropic | ✅ 
+#### Javascript
+```javascript javascript
+const Bytez = require("bytez.js");
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 
-### Usage
+const model = client.model("Qwen/Qwen2-Audio-7B-Instruct");
+await model.load();
 
-To use models like OpenAI’s GPT-4, simply include your Provider-Key in your request. The Bytez API handles everything with a consistent schema:
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "What sound is this?" },
+      { type: "audio", url: "https://example.com/path-to-audio.mp3" }
+    ]
+  }
+];
 
+const { output } = await model.run(textInput);
+console.log(output);
+```
+Full documentation [here](https://docs.bytez.com/model-api/docs/chat/audio)
+
+### Image Generation
+Generate images using Bytez API with `base64` or `URL` inputs.
+
+#### Javascript
+```javascript javascript
+import Bytez from "bytez.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { writeFileSync } from "node:fs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+const model = client.model("dreamlike-art/dreamlike-photoreal-2.0");
+
+await model.load();
+
+const { output_png } = await model.run(
+  "A beautiful landscape with mountains and a river"
+);
+
+const buffer = Buffer.from(output_png, "base64");
+
+// Write the image to the local file system
+writeFileSync(`${__dirname}/output.png`, buffer);
+```
+
+### Embeddings
+Generate `text` and `vector` embeddings
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("API_KEY");
+
+// 1) Select the model
+const model = client.model("nomic-ai/nomic-embed-text-v1.5");
+
+// 2) Load the model
+await model.load();
+
+// 3) Run the model
+const output = await model.run("Once upon a time");
+
+console.log(output);
+
+```
+Full documentation [here](https://docs.bytez.com/model-api/docs/embeddings)
+
+### Function Calling
+Execute `code` or `actions` based on model-generated outputs
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+const inputText = "What's the weather like in Seattle right now?";
+
+const modelParams = {
+  max_new_tokens: 2000,
+  min_new_tokens: 50,
+  temperature: 0.001,
+  do_sample: false
+};
+
+const promptTemplate = `
+Function:
+def get_weather_data(coordinates):
+    """
+    Fetches weather data from the Open-Meteo API for the given latitude and longitude.
+
+    Args:
+    coordinates (tuple): The latitude and longitude of the location.
+
+    Returns:
+    float: The current temperature in the coordinates you've asked for
+    """
+
+Function:
+def get_coordinates_from_city(city_name):
+    """
+    Fetches the latitude and longitude of a given city name using the Maps.co Geocoding API.
+
+    Args:
+    city_name (str): The name of the city.
+
+    Returns:
+    tuple: The latitude and longitude of the city.
+    """
+
+User Query: {query}<human_end>
+`;
+
+const model = client.model("Nexusflow/NexusRaven-V2-13B");
+
+await model.load();
+
+const prompt = promptTemplate.replace("{query}", inputText);
+
+const stream = await model.run(prompt, { stream: true, params: modelParams });
+
+const textStream = stream.pipeThrough(new TextDecoderStream());
+
+for await (const chunk of textStream) {
+  console.log(chunk);
+}
+
+```
+Full documentation [here](https://docs.bytez.com/model-api/docs/function-calling)
+
+## Streaming
+
+<Tip>Streaming allows you to receive model outputs incrementally as soon as they are available, which is ideal for tasks like real-time responses or large outputs.</Tip>
+
+### How Streaming Works
+
+To enable streaming, pass `true` as the third argument to the `model.run()` function. The model will return a stream that you can read incrementally.
+
+```javascript javascript
+const stream = await model.run(textInput, params, true);
+```
+
+### Node.js 
+
+```javascript javascript
+const { Readable } = require('stream');
+
+const stream = await model.run(textInput, params, true);
+
+try {
+  const readableStream = Readable.fromWeb(stream); // Convert Web Stream to Node.js Readable Stream
+  for await (const chunk of readableStream) {
+    console.log(chunk.toString()); // Handle each chunk of data
+  }
+} catch (error) {
+  console.error(error); // Handle errors
+}
+```
+### Browser 
+```javascript javascript
+const stream = await model.run(textInput, params, true);
+
+try {
+  const reader = stream.getReader(); // Get a reader for the Web Stream
+
+  while (true) {
+    const { done, value } = await reader.read(); // Read the stream chunk-by-chunk
+    if (done) break; // Exit when the stream ends
+    console.log(new TextDecoder().decode(value)); // Convert Uint8Array to string
+  }
+} catch (error) {
+  console.error(error); // Handle errors
+}
+```
+
+## All Model Tasks
+Our API provides access to a wide range of pretrained models across 33 machine learning tasks, each tailored to specific applications like `summarization`, `document question-answering`, `audio classification`, and more. 
+
+Explore the full list of tasks [here](http://docs.bytez.com/model-api/docs/all-tasks/audio-classification).
+
+## Proprietary Models
+Our v2 endpoint supports interacting with proprietary models from `Anthropic`, `Google`, `Cohere`, `OpenAI`, and `Mistral`.
+
+### OpenAI
 ```bash
 curl --location 'https://api.bytez.com/models/v2/openai/gpt-4o-mini' \
---header 'Authorization: Key BYTEZ_KEY_' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
 --header 'Provider-Key: PROVIDER_KEY' \
 --header 'Content-Type: application/json' \
 --data '{
-    "messages":[{"role":"user", "content":"Hello my name is Bob and I like to eat"}],
-    "stream":false,
-    "params":{ "max_tokens":100 }
+    "messages": [{"role": "user", "content": "Hello my name is Bob and I like to eat"}],
+    "stream": false,
+    "params": { "max_tokens": 100 }
 }'
 ```
+### Google Gemini
+```bash
+curl --location 'https://api.bytez.com/models/v2/google/gemini-1.5-flash' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Provider-Key: PROVIDER_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [{"role": "user", "content": "Hello my name is Bob and I like to eat"}],
+    "stream": false,
+    "params": { "temperature": 1 }
+}'
+```
+### Cohere
+```bash
+curl --location 'https://api.bytez.com/models/v2/cohere/command-r' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Provider-Key: PROVIDER_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [{"role": "user", "content": "Cats and rabbits who reside in fancy little houses"}],
+    "stream": false,
+    "params": { "max_tokens": 50 }
+}'
+```
+### Mistral
+```bash 
+curl --location 'https://api.bytez.com/models/v2/mistral/mistral-small-latest' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Provider-Key: PROVIDER_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [{"role": "user", "content": "Cats and rabbits who reside in fancy little houses"}],
+    "stream": false,
+    "params": { "max_tokens": 50 }
+}'
+```
+### Anthropic
+```bash 
+curl --location 'https://api.bytez.com/models/v2/anthropic/claude-3-haiku-20240307' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Provider-Key: PROVIDER_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [{"role": "user", "content": "Cats and rabbits who reside in fancy little houses"}],
+    "stream": false,
+    "params": { "max_tokens": 50 }
+}'
+```
+## Pricing
+Inference pricing for models is designed to be straightforward and predictable. Instead of relying on complex token-based pricing (which doesn't make sense for non-text-generation models), we calculate costs based on `Inference Meter Price` and `Time to First Inference`.</Info>
 
-# Resources
-- [About Us](./about.md)
-- [Cold Boot Times and Billing](./cold-boot-billing.md)
+### Formula
 
-# Feedback
+```plaintext
+Pricing = Meter Price × Inference Time
+```
 
-We value your feedback to improve our documentation and services. If you have any suggestions, please join our [Discord](https://discord.gg/Zrd5UbMEBA) or contact us via email at [help@bytez.com](mailto:help@bytez.com)
+### Key Features
+
+### **Instance-Based Pricing**
+- Models run on **instances** optimized for **RAM usage**.
+- Instances are categorized by size (e.g., `Micro`, `Small`, `Super`).
+- **LLMs (Large Language Models)** have their own specific pricing meters.
+
+### **Transparent API Response Metadata**
+Each API response includes:
+- **`Inference Meter`**
+- **`Inference Meter Price`**
+- **`Inference Time`**
+- **`Inference Cost`**
+
+### Prices
+
+### Language Models
+
+| Instance Size | GPU RAM (GB) | Inference Meter Price ($/sec) |
+|------------------|------------------|-------------------------------|
+| Micro         | 16               | 0.0000872083                  |
+| XS            | 24               | 0.0001475035                  | 
+| SM            | 64               | 0.0006478333                  | 
+| MD            | 96               | 0.0008433876                  | 
+| LG            | 128              | 0.0012956667                  | 
+| XL            | 192              | 0.0024468774                  | 
+| XXL           | 320              | 0.0047912685                  | 
+| Super         | 640              | 0.0059890856                  |
+
+
+### All other models
+
+| Instance Size | GPU RAM (GB) | Inference Meter Price ($/sec) | 
+|------------------|------------------|-------------------------------|
+| Micro            | 16               | 0.00053440                    |
+| XS               | 24               | 0.00066800                    | 
+| SM               | 64               | 0.00427520                    | 
+| MD               | 96               | 0.00480960                    | 
+| LG               | 128              | 0.00855040                    | 
+| XL               | 192              | 0.01603200                    |
+| XXL              | 320              | 0.02458240                    | 
+| Super            | 640              | 0.02992640                    | 
+
+
+## API Playground
+Explore our API endpoints in the documentation [here](https://docs.bytez.com/model-api/playground/overview).
+
+## Status
+<iframe
+  src="https://status.bytez.com"
+  title="API Status"
+  height="500"
+  allowFullScreen
+  style={{ width: '100%', borderRadius: '0.5rem' }}
+></iframe>
+
+## Resources
+Get to know our story, our mission, and our roadmap [here](https://docs.bytez.com/company/about).
+
+## Feedback
+We’re committed to building the best developer experience for AI builders. Have feedback? Let us know on [Discord](https://discord.com/invite/Z723PfCFWf) or open an issue on [GitHub](https://github.com/Bytez-com/docs/issues).
