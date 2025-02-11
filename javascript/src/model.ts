@@ -75,7 +75,7 @@ export default class Model {
    */
   async run(input?: any, params?: Inference): Promise<Response>;
   async run<Stream extends boolean = false>(
-    input?: string,
+    input?: any,
     stream?: Stream
   ): Promise<ModelRunOutput<Stream>>;
   async run<Stream extends boolean = false>(
@@ -183,8 +183,11 @@ export default class Model {
       // several task variants exist
       // so we cannot make assumptions on input, as it widely varies by model? so do nothing
       // does not require input
-      case "unconditional-image-generation":
+      case "unconditional-image-generation": {
+        break;
+      }
       default: {
+        postBody["input"] = input;
         break;
       }
     }

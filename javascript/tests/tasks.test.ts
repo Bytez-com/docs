@@ -213,6 +213,40 @@ describe.skip("chat models", async () => {
 
   after(model.delete);
 });
+describe.skip("chat model - closed source", async () => {
+  const model = client.model("google/gemini-2.0-flash-thinking-exp-01-21");
+  const messages = [
+    {
+      role: "system",
+      content:
+        "You are a friendly chatbot who always responds in the style of a pirate"
+    },
+    {
+      role: "user",
+      content: "How many helicopters can a human eat in one sitting?"
+    }
+  ];
+
+  await it("runs a model", async () => {
+    const { error, output } = await model.run(messages);
+
+    assert(error === null);
+    assert(typeof output?.content === "string", "returns output");
+  });
+
+  await it("streams text", async () => {
+    const stream = await model.run(messages, true);
+    let testPass = false;
+
+    for await (const chunk of stream.setEncoding("utf8")) {
+      // console.log({ chunk });
+      if (testPass === false) {
+        testPass = typeof chunk === "string";
+        assert(testPass, "streams output");
+      }
+    }
+  });
+});
 describe.skip("summarization", async () => {
   const model = client.model("ainize/bart-base-cnn");
   const input =
