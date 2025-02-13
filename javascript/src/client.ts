@@ -16,8 +16,8 @@ export default class Client {
     };
 
     if (isBrowser === false) {
-      import("stream").then(({ Readable }) => {
-        this.#Readable = Readable;
+      import("stream").then(module => {
+        this.#Readable = module.Readable ?? module.default?.Readable;
       });
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "bytez.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "packageManager": "yarn@4.5.3",
   "engines": {

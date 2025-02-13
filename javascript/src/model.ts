@@ -188,7 +188,6 @@ export default class Model {
       }
       default: {
         postBody["input"] = input;
-        break;
       }
     }
 
