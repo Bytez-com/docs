@@ -34,6 +34,14 @@ export default class Client {
       });
 
       if (
+        method === "POST" &&
+        !res.ok &&
+        res.headers.get("content-type") !== "application/json"
+      ) {
+        throw new Error(res.statusText);
+      }
+
+      if (
         res.body !== null &&
         (body?.stream === true || body?.json === false)
       ) {
