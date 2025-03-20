@@ -1,103 +1,105 @@
-import unittest, os
+import unittest
+import os
 from bytez import Bytez
 
-client = Bytez(os.environ.get("BYTEZ_KEY"))
-
+bytez = Bytez(os.environ.get("BYTEZ_KEY"), True)
 modelId = "openai-community/gpt2"
-model = client.model(modelId)
+model = bytez.model(modelId)
 
+class TestTextGeneration(unittest.IsolatedAsyncioTestCase):
+    """Tests for text generation models in a fixed order."""
 
-class TestBytez(unittest.TestCase):
-    def test_list_models(self):
-        """Test listing models."""
-        model_list = client.list_models()
-
-        self.assertIsInstance(model_list, list, "should return array of models")
-        self.assertNotEqual(len(model_list), 0, "array is not empty")
-        self.assertTrue(
-            all("modelId" in model and "ramRequired" in model for model in model_list),
-            "all models should have name and RAM",
-        )
-
-    def test_lists_running_instances(self):
-        """Test listing running instances."""
-        instances = client.list_instances()
-        self.assertIsInstance(instances, list, "should return array of instances")
-
-    def test_creates_model_class(self):
-        """Test creating a model class."""
+    def test_01_creates_model_class(self):
+        """Test that the correct model ID is loaded."""
         self.assertEqual(model.id, modelId, "loads the right model")
-        self.assertEqual(model.options.get("concurrency"), 1, "default concurrency: 1")
-        self.assertEqual(model.options.get("timeout"), 300, "default concurrency: 300")
 
-    def test_starts(self):
-        """Test starting a model and managing its status."""
-        response = model.start()
+    def test_02_list_models(self):
+        """Test listing models."""
+        output, error = bytez.list.models()
 
-        if response["status"] != "error":
-            self.assertEqual(response["status"], "started", "model starts")
-        else:
-            alreadyStarted = (
-                "already loaded" in response["error"]
-                or "operation already in progress: load" in response["error"]
-            )
+        self.assertIsNone(error)
+        self.assertIsInstance(output, list, "should return an array of models")
+        self.assertNotEqual(len(output), 0, "array should not be empty")
 
-            self.assertEqual(alreadyStarted, True, "model already started")
+    def test_03_lists_running_instances(self):
+        """Test listing running instances."""
+        output = bytez.list.clusters()
 
-        status = model.status()
+        self.assertIsInstance(output, list, "should return an array of instances")
 
-        self.assertIn(
-            status["status"],
-            ["DEPLOYING", "RUNNING"],
-            "returns status deploying or running",
+    def test_04_crud_creates_cluster(self):
+        """Test creating a cluster."""
+        output, error = model.create()
+
+        self.assertTrue(
+            (error is None and output == "Loading")
+            or (error == "Cluster already exists" and output is None)
         )
 
-    def test_load(self):
-        """Test starting a model and managing its status."""
-        # Load model and check status
-        print("awaiting model to load")
-        model.load()
-        status = model.status()
+    def test_05_crud_reads_cluster(self):
+        """Test reading a cluster."""
+        output, error = model.read()
 
-        self.assertEqual(status["status"], "RUNNING", "model is now running")
+        self.assertIsNone(error)
+        self.assertIsInstance(output, dict, "should return an object")
 
-    def test_runs_model(self):
+    def test_06_crud_updates_cluster(self):
+        """Test updating a cluster."""
+        output, error = model.update({"timeout": 1, "capacity": {"min": 1, "desired": 1, "max": 1}})
+
+        self.assertIsNone(error)
+        self.assertIsInstance(output, dict, "should return an object")
+
+    def test_07_runs_a_model(self):
         """Test running a model."""
-        response = model.run("Jack and jill")
-        print(response)
-        self.assertIsInstance(
-            response["output"][0]["generated_text"], str, "returns output"
-        )
+        output, error = model.run("Jack and jill")
 
-    def test_runs_model_with_params(self):
-        """Test streaming output."""
+        self.assertIsNone(error)
+        self.assertIsInstance(output, str, "returns output")
+
+    def test_08_runs_model_with_params(self):
+        """Test running a model with parameters."""
         input_text = "Jack and Jill "
-        response = model.run(
-            input, model_params={"max_new_tokens": 1, "min_new_tokens": 1}
-        )
-        print(response)
-        output = response["output"][0]["generated_text"]
+        output, error = model.run(input_text, {"min_new_tokens": 1, "max_new_tokens": 1})
 
-        self.assertEqual(
-            len(input.strip().split(" ")) + 1, len(output.split(" ")), "streams output"
-        )
+        self.assertIsNone(error)
+        self.assertIsInstance(output, str, "returns output")
+        self.assertEqual(len(output.split(" ")), len(input_text.strip().split(" ")) + 1, "returns output")
 
-    def test_streams_back(self):
-        """Test streaming output."""
+    def test_09_streams_text(self):
+        """Test streaming text."""
         stream = model.run("Jack and jill", stream=True)
-        testPass = False
 
         for chunk in stream:
-            if not testPass:
-                testPass = isinstance(chunk, str)
-                self.assertTrue(testPass, "streams output")
+            self.assertIsInstance(chunk.decode('utf-8'), str, "streams output")
+            break
 
-    def test_stops_a_model(self):
-        """Test stopping a model."""
-        model.stop()
-        response = model.status()
+    def test_10_streams_text_with_params(self):
+        """Test streaming text with parameters."""
+        stream = model.run("Jack and jill", {"max_length": 100}, stream=True)
 
-        self.assertNotEqual(response["status"], "RUNNING", "model is stopped")
+        for chunk in stream:
+            self.assertIsInstance(chunk.decode('utf-8'), str, "streams output")
+            break
+
+    def test_11_stream_false_does_not_stream(self):
+        """Test that `stream=False` does not return a stream."""
+        output, error = model.run("Jack and jill", stream=False)
+
+        self.assertIsNone(error)
+        self.assertIsInstance(output, str, "returns output")
+
+        output, error = model.run("Jack and jill", {"max_length": 100}, stream=False)
+
+        self.assertIsNone(error)
+        self.assertIsInstance(output, str, "returns output")
+
+    def test_12_crud_deletes_cluster(self):
+        """Test deleting a cluster."""
+        output, error = model.delete()
+
+        self.assertIsNone(error)
+        self.assertIsNone(output)
 
 
 if __name__ == "__main__":
