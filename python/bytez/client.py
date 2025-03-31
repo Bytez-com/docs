@@ -16,6 +16,7 @@ class Client:
             api_key (str): Your Bytez API key.
         """
         self.headers = {
+            "lang": "python",
             "authorization": f"Key {api_key}",
             "content-type": "application/json",
         }

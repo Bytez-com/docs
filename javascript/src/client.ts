@@ -11,6 +11,7 @@ export default class Client {
       dev ? "://localhost:8080" : "s://api.bytez.com"
     }/models/v2/`;
     this.headers = {
+      lang: "javascript",
       Authorization: `Key ${apiKey}`,
       "content-type": "application/json"
     };
