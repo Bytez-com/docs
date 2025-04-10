@@ -1,0 +1,134 @@
+---
+title: "Zero Shot Image Classification"
+icon: "file-image"
+---
+
+<Tip>Classify images into categories not seen during training for applications like novel object recognition, transfer learning, and few-shot learning.</Tip>
+
+## Quickstart
+
+### Classify Images into Unseen Categories
+
+Send an image URL and a set of candidate labels to receive classification results.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("BilelDJ/clip-hugging-face-finetuned");
+
+const input = {
+  image: "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+  candidate_labels: ["squid", "octopus", "human", "cat"]
+};
+
+const { error, output } = await model.run(input);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  output.sort((a, b) => (a.score < b.score ? 1 : -1));
+  for (const labelObject of output) {
+    console.log(labelObject);
+  }
+}
+```
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("BilelDJ/clip-hugging-face-finetuned")
+
+model.load()
+
+input_data = {
+    "image": "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+    "candidate_labels": ["squid", "octopus", "human", "cat"],
+}
+
+result = model.run(input_data)
+
+# Extract the output label objects
+label_objects = result["output"]
+
+# Sort label objects by score in descending order
+label_objects.sort(key=lambda x: x["score"], reverse=True)
+
+for label_object in label_objects:
+    # Depending on the model, there may be additional props returned
+    print(label_object)
+
+    # Extract and print score and label
+    score = label_object["score"]
+    label = label_object["label"]
+
+    print({"score": score, "label": label})
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("BilelDJ/clip-hugging-face-finetuned")
+
+model.load()
+
+input_data = Dict(
+	"image" => "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+	"candidate_labels" => ["squid", "octopus", "human", "cat"],
+)
+
+result = model.run(input_data)
+
+# Extract the output label objects
+label_objects = result["output"]
+
+# Sort label objects by score in descending order
+sorted_label_objects = sort(label_objects, by = x -> x["score"], rev = true)
+
+for label_object in sorted_label_objects
+	# Depending on the model, there may be additional props returned
+	println(label_object)
+
+	# Extract and print score and label
+	score = label_object["score"]
+	label = label_object["label"]
+
+	println(Dict("score" => score, "label" => label))
+end
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/BilelDJ/clip-hugging-face-finetuned' \
+--header 'Authorization: Key YOUR_API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "candidate_labels": [
+        "squid",
+        "octopus",
+        "human",
+        "cat"
+    ],
+    "url": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 203+ zero shot image classification. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/multi-input/zero-shot-image-classification" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

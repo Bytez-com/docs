@@ -1,0 +1,170 @@
+---
+title: "Sentence Similarity"
+icon: "waves-sine"
+---
+
+<Tip>Measure how similar two sentences are for applications like duplicate question detection, paraphrase detection, and text clustering.</Tip>
+
+## Quickstart
+### Compare Sentence Similarity
+Send sentences to a model to generate embeddings and compare their similarity.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("sentence-transformers/all-MiniLM-L6-v2");
+
+const sentences = [
+  "What is the weather like today?",
+  "Is it sunny today?",
+  "The e39 BMW M5 was one of the best production sport sedans ever produced."
+];
+
+const { error, output } = await model.run(sentences);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  console.log("Embeddings:", output);
+}
+```
+
+```python python
+from bytez import Bytez
+import numpy as np
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("sentence-transformers/all-MiniLM-L6-v2")
+
+model.load()
+
+sentences = [
+    "What is the weather like today?",
+    "Is it sunny today?",
+    "The e39 BMW M5 was one of the best production sport sedans ever produced.",
+]
+
+results = []
+
+# Get embeddings for each sentence
+for sentence in sentences:
+    result = model.run(sentence)
+    embedding = result.get("output")
+
+    print({"embedding": embedding})
+
+    results.append({"embedding": embedding, "sentence": sentence})
+
+# Extract the original sentence's embedding and the embeddings to compare
+original_sentence_with_embedding = results[0]
+sentences_to_compare = results[1:]
+
+
+def cosine_similarity(embedding1, embedding2):
+    embedding1 = np.array(embedding1)
+    embedding2 = np.array(embedding2)
+
+    dot_product = np.dot(embedding1, embedding2)
+    magnitude1 = np.linalg.norm(embedding1)
+    magnitude2 = np.linalg.norm(embedding2)
+
+    similarity = dot_product / (magnitude1 * magnitude2)
+
+    return similarity
+
+
+# Calculate and display cosine similarity for each comparison
+for sentence_object in sentences_to_compare:
+    similarity = cosine_similarity(
+        original_sentence_with_embedding["embedding"], sentence_object["embedding"]
+    )
+    print(
+        f'Cosine similarity between "{original_sentence_with_embedding["sentence"]}" and "{sentence_object["sentence"]}": {similarity}'
+    )
+```
+
+```julia julia
+using Bytez
+using LinearAlgebra
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("sentence-transformers/all-MiniLM-L6-v2")
+
+model.load()
+
+sentences = [
+	"What is the weather like today?",
+	"Is it sunny today?",
+	"The e39 BMW M5 was one of the best production sport sedans ever produced.",
+]
+
+results = []
+
+# Get embeddings for each sentence
+for sentence in sentences
+	result = model.run(sentence)
+	embedding = result["output"]
+
+	println(Dict("embedding" => embedding))
+
+	push!(results, Dict("embedding" => embedding, "sentence" => sentence))
+end
+
+# Extract the original sentence's embedding and the embeddings to compare
+original_sentence_with_embedding = results[1]
+sentences_to_compare = results[2:end]
+
+
+function cosine_similarity(embedding1, embedding2)
+	embedding1 = collect(embedding1)
+	embedding2 = collect(embedding2)
+
+	dot_product = dot(embedding1, embedding2)
+	magnitude1 = norm(embedding1)
+	magnitude2 = norm(embedding2)
+
+	similarity = dot_product / (magnitude1 * magnitude2)
+
+	return similarity
+end
+
+# Calculate and display cosine similarity for each comparison
+for sentence_object in sentences_to_compare
+	similarity = cosine_similarity(
+		original_sentence_with_embedding["embedding"], sentence_object["embedding"],
+	)
+	println(
+		"Cosine similarity between \"$(original_sentence_with_embedding["sentence"])\" and \"$(sentence_object["sentence"])\": $similarity",
+	)
+end
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/sentence-transformers/all-MiniLM-L6-v2' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "text": "Once upon a time"
+}'
+
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 1.9K+ sentence similarity models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="https://bytez.com/docs/sentence-transformers/all-MiniLM-L6-v2/model" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

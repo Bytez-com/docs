@@ -1,0 +1,629 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Source AI Models API - Text as Input Examples",
+    "description": "Explore API endpoints for running specific open-source AI models across various tasks.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bytez.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/models/v2/almanach/camembert-base": {
+      "post": {
+        "summary": "Fill Mask",
+        "description": "Run the `camembert-base` model to predict masked tokens in the input text.",
+        "operationId": "runFillMask",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text with a `<mask>` token to be predicted.",
+                    "example": "Hello <mask>"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with predictions for the masked token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "score": {
+                            "type": "number",
+                            "description": "Confidence score for the prediction."
+                          },
+                          "token": {
+                            "type": "integer",
+                            "description": "Token ID of the predicted word."
+                          },
+                          "token_str": {
+                            "type": "string",
+                            "description": "Predicted token as a string."
+                          },
+                          "sequence": {
+                            "type": "string",
+                            "description": "Generated sequence with the masked token filled."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "output": [
+                      { "score": 0.85, "token": 83, "token_str": "world", "sequence": "Hello world!" },
+                      { "score": 0.1, "token": 84, "token_str": "there", "sequence": "Hello there!" }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/facebook/mms-tts-eng": {
+      "post": {
+        "summary": "Text-to-Speech",
+        "description": "Run the `mms-tts-eng` model to convert text into speech.",
+        "operationId": "runTextToSpeech",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "boolean",
+                    "description": "Flag to determine if the response is JSON formatted.",
+                    "example": false
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to convert to speech.",
+                    "example": "Hello"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the generated audio link.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Generated audio link or string."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "https://api.bytez.com/audio/1234567890"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/facebook/musicgen-melody": {
+      "post": {
+        "summary": "Text-to-Audio",
+        "description": "Run the `musicgen-melody` model to convert text into audio.",
+        "operationId": "runTextToAudio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "boolean",
+                    "description": "Flag to determine if the response is JSON formatted.",
+                    "example": false
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to convert to speech.",
+                    "example": "Hello"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the generated audio link.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Generated audio link or string."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "https://api.bytez.com/audio/1234567890"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/stabilityai/stable-diffusion-xl-base-1.0": {
+      "post": {
+        "summary": "Text-to-Image",
+        "description": "Run the `stable-diffusion-xl-base-1.0` model to generate images from text.",
+        "operationId": "runTextToImage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "boolean",
+                    "description": "Flag to determine if the response is JSON formatted. If `false`, returns raw image data.",
+                    "example": true,
+                    "default": true
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to generate an image.",
+                    "example": "A cat in a bowtie"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the generated image link.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Generated image link or string."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "https://api.bytez.com/image/1234567890"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/Areeb123/En-Fr_Translation_Model": {
+      "post": {
+        "summary": "Translation",
+        "description": "Run the `En-Fr_Translation_Model` to translate English text to French.",
+        "operationId": "runTranslation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to translate.",
+                    "example": "Hello"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the translated text.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Translated text."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "Bonjour"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/ainize/bart-base-cnn": {
+      "post": {
+        "summary": "Summarization",
+        "description": "Run the `bart-base-cnn` model to summarize input text.",
+        "operationId": "runSummarization",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to summarize.",
+                    "example": "The tower is 324 metres tall and the tallest structure in Paris..."
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the summarized text.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Summarized text."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "The Eiffel Tower is the tallest structure in Paris."
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/allenai/specter2_base": {
+      "post": {
+        "summary": "Feature Extraction",
+        "description": "Run the `specter2_base` model to extract features from input text.",
+        "operationId": "runFeatureExtraction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to extract features.",
+                    "example": "The Eiffel Tower is the tallest structure in Paris."
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with extracted features.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "array",
+                      "description": "Extracted feature vectors."
+                    }
+                  }
+                },
+                "example": {
+                  "output": [0.1, 0.2, 0.3, 0.4]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon": {
+      "post": {
+        "summary": "Text Classification",
+        "description": "Run the `distilbert-base-uncased-finetuned-sentiment-amazon` model to classify input text.",
+        "operationId": "runTextClassification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text to classify.",
+                    "example": "The Eiffel Tower is amazing."
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the classification.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Classification label."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "positive"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/2rtl3/mn-xlm-roberta-base-named-entity": {
+      "post": {
+        "summary": "Token Classification",
+        "description": "Run the `mn-xlm-roberta-base-named-entity` model to perform named entity recognition.",
+        "operationId": "runTokenClassification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text for token classification.",
+                    "example": "Paris is the capital of France."
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with classified tokens.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "array",
+                      "description": "Classified tokens and their labels."
+                    }
+                  }
+                },
+                "example": {
+                  "output": [
+                    {"token": "Paris", "label": "LOCATION"},
+                    {"token": "France", "label": "LOCATION"}
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/bigscience/mt0-small": {
+      "post": {
+        "summary": "Text2Text Generation",
+        "description": "Run the `mt0-small` model to generate text-to-text transformations.",
+        "operationId": "runText2TextGeneration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input text for text-to-text generation.",
+                    "example": "Translate this to French: Hello"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with transformed text.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Generated text."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "Bonjour"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/models/v2/openai-community/gpt2": {
+      "post": {
+        "summary": "Text Generation",
+        "description": "Run the `gpt2` model to generate text from an input prompt.",
+        "operationId": "runTextGeneration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "Input prompt for text generation.",
+                    "example": "Humpty Dumpty sat on a"
+                  }
+                },
+                "required": ["text"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with generated text.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "output": {
+                      "type": "string",
+                      "description": "Generated text."
+                    }
+                  }
+                },
+                "example": {
+                  "output": "Humpty Dumpty sat on a wall, enjoying the view."
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Provide your API key as `Key your-key-here` in the `Authorization` header."
+      }
+    }
+  }
+}

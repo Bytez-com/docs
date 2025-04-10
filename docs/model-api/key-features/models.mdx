@@ -1,0 +1,17 @@
+---
+title: Models
+openapi: get /models/v2/list/models
+icon: 'cube'
+---
+
+# Explore Available Models
+
+Use the `GET /models/v2/list/models` endpoint to retrieve a list of open-source AI models available for various tasks. You can filter models by task using the `task` query parameter.
+
+## Query Models by Task
+
+### Example Request
+
+```bash
+curl --location 'https://api.bytez.com/models/v2/list/models?task=chat' \
+--header 'Authorization: Key your-api-key-here'

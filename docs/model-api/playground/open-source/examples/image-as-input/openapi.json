@@ -1,0 +1,399 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Open Source AI Models API - Image as Input",
+      "description": "API for running open-source AI models that take images as input across various tasks.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.bytez.com",
+        "description": "Production server"
+      }
+    ],
+    "paths": {
+      "/models/v2/captioner/caption-gen": {
+        "post": {
+          "summary": "Image to Text",
+          "description": "Generate captions for images using the `caption-gen` model.",
+          "operationId": "imageToText",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with a generated caption.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": { "type": "string", "description": "Generated caption for the image." }
+                    }
+                  },
+                  "example": {
+                    "output": "A cat sitting on a windowsill."
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      },
+      "/models/v2/akahana/vit-base-cats-vs-dogs": {
+        "post": {
+          "summary": "Image Classification",
+          "description": "Classify images into categories using the `vit-base-cats-vs-dogs` model.",
+          "operationId": "imageClassification",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with a classification label.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": { "type": "string", "description": "Classification result." }
+                    }
+                  },
+                  "example": {
+                    "output": "Cat"
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      },
+      "/models/v2/apple/deeplabv3-mobilevit-small": {
+        "post": {
+          "summary": "Image Segmentation",
+          "description": "Perform image segmentation using the `deeplabv3-mobilevit-small` model.",
+          "operationId": "imageSegmentation",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with segmentation results.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": { "type": "string", "description": "Segmented image or mask." }
+                    }
+                  },
+                  "example": {
+                    "output": "https://api.bytez.com/segmentation-result.png"
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      },
+      "/models/v2/depth-anything/Depth-Anything-V2-Base-hf": {
+        "post": {
+          "summary": "Depth Estimation",
+          "description": "Estimate depth in images using the `Depth-Anything-V2-Base-hf` model.",
+          "operationId": "depthEstimation",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with depth estimation results.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": { "type": "string", "description": "Depth map of the image." }
+                    }
+                  },
+                  "example": {
+                    "output": "https://api.bytez.com/depth-map-result.png"
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      },
+      "/models/v2/aisak-ai/aisak-detect": {
+        "post": {
+          "summary": "Object Detection",
+          "description": "Detect objects in an image using the `aisak-detect` model.",
+          "operationId": "objectDetection",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with detected objects.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "score": { "type": "number", "description": "Confidence score." },
+                            "label": { "type": "string", "description": "Object label." },
+                            "box": {
+                              "type": "object",
+                              "properties": {
+                                "xmin": { "type": "integer" },
+                                "ymin": { "type": "integer" },
+                                "xmax": { "type": "integer" },
+                                "ymax": { "type": "integer" }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "output": [
+                      {
+                        "score": 0.992,
+                        "label": "donut",
+                        "box": {
+                          "xmin": 0,
+                          "ymin": 1,
+                          "xmax": 997,
+                          "ymax": 656
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      },
+      "/models/v2/ahishamm/skinsam": {
+        "post": {
+          "summary": "Mask Generation",
+          "description": "Generate a mask for the given image using the `skinsam` model.",
+          "operationId": "maskGeneration",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with the mask image.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": { "type": "string", "description": "Mask image URL." }
+                    }
+                  },
+                  "example": {
+                    "output": "https://api.bytez.com/mask-result.png"
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      },
+      "/models/v2/facebook/dinov2-base": {
+        "post": {
+          "summary": "Image Feature Extraction",
+          "description": "Extract features from an image using the `dinov2-base` model.",
+          "operationId": "imageFeatureExtraction",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "URL of the image to process.",
+                      "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                    },
+                    "base64": {
+                      "type": "string",
+                      "description": "Base64-encoded image data.",
+                      "example": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+                    }
+                  },
+                  "oneOf": [{ "required": ["url"] }, { "required": ["base64"] }]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with extracted features.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": { "type": "array", "description": "Extracted feature vectors." }
+                    }
+                  },
+                  "example": {
+                    "output": [0.23, 0.45, 0.89, 0.67]
+                  }
+                }
+              }
+            }
+          },
+          "security": [{ "apiKeyAuth": [] }]
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "apiKeyAuth": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header",
+          "description": "Provide your API key as `Key your-key-here` in the `Authorization` header."
+        }
+      }
+    }
+  }
+  

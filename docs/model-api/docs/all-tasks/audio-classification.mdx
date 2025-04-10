@@ -1,0 +1,137 @@
+---
+title: "Audio Classification"
+icon: "music-magnifying-glass"
+---
+
+<Tip>Classify audio clips into predefined categories such as speech emotion, sound detection, and music genres.</Tip>
+
+## Quickstart
+### Classify an Audio File
+
+Send an audio file to a model for classification.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("aaraki/wav2vec2-base-finetuned-ks");
+
+const inputAudioBase64 = await getBase64Audio(
+  "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+);
+
+const { error, output: labelObjects } = await model.run({
+  b64AudioBufferWav: inputAudioBase64
+});
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  for (const labelObject of labelObjects) {
+    console.log(labelObject);
+    const { score, label } = labelObject;
+    console.log({ score, label });
+  }
+}
+
+async function getBase64Audio(url) {
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  return Buffer.from(arrayBuffer).toString("base64");
+}
+```
+
+```python python
+import requests
+import base64
+from bytez import Bytez
+
+
+def get_base64_audio(url):
+    response = requests.get(url)
+    return base64.b64encode(response.content).decode("utf-8")
+
+
+input_audio_base64 = get_base64_audio(
+    "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+)
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("aaraki/wav2vec2-base-finetuned-ks")
+
+model.load()
+
+result = model.run({"b64AudioBufferWav": input_audio_base64})
+
+label_objects = result["output"]
+
+for label_object in label_objects:
+    # Depending on the model, there may be additional props returned
+    print(label_object)
+
+    score = label_object["score"]
+    label = label_object["label"]
+
+    print({"score": score, "label": label})
+```
+
+```julia julia
+using Bytez
+using Base64
+using HTTP
+
+function get_base64_audio(url::String)::String
+	response = HTTP.get(url)
+	return base64encode(response.body)
+end
+
+input_audio_base64 = get_base64_audio(
+	"https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav",
+)
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("aaraki/wav2vec2-base-finetuned-ks")
+
+model.load()
+
+result = model.run(Dict("b64AudioBufferWav" => input_audio_base64))
+
+label_objects = result["output"]
+
+for label_object in label_objects
+	# Depending on the model, there may be additional props returned
+	println(label_object)
+
+	score = label_object["score"]
+	label = label_object["label"]
+	println("Score: $score, Label: $label")
+end
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "url": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+}'
+
+```
+
+</CodeGroup>
+
+## Demo
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 1.9K+ audio classification models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/audio-as-input/audio-classification" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

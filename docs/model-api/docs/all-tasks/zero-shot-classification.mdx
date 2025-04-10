@@ -1,0 +1,141 @@
+---
+title: "Zero Shot Classification"
+icon: "magnifying-glass"
+---
+<Tip>Classify text into categories not seen during training for applications like intent detection, content moderation, and dynamic classification.</Tip>
+
+## Quickstart
+
+### Classify Text into Unseen Categories
+
+Send a text input and a set of candidate labels to receive classification results.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("facebook/bart-large-mnli");
+
+const input = {
+  text: "One day I will see the world",
+  candidate_labels: ["travel", "cooking", "dancing"]
+};
+
+const { error, output } = await model.run(input);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  const { sequence, labels, scores } = output;
+  const labelObjects = labels.map((v, i) => ({ sequence, label: v, score: scores[i] }));
+  
+  labelObjects.sort((a, b) => (a.score < b.score ? 1 : -1));
+  
+  for (const labelObject of labelObjects) {
+    console.log(labelObject);
+  }
+}
+```
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("facebook/bart-large-mnli")
+
+model.load()
+
+input_data = {
+    "text": "One day I will see the world",
+    "candidate_labels": ["travel", "cooking", "dancing"],
+}
+
+result = model.run(input_data)
+
+output = result["output"]
+sequence = output["sequence"]
+labels = output["labels"]
+scores = output["scores"]
+
+# Create label objects with sequence, label, and score
+label_objects = [
+    {"sequence": sequence, "label": v, "score": scores[i]} for i, v in enumerate(labels)
+]
+
+# Sort label objects by score in descending order
+label_objects.sort(key=lambda x: x["score"], reverse=True)
+
+for label_object in label_objects:
+    sequence = label_object["sequence"]
+    label = label_object["label"]
+    score = label_object["score"]
+
+    print({"sequence": sequence, "label": label, "score": score})
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("facebook/bart-large-mnli")
+
+model.load()
+
+input_data = Dict(
+	"text" => "One day I will see the world",
+	"candidate_labels" => ["travel", "cooking", "dancing"],
+)
+
+result = model.run(input_data)
+
+output = result["output"]
+sequence = output["sequence"]
+labels = output["labels"]
+scores = output["scores"]
+
+# Create label objects with sequence, label, and score
+label_objects = [Dict("sequence" => sequence, "label" => labels[i], "score" => scores[i]) for i in 1:length(labels)]
+
+# Sort label objects by score in descending order
+sorted_label_objects = sort(label_objects, by = x -> x["score"], rev = true)
+
+for label_object in sorted_label_objects
+	sequence = label_object["sequence"]
+	label = label_object["label"]
+	score = label_object["score"]
+
+	println(Dict("sequence" => sequence, "label" => label, "score" => score))
+end
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/AyoubChLin/DistilBERT_eco_ZeroShot' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "candidate_labels": [
+        "positive,",
+        "negative"
+    ],
+    "text": "Ninja turtles are cool"
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 220+ zero shot classification models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/multi-input/zero-shot-classification" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

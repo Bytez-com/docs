@@ -1,0 +1,157 @@
+---
+title: "Zero Shot Object Detection"
+icon: "scanner-image"
+---
+<Tip>Detect objects in images without prior training on those specific objects. Use cases include novel object detection, transfer learning, and few-shot learning..</Tip>
+
+## Quickstart
+
+### Detect Unseen Objects in Images
+
+Send an image URL and a set of candidate labels to detect objects in the image.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("BilelDJ/clip-hugging-face-finetuned");
+
+const input = {
+  image: "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+  candidate_labels: ["squid", "octopus", "human", "cat"]
+};
+
+const { error, output } = await model.run(input);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  output.sort((a, b) => (a.score < b.score ? 1 : -1));
+  for (const labelObject of output) {
+    console.log(labelObject);
+  }
+}
+```
+
+```python python
+import requests
+import base64
+from bytez import Bytez
+
+
+def get_base64_image(url):
+    response = requests.get(url)
+    response.raise_for_status()
+    image_bytes = response.content
+    return base64.b64encode(image_bytes).decode("utf-8")
+
+
+input_image_base64 = get_base64_image(
+    "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+)
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("BilelDJ/clip-hugging-face-finetuned")
+
+model.load()
+
+input_data = {
+    "b64ImageBufferPng": input_image_base64,
+    "candidate_labels": ["squid", "octopus", "human", "cat"],
+}
+
+result = model.run(input_data)
+
+label_objects = result["output"]
+
+# Sort label objects by score in descending order
+label_objects.sort(key=lambda x: x["score"], reverse=True)
+
+for label_object in label_objects:
+    # Print each label object (for debugging or review)
+    print(label_object)
+
+    # Extract and print score and label
+    score = label_object["score"]
+    label = label_object["label"]
+
+    print({"score": score, "label": label})
+```
+
+```julia julia
+using Bytez
+using HTTP
+using Base64
+
+function get_base64_image(url::String)::String
+	response = HTTP.get(url)
+	image_bytes = response.body
+	return base64encode(image_bytes)
+end
+
+input_image_base64 = get_base64_image(
+	"https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+)
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("BilelDJ/clip-hugging-face-finetuned")
+
+model.load()
+
+input_data = Dict(
+	"b64ImageBufferPng" => input_image_base64,
+	"candidate_labels" => ["squid", "octopus", "human", "cat"],
+)
+
+result = model.run(input_data)
+
+label_objects = result["output"]
+
+# Sort label objects by score in descending order
+sorted_label_objects = sort(label_objects, by = x -> x["score"], rev = true)
+
+for label_object in sorted_label_objects
+	# Depending on the model, there may be additional props returned
+	println(label_object)
+
+	# Extract and print score and label
+	score = label_object["score"]
+	label = label_object["label"]
+
+	println(Dict("score" => score, "label" => label))
+end
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/google/owlv2-base-patch16-finetuned' \
+--header 'Authorization: Key your-key-here' \
+--header 'Content-Type: application/json' \
+--data '{
+    "candidate_labels": [
+        "squid",
+        "octopus",
+        "human",
+        "cat"
+    ],
+    "url": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 25+ zero shot object detection models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/multi-input/zero-shot-object-detection" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

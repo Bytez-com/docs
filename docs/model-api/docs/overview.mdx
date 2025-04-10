@@ -1,0 +1,214 @@
+---
+title: 'Overview'
+description: '✨ Access 40k+ open source and proprietary AI models through a standard API. Achieve GPU-backed performance at CPU pricing ✨'
+icon: 'sparkles'
+---
+
+## [Get a Bytez API Key](authentication)
+
+And run inference in minutes
+
+<CodeGroup>
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+model_params = {"max_new_tokens": 20, "max_new_tokens": 5, "temperature": 0.5}
+
+result = model.run(input_text, model_params=model_params)
+
+output = result["output"]
+
+generated_text = output[0]["generated_text"]
+
+print(generated_text)
+```
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+const model_id = "openai-community/gpt2";
+
+const model = client.model("openai-community/gpt2");
+
+await model.load();
+
+const output = await model.run("Once upon a time there was a", {
+// huggingface params
+  max_new_tokens: 20,
+  min_new_tokens: 5
+});
+
+console.log(output);
+```
+
+```julia julia
+using Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Qwen/Qwen2-7B-Instruct")
+
+model.load()
+
+input_text = "Once upon a time there was a beautiful home where"
+
+options = Dict(
+	"params" => Dict(
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
+		"temperature" => 0.5,
+	)
+)
+
+result = model.run(input_text, options)
+
+output = result["output"]
+
+generated_text = output[1]["generated_text"]
+
+println(generated_text)
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/NousResearch/Hermes-3-Llama-3.1-8B' \
+--header 'Authorization: Key BYTEZ_API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You'\''re a helpful assistant"
+        },
+        {
+            "role": "user",
+            "content": "Why is the sky blue "
+        }
+    ]
+}'
+
+```
+
+</CodeGroup>
+
+## List Models & Tasks
+
+<CodeGroup>
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+# To list all models
+models = client.list_models()
+
+println(models)
+
+# To list models by task
+models_by_task = client.list_models("object-detection")
+
+println(models_by_task)
+```
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+// lists all models
+const models = await client.list.models.all();
+
+console.log(models);
+
+// to list models by task
+const modelsByTask = await client.list.models.byTask("object-detection");
+
+console.log(modelsByTask);
+```
+
+```julia julia
+using Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+# To list all models
+model_list = client.list_models()
+
+println(model_list)
+```
+
+```bash rest
+// Get Models
+curl --location 'https://api.bytez.com/models/v2/list/models' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE'
+
+// By Task
+curl --location 'https://api.bytez.com/models/v2/list/models?task=chat' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE'
+```
+</CodeGroup>
+## Play with Trending Models on Bytez
+
+<CardGroup cols={3}>
+
+<Card title="Qwen Models by Alibaba Cloud" href="https://bytez.com/docs/Qwen/Qwen2-7B-Instruct/model" icon="cloud">
+  Experience powerful language understanding and generation capabilities from Alibaba Cloud's Qwen models.
+</Card>
+
+<Card title="Phi4 by Microsoft" href="https://bytez.com/docs/microsoft/phi-4/model" icon="microsoft">
+  Dive into cutting-edge AI advancements with Microsoft's Phi4 model for versatile applications.
+</Card>
+
+<Card title="Stable Diffusion by Stability" href="/model-api/playground/open-source/examples/text-as-input/text-to-image" icon="image">
+  Generate stunning images using Stability AI's popular Stable Diffusion model.
+</Card>
+
+</CardGroup>
+
+## Explore 40K+ AI Models
+
+<CardGroup>
+
+<Card title="Model Hub" href="https://bytez.com/models" icon="cube">
+  Discover, explore, and integrate models directly from our extensive library.
+</Card>
+
+<Card title="Model API" href="/model-api/docs/models/all" icon="webhook">
+  Access and interact with Bytez models programmatically through our API.
+</Card>
+
+</CardGroup>
+
+## Explore the Model API
+
+<Card title="Chat" href="chat/text" icon="comments">
+  Input millions of tokens to Bytez models and derive understanding from unstructured images, videos, and documents.
+</Card>
+
+<Card title="Image Generation" href="image-generation" icon="image">
+  Modify the behavior of models to adapt to specific tasks, recognize data, and solve problems.
+</Card>
+
+<Card title="Embeddings" href="embeddings" icon="book">
+  Generate text or vector representations of your data for advanced analytics and search capabilities.
+</Card>
+
+<Card title="Function Calling" href="function-calling" icon="rocket">
+  Execute code or actions based on model-generated outputs.
+</Card>
+
+
+<Card title="All Capabilities" href="/model-api/docs/all-tasks/audio-classification" icon="bolt">
+  Adapt Bytez models to a wide variety of machine learning tasks.
+</Card>

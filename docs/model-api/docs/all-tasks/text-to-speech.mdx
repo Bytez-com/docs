@@ -1,0 +1,117 @@
+---
+title: "Text-to-Speech"
+icon: "volume-high"
+---
+
+<Tip>Convert text into natural-sounding speech for applications like virtual assistants, accessibility features, and content creation.</Tip>
+
+## Quickstart
+
+### Convert Text to Speech
+
+Send a text input to generate an audio output.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+import { writeFileSync } from "fs";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("suno/bark-small");
+
+const { error, output_wav } = await model.run("Hello, how are you today?");
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  const buffer = Buffer.from(output_wav, "base64");
+  writeFileSync("output.wav", buffer);
+  console.log("Audio successfully saved to output.wav");
+}
+
+```python python
+from bytez import Bytez
+import base64
+import os
+
+WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("suno/bark-small")
+
+model.load()
+
+input_text = "Hello, how are you today?"
+
+result = model.run(input_text)
+
+output_wav = result.get("output_wav")
+
+# Decode the base64 string to bytes
+audio_bytes = base64.b64decode(output_wav)
+
+# Write the audio to the local file system
+output_path = os.path.join(WORKING_DIR, "output.wav")
+with open(output_path, "wb") as audio_file:
+    audio_file.write(audio_bytes)
+
+print(f"Audio successfully saved to {output_path}")
+```
+
+```julia julia
+using Bytez
+using Base64
+using Printf
+
+WORKING_DIR = dirname(@__FILE__)
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("suno/bark-small")
+
+model.load()
+
+input_text = "Hello, how are you today?"
+
+result = model.run(input_text)
+
+output_wav = result["output_wav"]
+
+# Decode the base64 string to bytes
+audio_bytes = base64decode(output_wav)
+
+# Write the audio to the local file system
+output_path = joinpath(WORKING_DIR, "output.wav")
+open(output_path, "w") do audio_file
+	write(audio_file, audio_bytes)
+end
+
+println("Audio successfully saved to $output_path")
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/suno/bark' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "json": false,
+    "text": "Hello"
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 130+ image feature extraction models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/text-as-input/text-to-speech" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

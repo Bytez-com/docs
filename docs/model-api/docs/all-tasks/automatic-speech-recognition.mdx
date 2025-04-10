@@ -1,0 +1,127 @@
+---
+title: "Automatic Speech Recognition"
+icon: "file-music"
+---
+<Tip>Convert spoken language into written text for transcription services, voice assistants, and accessibility features..</Tip>
+
+
+## Quickstart
+### Transcribe an Audio File
+Send an audio file to an ASR model to generate text.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("facebook/data2vec-audio-base-960h");
+
+const inputAudioBase64 = await getBase64Audio(
+  "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
+);
+
+const { error, output } = await model.run({ b64AudioBufferWav: inputAudioBase64 });
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  console.log("Transcription:", output.text);
+}
+
+async function getBase64Audio(url) {
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  return Buffer.from(arrayBuffer).toString("base64");
+}
+
+```
+
+```python python
+import requests
+import base64
+from bytez import Bytez
+
+
+def get_base64_audio(url):
+    response = requests.get(url)
+    return base64.b64encode(response.content).decode("utf-8")
+
+
+input_audio_base64 = get_base64_audio(
+    "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+)
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("facebook/data2vec-audio-base-960h")
+
+model.load()
+
+result = model.run({"b64AudioBufferWav": input_audio_base64})
+
+output = result["output"]
+
+# Depending on the model, there may be additional props returned
+print(output)
+
+text = output["text"]
+
+print("Inference is: ", text)
+```
+
+```julia julia
+using Bytez
+using Base64
+using HTTP
+
+function get_base64_audio(url::String)::String
+	response = HTTP.get(url)
+	return base64encode(response.body)
+end
+
+input_audio_base64 = get_base64_audio(
+	"https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav",
+)
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("facebook/data2vec-audio-base-960h")
+
+model.load()
+
+result = model.run(Dict("b64AudioBufferWav" => input_audio_base64))
+
+output = result["output"]
+
+# Depending on the model, there may be additional props returned
+println(output)
+
+text = output["text"]
+
+println("Inference is: $text")
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/google/ddpm-cifar10-32' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "url": "https://example.com/path/to/your/input-file"
+}'
+
+```
+
+</CodeGroup>
+
+## Demo
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 3.5K+ ASR models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="https://bytez.com/docs/openai/whisper-large-v3/model" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

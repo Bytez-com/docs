@@ -1,0 +1,243 @@
+---
+title: 'Vision'
+description: 'Use chat + vision models (`image-as-input`) to generate text-based responses.'
+icon: 'image'
+---
+
+# Describe Images
+
+<Tip>Send text and image inputs to vision-enabled chat models to generate descriptions, compare images, and analyze visual content.</Tip>
+
+## Quickstart
+
+### Describe an Image
+Send an image with a text prompt to generate a description.
+
+<CodeGroup>
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("meta-llama/Llama-3.2-11B-Vision-Instruct");
+
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "What is this image?" },
+      { type: "image", url: "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
+    ]
+  }
+];
+
+const { error, output } = await model.run(textInput);
+
+if (error) {
+  console.error("Error running the model:", error);
+} else {
+  console.log(output);
+}
+
+
+```
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/meta-llama/Llama-3.2-11B-Vision-Instruct' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+  "messages": [
+    {
+      "role": "system",
+      "content": [
+        { "type": "text", "text": "You are a friendly chatbot who responds in the tone of a pirate" }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        { "type": "text", "text": "What is this image?" },
+        { "type": "image", "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
+      ]
+    }
+  ],
+  "params": {
+    "max_new_tokens": 10
+  }
+}'
+```
+</CodeGroup>
+### Compare Two Images
+
+Ask the model to compare multiple images.
+
+<CodeGroup>
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("meta-llama/Llama-3.2-11B-Vision-Instruct");
+
+const multiImageInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Compare these images." },
+      { type: "image", url: "https://example.com/path-to-image1.jpg" },
+      { type: "image", url: "https://example.com/path-to-image2.jpg" }
+    ]
+  }
+];
+
+const { error, output } = await model.run(multiImageInput);
+
+if (error) {
+  console.error("Error running the model:", error);
+} else {
+  console.log(output);
+}
+
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/meta-llama/Llama-3.2-11B-Vision-Instruct' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You'\''re a helpful assistant"
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "What'\''s the difference between these images?"
+                },
+                {
+                    "type": "image",
+                    "url": "https://tripfixers.com/wp-content/uploads/2019/11/eiffel-tower-with-snow.jpeg"
+                },
+                {
+                    "type": "image",
+                    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+                }
+            ]
+        }
+    ]
+}'
+```
+</CodeGroup>
+
+## Streaming
+
+Get real-time responses when analyzing an image.
+
+```javascript javascript
+const stream = await model.run(textInput, params, true);
+```
+
+#### Node.js Version (Using Readable Stream)
+
+```javascript javascript
+import Bytez from "bytez.js";
+import { Readable } from "stream";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("meta-llama/Llama-3.2-11B-Vision-Instruct");
+
+const multiImageInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Compare these images." },
+      { type: "image", url: "https://example.com/path-to-image1.jpg" },
+      { type: "image", url: "https://example.com/path-to-image2.jpg" }
+    ]
+  }
+];
+
+const params = { max_new_tokens: 100 };
+
+// Stream response
+const stream = await model.run(multiImageInput, params, true);
+
+try {
+  const readableStream = Readable.fromWeb(stream); // Convert Web Stream to Node.js Readable Stream
+  for await (const chunk of readableStream) {
+    console.log(chunk.toString()); // Log each chunk
+  }
+  console.log("Streaming ended.");
+} catch (error) {
+  console.error("Streaming error:", error);
+}
+
+```
+#### Browser Version (Using `getReader()`)
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("meta-llama/Llama-3.2-11B-Vision-Instruct");
+
+const multiImageInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Compare these images." },
+      { type: "image", url: "https://example.com/path-to-image1.jpg" },
+      { type: "image", url: "https://example.com/path-to-image2.jpg" }
+    ]
+  }
+];
+
+const params = { max_new_tokens: 100 };
+
+// Stream response
+const stream = await model.run(multiImageInput, params, true);
+
+try {
+  const reader = stream.getReader(); // Get a reader for the Web Stream
+
+  while (true) {
+    const { done, value } = await reader.read(); // Read chunk-by-chunk
+    if (done) break; // Exit when the stream ends
+    console.log(new TextDecoder().decode(value)); // Convert Uint8Array to string
+  }
+
+  console.log("Streaming ended.");
+} catch (error) {
+  console.error("Streaming error:", error);
+}
+
+```
+### Key Points
+- `Node.js`: Convert the Web Stream using `Readable.fromWeb()` for compatibility.
+- `Browser`: Use `getReader()` and `TextDecoder` to process the stream.
+- `Error Handling`: Both methods use try...catch to handle potential errors.
+- `Data Handling`: Data chunks are processed as they arrive via data events or `.read()` calls.
+
+## Explore Specialized Models
+
+- [`Object Detection`](../all-tasks/object-detection): Models trained to detect objects in images.
+- [`Fill Mask`](../all-tasks/fill-mask): Models designed to fill in missing parts of an image.
+- [`Image Classification`](../all-tasks/image-classification): Models optimized for classifying images into categories.
+- [`Image-to-Text`](../all-tasks/image-to-text): Models that generate textual descriptions for images.

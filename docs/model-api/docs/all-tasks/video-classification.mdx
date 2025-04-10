@@ -1,0 +1,117 @@
+---
+title: "Video Classification"
+icon: "video"
+---
+
+<Tip>Categorize videos into predefined classes for applications in video content analysis, security surveillance, and media organization.</Tip>
+
+## Quickstart
+
+### Classify a Video
+
+Send a video input URL to classify its contents.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("ahmedabdo/video-classifier");
+
+const videoUrl = "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4";
+
+const { error, output } = await model.run(videoUrl);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  const [labelObjects] = output;
+  labelObjects.sort((a, b) => b.score - a.score);
+  
+  for (const labelObject of labelObjects) {
+    console.log(labelObject);
+    const { score, label } = labelObject;
+    console.log({ score, label });
+  }
+}
+```
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("ahmedabdo/video-classifier")
+
+model.load()
+
+input_video_url = "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4"
+
+result = model.run(input_video_url)
+
+outputs = result["output"]
+
+label_objects = outputs[0]
+
+# Sort label objects by score in descending order
+label_objects.sort(key=lambda x: x["score"], reverse=True)
+
+for label_object in label_objects:
+    # Print each label object (for debugging or review)
+    print(label_object)
+
+    # Extract and print score and label
+    score = label_object.get("score")
+    label = label_object.get("label")
+
+    print({"score": score, "label": label})
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("ahmedabdo/video-classifier")
+
+model.load()
+
+input_video_url = "https://video-previews.elements.envatousercontent.com/6d07b79d-b17a-47b5-9d24-4fe984c7ca36/watermarked_preview/watermarked_preview.mp4"
+
+result = model.run(input_video_url)
+
+outputs = result["output"]
+
+label_objects = outputs[1]
+
+# Sort label objects by score in descending order
+sorted_label_objects = sort(label_objects, by = x -> x["score"], rev = true)
+
+for label_object in sorted_label_objects
+	# Depending on the model, there may be additional props returned
+	println(label_object)
+
+	# Extract and print score and label
+	score = get(label_object, "score", 0.0)
+	label = get(label_object, "label", "N/A")
+
+	println(Dict("score" => score, "label" => label))
+end
+```
+
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 949+ video classification models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="https://bytez.com/models?task=video-classification" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

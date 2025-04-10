@@ -1,0 +1,195 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Open Source Examples - 'Messages' as Input",
+      "description": "Explore open-source AI models that take `messages` as input across various tasks via HTTP requests. We've standardized the schema, allowing you to call any model seamlessly via its `modelId` in the format `org/model_name.` Filter models by task or explore via our UI.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.bytez.com",
+        "description": "Production server"
+      }
+    ],
+    "paths": {
+      "/models/v2/openai/gpt-4o-audio-preview": {
+        "post": {
+          "summary": "Chat",
+          "description": "Interact with OpenAI's GPT-4 model for chat and multi-modal tasks.",
+          "operationId": "chatWithGPT4",
+          "parameters": [
+            {
+              "name": "Authorization",
+              "in": "header",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "Key your-key-here",
+              "description": "API key for authorization."
+            },
+            {
+              "name": "Provider-key",
+              "in": "header",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "example": "{{vault:open-ai-api-key}}",
+              "description": "Provider-specific API key."
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "description": "Send messages to the model for processing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "json": {
+                      "type": "boolean",
+                      "description": "Flag to determine if the response is JSON formatted.",
+                      "example": false
+                    },
+                    "messages": {
+                      "type": "array",
+                      "description": "Array of messages for the model.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string",
+                            "description": "Role of the message sender.",
+                            "example": "user"
+                          },
+                          "content": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "Content type (e.g., text, audio, image).",
+                                  "example": "text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "description": "Text content.",
+                                  "example": "How many sentences was that?"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "URL of the content (e.g., audio file).",
+                                  "example": "https://openaiassets.blob.core.windows.net/$web/API/docs/audio/alloy.wav"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["json", "messages"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with the output from the model.",
+              "headers": {
+                "Content-Type": {
+                  "description": "Content type of the response.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "application/json; charset=utf-8"
+                },
+                "X-Response-Time": {
+                  "description": "Time taken to process the request.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "1242ms"
+                }
+              },
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "object",
+                        "nullable": true
+                      },
+                      "output": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string",
+                            "description": "The role of the response.",
+                            "example": "assistant"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "The response content.",
+                            "example": "I can definitely help you generate code! Please tell me what language and functionality you need."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Text": {
+                      "value": {
+                        "error": null,
+                        "output": {
+                          "role": "assistant",
+                          "content": "I can definitely help you generate code! Please tell me what language and functionality you need."
+                        }
+                      }
+                    },
+                    "Text + Image": {
+                      "value": {
+                        "error": null,
+                        "output": {
+                          "role": "assistant",
+                          "content": "The image shows the Eiffel Tower covered in snow. A picnic would not be a good idea in this location because it is too cold and snowy."
+                        }
+                      }
+                    },
+                    "Text + Audio": {
+                      "value": {
+                        "error": null,
+                        "output": {
+                          "role": "assistant",
+                          "content": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "apiKeyAuth": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header",
+          "description": "Provide your API key as `Key your-key-here` in the `Authorization` header."
+        }
+      }
+    }
+  }
+  

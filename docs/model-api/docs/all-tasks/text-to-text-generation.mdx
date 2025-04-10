@@ -1,0 +1,101 @@
+---
+title: "Text-to-Text Generation"
+icon: "text-size"
+---
+<Tip>
+
+Generate text from input text for applications like text completion, content generation, and dialogue systems.</Tip>
+
+## Quickstart
+
+### Generate Text from Text Input
+Send an input text to generate a response.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("google/flan-t5-base");
+
+const modelParams = { max_new_tokens: 20, temperature: 2 };
+
+const { error, output } = await model.run(
+  "Once upon a time there was a small little man who",
+  modelParams
+);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  console.log("Generated text:", output[0].generated_text);
+}
+```
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("google/flan-t5-base")
+
+model.load()
+
+input_text = "Once upon a time there was a small little man who"
+
+model_params = {"max_new_tokens": 20, "temperature": 2}
+
+result = model.run(input_text, model_params=model_params)
+
+output = result["output"]
+
+generated_text = output[0]["generated_text"]
+
+print(generated_text)
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("google/flan-t5-base")
+
+model.load()
+
+input_text = "Once upon a time there was a small little man who"
+
+model_params = Dict("max_new_tokens" => 20, "temperature" => 2)
+
+result = model.run(input_text, model_params)
+
+output = result["output"]
+
+generated_text = output[1]["generated_text"]
+
+println(generated_text)
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/bigscience/mt0-small' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "text": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct."
+}'
+```
+
+</CodeGroup>
+
+## Demo
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Explore 60+ text-to-text generation models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/text-as-input/text2text-generation" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

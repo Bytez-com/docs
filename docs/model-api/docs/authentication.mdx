@@ -1,0 +1,58 @@
+---
+title: 'API Keys'
+description: 'Get your API key and access `open source` and `closed-source` models through a standard format'
+icon: 'key'
+---
+
+## Get Your API Key
+
+1. Log into [Bytez](http://bytez.com).
+2. Navigate to the `Settings` page.
+3. Locate your API key under the **API Keys** section and copy it.
+
+Use this key in the `Authorization` header for all API requests:
+
+```http
+Authorization: Key your-key-here
+```
+
+## Send Your First API Request
+You can use a `curl` command to verify your setup:
+
+```bash
+curl --location 'https://api.bytez.com/models/v2/NousResearch/Hermes-3-Llama-3.1-8B' \
+--header 'Authorization: Key BYTEZ_API_KEY' \
+--header 'Content-Type: application/json' \
+--data '{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You'\''re a helpful assistant"
+        },
+        {
+            "role": "user",
+            "content": "Dreams are messages from the "
+        }
+    ]
+}'
+```
+
+<Info>Something not right or need another API Key? DM our team in [Disocrd](https://discord.com/invite/Z723PfCFWf) and we'll resolve.</Info>
+
+## Accessing Closed Source Models
+Bytez enables you to interact with proprietary [chat](chat/text#proprietary-models) models by `OpenAI`, `Anthropic`, `Cohere`, `Google`, and `Mistral`
+
+To use these models, you'll need two keys:
+
+1. Your `Bytez API Key`: Obtained as described above.
+2. `Provider Key`: The key specific to the provider you want to access (e.g., OpenAI API key).
+
+Example Headers
+```http
+Authorization: Key your-bytez-api-key
+Provider-key: your-provider-key
+```
+
+## Notes
+1. `No Additional Charges`: Bytez does not charge for accessing proprietary models; however, the respective provider's billing applies.
+2. `Seamless Integration`: You can interact with closed-source models using the same standardized input structure as open-source models.

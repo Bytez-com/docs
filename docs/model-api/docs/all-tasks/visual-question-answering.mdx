@@ -1,0 +1,104 @@
+---
+title: "Visual Question Answering"
+icon: "comments-question-check"
+---
+<Tip>Answer questions based on image content for applications like interactive learning, accessibility features, and content analysis.</Tip>
+
+## Quickstart
+
+### Answer Questions About an Image
+
+Send an image URL and a question to receive an answer.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("Salesforce/blip-vqa-base");
+
+const input = {
+  image: "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+  question: "What kind of animal is this?"
+};
+
+const { error, output } = await model.run(input);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  const [{ answer }] = output;
+  console.log(answer);
+}
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Salesforce/blip-vqa-base")
+
+model.load()
+
+input_data = {
+    "image": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+    "question": "What kind of animal is this?",
+}
+
+result = model.run(input_data)
+
+outputs = result["output"]
+
+answer = outputs[0]["answer"]
+
+print(answer)
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Salesforce/blip-vqa-base")
+
+model.load()
+
+input_data = Dict(
+	"image" => "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+	"question" => "What kind of animal is this?",
+)
+
+result = model.run(input_data)
+
+outputs = result["output"]
+
+answer = outputs[1]["answer"]
+
+println(answer)
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/aqachun/Vilt_fine_tune_2000' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "question": "What kind of animal is this?",
+    "url": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 117+ visual question answering models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/multi-input/visual-question-answering" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

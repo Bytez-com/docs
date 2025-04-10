@@ -1,0 +1,274 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Open Source Model API",
+      "description": "# 🚀 Get started here\n\nGuides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n✨ Link to [Bytez GitHub README.md](https://github.com/Bytez-com/docs).",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.bytez.com",
+        "description": "Production server"
+      }
+    ],
+    "paths": {
+      "/models/v2/openai-community/{model}": {
+        "post": {
+          "summary": "Run Inference",
+          "description": "Use POST to run any open source model. This will automatically create an auto-scaling cluster of the model and run inference on that cluster.",
+          "operationId": "runModel",
+          "parameters": [
+            {
+              "name": "model",
+              "in": "path",
+              "required": true,
+              "description": "The specific open source model to run (e.g., `gpt2`).",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Send input text and parameters to the model.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "Input text to be processed by the model."
+                    },
+                    "stream": {
+                      "type": "boolean",
+                      "description": "Enable or disable streaming responses."
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "min_length": {
+                          "type": "integer",
+                          "description": "Minimum length of the response."
+                        },
+                        "max_length": {
+                          "type": "integer",
+                          "description": "Maximum length of the response."
+                        }
+                      }
+                    }
+                  },
+                  "required": ["text", "params"]
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response from the model.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "output": {
+                        "type": "string",
+                        "description": "The model's output."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        },
+        "put": {
+          "summary": "Create Cluster",
+          "description": "Create an auto-scaling cluster for the specified model.",
+          "operationId": "createModelCluster",
+          "parameters": [
+            {
+              "name": "model",
+              "in": "path",
+              "required": true,
+              "description": "The specific model to create a cluster for (e.g., `gpt2`).",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Specify the desired capacity and timeout for the cluster.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "capacity": {
+                      "type": "object",
+                      "properties": {
+                        "max": {
+                          "type": "integer",
+                          "description": "Maximum capacity of the cluster."
+                        },
+                        "desired": {
+                          "type": "integer",
+                          "description": "Desired capacity of the cluster."
+                        }
+                      }
+                    },
+                    "timeout": {
+                      "type": "integer",
+                      "description": "Timeout value for the cluster."
+                    }
+                  },
+                  "required": ["capacity", "timeout"]
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Cluster created successfully."
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        },
+        "get": {
+          "summary": "Read Cluster",
+          "description": "Retrieve information about the specified model cluster.",
+          "operationId": "readModelCluster",
+          "parameters": [
+            {
+              "name": "model",
+              "in": "path",
+              "required": true,
+              "description": "The specific model to retrieve information about (e.g., `gpt2`).",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cluster information retrieved successfully.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "cluster": {
+                        "type": "object",
+                        "description": "Details about the model cluster."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        },
+        "patch": {
+          "summary": "Update Cluster",
+          "description": "Update the capacity or configuration of the specified model cluster.",
+          "operationId": "updateModelCluster",
+          "parameters": [
+            {
+              "name": "model",
+              "in": "path",
+              "required": true,
+              "description": "The specific model to update (e.g., `gpt2`).",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Specify the new configuration for the cluster.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "capacity": {
+                      "type": "object",
+                      "properties": {
+                        "desired": {
+                          "type": "integer",
+                          "description": "Updated desired capacity of the cluster."
+                        }
+                      }
+                    }
+                  },
+                  "required": ["capacity"]
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Cluster updated successfully."
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        },
+        "delete": {
+          "summary": "Delete Cluster",
+          "description": "Delete the specified model cluster.",
+          "operationId": "deleteModelCluster",
+          "parameters": [
+            {
+              "name": "model",
+              "in": "path",
+              "required": true,
+              "description": "The specific model to delete the cluster for (e.g., `gpt2`).",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cluster deleted successfully."
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "apiKeyAuth": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "Authorization",
+          "description": "Provide your API key as `Key your-key-here` in the `Authorization` header."
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,170 @@
+---
+title: 'Video'
+description: 'Use chat + video mpdels (`video-as-input`) to generate insightful responses.'
+icon: 'video'
+---
+
+# Process Video Inputs
+
+<Tip>Analyze video content and generate responses based on visual context.</Tip>
+
+## Quickstart 
+
+Use a chat model with video input to analyze and generate insights.
+
+<CodeGroup>
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("llava-hf/LLaVA-NeXT-Video-7B-hf");
+
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Why is this video funny?" },
+      { type: "video", url: "https://example.com/path-to-video.mp4" }
+    ]
+  }
+];
+
+const { error, output } = await model.run(textInput);
+
+if (error) {
+  console.error("Error running the model:", error);
+} else {
+  console.log(output);
+}
+
+```
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--data '{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant."
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Why is this video funny?"
+                },
+                {
+                    "type": "video",
+                    "url": "https://example.com/path-to-video.mp4"
+                }
+            ]
+        }
+    ]
+}'
+```
+</CodeGroup>
+
+## Streaming
+
+Enable real-time analysis of video content by streaming model responses.
+
+### How Streaming Works
+
+To enable streaming, pass `true` as the third argument to the `model.run()` function. The model will return a stream that you can read incrementally.
+
+```javascript javascript
+const stream = await model.run(textInput, params, true);
+```
+
+#### Node.js Version (Using Readable Stream)
+
+```javascript javascript
+import Bytez from "bytez.js";
+import { Readable } from "stream";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("llava-hf/LLaVA-NeXT-Video-7B-hf");
+
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Why is this video funny?" },
+      { type: "video", url: "https://example.com/path-to-video.mp4" }
+    ]
+  }
+];
+
+const params = { max_new_tokens: 100 };
+
+// Stream response
+const stream = await model.run(textInput, params, true);
+
+try {
+  const readableStream = Readable.fromWeb(stream); // Convert Web Stream to Node.js Readable Stream
+  for await (const chunk of readableStream) {
+    console.log(chunk.toString()); // Log each chunk
+  }
+  console.log("Streaming ended.");
+} catch (error) {
+  console.error("Streaming error:", error);
+}
+
+```
+
+#### Browser Version (Using getReader())
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("llava-hf/LLaVA-NeXT-Video-7B-hf");
+
+const textInput = [
+  {
+    role: "system",
+    content: [{ type: "text", text: "You are a helpful assistant." }]
+  },
+  {
+    role: "user",
+    content: [
+      { type: "text", text: "Why is this video funny?" },
+      { type: "video", url: "https://example.com/path-to-video.mp4" }
+    ]
+  }
+];
+
+const params = { max_new_tokens: 100 };
+
+// Stream response
+const stream = await model.run(textInput, params, true);
+
+try {
+  const reader = stream.getReader(); // Get a reader for the Web Stream
+
+  while (true) {
+    const { done, value } = await reader.read(); // Read chunk-by-chunk
+    if (done) break; // Exit when the stream ends
+    console.log(new TextDecoder().decode(value)); // Convert Uint8Array to string
+  }
+
+  console.log("Streaming ended.");
+} catch (error) {
+  console.error("Streaming error:", error);
+}
+
+```
+### Key Points
+- `Node.js`: Convert the Web Stream using `Readable.fromWeb()` for compatibility.
+- `Browser`: Use `getReader()` and `TextDecoder` to process the stream.
+- `Error Handling`: Both methods use try...catch to handle potential errors.
+- `Data Handling`: Data chunks are processed as they arrive via data events or `.read()` calls.

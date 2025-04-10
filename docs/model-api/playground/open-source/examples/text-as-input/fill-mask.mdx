@@ -1,0 +1,19 @@
+---
+openapi: post /models/v2/almanach/camembert-base
+---
+
+# Fill Mask
+
+The `fill-mask` task uses a masked language model to predict masked tokens in a given text.
+
+## Example
+
+### Request
+
+```bash
+curl --location 'https://api.bytez.com/models/v2/almanach/camembert-base' \
+--header 'Authorization: Key your-api-key-here' \
+--header 'Content-Type: application/json' \
+--data '{
+    "text": "Hello <mask>"
+}'

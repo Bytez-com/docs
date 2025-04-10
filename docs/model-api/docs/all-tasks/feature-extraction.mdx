@@ -1,0 +1,98 @@
+---
+title: "Feature Extraction"
+icon: "fingerprint"
+---
+<Tip>Extract features from text for tasks like embedding generation, data preprocessing, and similarity search.</Tip>
+
+## Quickstart
+### Extract Features from Text
+Send text to a model to generate embeddings.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("Salesforce/SFR-Embedding-2_R");
+
+const inputText = "Your text for feature extraction goes here...";
+
+const { error, output } = await model.run(inputText);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  console.log("Embedding:", output[0]);
+}
+```
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Salesforce/SFR-Embedding-2_R")
+
+model.load()
+
+input_text = "Your text for feature extraction goes here..."
+
+result = model.run(input)
+
+output = result.get("output")
+
+# Depending on the model, there may be additional props returned
+print(output)
+
+embedding = output[0]
+
+print(embedding)
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Salesforce/SFR-Embedding-2_R")
+
+model.load()
+
+input_text = "Your text for feature extraction goes here..."
+
+result = model.run(input_text)
+
+output = result["output"]
+
+# Depending on the model, there may be additional props returned
+println(output)
+
+embedding = output[1]
+
+println(embedding)
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/allenai/specter2_base' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "text": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct."
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Discover 1.7K+ Feature Extraction models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/text-as-input/feature-extraction" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>

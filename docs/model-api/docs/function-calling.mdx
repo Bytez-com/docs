@@ -1,0 +1,178 @@
+---
+title: Function Calling
+description: "Execute `code` or `actions` based on model-generated outputs"
+icon: 'rocket'
+---
+
+<Tip>Some models support function calling, allowing them to interact with user-defined functions.</Tip>
+
+## Quickstart 
+
+### Function Calling with AI Models
+Pass a user query and function definitions to enable structured outputs.
+<CodeGroup>
+
+```javascript javascript
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+
+const inputText = "What's the weather like in Seattle right now?";
+
+const modelParams = {
+  max_new_tokens: 2000,
+  min_new_tokens: 50,
+  temperature: 0.001,
+  do_sample: false
+};
+
+const promptTemplate = `
+Function:
+def get_weather_data(coordinates):
+    """
+    Fetches weather data from the Open-Meteo API for the given latitude and longitude.
+    Args:
+    coordinates (tuple): The latitude and longitude of the location.
+    Returns:
+    float: The current temperature in the coordinates you've asked for
+    """
+
+Function:
+def get_coordinates_from_city(city_name):
+    """
+    Fetches the latitude and longitude of a given city name using the Maps.co Geocoding API.
+    Args:
+    city_name (str): The name of the city.
+    Returns:
+    tuple: The latitude and longitude of the city.
+    """
+
+User Query: {query}<human_end>
+`;
+
+const model = client.model("Nexusflow/NexusRaven-V2-13B");
+
+await model.load();
+
+const prompt = promptTemplate.replace("{query}", inputText);
+
+const stream = await model.run(prompt, { stream: true, params: modelParams });
+
+const textStream = stream.pipeThrough(new TextDecoderStream());
+
+for await (const chunk of textStream) {
+  console.log(chunk);
+}
+```
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Nexusflow/NexusRaven-V2-13B")
+
+model.load()
+
+input_text = "What's the weather like in Seattle right now?"
+
+model_params = {
+    "max_new_tokens": 20,
+    "max_new_tokens": 5,
+    "temperature": 0.001,
+    "do_sample": False,
+}
+
+prompt_template = '''
+Function:
+def get_weather_data(coordinates):
+    """
+    Fetches weather data from the Open-Meteo API for the given latitude and longitude.
+
+    Args:
+    coordinates (tuple): The latitude and longitude of the location.
+
+    Returns:
+    float: The current temperature in the coordinates you've asked for
+    """
+
+Function:
+def get_coordinates_from_city(city_name):
+    """
+    Fetches the latitude and longitude of a given city name using the Maps.co Geocoding API.
+
+    Args:
+    city_name (str): The name of the city.
+
+    Returns:
+    tuple: The latitude and longitude of the city.
+    """
+
+User Query: {query}<human_end>
+'''
+
+# Prepare the prompt with the user query
+prompt = prompt_template.format(query=input_text)
+
+stream = model.run(prompt, model_params=model_params, stream=True)
+for chunk in stream:
+    print(f"Output: {chunk}")
+```
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("Nexusflow/NexusRaven-V2-13B")
+
+model.load()
+
+input_text = "What's the weather like in Seattle right now?"
+
+options = Dict(
+	"params" => Dict(
+		"max_new_tokens" => 20,
+		"min_new_tokens" => 5,
+		"temperature" => 0.001,
+		"do_sample" => false),
+	"stream" => true,
+)
+
+prompt_template = """
+Function:
+def get_weather_data(coordinates):
+	\"\"\"
+	Fetches weather data from the Open-Meteo API for the given latitude and longitude.
+
+	Args:
+	coordinates (tuple): The latitude and longitude of the location.
+
+	Returns:
+	float: The current temperature in the coordinates you've asked for
+	\"""
+
+Function:
+def get_coordinates_from_city(city_name):
+	\"""
+	Fetches the latitude and longitude of a given city name using the Maps.co Geocoding API.
+
+	Args:
+	city_name (str): The name of the city.
+
+	Returns:
+	tuple: The latitude and longitude of the city.
+	\"""
+
+User Query: {query}<human_end>
+"""
+
+# Prepare the prompt with the user query
+prompt = replace(prompt_template, "{query}" => input_text)
+
+stream = model.run(prompt, options)
+
+while isopen(stream)
+	item = take!(stream)
+	println(item)
+end
+```
+</CodeGroup>

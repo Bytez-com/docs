@@ -1,0 +1,135 @@
+---
+title: "Token Classification"
+icon: "vector-square"
+---
+
+<Tip>Identify and categorize tokens in text for Named Entity Recognition (NER), Part-of-Speech tagging, and other NLP tasks.</Tip>
+
+## Quickstart
+### Classify Tokens in Text
+Send a text input to classify individual tokens.
+
+<CodeGroup>
+```javascript javascript 
+import Bytez from "bytez.js";
+
+const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
+const model = client.model("dslim/bert-base-NER");
+
+const { error, output: wordObjects } = await model.run(
+  "John Doe is a software engineer at Google."
+);
+
+if (error) {
+  console.error("Error:", error);
+} else {
+  for (const wordObject of wordObjects) {
+    console.log(wordObject);
+    const { word, entity, score, index, start, end } = wordObject;
+    console.log({ word, entity, score, index, start, end });
+  }
+}
+```
+
+```python python
+from bytez import Bytez
+
+client = Bytez("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("dslim/bert-base-NER")
+
+model.load()
+
+input_text = "John Doe is a software engineer at Google."
+
+result = model.run(input_text)
+
+word_objects = result["output"]
+
+for word_object in word_objects:
+    # Depending on the model, there may be additional props returned
+    print(word_object)
+
+    word = word_object.get("word")
+    entity = word_object.get("entity")
+    score = word_object.get("score")
+    index = word_object.get("index")
+    start = word_object.get("start")
+    end = word_object.get("end")
+
+    print(
+        {
+            "word": word,
+            "entity": entity,
+            "score": score,
+            "index": index,
+            "start": start,
+            "end": end,
+        }
+    )
+```
+
+```julia julia
+using Bytez
+
+client = Bytez.init("YOUR_BYTEZ_KEY_HERE")
+
+model = client.model("dslim/bert-base-NER")
+
+model.load()
+
+input_text = "John Doe is a software engineer at Google."
+
+result = model.run(input_text)
+
+word_objects = result["output"]
+
+for word_object in word_objects
+	# Depending on the model, there may be additional props returned
+	println(word_object)
+
+	word = get(word_object, "word", "N/A")
+	entity = get(word_object, "entity", "N/A")
+	score = get(word_object, "score", 0.0)
+	index = get(word_object, "index", 0)
+	start = get(word_object, "start", 0)
+	# End is a reserved keyword in julia
+	_end = get(word_object, "end", 0)
+
+	println(
+		Dict(
+			"word" => word,
+			"entity" => entity,
+			"score" => score,
+			"index" => index,
+			"start" => start,
+			"end" => _end,
+		),
+	)
+end
+```
+
+```bash rest
+curl --location 'https://api.bytez.com/models/v2/2rtl3/mn-xlm-roberta-base-named-entity' \
+--header 'Authorization: Key YOUR_BYTEZ_KEY_HERE' \
+--header 'Content-Type: application/json' \
+--data '{
+    "text": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct."
+}'
+```
+
+</CodeGroup>
+
+## Demo
+
+<CardGroup>
+
+<Card title="Explore Models" href="/model-api/playground/models" icon="cube">
+  Explore 60+ token classification models. Find the right model for your use case.
+</Card>
+
+<Card title="API Playground" href="/model-api/playground/open-source/examples/text-as-input/token-classification" icon="webhook">
+  Experiment with our API using an example model.
+</Card>
+
+</CardGroup>
