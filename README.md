@@ -11,7 +11,7 @@
 
 # Bytez Model API
 
-✨ Access 40k+ open-source and proprietary AI models through a standard API. Achieve GPU-backed performance at CPU pricing ✨
+✨ Access 41k+ serverless AI models through a standard API. Achieve GPU-backed performance at CPU pricing ✨
 
 ## Table of Contents
 
@@ -44,7 +44,7 @@
 
 ## Introduction
 
-Bytez Model API streamlines integration with 40k+ open-source and proprietary AI models across 33 ML tasks. By standardizing inputs for `text`, `images`, `audio`, and more, it eliminates the complexity of inconsistent formats, enabling developers to effortlessly interact with models for tasks like `chat`, `text generation`, `image generation`, `video generation`, and beyond.
+Bytez Model API streamlines integration with 41k+ open-source and proprietary AI models across 33 ML tasks. By standardizing inputs for `text`, `images`, `audio`, and more, it eliminates the complexity of inconsistent formats, enabling developers to effortlessly interact with models for tasks like `chat`, `text generation`, `image generation`, `video generation`, and beyond.
 
 ---
 
