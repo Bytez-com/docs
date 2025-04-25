@@ -14,6 +14,8 @@ mode: 'wide'
       const sdk = new Bytez("BYTEZ_KEY");
       const model = sdk.model("dreamlike-art/dreamlike-photoreal-2.0");
 
+      await model.create()
+
       const { error, output } = await model.run("A beautiful landscape with mountains and a river");
 
       console.log({ error, output });
@@ -23,6 +25,8 @@ mode: 'wide'
 
       sdk = Bytez("BYTEZ_KEY")
       model = sdk.model("dreamlike-art/dreamlike-photoreal-2.0")
+
+      model.create()
 
       output, error = model.run("A beautiful landscape with mountains and a river")
 
@@ -48,6 +52,9 @@ mode: 'wide'
 
       const sdk = new Bytez("BYTEZ_KEY");
       const model = sdk.model("dreamlike-art/dreamlike-photoreal-2.0");
+
+      await model.create()
+
       const text = "A beautiful landscape with mountains and a river"
       const stream = true
 
@@ -63,6 +70,9 @@ mode: 'wide'
 
       sdk = Bytez("BYTEZ_KEY")
       model = sdk.model("dreamlike-art/dreamlike-photoreal-2.0")
+
+      model.create()
+
       text = "A beautiful landscape with mountains and a river"
       stream = True
 
