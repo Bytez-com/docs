@@ -1,0 +1,255 @@
+openapi: 3.0.3
+info:
+  title: Closed Source Model API
+  description: |
+    # 🚀 Get started here
+
+    Guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.
+
+    ✨ Link to [Bytez GitHub README.md](https://github.com/Bytez-com/docs).
+  version: 1.0.0
+servers:
+  - url: https://api.bytez.com
+    description: Production server
+
+paths:
+  /models/v2/openai/{model}:
+    post:
+      summary: OpenAI
+      description: Send requests to any OpenAI model by specifying the `{model}` placeholder in the path.
+      operationId: openaiModels
+      parameters:
+        - $ref: '#/components/parameters/ModelParameterOpenAI'
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+      security:
+        - apiKeyAuth: []
+          providerKeyAuth: []
+
+  /models/v2/google/{model}:
+    post:
+      summary: Google
+      description: Send requests to any Google model by specifying the `{model}` placeholder in the path.
+      operationId: googleModels
+      parameters:
+        - $ref: '#/components/parameters/ModelParameterGoogle'
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+      security:
+        - apiKeyAuth: []
+          providerKeyAuth: []
+
+  /models/v2/cohere/{model}:
+    post:
+      summary: Cohere
+      description: Send requests to any Cohere model by specifying the `{model}` placeholder in the path.
+      operationId: cohereModels
+      parameters:
+        - $ref: '#/components/parameters/ModelParameterCohere'
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+      security:
+        - apiKeyAuth: []
+          providerKeyAuth: []
+
+  /models/v2/anthropic/{model}:
+    post:
+      summary: Anthropic
+      description: Send requests to any Anthropic model by specifying the `{model}` placeholder in the path.
+      operationId: anthropicModels
+      parameters:
+        - $ref: '#/components/parameters/ModelParameterAnthropic'
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+      security:
+        - apiKeyAuth: []
+          providerKeyAuth: []
+
+  /models/v2/mistral/{model}:
+    post:
+      summary: Mistral
+      description: Send requests to any Mistral model by specifying the `{model}` placeholder in the path.
+      operationId: mistralModels
+      parameters:
+        - $ref: '#/components/parameters/ModelParameterMistral'
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessResponse'
+      security:
+        - apiKeyAuth: []
+          providerKeyAuth: []
+
+components:
+  # ─────────────────────────── Parameters ───────────────────────────
+  parameters:
+    ModelParameterBase: &ModelParameterBase
+      name: model
+      in: path
+      required: true
+      schema:
+        type: string
+    ModelParameterOpenAI:
+      <<: *ModelParameterBase
+      description: The specific OpenAI model to interact with (e.g., `gpt-4o-mini`).
+    ModelParameterGoogle:
+      <<: *ModelParameterBase
+      description: The specific Google model to interact with (e.g., `gemini-1.5-flash`).
+    ModelParameterCohere:
+      <<: *ModelParameterBase
+      description: The specific Cohere model to interact with (e.g., `command-r`).
+    ModelParameterAnthropic:
+      <<: *ModelParameterBase
+      description: The specific Anthropic model to interact with (e.g., `claude-3-haiku-20240307`).
+    ModelParameterMistral:
+      <<: *ModelParameterBase
+      description: The specific Mistral model to interact with (e.g., `mistral-small-latest`).
+
+  # ─────────────────────────── Schemas ───────────────────────────
+  schemas:
+    # Re-usable Chat-style message object
+    Message:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant]
+        content:
+          oneOf:
+            - type: string
+              description: Text-only message content.
+            - type: array
+              description: Multi-modal content blocks.
+              items:
+                type: object
+                required: [type]
+                properties:
+                  type:
+                    type: string
+                    enum: [text, image, audio, video]
+                  text:
+                    type: string
+                    description: Text when `type` is `text`.
+                  url:
+                    type: string
+                    format: uri
+                    description: HTTP URL to the media when `type` is image/audio/video.
+                  base64:
+                    type: string
+                    description: Base64-encoded media when `type` is image/audio/video.
+      required: [role, content]
+
+    # Array wrapper
+    MessagesProperty:
+      type: array
+      description: Conversation history.
+      items:
+        $ref: '#/components/schemas/Message'
+
+    # Stream / json flags
+    StreamProperty:
+      type: boolean
+      description: Enable/disable text streaming.
+    JsonProperty:
+      type: boolean
+      description: Stream media instead of JSON.
+
+    # Model-agnostic params (matches first YAML)
+    ParamsProperty:
+      type: object
+      description: Model-specific parameters.
+      properties:
+        min_length: { type: integer, description: Minimum response length. }
+        max_length: { type: integer, description: Maximum response length. }
+        temperature: { type: number, description: Sampling temperature. }
+
+    # ── UNIVERSAL REQUEST-BODY SCHEMA (imported from first YAML) ──
+    UniversalRequestBodySchema:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Input text for NLP tasks.
+        messages:
+          $ref: '#/components/schemas/MessagesProperty'
+        url:
+          type: string
+          format: uri
+          description: URL to image/audio/video.
+        base64:
+          type: string
+          description: Base64-encoded image/audio/video.
+        question:
+          type: string
+          description: Question (for QA tasks).
+        context:
+          type: string
+          description: Context paragraph (for QA tasks).
+        candidate_labels:
+          type: array
+          description: Candidate labels (for zero-shot).
+          items: { type: string }
+        stream:
+          $ref: '#/components/schemas/StreamProperty'
+        json:
+          $ref: '#/components/schemas/JsonProperty'
+        params:
+          $ref: '#/components/schemas/ParamsProperty'
+
+  # ─────────────────────────── Request Bodies ───────────────────────────
+  requestBodies:
+    UniversalRequestBody:
+      description: Universal schema that supports text, chat, image, audio, video, QA, zero-shot, and more.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UniversalRequestBodySchema'
+
+  # ─────────────────────────── Responses ───────────────────────────
+  responses:
+    SuccessResponse:
+      description: Successful response from the model.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: null
+                description: Null if everything is fine
+              output:
+                oneOf:
+                  - type: string
+                  - type: object
+                  - type: array
+                description: Model output
+
+  # ─────────────────────────── Security ───────────────────────────
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >
+        Set `Authorization` header to `Key BYTEZ_KEY` (e.g. 'Authorization': 'Key ABC123')
+    providerKeyAuth:
+      type: apiKey
+      in: header
+      name: provider-key
+      description: >
+        Set `provider-key` header to `PROVIDER_KEY` (e.g. 'provider-key': 'OPEN_AI_KEY')

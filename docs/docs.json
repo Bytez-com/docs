@@ -1,0 +1,207 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Bytez",
+  "logo": {
+    "light": "/logo/wordmark-dark.svg",
+    "dark": "/logo/wordmark-white.svg"
+  },
+  "favicon": "favicon.png",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373"
+  },
+  "api": {
+    "mdx": {
+      "server": "https://api.bytez.com"
+    },
+    "playground": { "proxy": false }
+  },
+  "navbar": {
+    "links": [
+      { "label": "Discord", "href": "https://discord.com/invite/Z723PfCFWf" },
+      {
+        "label": "Get support",
+        "href": "https://discord.com/invite/Z723PfCFWf"
+      }
+    ],
+    "primary": { "type": "github", "href": "https://github.com/Bytez-com/docs" }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Model API",
+            "pages": [
+              "model-api/docs/welcome",
+              "model-api/docs/get-started",
+              {
+                "group": "Understand the API",
+                "icon": "head-side-gear",
+                "pages": [
+                  "model-api/docs/under-the-hood",
+                  "model-api/docs/clusters"
+                ]
+              },
+              {
+                "group": "Tasks",
+                "icon": "microchip-ai",
+                "pages": [
+                  "/model-api/docs/task/audio-classification",
+                  "/model-api/docs/task/automatic-speech-recognition",
+                  "/model-api/docs/task/chat",
+                  "/model-api/docs/task/depth-estimation",
+                  "/model-api/docs/task/document-question-answering",
+                  "/model-api/docs/task/feature-extraction",
+                  "/model-api/docs/task/fill-mask",
+                  "/model-api/docs/task/image-classification",
+                  "/model-api/docs/task/image-feature-extraction",
+                  "/model-api/docs/task/image-segmentation",
+                  "/model-api/docs/task/image-to-text",
+                  "/model-api/docs/task/mask-generation",
+                  "/model-api/docs/task/object-detection",
+                  "/model-api/docs/task/question-answering",
+                  "/model-api/docs/task/sentence-similarity",
+                  "/model-api/docs/task/summarization",
+                  "/model-api/docs/task/text-classification",
+                  "/model-api/docs/task/text-generation",
+                  "/model-api/docs/task/text-to-image",
+                  "/model-api/docs/task/text-to-speech",
+                  "/model-api/docs/task/text-to-text-generation",
+                  "/model-api/docs/task/text-to-video",
+                  "/model-api/docs/task/token-classification",
+                  "/model-api/docs/task/translation",
+                  "/model-api/docs/task/unconditional-image-generation",
+                  "/model-api/docs/task/video-classification",
+                  "/model-api/docs/task/visual-question-answering",
+                  "/model-api/docs/task/zero-shot-classification",
+                  "/model-api/docs/task/zero-shot-image-classification",
+                  "/model-api/docs/task/zero-shot-object-detection"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "HTTP Reference",
+        "pages": [
+          "http/overview",
+          {
+            "group": "Endpoints",
+            "pages": [
+              {
+                "group": "List",
+                "icon": "layer-group",
+                "pages": [
+                  "http/list/clusters",
+                  "http/list/models",
+                  "http/list/tasks"
+                ]
+              },
+              {
+                "group": "Model",
+                "icon": "cube",
+                "pages": [
+                  "http/model/create",
+                  "http/model/read",
+                  "http/model/update",
+                  "http/model/delete",
+                  "http/model/run"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Examples",
+            "pages": [
+              {
+                "group": "Closed Source",
+                "pages": [
+                  "http/examples/closed-source/openai",
+                  "http/examples/closed-source/google",
+                  "http/examples/closed-source/cohere",
+                  "http/examples/closed-source/anthropic",
+                  "http/examples/closed-source/mistral"
+                ]
+              },
+              {
+                "group": "Multimodal",
+                "pages": [
+                  "http/examples/open-source/multimodal/chat-text",
+                  "http/examples/open-source/multimodal/chat-vision",
+                  "http/examples/open-source/multimodal/chat-audio",
+                  "http/examples/open-source/multimodal/chat-video"
+                ]
+              },
+              {
+                "group": "Text as Input",
+                "pages": [
+                  "http/examples/open-source/text-as-input/fill-mask",
+                  "http/examples/open-source/text-as-input/text-to-speech",
+                  "http/examples/open-source/text-as-input/text-to-audio",
+                  "http/examples/open-source/text-as-input/text-to-image",
+                  "http/examples/open-source/text-as-input/translation",
+                  "http/examples/open-source/text-as-input/summarization",
+                  "http/examples/open-source/text-as-input/feature-extraction",
+                  "http/examples/open-source/text-as-input/text-classification",
+                  "http/examples/open-source/text-as-input/token-classification",
+                  "http/examples/open-source/text-as-input/text2text-generation",
+                  "http/examples/open-source/text-as-input/text-generation"
+                ]
+              },
+              {
+                "group": "Image as Input",
+                "pages": [
+                  "http/examples/open-source/image-as-input/image-to-text",
+                  "http/examples/open-source/image-as-input/image-classification",
+                  "http/examples/open-source/image-as-input/segmentation",
+                  "http/examples/open-source/image-as-input/depth-estimation",
+                  "http/examples/open-source/image-as-input/object-detection",
+                  "http/examples/open-source/image-as-input/mask-generation",
+                  "http/examples/open-source/image-as-input/image-feature-extraction"
+                ]
+              },
+              {
+                "group": "Multi‑input",
+                "pages": [
+                  "http/examples/open-source/multi-input/question-answering",
+                  "http/examples/open-source/multi-input/document-question-answering",
+                  "http/examples/open-source/multi-input/visual-question-answering",
+                  "http/examples/open-source/multi-input/zero-shot-object-detection",
+                  "http/examples/open-source/multi-input/zero-shot-image-classification",
+                  "http/examples/open-source/multi-input/zero-shot-classification"
+                ]
+              },
+              {
+                "group": "Resources",
+                "pages": [
+                  "company/about",
+                  "company/blog",
+                  "company/solutions",
+                  "company/roadmap"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "pages": ["integrations/langchain"]
+      },
+      { "tab": "API status", "pages": ["model-api/docs/status"] }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/bytez",
+      "github": "https://github.com/bytez-com",
+      "linkedin": "https://linkedin.com/company/bytez",
+      "discord": "https://discord.com/invite/Z723PfCFWf"
+    }
+  }
+}

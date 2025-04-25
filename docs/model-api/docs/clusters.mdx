@@ -1,0 +1,251 @@
+---
+title: 'Clusters'
+description: 'When you run open source models, we create serverless clusters for you'
+icon: 'microchip'
+mode: 'wide'
+---
+
+import Latex from '/snippets/latex/concurrency.mdx';
+import LatexBilling from '/snippets/latex/under-the-hood.mdx';
+
+<AccordionGroup>
+  <Accordion title="What are clusters?">
+    Open models are great, and they're not easy to use as closed models. They require you, the developer, to think about extra steps, like which hardware to run on, if you should quantize, if you should keep your instances always on, off, or try to make them serverless. Running open models requires DevOps; this especially true when we're talking about run large models affordably, at scale.
+
+    To make open models easy to use, our approach begins with benchmarking and ends with auto-scaling groups that act like serverless instances.
+
+    To begin, we benchmark models to understand how much GPU RAM is required for inference.
+
+    We use this information to place models on the right-size GPU.
+
+    Below is a simple breakdown of our process.
+
+    ### Our process "behind the scenes"
+
+    <Steps>
+      <Step title="Add a new model to our sdk...">
+        We debug the model and ensure it runs in a secure container
+      </Step>
+      <Step title="Model benchmarking">
+        We determine how much RAM is required for inference
+      </Step>
+      <Step title="Instance selection">
+        We select the cheapest GPU instances with enough RAM for the model
+      </Step>
+      <Step title="Model becomes available">
+        We add the model to our sdk, making it available to you
+      </Step>
+    </Steps>
+
+    ### Later, when you want to run the model
+
+
+    <Steps>
+      <Step title="Cluster creation">
+        To run an open model, you'll need to a cluster. A cluster is an auto-scaling group, configured to have the right GPU-backed instances that support running your open model. This auto-scaling group auto-scales up and down for you, allowing open models to infinitely scale to your traffic demands. Like serverless setups, if the instances in your cluster don't receive traffic after a certain period of time, they shut down, saving you money.
+
+        To create a cluster, you'll either use `model.create()` or `model.run()`.
+
+        If you run `model.create()` you'll create a cluster for yourself, giving you full control.
+
+        If you choose to skip running `model.create()` and instead, you execute `model.run()` first, we'll automatically run `model.create()` for you and we'll use the default params. After the `create` operation succeeds, we then pass your `run` request to the cluster.
+
+        <CodeGroup>
+          ```javascript model.create()
+          import Bytez from "bytez.js";
+
+          const client = new Bytez("BYTEZ_KEY");
+          const model = client.model("openai-community/gpt-2")
+
+          const { error, output } = await model.create({
+            timeout: 10,   // if reqs not received for `10` mins, then shut down
+            capacity: {   // capacity can be thought of as `concurrency`
+              min: 0,     // scale down to this number
+              desired: 1, // try to maintain this number of instances
+              max: 1,     // scale up to this number
+            },
+          })
+
+          console.log({ error, output });
+          ```
+          ```javascript model.run()
+          import Bytez from "bytez.js";
+
+          const client = new Bytez("BYTEZ_KEY");
+          const model = client.model("openai-community/gpt-2")
+
+          const { error, output } = await model.run("Hello")
+
+          console.log({ error, output });
+          ```
+        </CodeGroup>
+
+
+
+        <Note>Creating a cluster can take 5-10 seconds before the operation completes. Under the hood, we create an auto-scaling group with a load balancer, which uses the right-sized GPU-backed instances to run your selected model.</Note>
+
+        ```mermaid
+        gantt
+          dateFormat  X
+          axisFormat  %s.%Ls
+          title Cluster creation timeline
+
+          section Operation
+          Operation timeline          : 0, 5
+          Create load balancer        : 0, 1
+          Create auto-scaling group   : 0, 1
+          Create scaling policies     : 1, 2
+          Tie services together       : 2, 3
+          Provisioning first instance : 1, 5
+
+        ```
+        <Note>Cluster creation completes when the first instance is provisioned. Note, even though a instance is provisioned, it doesn't mean it has completed its cold boot</Note>
+
+      </Step>
+      <Step title="A cluster spins up instances. Instances cold boot.">
+        Once a Cluster is created, it begins to spin up instances based on the cluster capacity, which configurable by you, the developer.
+
+        Each instance that spins up has a delay before its ready to serve traffic.
+
+        Let's define this delay as `cold boot`.
+
+        ```mermaid
+        gantt
+          dateFormat  X
+          axisFormat %ss
+          title Cold boot timeline
+
+          section Create
+          Operation timeline          : 0, 5
+          Create load balancer        : 0, 1
+          Create auto-scaling group   : 0, 1
+          Create scaling policies     : 1, 2
+          Tie services together       : 2, 3
+          Provisioning first instance : 1, 5
+
+          section First instance cold boot
+          Attach file system            : 1, 3
+          Networking setup              : 3, 5
+          OS boot                       : 5, 8
+          Startup script                : 8, 10
+          Download GBs of model weights : 10, 20
+          Load weights onto GPU         : 20, 22
+          Ready to serve traffic        : 22, 24
+          Cold boot                     : 1, 24
+        ```
+
+        Under the hood, the `cold boot` timeline includes provisioning the instance, which includes low-level operations, like the time it takes to virtually attach file systems and network cards.
+
+        Once the OS is booted, we have control, and we race to download weights, load them onto a GPU, and make the instance ready for traffic. We've optimized many of these steps, like skipping downloading weights, where possible, to reduce cold boot time.
+
+        <Note>Cold boot can take 20-60 seconds depending how many GBs of params are being downloaded/loaded onto the GPU</Note>
+      </Step>
+      <Step title="Cluster updates">
+        You can update a cluster at anytime by running `model.update()`
+
+        Let's say you want to update your cluster `timeout` to `2` minutes:
+
+        ```javascript Updating a cluster
+        import Bytez from "bytez.js";
+
+        const client = new Bytez("BYTEZ_KEY");
+        const model = client.model("openai-community/gpt-2")
+
+        const { error, output } = await model.update({ timeout: 2 })
+
+        console.log({ error, output });
+        ```
+      </Step>
+      <Step title="Auto-scaling">
+        Clusters are configured with an auto-scaling policy that tries to maintain 1 concurrent request per an instance. This is because inference typically needs the entire GPU.
+
+        <Latex />
+      </Step>
+      <Step title="Cluster deletion">
+        There are two ways a cluster can be deleted:
+
+        1. You can run `model.delete()`
+        2. Or, if the cluster is `idle` for `N` number of minutes, it auto-terminates
+
+        #### Idle clusters
+        A cluster is `idle` when it hasn't receive requests for a certain `N` number of minutes.
+
+        `N` here is the `timeout` parameter that's part of your cluster config. `Timeout` can be set during cluster creation or updated while your cluster is alive.
+
+        For example, lets say your cluster has a `timeout` = `2`. If your cluster doesn't receive requests for `2` minutes it auto-deletes. You can think of this as a safety measure, in case a developer forgets to run `model.delete()`
+      </Step>
+      <Step title="Cluster billing">
+        Clusters launch instances. Instances cost money per second. Your cluster will incur a bill for the total number of instance seconds it accumulated over its life.
+
+        {<u>Example Calculation</u>}
+
+        Let's say a cluster had 2 instances that were active for $t_1 = 300$ seconds and $t_2 = 120$ seconds, respectively.
+
+        - The total instance seconds is calculated as:
+          $t_{total} = t_1 + t_2 = 300s + 120s = 420s$
+
+        - Assume the price per second for the instance type is \$0.00001.
+
+        The total bill is then calculated using the formula:
+
+        <LatexBilling />
+      </Step>
+    </Steps>
+
+  </Accordion>
+  <Accordion title='CREATE a cluster'>
+    Let's say you want to create an "openai-community/gpt-2" cluster, that times out after 2 minutes.
+
+    You want a concurrency of 2 requests at any given moment, so you set capacity to 2.
+
+    ```javascript
+    import Bytez from "bytez.js";
+
+    const client = new Bytez("BYTEZ_KEY");
+    const model = client.model("openai-community/gpt-2")
+
+    const { error, output } = await model.create({
+      timeout: 2,
+      capacity: { min: 2, max: 2 }
+    })
+
+    console.log({ error, output });
+    ```
+
+  </Accordion>
+  <Accordion title='READ a cluster'>
+    ```javascript
+    const { error, output } = await model.read()
+
+    console.log({ error, output });
+    ```
+
+  </Accordion>
+    <Accordion title='UPDATE a cluster'>
+    ```javascript
+    const { error, output } = await model.update({
+      capacity: { min: 5, max: 5 }
+    })
+
+    console.log({ error, output });
+    ```
+
+  </Accordion>
+  <Accordion title='DELETE a cluster'>
+    ```javascript
+    const { error, output } = await model.delete()
+
+    console.log({ error, output });
+    ```
+
+  </Accordion>
+  <Accordion title='Run your model on the cluster'>
+    ```javascript
+    const input = "your model input"
+    const { error, output } = await model.run(input)
+
+    console.log({ error, output });
+    ```
+
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,46 @@
+---
+title: 'Feature Extraction'
+icon: 'vector-square'
+description: Convert text into vectors (embeddings) that capture semantic meaning
+mode: 'wide'
+---
+
+<Accordion defaultOpen title="Basic usage">
+  Each feature extraction model is different, so check readme.md for the model manual. Below is an example of text embedding model:
+
+  <CodeGroup>
+    ```javascript javascript
+    import Bytez from 'bytez.js'
+
+    const sdk = new Bytez("BYTEZ_KEY");
+    const model = sdk.model("nomic-ai/nomic-embed-text-v1.5");
+
+    await model.create()
+
+    const { error, output } = await model.run("search_document: Turn this text into a vector");
+
+    console.log({ error, output })
+    ```
+    ```python python
+    from bytez import Bytez
+
+    sdk = Bytez("BYTEZ_KEY")
+    model = sdk.model("nomic-ai/nomic-embed-text-v1.5")
+
+    model.create()
+
+    output, error = model.run("search_document: Turn this text into a vector")
+
+    print({ "error": error, "output": output })
+    ```
+    ```bash http
+    curl -X POST 'https://api.bytez.com/models/v2/nomic-ai/nomic-embed-text-v1.5' \
+    -H 'Authorization: Key BYTEZ_KEY' \
+    -H 'Content-Type: application/json' \
+    --data '{
+      "text": "search_document: Turn this text into a vector"
+    }'
+    ```
+
+  </CodeGroup>
+</Accordion>

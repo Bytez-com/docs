@@ -6,7 +6,7 @@ class Model:
     Represents a model in the Bytez API, allowing operations like loading, running, updating, and deleting.
     """
 
-    def __init__(self, model_id: str, bytez, client: Client, params: Optional[Dict] = None):
+    def __init__(self, model_id: str, bytez, client: Client, provider_key: str = None):
         """
         Initialize a model instance.
 
@@ -14,11 +14,11 @@ class Model:
             model_id (str): The model ID, e.g., `openai-community/gpt2`.
             bytez (Bytez): The Bytez API client instance.
             client (Client): The internal request client.
-            params (dict, optional): Default inference parameters.
+            provider_key (str, optional): closed source model provider key
         """
         self._client = client
+        self.provider_key: str = provider_key
         self.id: str = model_id  # The modelId, for example `openai-community/gpt2`
-        self.params: Optional[Dict] = params  # Default model params
         self.details: Dict = {}  # Details about the model
         self._is_generating_media: bool = False  # Whether the model generates media output
         self._bytez = bytez
@@ -100,7 +100,7 @@ class Model:
             self._initialize()
 
         post_body = {
-            "params": params if params is not None else self.params,
+            "params": params,
             "stream": stream,
             "json": False if self._is_generating_media and stream else None
         }
@@ -137,4 +137,4 @@ class Model:
         else:
             post_body["input"] = input
 
-        return self._client.request(self.id, "POST", post_body)
+        return self._client.request(self.id, "POST", post_body, self.provider_key)

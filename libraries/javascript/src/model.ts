@@ -11,11 +11,11 @@ export default class Model {
     modelId: string,
     bytez: Bytez,
     client: Client,
-    params?: Inference
+    providerKey?: string
   ) {
     this.#client = client;
     this.id = modelId;
-    this.params = params;
+    this.#providerKey = providerKey;
     this.#ready = bytez.list.models({ modelId }).then((response: Response) => {
       const mediaGenerators = new Set([
         "text-to-audio",
@@ -31,6 +31,7 @@ export default class Model {
   #client: Client;
   #ready: Promise<void>;
   #isGeneratingMedia = false;
+  #providerKey: string | undefined;
   /** The modelId, for example `openai-community/gpt2` */
   id: string;
   /** Default model params */
@@ -90,9 +91,7 @@ export default class Model {
   ) {
     const postBody: RequestBody = {
       params:
-        typeof params === "boolean" || params === undefined
-          ? this.params
-          : params
+        typeof params === "boolean" || params === undefined ? undefined : params
     };
 
     await this.#ready;
@@ -191,6 +190,6 @@ export default class Model {
       }
     }
 
-    return this.#client.request(this.id, "POST", postBody);
+    return this.#client.request(this.id, "POST", postBody, this.#providerKey);
   }
 }

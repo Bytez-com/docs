@@ -58,15 +58,15 @@ class Bytez:
         """Hidden function to list tasks."""
         return self._client.request("list/tasks")
 
-    def model(self, model_id: str, params: Optional[Dict] = None):
+    def model(self, model_id: str, provider_key: str = None):
         """
         Get a model instance.
 
         Args:
             model_id (str): The model ID, e.g., `openai-community/gpt2`.
-            params (dict, optional): Default model parameters.
+            provider_key (str, optional): Closed-source model provider's API key (e.g. OpenAI key)
 
         Returns:
             Model instance.
         """
-        return Model(model_id, self, self._client, params)
+        return Model(model_id, self, self._client, provider_key)

@@ -1,0 +1,45 @@
+---
+title: 'Welcome'
+description: '1 API Key. Thousands of models.'
+icon: 'hand-wave'
+mode: 'wide'
+---
+
+import { tasks } from '/snippets/tasks.mdx';
+
+<Card
+  arrow
+  horizontal
+  color="#6073BF"
+  icon="circle-info"
+  href="/model-api/docs/quickstart"
+  title="Are you new to Bytez?"
+>
+  Get started by exploring our quick start guide.
+</Card>
+
+<br />
+
+# What kind of AI are you looking for?
+
+### Popular
+
+<CardGroup cols={3}>
+  <Card title="Chat" href="task/chat" icon="comments">
+    Multi-modal models
+  </Card>
+  <Card title="Image Generation" href="task/text-to-image" icon="image">
+    Text-to-image models
+  </Card>
+  <Card title="Embeddings" href="task/feature-extraction" icon="vector-square">
+    Turn your data to vectors
+  </Card>
+</CardGroup>
+
+### Everything
+
+<CardGroup cols={4}>
+  {tasks.map((task) => (
+    <Card key={task.href} title={task.title} href={task.href} icon={task.icon} />
+  ))}
+</CardGroup>

@@ -1,0 +1,59 @@
+---
+title: 'Visual Question Answering'
+icon: 'comments-question-check'
+description:
+  Answer questions based on image content for applications like interactive learning, accessibility
+  features, and content analysis
+mode: 'wide'
+---
+
+import Base64 from '/snippets/base64.mdx';
+
+<Accordion defaultOpen title="Basic usage">
+  Send an image URL and a question to receive an answer:
+
+  <CodeGroup>
+    ```javascript javascript
+    import Bytez from 'bytez.js'
+
+    const sdk = new Bytez("BYTEZ_KEY");
+    const model = sdk.model("Salesforce/blip-vqa-base");
+
+    await model.create()
+
+    const { error, output } = await model.run({
+      question: "What kind of animal is this?",
+      image: "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+    });
+
+    console.log({ error, output })
+    ```
+    ```python python
+    from bytez import Bytez
+
+    sdk = Bytez("BYTEZ_KEY")
+    model = sdk.model("Salesforce/blip-vqa-base")
+
+    model.create()
+
+    output, error = model.run({
+      "question": "What kind of animal is this?",
+      "image": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+    })
+
+    print({ "error": error, "output": output })
+    ```
+    ```bash http
+    curl -X POST 'https://api.bytez.com/models/v2/Salesforce/blip-vqa-base' \
+    -H 'Authorization: Key BYTEZ_KEY' \
+    -H 'Content-Type: application/json' \
+    --data '{
+     "question": "What kind of animal is this?",
+      "image": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+    }'
+    ```
+
+  </CodeGroup>
+      <Base64 type='image'/>
+
+</Accordion>

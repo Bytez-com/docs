@@ -26,11 +26,19 @@ export default class Client {
   #isBrowser: boolean;
   host = "";
   headers = {};
-  async request(path: string, method?: Method, body?: RequestBody) {
+  async request(
+    path: string,
+    method?: Method,
+    body?: RequestBody,
+    providerKey?: string
+  ) {
     try {
       const res = await fetch(this.host + path, {
         method,
-        headers: this.headers,
+        headers:
+          providerKey === undefined
+            ? this.headers
+            : { ...this.headers, ["provider-key"]: providerKey },
         body: body ? JSON.stringify(body) : undefined
       });
 

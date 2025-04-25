@@ -6,7 +6,11 @@ icon: 'square-dollar'
 
 # Overview
 
-<Info>Inference pricing for models is designed to be straightforward and predictable. Instead of relying on complex token-based pricing (which doesn't make sense for non-text-generation models), we calculate costs based on `Inference Meter Price` and `Time to First Inference`.</Info>
+<Info>
+  Inference pricing for models is designed to be straightforward and predictable. Instead of relying
+  on complex token-based pricing (which doesn't make sense for non-text-generation models), we
+  calculate costs based on `Inference Meter Price` and `Time to First Inference`.
+</Info>
 
 ## Formula
 
@@ -17,12 +21,15 @@ Pricing = Meter Price × Inference Time
 ## Key Features
 
 ### **Instance-Based Pricing**
+
 - Models run on **instances** optimized for **RAM usage**.
 - Instances are categorized by size (e.g., `Micro`, `Small`, `Super`).
 - **LLMs (Large Language Models)** have their own specific pricing meters.
 
 ### **Transparent API Response Metadata**
+
 Each API response includes:
+
 - **`Inference Meter`**
 - **`Inference Meter Price`**
 - **`Inference Time`**
@@ -33,32 +40,31 @@ Each API response includes:
 ### Language Models
 
 | Instance Size | GPU RAM (GB) | Inference Meter Price ($/sec) |
-|------------------|------------------|-------------------------------|
-| Micro         | 16               | 0.0000872083                  |
-| XS            | 24               | 0.0001475035                  | 
-| SM            | 64               | 0.0006478333                  | 
-| MD            | 96               | 0.0008433876                  | 
-| LG            | 128              | 0.0012956667                  | 
-| XL            | 192              | 0.0024468774                  | 
-| XXL           | 320              | 0.0047912685                  | 
-| Super         | 640              | 0.0059890856                  |
-
+| ------------- | ------------ | ----------------------------- |
+| Micro         | 16           | 0.0000872083                  |
+| XS            | 24           | 0.0001475035                  |
+| SM            | 64           | 0.0006478333                  |
+| MD            | 96           | 0.0008433876                  |
+| LG            | 128          | 0.0012956667                  |
+| XL            | 192          | 0.0024468774                  |
+| XXL           | 320          | 0.0047912685                  |
+| Super         | 640          | 0.0059890856                  |
 
 ### All other models
 
-| Instance Size | GPU RAM (GB) | Inference Meter Price ($/sec) | 
-|------------------|------------------|-------------------------------|
-| Micro            | 16               | 0.00053440                    |
-| XS               | 24               | 0.00066800                    | 
-| SM               | 64               | 0.00427520                    | 
-| MD               | 96               | 0.00480960                    | 
-| LG               | 128              | 0.00855040                    | 
-| XL               | 192              | 0.01603200                    |
-| XXL              | 320              | 0.02458240                    | 
-| Super            | 640              | 0.02992640                    | 
-
+| Instance Size | GPU RAM (GB) | Inference Meter Price ($/sec) |
+| ------------- | ------------ | ----------------------------- |
+| Micro         | 16           | 0.00053440                    |
+| XS            | 24           | 0.00066800                    |
+| SM            | 64           | 0.00427520                    |
+| MD            | 96           | 0.00480960                    |
+| LG            | 128          | 0.00855040                    |
+| XL            | 192          | 0.01603200                    |
+| XXL           | 320          | 0.02458240                    |
+| Super         | 640          | 0.02992640                    |
 
 ## Example Pricing
+
 A developer runs an LLM on a `Micro` instance with an `Inference Meter Price` of `$0.0000872083/sec`. They configure their cluster to shut down after 1 minute of inactivity. They perform non-stop streaming inference for 9 minutes, then stop. Since the cluster shuts down at 10 minutes, total cost is:
 
 ```plaintext
@@ -67,18 +73,18 @@ A developer runs an LLM on a `Micro` instance with an `Inference Meter Price` of
 
 ## Real-World Savings
 
-| Service                              | Cost for 10 minutes |
-|--------------------------------------|--------------------|
-| Our LLM (Micro Instance)             | $0.05              |
-| AWS Lambda (16GB, no GPU)            | $0.16              |
-| GPT-4o (109,080 tokens @ $10.00/1M)  | $1.09              |
-
+| Service                             | Cost for 10 minutes |
+| ----------------------------------- | ------------------- |
+| Our LLM (Micro Instance)            | $0.05               |
+| AWS Lambda (16GB, no GPU)           | $0.16               |
+| GPT-4o (109,080 tokens @ $10.00/1M) | $1.09               |
 
 ### **GPT-4o Cost Breakdown**
+
 ```plaintext
 202 tokens/sec × 540 sec = 109,080 tokens
 109,080 × ($10.00 / 1,000,000 tokens) = $1.09
 ```
 
-* ✅ Our pricing is significantly cheaper than GPT-4o for continuous inference.
-* ✅ For real-time AI workloads, our GPU-based pricing provides better cost efficiency.
+- ✅ Our pricing is significantly cheaper than GPT-4o for continuous inference.
+- ✅ For real-time AI workloads, our GPU-based pricing provides better cost efficiency.

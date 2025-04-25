@@ -1,0 +1,235 @@
+{
+  "name": "Bytez",
+  "logo": {
+    "dark": "/logo/wordmark-white.svg",
+    "light": "/logo/wordmark-dark.svg"
+  },
+  "favicon": "favicon.png",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "api": {
+    "baseUrl": "https://api.bytez.com",
+    "playground": {
+      "disableProxy": true
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "https://discord.com/invite/Z723PfCFWf"
+    }
+  ],
+  "topbarCtaButton": {
+    "type": "github",
+    "url": "https://github.com/Bytez-com/docs"
+  },
+  "primaryTab": {
+    "name": "API Documentation"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "/model-api/playground"
+    },
+    {
+      "name": "Pricing",
+      "url": "/model-api/key-features"
+    },
+    {
+      "name": "Company",
+      "url": "company"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Bytez Platform",
+      "icon": "square-terminal",
+      "url": "https://bytez.com"
+    },
+    {
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://discord.com/invite/Z723PfCFWf"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Model API",
+      "pages": ["model-api/docs/overview", "model-api/docs/models/all"]
+    },
+    {
+      "group": "Get Started",
+      "pages": [
+        "model-api/docs/quickstart",
+        "model-api/docs/authentication",
+        "model-api/docs/libraries",
+        "model-api/docs/status"
+      ]
+    },
+    {
+      "group": "Capabilities",
+      "pages": [
+        {
+          "group": "Chat",
+          "icon": "message",
+          "pages": [
+            "model-api/docs/chat/text",
+            "model-api/docs/chat/vision",
+            "model-api/docs/chat/audio",
+            "model-api/docs/chat/video"
+          ]
+        },
+        "model-api/docs/image-generation",
+        "model-api/docs/embeddings",
+        "model-api/docs/function-calling",
+        {
+          "group": "Model Tasks",
+          "icon": "globe",
+          "pages": [
+            "/model-api/docs/all-tasks/audio-classification",
+            "/model-api/docs/all-tasks/automatic-speech-recognition",
+            "/model-api/docs/all-tasks/depth-estimation",
+            "/model-api/docs/all-tasks/document-question-answering",
+            "/model-api/docs/all-tasks/feature-extraction",
+            "/model-api/docs/all-tasks/fill-mask",
+            "/model-api/docs/all-tasks/image-classification",
+            "/model-api/docs/all-tasks/image-feature-extraction",
+            "/model-api/docs/all-tasks/image-segmentation",
+            "/model-api/docs/all-tasks/image-to-text",
+            "/model-api/docs/all-tasks/mask-generation",
+            "/model-api/docs/all-tasks/object-detection",
+            "/model-api/docs/all-tasks/question-answering",
+            "/model-api/docs/all-tasks/sentence-similarity",
+            "/model-api/docs/all-tasks/summarization",
+            "/model-api/docs/all-tasks/text-classification",
+            "/model-api/docs/all-tasks/text-generation",
+            "/model-api/docs/all-tasks/text-to-speech",
+            "/model-api/docs/all-tasks/text-to-text-generation",
+            "/model-api/docs/all-tasks/text-to-video",
+            "/model-api/docs/all-tasks/token-classification",
+            "/model-api/docs/all-tasks/translation",
+            "/model-api/docs/all-tasks/unconditional-image-generation",
+            "/model-api/docs/all-tasks/video-classification",
+            "/model-api/docs/all-tasks/visual-question-answering",
+            "/model-api/docs/all-tasks/zero-shot-classification",
+            "/model-api/docs/all-tasks/zero-shot-image-classification",
+            "/model-api/docs/all-tasks/zero-shot-object-detection"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": ["model-api/docs/langchain"]
+    },
+    {
+      "group": "Pricing",
+      "pages": [
+        "model-api/key-features/pricing",
+        "model-api/key-features/streaming",
+        "model-api/key-features/models",
+        "model-api/key-features/tasks"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "model-api/playground/overview",
+        {
+          "group": "Endpoints",
+          "icon": "bolt",
+          "pages": [
+            "model-api/playground/open-source/create-cluster",
+            "model-api/playground/open-source/run-model",
+            "model-api/playground/open-source/read-cluster",
+            "model-api/playground/open-source/update-cluster",
+            "model-api/playground/open-source/delete-cluster"
+          ]
+        },
+        "model-api/playground/models",
+        "model-api/playground/tasks",
+        "model-api/playground/clusters"
+      ]
+    },
+    {
+      "group": "Closed Source",
+      "pages": [
+        "model-api/playground/closed-source/openai",
+        "model-api/playground/closed-source/google",
+        "model-api/playground/closed-source/cohere",
+        "model-api/playground/closed-source/anthropic",
+        "model-api/playground/closed-source/mistral"
+      ]
+    },
+    {
+      "group": "Multimodal",
+      "pages": [
+        "model-api/playground/open-source/examples/multimodal/chat-text",
+        "model-api/playground/open-source/examples/multimodal/chat-vision",
+        "model-api/playground/open-source/examples/multimodal/chat-audio",
+        "model-api/playground/open-source/examples/multimodal/chat-video"
+      ]
+    },
+    {
+      "group": "Text as Input",
+      "pages": [
+        "model-api/playground/open-source/examples/text-as-input/fill-mask",
+        "model-api/playground/open-source/examples/text-as-input/text-to-speech",
+        "model-api/playground/open-source/examples/text-as-input/text-to-audio",
+        "model-api/playground/open-source/examples/text-as-input/text-to-image",
+        "model-api/playground/open-source/examples/text-as-input/translation",
+        "model-api/playground/open-source/examples/text-as-input/summarization",
+        "model-api/playground/open-source/examples/text-as-input/feature-extraction",
+        "model-api/playground/open-source/examples/text-as-input/text-classification",
+        "model-api/playground/open-source/examples/text-as-input/token-classification",
+        "model-api/playground/open-source/examples/text-as-input/text2text-generation",
+        "model-api/playground/open-source/examples/text-as-input/text-generation"
+      ]
+    },
+    {
+      "group": "Image as Input",
+      "pages": [
+        "model-api/playground/open-source/examples/image-as-input/image-to-text",
+        "model-api/playground/open-source/examples/image-as-input/image-classification",
+        "model-api/playground/open-source/examples/image-as-input/segmentation",
+        "model-api/playground/open-source/examples/image-as-input/depth-estimation",
+        "model-api/playground/open-source/examples/image-as-input/object-detection",
+        "model-api/playground/open-source/examples/image-as-input/mask-generation",
+        "model-api/playground/open-source/examples/image-as-input/image-feature-extraction"
+      ]
+    },
+    {
+      "group": "Multi-input",
+      "pages": [
+        "model-api/playground/open-source/examples/multi-input/question-answering",
+        "model-api/playground/open-source/examples/multi-input/document-question-answering",
+        "model-api/playground/open-source/examples/multi-input/visual-question-answering",
+        "model-api/playground/open-source/examples/multi-input/zero-shot-object-detection",
+        "model-api/playground/open-source/examples/multi-input/zero-shot-image-classification",
+        "model-api/playground/open-source/examples/multi-input/zero-shot-classification"
+      ]
+    },
+    {
+      "group": "Resources",
+      "pages": [
+        "company/about",
+        "company/blog",
+        "company/solutions",
+        "company/roadmap"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/bytez",
+    "github": "https://github.com/bytez-com",
+    "linkedin": "https://linkedin.com/company/bytez",
+    "discord": "https://discord.com/invite/Z723PfCFWf"
+  }
+}

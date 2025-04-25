@@ -34,10 +34,10 @@ export default class Bytez {
   /**
    * Get a model - allows you to run closed and open source models
    * @param modelId The modelId, for example `openai-community/gpt2`
-   * @param params Optional default model params, for example { temperature: 0 }
+   * @param providerKey Optional: Closed-source model provider's API key (e.g. OpenAI key)
    */
-  model = (modelId: string, params?: Inference): Model =>
-    new Model(modelId, this, this.#client, params);
+  model = (modelId: string, providerKey?: string): Model =>
+    new Model(modelId, this, this.#client, providerKey);
 
   // workflow = {
   //   pipeline: (sequence: Model[]) => new Pipeline(sequence),

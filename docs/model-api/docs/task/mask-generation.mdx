@@ -1,0 +1,54 @@
+---
+title: 'Mask Generation'
+icon: 'draw-polygon'
+description:
+  Generate masks for objects in images for tasks like image segmentation, medical imaging, and
+  computer vision applications
+mode: 'wide'
+---
+
+import Base64 from '/snippets/base64.mdx';
+
+<Accordion defaultOpen title="Basic usage">
+  Send an image to a model to generate object masks:
+
+  <CodeGroup>
+    ```javascript javascript
+    import Bytez from 'bytez.js'
+
+    const sdk = new Bytez("BYTEZ_KEY");
+    const model = sdk.model("facebook/sam-vit-base");
+
+    await model.create()
+
+    const image = "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
+    const { error, output } = await model.run({ url: image });
+
+    console.log({ error, output })
+    ```
+    ```python python
+    from bytez import Bytez
+
+    sdk = Bytez("BYTEZ_KEY")
+    model = sdk.model("facebook/sam-vit-base")
+
+    model.create()
+
+    image = "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
+    output, error = model.run({ "url": image })
+
+    print({ "error": error, "output": output })
+    ```
+    ```bash http
+    curl -X POST 'https://api.bytez.com/models/v2/facebook/sam-vit-base' \
+    -H 'Authorization: Key BYTEZ_KEY' \
+    -H 'Content-Type: application/json' \
+    --data '{
+      "url": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
+    }'
+    ```
+
+  </CodeGroup>
+  <Base64 type='image'/>
+
+</Accordion>

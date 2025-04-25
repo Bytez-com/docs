@@ -1,0 +1,55 @@
+---
+title: 'Text-to-Text Generation'
+icon: 'text-size'
+description:
+  Generate text from input text for applications like text completion, content generation, and
+  dialogue systems
+mode: 'wide'
+---
+
+<Accordion defaultOpen title="Basic usage">
+  Send a prompt to a model to generate text:
+
+  <CodeGroup>
+    ```javascript javascript
+    import Bytez from 'bytez.js'
+
+    const sdk = new Bytez("BYTEZ_KEY");
+    const model = sdk.model("google/flan-t5-base");
+
+    await model.create()
+
+    const { error, output } = await model.run(
+      "Once upon a time there was a beautiful home where",
+      { max_new_tokens: 200, min_new_tokens: 50, temperature: 0.5 }
+    );
+
+    console.log({ error, output })
+    ```
+    ```python python
+    from bytez import Bytez
+
+    sdk = Bytez("BYTEZ_KEY")
+    model = sdk.model("google/flan-t5-base")
+
+    model.create()
+
+    output, error = model.run(
+      "Once upon a time there was a beautiful home where",
+      { "max_new_tokens": 200, "min_new_tokens": 50, "temperature": 0.5 }
+    )
+
+    print({ "error": error, "output": output })
+    ```
+    ```bash http
+    curl -X POST 'https://api.bytez.com/models/v2/google/flan-t5-base' \
+    -H 'Authorization: Key BYTEZ_KEY' \
+    -H 'Content-Type: application/json' \
+    --data '{
+      "text": "Once upon a time there was a beautiful home where",
+      "params": { "max_new_tokens": 200, "min_new_tokens": 50, "temperature": 0.5 }
+    }'
+    ```
+
+  </CodeGroup>
+</Accordion>

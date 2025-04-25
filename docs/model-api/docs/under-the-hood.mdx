@@ -1,0 +1,164 @@
+---
+title: 'Open vs Closed models'
+description: 'We handle open & closed models differently'
+icon: 'not-equal'
+mode: 'wide'
+---
+
+import Latex from '/snippets/latex/under-the-hood.mdx';
+
+Our API simplifies working with a wide variety of AI models, including both popular closed-source options and flexible open-source alternatives. Although how we handle requests differs behind the scenes depending on the model type, you benefit significantly from our **Unified Model Protocol**.
+
+This protocol means you can use the _same input format_ to interact with _any_ model on our platform—whether it's open or closed-source. It makes experimenting and switching between models much easier, almost like swapping Lego bricks in your project. This consistency frees you up to focus purely on building your application logic, rather than managing different provider interfaces.
+
+Now, let's dive into the specific ways we handle requests under the hood for open vs. closed models to provide this seamless experience.
+
+<AccordionGroup>
+  <Accordion icon="lock-keyhole" title="Closed-Source Models (e.g., OpenAI, Anthropic, Gemini)">
+    Think of us as a smart, multi-lingual translator and secure messenger when you use closed-source models. Our **Unified Model Protocol** means you use **one consistent format** for your requests and receive responses in **one consistent format**, regardless of the underlying provider.
+
+    **The Process:**
+
+    <Steps>
+      <Step title="You Send Request">
+        Your app sends an API request using our standardized input format
+      </Step>
+      <Step title="We Translate Input">
+        We automatically translate your request into the specific format required by
+        the chosen model provider (e.g., OpenAI, Google Gemini)
+      </Step>
+      <Step title="Forward Request">
+        We securely pass your request to the model provider's API, using your API
+        key, so the provider knows it's from you
+      </Step>
+      <Step title="Provider Computes">
+        The provider runs inference on their servers
+      </Step>
+      <Step title="We Translate Output">
+        We receive the provider's raw response and translate to standardized JSON
+      </Step>
+      <Step title="You Receive Response">
+        Your app gets inference results back in standardized JSON
+      </Step>
+    </Steps>
+
+    **Key Takeaway:** For closed-source models, we act as a router and standardization layer. You interact with a **single, unified protocol**, making it easy to switch between models providers or use multiple providers without changing your code structure. The inference itself happens on the provider's infrastructure.
+
+    **Billing**: We don't charge anything for closed source models. Billing for closed-source models is based on the provider's pricing. They'll bill you based on the API key you provide.
+
+  </Accordion>
+  <Accordion icon="lock-keyhole-open" title="Open‑Source Models –  Serverless GPU Inference">
+    When you run an **open‑source** model, Bytez spins up a GPU cluster, runs inference on it, and then tears it down when your traffic stops.
+    You get zero‑to‑scale performance **without** managing any infrastructure.
+
+    **How the lifecycle works**
+
+    <Steps>
+        <Step title="Create cluster (optional, recommended)" stepNumber={0}>
+          You can create a cluster in advance to reduce cold‑start latency. This is optional, but recommended for production workloads, as it gives you full control.
+
+          <CodeGroup>
+            ```python python
+            from bytez import Bytez
+
+            client = Bytez("BYTEZ_KEY")
+            model = client.model("openai-community/gpt-2")
+
+            output, error = model.create({
+              "timeout": 10,   # if reqs not received for `10` mins, then shut down
+              "capacity": {   # can be thought of as concurrency
+                "min": 0,     # scale down to this number
+                "desired": 1, # try to maintain this number of instances
+                "max": 1,     # scale up to this number
+              },
+            })
+
+            print({ "error": error, "output": output })
+            ```
+
+            ```javascript javascript
+            import Bytez from "bytez.js";
+
+            const client = new Bytez("BYTEZ_KEY");
+            const model = client.model("openai-community/gpt-2")
+
+            const { error, output } = await model.create({
+              timeout: 10,   // if reqs not received for `10` mins, then shut down
+              capacity: {   // capacity can be thought of as `concurrency`
+                min: 0,     // scale down to this number
+                desired: 1, // try to maintain this number of instances
+                max: 1,     // scale up to this number
+              },
+            })
+
+            console.log({ error, output });
+            ```
+            ```bash http
+            curl -X PUT "https://api.bytez.com/models/v2/openai-community/gpt-2" \
+              -H "Authorization: Key BYTEZ_KEY" \
+              -H "Content-Type: application/json" \
+              --data '{
+                "timeout": 10,
+                "capacity": {
+                  "min": 0,
+                  "desired": 1,
+                  "max": 1
+                }
+              }'
+            ```
+
+          </CodeGroup>
+          Notes:
+          * Cold start latency ≈ 15‑60s, depending on model size. We try to minimize this.
+          * Cluster instances are single tenant, meaning you get exclusive access to GPUs.
+        </Step>
+        <Step title="Model Inference" stepNumber={1}>
+          When you run a model, if you don't have a cluster created, we create one for you using the defaults above.
+
+          We route your request to your model cluster, which load balances the request across instances.
+        </Step>
+
+        <Step title="Automatic scaling" stepNumber={2}>
+          The cluster auto-scales based on `concurrent requests` received.
+
+          With deep learning models, typically the entire GPU is used for inference. This means that if you need 2 concurrent requests at any given moment, we need to spin up 2 instances of the model.
+
+          The cluster tries to maintain the number of instances equal to the number of `concurrent requests`.
+
+          • <em>Scaling rule</em>: <code>instances = concurrent requests</code>
+          <br /> • More traffic? Cluster scales <strong>up</strong>
+          <br /> • Less traffic? Cluster scales <strong>down</strong>
+
+          Your open source model cluster scales to your needs.
+        </Step>
+
+        <Step title="Auto shutdown" stepNumber={3}>
+          If <code>concurrent requests = 0</code> for `10` minutes, then the cluster is considered `idle` and shuts down.
+
+          By default, `timeout` is `10` mins (see above). You can configure this when you create a cluster or after a cluster is created.
+
+        </Step>
+
+      </Steps>
+
+    **Key Takeaway:** We try to make open source models NoOps for you. We manage hardware, auto-scaling, and clean up. You can configure your clusters to make them work for you, and at any moment, you can use our Cluster CRUD to have full control.
+
+    **Billing**: Open source models follow an instance-based billing model. You're charged for the total **instance seconds** across all active instances in your cluster.
+
+    {<u>Example Calculation</u>}
+
+    Let's say a cluster had 2 instances that were active for $t_1 = 300$ seconds and $t_2 = 120$ seconds, respectively.
+
+    - The total instance seconds is calculated as:
+      $t_{total} = t_1 + t_2 = 300s + 120s = 420s$
+
+    - Assume the price per second for the instance type is \$0.00001.
+
+    The total bill is then calculated using the formula:
+
+    <Latex />
+
+    Our goal with open source models is to make them as easy and affordable to use closed source models.
+
+ </Accordion>
+</AccordionGroup>

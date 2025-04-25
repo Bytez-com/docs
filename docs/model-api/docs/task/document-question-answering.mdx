@@ -1,0 +1,58 @@
+---
+title: 'Document Question Answering'
+icon: 'file-invoice'
+description: Answer questions based on document content for tasks like contract analysis, document
+  understanding, and information retrieval.
+mode: 'wide'
+---
+
+import Base64 from '/snippets/base64.mdx';
+
+<Accordion defaultOpen title="Basic usage">
+  Send an image of a document along with a question to get relevant answers.
+
+  <CodeGroup>
+    ```javascript javascript
+    import Bytez from 'bytez.js'
+
+    const sdk = new Bytez("BYTEZ_KEY");
+    const model = sdk.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0");
+
+    await model.create()
+
+    const { error, output } = await model.run({
+      question: "Whats the total cost?",
+      url: "https://templates.invoicehome.com/invoice-template-us-neat-750px.png"
+    });
+
+    console.log({ error, output })
+    ```
+    ```python python
+    from bytez import Bytez
+
+    sdk = Bytez("BYTEZ_KEY")
+    model = sdk.model("cloudqi/CQI_Visual_Question_Awnser_PT_v0")
+
+    model.create()
+
+    output, error = model.run({
+      "question": "Whats the total cost?",
+      "url": "https://templates.invoicehome.com/invoice-template-us-neat-750px.png"
+    })
+
+    print({ "error": error, "output": output })
+    ```
+    ```bash http
+    curl -X POST 'https://api.bytez.com/models/v2/cloudqi/CQI_Visual_Question_Awnser_PT_v0' \
+    -H 'Authorization: Key BYTEZ_KEY' \
+    -H 'Content-Type: application/json' \
+    --data '{
+      "question": "Whats the total cost?",
+      "url": "https://templates.invoicehome.com/invoice-template-us-neat-750px.png"
+    }'
+    ```
+
+  </CodeGroup>
+  <Base64 type='image of the document'/>
+
+</Accordion>

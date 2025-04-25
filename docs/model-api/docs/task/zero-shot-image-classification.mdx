@@ -1,0 +1,58 @@
+---
+title: 'Zero Shot Image Classification'
+icon: 'file-image'
+description:
+  Classify images into categories not seen during training for applications like novel object
+  recognition, transfer learning, and few-shot learning
+mode: 'wide'
+---
+
+import Base64 from '/snippets/base64.mdx';
+
+<Accordion defaultOpen title="Basic usage">
+  Send an image URL and a set of candidate labels to receive classification results:
+
+  <CodeGroup>
+    ```javascript javascript
+    import Bytez from 'bytez.js'
+
+    const sdk = new Bytez("BYTEZ_KEY");
+    const model = sdk.model("BilelDJ/clip-hugging-face-finetuned");
+
+    await model.create()
+
+    const { error, output } = await model.run({
+      url: "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+      candidate_labels: ["squid", "octopus", "human", "cat"]
+    });
+
+    console.log({ error, output })
+    ```
+    ```python python
+    from bytez import Bytez
+
+    sdk = Bytez("BYTEZ_KEY")
+    model = sdk.model("BilelDJ/clip-hugging-face-finetuned")
+
+    model.create()
+
+    output, error = model.run({
+      "url": "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+      "candidate_labels": ["squid", "octopus", "human", "cat"]
+    })
+
+    print({ "error": error, "output": output })
+    ```
+    ```bash http
+    curl -X POST 'https://api.bytez.com/models/v2/BilelDJ/clip-hugging-face-finetuned' \
+    -H 'Authorization: Key BYTEZ_KEY' \
+    -H 'Content-Type: application/json' \
+    --data '{
+      "url": "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg",
+      "candidate_labels": ["squid", "octopus", "human", "cat"]
+    }'
+    ```
+
+  </CodeGroup>
+  <Base64 type='image'/>
+</Accordion>

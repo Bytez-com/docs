@@ -1,0 +1,218 @@
+openapi: 3.0.3
+info:
+  title: Open Source AI Models API – Multi-input Examples
+  description: API for running open-source AI models across various multi-input tasks.
+  version: 1.0.0
+
+servers:
+  - url: https://api.bytez.com
+    description: Production server
+
+paths:
+  /models/v2/airesearch/xlm-roberta-base-finetune-qa:
+    post:
+      summary: Question Answering
+      description: Answer a question given a context using the `xlm-roberta-base-finetune-qa` model.
+      operationId: questionAnswering
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          description: Successful response with the answer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponseSchema'
+              example: { error: null, output: Ron }
+      security:
+        - apiKeyAuth: []
+
+  /models/v2/cloudqi/CQI_Visual_Question_Awnser_PT_v0:
+    post:
+      summary: Document Question Answering
+      description: Answer a question about a document (via URL) using the `CQI_Visual_Question_Awnser_PT_v0` model.
+      operationId: documentQA
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          description: Successful response with the answer from the document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponseSchema'
+              example: { error: null, output: '$154.06' }
+      security:
+        - apiKeyAuth: []
+
+  /models/v2/aqachun/Vilt_fine_tune_2000:
+    post:
+      summary: Visual Question Answering
+      description: Answer a question based on an image using the `Vilt_fine_tune_2000` model.
+      operationId: visualQA
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          description: Successful response with the answer to the visual question.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponseSchema'
+              example: { error: null, output: Cat }
+      security:
+        - apiKeyAuth: []
+
+  /models/v2/google/owlv2-base-patch16-finetuned:
+    post:
+      summary: Zero-shot Object Detection
+      description: Detect objects in an image based on candidate labels using the `owlv2-base-patch16-finetuned` model.
+      operationId: zeroShotObjectDetection
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          description: Successful response with detected objects, scores, labels, and boxes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponseSchema'
+              example:
+                error: null
+                output:
+                  - score: 0.838
+                    label: octopus
+                    box: { xmin: 0, ymin: -2, xmax: 990, ymax: 665 }
+      security:
+        - apiKeyAuth: []
+
+  /models/v2/BilelDJ/clip-hugging-face-finetuned:
+    post:
+      summary: Zero-shot Image Classification
+      description: Classify an image based on candidate labels using the `clip-hugging-face-finetuned` model.
+      operationId: zeroShotImageClassification
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          description: Successful response with image-classification scores and labels.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponseSchema'
+              example:
+                error: null
+                output:
+                  - { score: 0.838, label: octopus }
+      security:
+        - apiKeyAuth: []
+
+  /models/v2/AyoubChLin/DistilBERT_eco_ZeroShot:
+    post:
+      summary: Zero-shot Text Classification
+      description: Classify text using candidate labels with the `DistilBERT_eco_ZeroShot` model.
+      operationId: zeroShotClassification
+      requestBody:
+        $ref: '#/components/requestBodies/UniversalRequestBody'
+      responses:
+        '200':
+          description: Successful response with text-classification scores and labels.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponseSchema'
+              example:
+                error: null
+                output:
+                  - { score: 0.92, label: positive }
+      security:
+        - apiKeyAuth: []
+
+# ───────────────────────────── Components ─────────────────────────────
+components:
+  # ---------- Schemas ----------
+  schemas:
+    UniversalRequestBodySchema:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Input text for NLP tasks.
+        messages:
+          type: array
+          description: Conversation history.
+          items:
+            type: object
+            required: [role, content]
+            properties:
+              role:
+                type: string
+                enum: [system, user, assistant]
+              content:
+                oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: object
+                      required: [type]
+                      properties:
+                        type: { type: string, enum: [text, image, audio, video] }
+                        text: { type: string }
+                        url: { type: string, format: uri }
+                        base64: { type: string }
+        url:
+          type: string
+          format: uri
+          description: URL to image/audio/video.
+        base64:
+          type: string
+          description: Base64-encoded image/audio/video.
+        question:
+          type: string
+          description: Question text (QA tasks).
+        context:
+          type: string
+          description: Context paragraph (QA tasks).
+        candidate_labels:
+          type: array
+          items: { type: string }
+          description: Candidate labels (zero-shot).
+        stream: { type: boolean, description: Enable text streaming. }
+        json: { type: boolean, description: Stream media instead of JSON. }
+        params:
+          type: object
+          description: Model-specific parameters.
+          properties:
+            min_length: { type: integer }
+            max_length: { type: integer }
+            temperature: { type: number }
+
+    GenericSuccessResponseSchema:
+      type: object
+      required: [error, output]
+      properties:
+        error:
+          type: string
+          nullable: true
+          description: Null on success, otherwise an error message.
+        output:
+          description: Model-specific output.
+
+  # ---------- Request Bodies ----------
+  requestBodies:
+    UniversalRequestBody:
+      description: Universal schema supporting text, chat, image, audio, QA, zero-shot, etc.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UniversalRequestBodySchema'
+
+  # ---------- Security ----------
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >
+        Set `Authorization` header to `Key BYTEZ_KEY` (e.g. 'Authorization': 'Key ABC123')

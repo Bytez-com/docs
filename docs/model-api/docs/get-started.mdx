@@ -1,0 +1,237 @@
+---
+title: 'Get started'
+description: 'Install our API libraries and run inference in seconds'
+icon: 'play'
+mode: 'wide'
+---
+
+<AccordionGroup>
+  <Accordion icon='1' title="Install sdk">
+    You can use the API with any programming language that can make HTTP requests,
+    but we recommend using one of our official SDKs for ease of use and convenience.
+
+    We have libraries for Python, JavaScript, and Julia.
+    Using Python 3.9+, JavaScript, or Julia, install the appropriate package:
+
+    <CodeGroup>
+      ```bash python
+        pip install bytez
+      ```
+
+      ```bash javascript
+        // use your fav package manager
+        npm i bytez.js
+        yarn add bytez.js
+      ```
+
+      ```julia julia
+      // Run the command julia
+      // Press ]
+      // Run the command below
+      add Bytez
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion icon='2' title="Auth">
+    Bytez allows you to use open-source and closed-source models with a single API key.
+
+    ## Use open-source models
+
+    1. Copy your key from the [API Dashboard](https://bytez.com/api).
+    2. Use your Bytez Key in requests
+
+    <CodeGroup>
+      ```python python
+      from bytez import Bytez
+
+      sdk = Bytez("BYTEZ_KEY")
+      ```
+
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      const sdk = new Bytez("BYTEZ_KEY");
+      ```
+      ```julia julia
+      using Bytez
+
+      sdk = Bytez.init("BYTEZ_KEY");
+      ```
+      ```bash http
+      # add an Authorization header, with value "Key {BYTEZ_KEY}"
+      curl -X GET "https://api.bytez.com/models/v2/some-endpoint" \
+        -H "Authorization: Key BYTEZ_KEY"
+      ```
+    </CodeGroup>
+
+    You're now set to use open source models on Bytez!
+
+    ## Use closed-source models
+
+    To use a closed-source model, you'll need an account with the model provider. For example, if you want to use `OpenAI` models, you'll need an OpenAI key. We call your closed source key a "provider key"
+
+    1. Copy your key from the [API Dashboard](https://bytez.com/api).
+    2. Use your Bytez Key AND closed-source provider key in requests.
+    <CodeGroup>
+      ```bash http
+      # add a "provider-key" header, and set its value to "{KEY}"
+      curl -X GET "https://api.bytez.com/models/v2/some-endpoint" \
+        -H "Authorization: Key BYTEZ_KEY" \
+        -H "provider-key: {your-key}"
+      ```
+    </CodeGroup>
+
+
+    <Card title="Bytez API Key Security & Usage" icon='lock'>
+      We securely route your requests as a pass-through service. Your API keys are never stored or logged by Bytez; they are only used to authenticate directly with the model provider.
+
+      **Recommendation:** Use a dedicated API key for Bytez for maximum security and traceability.
+
+      * **Billing:** No extra Bytez fees for closed-source models; you're billed directly by the provider based on usage associated with your key.
+      * **Integration:** Seamlessly use the same input format for all models (open and closed-source).
+    </Card>
+
+    If you need help with any of this, please DM us in [Discord](https://discord.com/invite/Z723PfCFWf)
+    or submit an issue on [GitHub](https://github.com/Bytez-com/docs/issues). We're happy to help.
+
+  </Accordion>
+  <Accordion icon="3" title="Run a model">
+      Running is a model is easy. Just select the model and pass it an input
+
+    <CodeGroup>
+      ```python python
+      from bytez import Bytez
+
+      sdk = Bytez("BYTEZ_KEY")
+      model_id = "openai-community/gpt-2"
+      model = sdk.model(model_id)
+
+      output, error = model.run("Once upon a time")
+
+      print(output)
+      ```
+
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      const sdk = new Bytez("BYTEZ_KEY");
+      const modelId = "openai-community/gpt-2"
+      const model = sdk.model(model_id)
+
+      const { error, output } = await model.run("Once upon a time")
+
+      console.log({ error, output });
+      ```
+      ```bash http
+      curl -X POST "https://api.bytez.com/models/v2/openai-community/gpt-2" \
+      -H "Authorization: Key BYTEZ_KEY" \
+      -H "Content-Type: application/json" \
+      --data '{ "text": "Once upon a time" }'
+      ```
+
+    </CodeGroup>
+
+<Card arrow horizontal icon="globe" href="/http/model/run">
+  Read more about our schema by visiting our HTTP reference.
+</Card>
+
+  </Accordion>
+  <Accordion icon="4" title="List tasks, models, and running models">
+      You can list all the tasks, models, and running models using the API.
+
+      ### Tasks
+
+      A `task` defines a specific function a model performs (e.g., object-detection). Multiple models might be available for the same task. To list all tasks supported by Bytez, run the following command:
+
+        <CodeGroup>
+          ```python python
+          from bytez import Bytez
+
+          sdk = Bytez("BYTEZ_KEY")
+
+          output, error = sdk.list.tasks()
+
+          print(output)
+          ```
+
+          ```javascript javascript
+          import Bytez from "bytez.js";
+
+          const sdk = new Bytez("BYTEZ_KEY");
+
+          const { error, output } = await sdk.list.tasks()
+
+          console.log({ error, output });
+          ```
+          ```bash http
+          curl -X GET "https://api.bytez.com/models/v2/list/tasks" \
+            -H "Authorization: Key BYTEZ_KEY"
+          ```
+
+    </CodeGroup>
+      ### Models
+
+      A `model` refers to a software function with unique identifier. `Models` execute `tasks`. For example, the model `google/vit-base-patch16-224` executes `image-classification`. To list all open-source models supported by Bytez, run the following command:
+
+          <CodeGroup>
+          ```python python
+          from bytez import Bytez
+
+          sdk = Bytez("BYTEZ_KEY")
+
+          output, error = sdk.list.models()
+
+          print(output)
+          ```
+
+          ```javascript javascript
+          import Bytez from "bytez.js";
+
+          const sdk = new Bytez("BYTEZ_KEY");
+
+          const { error, output } = await sdk.list.models()
+
+          console.log({ error, output });
+          ```
+          ```bash http
+          curl -X GET "https://api.bytez.com/models/v2/list/models" \
+            -H "Authorization: Key BYTEZ_KEY"
+          ```
+
+    </CodeGroup>
+
+    ### Clusters
+
+    A `cluster` represents the auto-scaling GPU infrastructure Bytez provisions specifically for running an open-source model serverlessly. It's created automatically when needed and scales with demand. To list your active clusters, run the following command:
+
+    <CodeGroup>
+      ```python python
+      from bytez import Bytez
+
+      sdk = Bytez("BYTEZ_KEY")
+
+      output, error = sdk.list.clusters()
+
+      print(output)
+      ```
+
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      const sdk = new Bytez("BYTEZ_KEY");
+
+      const { error, output } = await sdk.list.clusters()
+
+      console.log({ error, output });
+      ```
+      ```bash http
+      curl -X GET "https://api.bytez.com/models/v2/list/clusters" \
+        -H "Authorization: Key BYTEZ_KEY"
+      ```
+
+    </CodeGroup>
+
+  </Accordion>
+</AccordionGroup>

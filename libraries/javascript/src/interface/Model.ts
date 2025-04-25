@@ -47,7 +47,7 @@ export interface Create {
    *
    * By default, Bytez creates a cluster that scales from 0-1 instances for free users and from 0-10 instances for premium users. If you need more instances, let us know.
    *
-   * The number of instances can be though of a concurrency and cluster capacity.
+   * The number of instances can be thought of as concurrency / cluster capacity.
    *
    * Developers can customize cluster capacity at creation time or at anytime by simply updating the cluster.
    */

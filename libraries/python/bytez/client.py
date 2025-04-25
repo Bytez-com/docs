@@ -21,7 +21,7 @@ class Client:
             "content-type": "application/json",
         }
         self.host = f"http{'://' if dev else 's://'}{'localhost:8080' if dev else 'api.bytez.com'}/models/v2/"
-    def request(self, path = "", method = "GET", post_body = None):
+    def request(self, path = "", method = "GET", post_body = None, provider_key = None):
         """
         Send an HTTP request.
 
@@ -38,7 +38,7 @@ class Client:
             response = requests.request(
                 method,
                 self.host + path,
-                headers = self.headers,
+                headers = ( { **self.headers, 'provider-key': provider_key } if provider_key is not None else self.headers ),
                 # drop null values from being sent
                 data = json.dumps({k: v for k, v in post_body.items() if v is not None}) if post_body else None,
                 stream = stream
