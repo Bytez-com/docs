@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "yarn@4.5.3",
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "description": "",
   "scripts": {

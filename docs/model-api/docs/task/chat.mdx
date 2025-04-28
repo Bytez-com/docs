@@ -549,7 +549,7 @@ mode: 'wide'
       // send to model
       const { error, output, provider } = await model.run(messages);
 
-      // the `provider` key is the raw openai/provider output
+      // `provider` is the raw OpenAI output
       console.log({ error, output, provider });
       ```
       ```python python
@@ -572,7 +572,7 @@ mode: 'wide'
       # send to model
       output, error, provider = model.run(messages)
 
-      # the `provider` key is the raw openai/provider output
+      # `provider` is the raw OpenAI output
       print({ "error": error, "output": output, "provider": provider })
       ```
       ```bash http
