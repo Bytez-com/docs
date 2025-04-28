@@ -547,9 +547,10 @@ mode: 'wide'
         { role: "user", content: "Hello bot, what is the capital of England?" },
       ]
       // send to model
-      const { error, output } = await model.run(messages);
+      const { error, output, provider } = await model.run(messages);
 
-      console.log({ error, output });
+      // the `provider` key is the raw openai/provider output
+      console.log({ error, output, provider });
       ```
       ```python python
       from bytez import Bytez
@@ -569,9 +570,10 @@ mode: 'wide'
         {"role": "user", "content": "Hello bot, what is the capital of England?"},
       ]
       # send to model
-      output, error = model.run(messages)
+      output, error, provider = model.run(messages)
 
-      print({ "error": error, "output": output })
+      # the `provider` key is the raw openai/provider output
+      print({ "error": error, "output": output, "provider": provider })
       ```
       ```bash http
       curl -X POST 'https://api.bytez.com/models/v2/openai/gpt-4o' \

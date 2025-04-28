@@ -48,7 +48,8 @@ class Client:
                 return response.iter_lines(decode_unicode=True)
             else:
                 results = response.json()
+                provider = results.get('provider')
 
-                return [results.get('output'), results.get('error')]
+                return [results.get('output'), results.get('error'), provider] if provider else [results.get('output'), results.get('error')]
         except Exception as error:
             return [None, str(error)]
