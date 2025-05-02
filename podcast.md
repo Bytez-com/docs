@@ -12,7 +12,7 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 | Episode | Title | Date | Listen |
 |--------|-------|------|--------|
-| **EP02** | *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning* | May 2, 2025 | [Spotify](https://open.spotify.com/episode/2cYQSu4rBlv3P3YyU4y2mK) |
+| **EP02** | *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning* | May 2, 2025 | [Spotify](https://open.spotify.com/episode/3N4ERFTt4m4ao4StJM8Al9) |
 | **EP01** | *From Quantum Observables to Concise Reasoning* | April 25, 2025 | [Spotify](https://open.spotify.com/episode/2cYQSu4rBlv3P3YyU4y2mK?si=62238910b8ac4345) |
 
 ---
@@ -20,8 +20,8 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 ## 🔍 Episode Deep Dives
 
 ### 🎙️ EP02: *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning*  
-🗓️ April 30, 2025  
-🎧 [Listen on Spotify](https://open.spotify.com/episode/2cYQSu4rBlv3P3YyU4y2mK)
+🗓️ May 2, 2025  
+🎧 [Listen on Spotify](https://open.spotify.com/episode/3N4ERFTt4m4ao4StJM8Al9)
 
 | Paper | Summary | Link |
 |-------|---------|------|
@@ -51,8 +51,8 @@ In this episode, we discuss 5 new and trending papers in AI research:
 
 ## 🧠 Explore More from Bytez
 
-- 📄 [Explore 440K+ Papers](https://byetz.com)  
-- 🤖 [Deploy 70K+ Models](https://byetz.com/search)  
+- 📄 [Explore 440K+ Papers](https://bytez.com)  
+- 🤖 [Deploy 70K+ Models](https://bytez.com/search)  
 - 🛠️ [API Docs](https://docs.bytez.com)
 
 ---
