@@ -1,8 +1,8 @@
 # 🎙️ The Bytez Brief — This Week in AI
 
-**The Bytez Brief** is a weekly podcast by [Bytez](https://byetz.com). We break down the most important new AI papers — so you can stay sharp without drowning in ArXiv.
+**The Bytez Brief** is a weekly podcast by [Bytez](https://bytez.com). We break down the most important new AI papers — so you can stay sharp without drowning in ArXiv.
 
-Each episode distills research with crisp summaries, clear takeaways, and links to explore more on [Bytez](https://byetz.com).
+Each episode distills research with crisp summaries, clear takeaways, and links to explore more on [Bytez](https://bytez.com).
 
 🎧 [Listen on Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=7fd90a40ea9b40e3)
 
