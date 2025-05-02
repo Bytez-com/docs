@@ -33,19 +33,19 @@ No infra. No orchestration. Just plug, play, and build.
 ### 🔗 [Docs](https://docs.bytez.com)  
 Everything you need to get started: quickstart, API references, guides, and more.
 
-### 🧪 [Product](https://byetz.com)  
+### 🧪 [Product](https://bytez.com)  
 Browse models and explore trending research — all live in the browser.
 
-### 🏛️ [Model Hub](https://byetz.com/models)  
+### 🏛️ [Model Hub](https://bytez.com/search)  
 Search, demo, and deploy 70K+ open-source models, all from one interface.
 
-### 🤖 [Agent](https://byetz.com/agent)  
+### 🤖 [Agent](https://bytez.com)  
 Ask anything, find everything. The Bytez AI Research co-pilot grounds answers in 440K+ AI papers and 70K+ models.
 
 ### 🔌 [API](https://docs.bytez.com)  
 1 key. 70K+ serverless models. 3 lines of code.
 
-### 📰 [AI Feed](https://byetz.com) 
+### 📰 [AI Feed](https://bytez.com) 
 Keep up with AI and create your own AI feed.
 
 ---
