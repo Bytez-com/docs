@@ -11,7 +11,7 @@
 
 # ⚡ Bytez — The Unified Platform for AI Models & Papers
 
-Welcome to Bytez. We make it easy to discover, demo, and deploy state of the art AI, all in one place.
+Welcome to Bytez. We make it easy to discover, demo, and deploy state of the art AI. All in one place.
 
 ---
 
@@ -21,8 +21,8 @@ Bytez is your one-stop platform for:
 
 - 🔬 **440K+ Interactive Research Papers**  
 - 🤖 **70K+ Serverless AI Models**  
-- 🧠 **Model API** for accessing 70K+ serverless AI models — to deploy in seconds  
-- ⚡ **Research Agent** to help you find exactly what you're looking for — grounded in papers and models
+- 🧠 **Model API** for demoing, deploying 70K+ models via a unified protocol, with 1 API key
+- ⚡ **AI Research Co-Pilot** to answer ML research questions, grounded in papers and models
 
 No infra. No orchestration. Just plug, play, and build.
 
@@ -30,23 +30,23 @@ No infra. No orchestration. Just plug, play, and build.
 
 ## 📚 Official Resources
 
-### 🔗 [Docs](https://docs.bytez.com)  
+### 🔗 [API Docs](https://docs.bytez.com)  
 Everything you need to get started: quickstart, API references, guides, and more.
 
-### 🧪 [Product](https://bytez.com)  
+### 🧪 [Bytez Platform](https://bytez.com)  
 Browse models and explore trending research — all live in the browser.
 
 ### 🏛️ [Model Hub](https://bytez.com/search)  
-Search, demo, and deploy 70K+ open-source models, all from one interface.
+Search, demo, and deploy 70K+ open source AI models, all from one interface.
 
 ### 🤖 [Agent](https://bytez.com)  
-Ask anything, find everything. The Bytez AI Research co-pilot grounds answers in 440K+ AI papers and 70K+ models.
+Ask anything, find everything. The Bytez AI Research Co-Pilot grounds answers in 440K+ AI papers and 70K+ models.
 
 ### 🔌 [API](https://docs.bytez.com)  
 1 key. 70K+ serverless models. 3 lines of code.
 
 ### 📰 [AI Feed](https://bytez.com) 
-Keep up with AI and create your own AI feed.
+Create your own AI feed to keep up with AI.
 
 ---
 
