@@ -52,6 +52,10 @@ export interface Create {
    * Developers can customize cluster capacity at creation time or at anytime by simply updating the cluster.
    */
   capacity?: Capacity;
+  /**
+    Keyword args to pass to model when it loads
+   */
+  config?: object;
 }
 
 export interface Update extends Create {
