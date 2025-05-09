@@ -12,12 +12,25 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 | Episode | Title | Date | Listen |
 |--------|-------|------|--------|
+| **EP03** | *EP03: From Grokking in the Wild to Bus Route Optimization* | May 9, 2025 | [Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=sP12NeaCTXuPAhBiCul5vw) |
 | **EP02** | *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning* | May 2, 2025 | [Spotify](https://open.spotify.com/episode/3N4ERFTt4m4ao4StJM8Al9) |
 | **EP01** | *From Quantum Observables to Concise Reasoning* | April 25, 2025 | [Spotify](https://open.spotify.com/episode/2cYQSu4rBlv3P3YyU4y2mK?si=62238910b8ac4345) |
 
 ---
 
 ## 🔍 Episode Deep Dives
+
+### 🎙️ EP03: *From Grokking in the Wild to Bus Route Optimization*  
+🗓️ May 9, 2025  
+🎧 [Listen on Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=7fd90a40ea9b40e3)
+
+| Paper | Summary | Link |
+|-------|---------|------|
+| **Grokking in the Wild: Data Augmentation for Real-World Multi-Hop Reasoning with Transformers** | Demonstrates that targeted data augmentation significantly boosts transformer performance on real-world multi-hop reasoning tasks by mimicking grokking phenomena. | [Interactive Paper →](https://bytez.com/docs/arxiv/2504.20752/paper) |
+| **Temporal Robustness in Discrete Time Linear Dynamical Systems** | Introduces a theoretical framework for quantifying and optimizing temporal robustness in discrete-time linear dynamical systems, ensuring stable behavior under perturbations over time. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.02347/paper) |
+| **Integrating Column Generation and Large Neighborhood Search for Bus Driver Scheduling with Complex Break Constraints** | Combines column generation with large neighborhood search to efficiently solve real-world bus driver scheduling problems involving strict and diverse break regulations. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.02485/paper) |
+
+---
 
 ### 🎙️ EP02: *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning*  
 🗓️ May 2, 2025  
