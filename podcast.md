@@ -12,13 +12,23 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 | Episode | Title | Date | Listen |
 |--------|-------|------|--------|
-| **EP03** | *EP03: From Grokking in the Wild to Bus Route Optimization* | May 9, 2025 | [Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=sP12NeaCTXuPAhBiCul5vw) |
+| **EP04** | *Zero to One - How LLMs Learn to Reason Without a Dataset* | May 11, 2025 | [Spotify](https://open.spotify.com/episode/4t9Cni9AFGon5Seh7YtZdI?si=p_uzFtnbQu6p2PwLygYAGQ) |
+| **EP03** | *From Grokking in the Wild to Bus Route Optimization* | May 9, 2025 | [Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=sP12NeaCTXuPAhBiCul5vw) |
 | **EP02** | *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning* | May 2, 2025 | [Spotify](https://open.spotify.com/episode/3N4ERFTt4m4ao4StJM8Al9) |
 | **EP01** | *From Quantum Observables to Concise Reasoning* | April 25, 2025 | [Spotify](https://open.spotify.com/episode/2cYQSu4rBlv3P3YyU4y2mK?si=62238910b8ac4345) |
 
 ---
 
 ## 🔍 Episode Deep Dives
+
+### 🎙️ EP04: *Zero to One - How LLMs Learn to Reason Without a Dataset*  
+🗓️ May 11, 2025  
+🎧 [Listen on Spotify](https://open.spotify.com/episode/4t9Cni9AFGon5Seh7YtZdI?si=p_uzFtnbQu6p2PwLygYAGQ)
+
+| Paper | Summary | Link |
+|-------|---------|------|
+| **⁠Absolute Zero: Reinforced Self-play Reasoning with Zero Data** | Proposes a method for reasoning model training that requires no data by using reinforced self-play and model-generated questions to achieve competitive performance on benchmarks. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.03335/paper) |
+| **⁠Reinforcement Learning for Reasoning in Large Language Models with One Training Example** | Demonstrates that LLMs can learn complex reasoning tasks using reinforcement learning from a single example, enabling data-efficient generalization by leveraging internal knowledge and reward shaping. | [Interactive Paper →](https://bytez.com/docs/arxiv/2504.20571/paper) |
 
 ### 🎙️ EP03: *From Grokking in the Wild to Bus Route Optimization*  
 🗓️ May 9, 2025  
