@@ -214,7 +214,10 @@ describe.skip("chat models", async () => {
   after(model.delete);
 });
 describe.skip("chat model - closed source", async () => {
-  const model = client.model("google/gemini-2.0-flash-thinking-exp-01-21");
+  const model = client.model(
+    "google/gemini-2.0-flash-thinking-exp-01-21",
+    process.env.GEMINI_API_KEY
+  );
   const messages = [
     {
       role: "system",
@@ -307,6 +310,7 @@ describe.skip("text-to-image", async () => {
 
   after(model.delete);
 });
+// works consistently?
 describe.skip("text-to-video", async () => {
   const model = client.model("ali-vilab/text-to-video-ms-1.7b");
 
@@ -329,7 +333,7 @@ describe.skip("text-to-video", async () => {
 
   after(model.delete);
 });
-// // image input
+// image input
 describe.skip("image-to-text", async () => {
   const model = client.model("captioner/caption-gen");
   const url =
@@ -472,6 +476,7 @@ describe.skip("depth-estimation", async () => {
 
   after(model.delete);
 });
+// check mask generation - works inconsistently?
 describe.skip("mask-generation", async () => {
   const url =
     "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png";
@@ -669,7 +674,7 @@ describe.skip("zero-shot-object-detection", async () => {
 
   after(model.delete);
 });
-// works inconsistently
+// works inconsistently?
 describe.skip("video-classification", async () => {
   const model = client.model("ahmedabdo/video-classifier");
   const url =
@@ -816,6 +821,7 @@ describe.skip("zero-shot-classification", async () => {
 
   after(model.delete);
 });
+// check audio model work?
 describe.skip("audio-classification", async () => {
   const model = client.model("aaraki/wav2vec2-base-finetuned-ks");
   const url =
