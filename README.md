@@ -19,10 +19,12 @@ Welcome to Bytez. We make it easy to discover and understand AI papers and deplo
 
 Bytez is your one-stop platform for:
 
-- 🔬 **440K+ Interactive AI Papers**  
-- 🤖 **70K+ Serverless AI Models**  
-- 🧠 **Model API** for using models via a unified protocol
-- ⚡ **AI Research Co-Pilot** for answering ML questions, grounded in research
+- 🔬 **440k+ Interactive Papers**  
+- 🤖 **80k+ Serverless Models**
+
+Accessible through:
+- 🧠 A **Model API** with a unified protocol
+- ⚡ An **Agent** grounded in 440k+ AI papers and 80k models
 
 No infra. No orchestration. Just plug, play, and build.
 
@@ -31,7 +33,7 @@ No infra. No orchestration. Just plug, play, and build.
 ## 📚 Official Resources
 
 ### 🔗 [API Docs](https://docs.bytez.com)  
-1 key. 70K+ serverless AI models. Demo, deploy, and stream responses in 3 lines of code.
+1 key. 80k+ serverless AI models. Demo, deploy, and stream responses in 3 lines of code.
 
 ### 🧪 [Bytez Platform](https://bytez.com)  
 Browse models and explore trending research in the browser.
@@ -39,19 +41,18 @@ Browse models and explore trending research in the browser.
 ### 🏛️ [Model Hub](https://bytez.com/search)  
 Search, demo, and deploy SOTA models across 33 ML tasks.
 
-### 🤖 [Agent](https://bytez.com)  
-Ask anything, find everything. Grounds answers in 440K+ AI papers and 70K+ models.
+### 🤖 [Agent](https://bytez.com/agent)  
+Ask anything, find everything. Get grounded answers citing real sources.
 
-### 📰 [AI Feed](https://bytez.com) 
+### 📰 [AI Feed](https://bytez.com/feed) 
 Keep up with AI by creating your own AI feed.
 
 ---
 
 ## 🔊 The Bytez Brief — *AI Research Weekly Podcast*
 
-🎧 Every week, we break down the most important new papers in AI so you don’t have to.
+🎧 Every week, we break down trending papers in AI so you don’t have to.
 
-- [Latest Episode on Spotify](https://open.spotify.com/episode/3N4ERFTt4m4ao4StJM8Al9)  
 - [All Episodes](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=7fd90a40ea9b40e3)  
 - [Deep Dives & Paper Summaries](./podcast.md)
 
