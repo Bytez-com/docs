@@ -12,6 +12,7 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 | Episode | Title | Date | Listen |
 |--------|-------|------|--------|
+| **EP05** | *Decentralized Minds & Meta Mastery - Pushing the Limits of AI Reasoning* | May 16, 2025 | [Spotify](https://open.spotify.com/episode/05NEZsDo5j8gN7n7JfQutH?si=WxnsqQtOTV-Db2X581fF0Q) |
 | **EP04** | *Zero to One - How LLMs Learn to Reason Without a Dataset* | May 11, 2025 | [Spotify](https://open.spotify.com/episode/4t9Cni9AFGon5Seh7YtZdI?si=p_uzFtnbQu6p2PwLygYAGQ) |
 | **EP03** | *From Grokking in the Wild to Bus Route Optimization* | May 9, 2025 | [Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=sP12NeaCTXuPAhBiCul5vw) |
 | **EP02** | *From Phi-4 to UniversalRAG — The Small Giants Redefining AI Reasoning* | May 2, 2025 | [Spotify](https://open.spotify.com/episode/3N4ERFTt4m4ao4StJM8Al9) |
@@ -20,6 +21,16 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 ---
 
 ## 🔍 Episode Deep Dives
+
+### 🎙️ EP05: *Decentralized Minds & Meta Mastery - Pushing the Limits of AI Reasoning*  
+🗓️ May 16, 2025  
+🎧 [Listen on Spotify](https://open.spotify.com/episode/05NEZsDo5j8gN7n7JfQutH?si=WxnsqQtOTV-Db2X581fF0Q)
+
+| Paper | Summary | Link |
+|-------|---------|------|
+| **⁠INTELLECT-2: A Reasoning Model Trained Through Globally Decentralized Reinforcement Learning** | Introduces INTELLECT-2, a reasoning model trained via decentralized reinforcement learning across distributed agents to enhance collaborative problem-solving capabilities. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.07291/paper) |
+| **⁠System Prompt Optimization with Meta-Learning** | Proposes a meta-learning approach to optimize system prompts dynamically, enabling language models to adapt prompts for improved task performance across diverse applications. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.09666/paper) |
+
 
 ### 🎙️ EP04: *Zero to One - How LLMs Learn to Reason Without a Dataset*  
 🗓️ May 11, 2025  
@@ -74,8 +85,8 @@ In this episode, we discuss 5 new and trending papers in AI research:
 
 ## 🧠 Explore More from Bytez
 
-- 📄 [Explore 440K+ Papers](https://bytez.com)  
-- 🤖 [Deploy 70K+ Models](https://bytez.com/search)  
+- 📄 [Explore 440k+ Papers](https://bytez.com)  
+- 🤖 [Deploy 80k+ Models](https://bytez.com/search)  
 - 🛠️ [API Docs](https://docs.bytez.com)
 
 ---
