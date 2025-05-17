@@ -12,6 +12,7 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 | Episode | Title | Date | Listen |
 |--------|-------|------|--------|
+| **EP06** | *Vision & Meta - Evolving Multimodal Minds* | May 19, 2025 | [Coming Soon](#) |
 | **EP05** | *Decentralized Minds & Meta Mastery - Pushing the Limits of AI Reasoning* | May 16, 2025 | [Spotify](https://open.spotify.com/episode/05NEZsDo5j8gN7n7JfQutH?si=WxnsqQtOTV-Db2X581fF0Q) |
 | **EP04** | *Zero to One - How LLMs Learn to Reason Without a Dataset* | May 11, 2025 | [Spotify](https://open.spotify.com/episode/4t9Cni9AFGon5Seh7YtZdI?si=p_uzFtnbQu6p2PwLygYAGQ) |
 | **EP03** | *From Grokking in the Wild to Bus Route Optimization* | May 9, 2025 | [Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=sP12NeaCTXuPAhBiCul5vw) |
@@ -21,6 +22,15 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 ---
 
 ## 🔍 Episode Deep Dives
+
+### 🎙️ EP06: *Vision & Meta - Evolving Multimodal Minds*  
+🗓️ May 19, 2025  
+🎧 [Coming Soon](#)
+
+| Paper | Summary | Link |
+|-------|---------|------|
+| **⁠⁠Seed1.5-VL Technical Report** | Presents Seed1.5-VL, a vision-language model that advances multimodal understanding by integrating large-scale training and innovative architecture design. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.07062/paper) |
+| **⁠Beyond 'Aha!': Toward Systematic Meta-Abilities Alignment in Large Reasoning Models** | Explores methods to systematically align meta-cognitive abilities in large reasoning models to improve their adaptability and self-monitoring during complex tasks. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.10554/paper) |
 
 ### 🎙️ EP05: *Decentralized Minds & Meta Mastery - Pushing the Limits of AI Reasoning*  
 🗓️ May 16, 2025  
