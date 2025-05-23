@@ -12,7 +12,9 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 | Episode | Title | Date | Listen |
 |--------|-------|------|--------|
-| **EP06** | *Vision & Meta - Evolving Multimodal Minds* | May 19, 2025 | [Coming Soon](#) |
+| **EP08** | *Paper Spotlight - Emerging Properties in Unified Multimodal Pretrainings (BAGEL)* | May 23, 2025 | [Spotify](https://open.spotify.com/episode/0Z63WRRX9s5rzhby5xTDRW?si=5ce8dffebccb4c24) |
+| **EP07** | *Paper Spotlight - Qwen3 Technical Report* | May 23, 2025 | [Spotify](https://open.spotify.com/episode/5A7pU7ctZA6sc1T3pWVVva?si=34621d72bb784fa5)|
+| **EP06** | *Vision & Meta - Evolving Multimodal Minds* | May 19, 2025 | [Spotify](https://open.spotify.com/episode/41S2OygDYJpx7LEEEv80dS?si=75767dafc9c64ff9) |
 | **EP05** | *Decentralized Minds & Meta Mastery - Pushing the Limits of AI Reasoning* | May 16, 2025 | [Spotify](https://open.spotify.com/episode/05NEZsDo5j8gN7n7JfQutH?si=WxnsqQtOTV-Db2X581fF0Q) |
 | **EP04** | *Zero to One - How LLMs Learn to Reason Without a Dataset* | May 11, 2025 | [Spotify](https://open.spotify.com/episode/4t9Cni9AFGon5Seh7YtZdI?si=p_uzFtnbQu6p2PwLygYAGQ) |
 | **EP03** | *From Grokking in the Wild to Bus Route Optimization* | May 9, 2025 | [Spotify](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=sP12NeaCTXuPAhBiCul5vw) |
@@ -23,9 +25,25 @@ Each episode distills research with crisp summaries, clear takeaways, and links 
 
 ## 🔍 Episode Deep Dives
 
+### 🎙️ EP08: *Paper Spotlight - Emerging Properties in Unified Multimodal Pretraining (BAGEL)*  
+🗓️ May 23, 2025  
+🎧 [Spotify](https://open.spotify.com/episode/0Z63WRRX9s5rzhby5xTDRW?si=5ce8dffebccb4c24)
+
+| Paper | Summary | Link |
+|-------|---------|------|
+| **⁠⁠Emerging Properties in Unified Multimodal Pretraining** | Presents BAGEL, a unified multimodal pretrained decoder-only model that excels at diverse reasoning and generation tasks across images, video, 3D, and language, outperforming prior open-source models. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.14683/paper) |
+
+### 🎙️ EP07: *Paper Spotlight - Qwen3 Technical Report*  
+🗓️ May 23, 2025  
+🎧 [Spotify](https://open.spotify.com/episode/5A7pU7ctZA6sc1T3pWVVva?si=34621d72bb784fa5)
+
+| Paper | Summary | Link |
+|-------|---------|------|
+| **⁠⁠Qwen3 Technical Report** | Qwen3 is an open-source LLM series with dense and MoE architectures (0.6–235B parameters), featuring adaptive thinking modes and multilingual support across 119 languages, achieving state-of-the-art results. | [Interactive Paper →](https://bytez.com/docs/arxiv/2505.09388/paper) |
+
 ### 🎙️ EP06: *Vision & Meta - Evolving Multimodal Minds*  
 🗓️ May 19, 2025  
-🎧 [Coming Soon](#)
+🎧 [Spotify](https://open.spotify.com/episode/41S2OygDYJpx7LEEEv80dS?si=75767dafc9c64ff9))
 
 | Paper | Summary | Link |
 |-------|---------|------|
