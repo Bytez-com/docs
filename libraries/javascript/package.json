@@ -39,5 +39,8 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     }
+  },
+  "dependencies": {
+    "undici": "^7.10.0"
   }
 }

@@ -1,4 +1,15 @@
 import { Response, Method, RequestBody } from "./interface/Client";
+import { fetch, Agent } from "undici";
+
+const FIFTEEN_MINUTES = 15 * 60 * 1000;
+
+const agent = new Agent({
+  keepAliveTimeout: FIFTEEN_MINUTES,
+  keepAliveMaxTimeout: FIFTEEN_MINUTES,
+  connectTimeout: FIFTEEN_MINUTES,
+  headersTimeout: FIFTEEN_MINUTES,
+  bodyTimeout: FIFTEEN_MINUTES
+});
 
 export default class Client {
   constructor(
@@ -39,7 +50,8 @@ export default class Client {
           providerKey === undefined
             ? this.headers
             : { ...this.headers, ["provider-key"]: providerKey },
-        body: body ? JSON.stringify(body) : undefined
+        body: body ? JSON.stringify(body) : undefined,
+        dispatcher: agent
       });
 
       if (
