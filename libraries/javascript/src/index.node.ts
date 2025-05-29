@@ -1,10 +1,25 @@
 import Client from "./client";
 import Model from "./model";
-// import { Pipeline, DAG } from "./workflow";
-// interfaces
 import { ListModels } from "./interface/List";
 import { Response } from "./interface/Client";
-import Inference from "./interface/inference";
+import { Agent, fetch } from "undici";
+
+// override fetch with our custom fetch that has an extended 15 minute timeout
+const fifteenMinutes = 15 * 60e3;
+
+const dispatcher = new Agent({
+  keepAliveTimeout: fifteenMinutes,
+  keepAliveMaxTimeout: fifteenMinutes,
+  connectTimeout: fifteenMinutes,
+  headersTimeout: fifteenMinutes,
+  bodyTimeout: fifteenMinutes
+});
+
+Client.prototype.fetch = (url, options) =>
+  fetch(url, {
+    ...options,
+    dispatcher
+  });
 
 /**
  * API Client for interfacing with the Bytez API.
@@ -38,9 +53,4 @@ export default class Bytez {
    */
   model = (modelId: string, providerKey?: string): Model =>
     new Model(modelId, this, this.#client, providerKey);
-
-  // workflow = {
-  //   pipeline: (sequence: Model[]) => new Pipeline(sequence),
-  //   dag: (nodes, edges) => new DAG(nodes, edges)
-  // };
 }

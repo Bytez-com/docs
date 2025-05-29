@@ -1,11 +1,13 @@
 import Client from "./client";
-import Bytez from "./index";
+import BytezNode from "./index.node";
+import BytezBrowser from "./index.browser";
 
 // interfaces
 import Inference from "./interface/inference";
 import { Create, Update, ModelRunOutput, Details } from "./interface/Model";
 import { Response, RequestBody } from "./interface/Client";
 
+type Bytez = BytezNode | BytezBrowser;
 export default class Model {
   constructor(
     modelId: string,

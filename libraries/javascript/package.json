@@ -9,7 +9,7 @@
   "description": "",
   "scripts": {
     "build": "pkgroll",
-    "dev": "tsx src/index.ts",
+    "dev": "tsx src/index.node.ts",
     "test": "tsx ./tests/tasks.test.ts",
     "lint": "eslint ./src/*.ts",
     "update": "yarn upgrade-interactive"
@@ -28,17 +28,24 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.cts",
+  "main": "./dist/index.node.cjs",
+  "module": "./dist/index.node.mjs",
+  "browser": "./dist/index.browser.js",
+  "types": "./dist/index.node.d.cts",
   "exports": {
-    "require": {
-      "types": "./dist/index.d.cts",
-      "default": "./dist/index.cjs"
-    },
-    "import": {
-      "types": "./dist/index.d.mts",
-      "default": "./dist/index.mjs"
+    ".": {
+      "browser": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "import": {
+        "types": "./dist/index.node.d.mts",
+        "default": "./dist/index.node.mjs"
+      },
+      "require": {
+        "types": "./dist/index.node.d.cts",
+        "default": "./dist/index.node.cjs"
+      }
     }
   },
   "dependencies": {

@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { describe, it, after } from "node:test";
 //
 // import Bytez from "bytez.js";
-import Bytez from "../src/index";
+import Bytez from "../src/index.node";
+// import Bytez from "../src/index.browser";
 
 async function getDataUrl(url: string) {
   const response = await fetch(url);
@@ -288,11 +289,15 @@ describe.skip("text2text-generation", async () => {
 
   after(model.delete);
 });
-describe.skip("text-to-image", async () => {
-  const model = client.model("IDKiro/sdxs-512-0.9");
+describe("text-to-image", async () => {
+  const model = client.model("black-forest-labs/FLUX.1-dev");
+
+  await model.delete();
 
   await it("sends back data-url", async () => {
     const { error, output } = await model.run("A cat in the hat");
+
+    console.log("error: ", error);
 
     assert(error === null);
     assert(output?.startsWith("https://cdn.bytez.com"), "returns output");
