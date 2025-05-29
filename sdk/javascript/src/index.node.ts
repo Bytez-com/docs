@@ -1,9 +1,19 @@
 import Client from "./client";
 import Model from "./model";
-// import { Pipeline, DAG } from "./workflow";
-// interfaces
 import { ListModels } from "./interface/List";
 import { Response } from "./interface/Client";
+import { Agent, fetch } from "undici";
+
+// override fetch with our custom fetch that has an extended 15 minute timeout
+const fifteenMinutes = 15 * 60e3;
+
+const dispatcher = new Agent({
+  keepAliveTimeout: fifteenMinutes,
+  keepAliveMaxTimeout: fifteenMinutes,
+  connectTimeout: fifteenMinutes,
+  headersTimeout: fifteenMinutes,
+  bodyTimeout: fifteenMinutes
+});
 
 /**
  * API Client for interfacing with the Bytez API.
@@ -12,6 +22,13 @@ import { Response } from "./interface/Client";
 export default class Bytez {
   constructor(apiKey: string, dev = false, browser?: boolean) {
     this.#client = new Client(apiKey, dev, browser);
+
+    // we override fetch on the client to allow for us to use our custom undicii timeouts
+    this.#client.fetch = (url, options) =>
+      fetch(url, {
+        ...options,
+        dispatcher
+      });
   }
   #client: Client;
 
@@ -22,8 +39,8 @@ export default class Bytez {
     /** Lists available models, and provides basic information about each one, such as RAM required */
     models: (options?: ListModels): Promise<Response> =>
       this.#client.request(
-        `list/models${options?.task ? `?task=${options.task}` : ""}${
-          options?.modelId ? `?modelId=${options.modelId}` : ""
+        `list/models${options?.task ? `?task=${options?.task}` : ""}${
+          options?.modelId ? `?modelId=${options?.modelId}` : ""
         }`
       ) as Promise<Response>,
     /** List available tasks */
@@ -37,9 +54,4 @@ export default class Bytez {
    */
   model = (modelId: string, providerKey?: string): Model =>
     new Model(modelId, this, this.#client, providerKey);
-
-  // workflow = {
-  //   pipeline: (sequence: Model[]) => new Pipeline(sequence),
-  //   dag: (nodes, edges) => new DAG(nodes, edges)
-  // };
 }

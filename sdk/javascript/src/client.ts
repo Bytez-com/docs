@@ -20,23 +20,11 @@ export default class Client {
       import("stream").then(module => {
         this.#Readable = module.Readable ?? module.default?.Readable;
       });
-
-      import("undici").then(({ Agent }) => {
-        const fifteenMinutes = 15 * 60 * 1000;
-
-        this.#dispatcher = new Agent({
-          keepAliveTimeout: fifteenMinutes,
-          keepAliveMaxTimeout: fifteenMinutes,
-          connectTimeout: fifteenMinutes,
-          headersTimeout: fifteenMinutes,
-          bodyTimeout: fifteenMinutes
-        });
-      });
     }
   }
   #Readable: any;
   #isBrowser: boolean;
-  #dispatcher?: any;
+  fetch: CallableFunction = fetch;
   host = "";
   headers = {};
   async request(
@@ -46,14 +34,13 @@ export default class Client {
     providerKey?: string
   ) {
     try {
-      const res = await fetch(this.host + path, {
+      // this allows us to inject our own version of fetch with the node.js client to allow for extended timeouts
+      const res = await this.fetch(this.host + path, {
         method,
         headers:
           providerKey === undefined
             ? this.headers
             : { ...this.headers, ["provider-key"]: providerKey },
-        // @ts-expect-error  dispatcher is undici-only
-        dispatcher: this.#dispatcher,
         body: body ? JSON.stringify(body) : undefined
       });
 
