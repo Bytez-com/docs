@@ -7,7 +7,6 @@ export default class Client {
     isBrowser = typeof window !== "undefined"
   ) {
     this.#isBrowser = isBrowser;
-    this.#fetch = fetch;
     this.host = `http${
       dev ? "://localhost:8080" : "s://api.bytez.com"
     }/models/v2/`;
@@ -22,29 +21,22 @@ export default class Client {
         this.#Readable = module.Readable ?? module.default?.Readable;
       });
 
-      // if not using the browser, override with a version of fetch that has extended timeouts
-      import("undici").then(({ Agent, fetch }) => {
+      import("undici").then(({ Agent }) => {
         const fifteenMinutes = 15 * 60 * 1000;
 
-        const dispatcher = new Agent({
+        this.#dispatcher = new Agent({
           keepAliveTimeout: fifteenMinutes,
           keepAliveMaxTimeout: fifteenMinutes,
           connectTimeout: fifteenMinutes,
           headersTimeout: fifteenMinutes,
           bodyTimeout: fifteenMinutes
         });
-
-        this.#fetch = (url, options) =>
-          fetch(url, {
-            ...options,
-            dispatcher
-          });
       });
     }
   }
   #Readable: any;
   #isBrowser: boolean;
-  #fetch: CallableFunction;
+  #dispatcher?: any;
   host = "";
   headers = {};
   async request(
@@ -54,13 +46,14 @@ export default class Client {
     providerKey?: string
   ) {
     try {
-      const res = await this.#fetch(this.host + path, {
+      const res = await fetch(this.host + path, {
         method,
-        signal: AbortSignal.timeout(60e3 * 15),
         headers:
           providerKey === undefined
             ? this.headers
             : { ...this.headers, ["provider-key"]: providerKey },
+        // @ts-expect-error  dispatcher is undici-only
+        dispatcher: this.#dispatcher,
         body: body ? JSON.stringify(body) : undefined
       });
 
