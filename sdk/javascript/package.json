@@ -1,6 +1,6 @@
 {
   "name": "bytez.js",
-  "version": "1.1.4",
+  "version": "1.1.7",
   "type": "module",
   "packageManager": "yarn@4.5.3",
   "engines": {
@@ -17,7 +17,6 @@
   "author": "Bytez",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^22.15.24",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "bytez.js": "^1.0.1",
@@ -40,9 +39,5 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     }
-  },
-  "dependencies": {
-    "stream": "^0.0.3",
-    "undici": "^7.10.0"
   }
 }

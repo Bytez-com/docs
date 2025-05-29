@@ -4,7 +4,6 @@ import Model from "./model";
 // interfaces
 import { ListModels } from "./interface/List";
 import { Response } from "./interface/Client";
-import Inference from "./interface/inference";
 
 /**
  * API Client for interfacing with the Bytez API.
@@ -23,8 +22,8 @@ export default class Bytez {
     /** Lists available models, and provides basic information about each one, such as RAM required */
     models: (options?: ListModels): Promise<Response> =>
       this.#client.request(
-        `list/models${options?.task ? `?task=${options?.task}` : ""}${
-          options?.modelId ? `?modelId=${options?.modelId}` : ""
+        `list/models${options?.task ? `?task=${options.task}` : ""}${
+          options?.modelId ? `?modelId=${options.modelId}` : ""
         }`
       ) as Promise<Response>,
     /** List available tasks */
