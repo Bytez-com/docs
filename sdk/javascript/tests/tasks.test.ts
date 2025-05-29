@@ -295,7 +295,7 @@ describe.skip("text-to-image", async () => {
     const { error, output } = await model.run("A cat in the hat");
 
     assert(error === null);
-    assert(output?.startsWith("data:image"), "returns output");
+    assert(output?.startsWith("https://cdn.bytez.com"), "returns output");
   });
 
   await it("streams back pure media", async () => {
