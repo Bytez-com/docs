@@ -20,8 +20,8 @@ export default class Client {
       import("stream").then(module => {
         this.#Readable = module.Readable ?? module.default?.Readable;
       });
-
-      import("undici").then(({ Agent }) => {
+      // make undici invisible to webpack's static analysis
+      new Function('return import("undici")')().then(({ Agent }) => {
         this.#dispatcher = new Agent({
           keepAliveTimeout: this.#timeout,
           keepAliveMaxTimeout: this.#timeout,
