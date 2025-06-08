@@ -1,13 +1,11 @@
+import Bytez from ".";
 import Client from "./client";
-import BytezNode from "./index.node";
-import BytezBrowser from "./index.browser";
 
 // interfaces
 import Inference from "./interface/inference";
 import { Create, Update, ModelRunOutput, Details } from "./interface/Model";
 import { Response, RequestBody } from "./interface/Client";
 
-type Bytez = BytezNode | BytezBrowser;
 export default class Model {
   constructor(
     modelId: string,
@@ -19,15 +17,15 @@ export default class Model {
     this.id = modelId;
     this.#providerKey = providerKey;
     this.#ready = bytez.list.models({ modelId }).then((response: Response) => {
-      const mediaGenerators = new Set([
+      const mediaGenerators = [
         "text-to-audio",
         "text-to-image",
         "text-to-video",
         "text-to-speech"
-      ]);
+      ];
 
       this.details = response?.output?.[0] ?? {};
-      this.#isGeneratingMedia = mediaGenerators.has(this.details.task);
+      this.#isGeneratingMedia = mediaGenerators.includes(this.details.task);
     });
   }
   #client: Client;

@@ -11,7 +11,7 @@ export class Pipeline {
     }
 
     this.sequence = sequence;
-    this.#ready = Promise.all(promises).then(() => {});
+    this.#ready = Promise.resolve();
   }
   #ready: Promise<void>;
   sequence: Model[];

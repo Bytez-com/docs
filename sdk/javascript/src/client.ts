@@ -20,11 +20,22 @@ export default class Client {
       import("stream").then(module => {
         this.#Readable = module.Readable ?? module.default?.Readable;
       });
+
+      import("undici").then(({ Agent }) => {
+        this.#dispatcher = new Agent({
+          keepAliveTimeout: this.#timeout,
+          keepAliveMaxTimeout: this.#timeout,
+          connectTimeout: this.#timeout,
+          headersTimeout: this.#timeout,
+          bodyTimeout: this.#timeout
+        });
+      });
     }
   }
   #Readable: any;
   #isBrowser: boolean;
-  fetch: CallableFunction = fetch;
+  #dispatcher?: any;
+  #timeout = 15 * 60e3;
   host = "";
   headers = {};
   async request(
@@ -34,13 +45,15 @@ export default class Client {
     providerKey?: string
   ) {
     try {
-      // this allows us to inject our own version of fetch with the node.js client to allow for extended timeouts
-      const res = await this.fetch(this.host + path, {
+      const res = await fetch(this.host + path, {
         method,
         headers:
           providerKey === undefined
             ? this.headers
             : { ...this.headers, ["provider-key"]: providerKey },
+        // @ts-expect-error  dispatcher is undici-only
+        dispatcher: this.#dispatcher,
+        signal: AbortSignal.timeout(this.#timeout),
         body: body ? JSON.stringify(body) : undefined
       });
 
@@ -62,7 +75,7 @@ export default class Client {
           ? res.body
           : this.#Readable.fromWeb(res.body as any);
       } else {
-        return res.json() as Promise<Response>;
+        return await res.json();
       }
     } catch (error) {
       return { error: error.message, output: null } as Response;
