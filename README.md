@@ -20,11 +20,11 @@ Welcome to Bytez. We make it easy to discover and understand AI papers and deplo
 Bytez is your one-stop platform for:
 
 - 🔬 **440k+ Interactive Papers**  
-- 🤖 **80k+ Serverless Models**
+- 🤖 **120k+ Serverless Models**
 
 Accessible through:
 - 🧠 A **Model API** with a unified protocol
-- ⚡ An **Agent** grounded in 440k+ AI papers and 80k models
+- ⚡ An **Agent** grounded in 440k+ AI papers and 120k+ models
 
 No infra. No orchestration. Just plug, play, and build.
 
@@ -32,16 +32,19 @@ No infra. No orchestration. Just plug, play, and build.
 
 ## 📚 Official Resources
 
-### 🔗 [API Docs](https://docs.bytez.com)  
-1 key. 80k+ serverless AI models. Demo, deploy, and stream responses in 3 lines of code.
-
 ### 🧪 [Bytez Platform](https://bytez.com)  
 Browse models and explore trending research in the browser.
 
-### 🏛️ [Model Hub](https://bytez.com/search)  
+### 🏛️ [Model Hub](https://bytez.com/models)  
 Search, demo, and deploy SOTA models across 33 ML tasks.
 
-### 🤖 [Agent](https://bytez.com/agent)  
+### 🔗 [API Docs](https://docs.bytez.com)  
+1 key. 120k+ serverless AI models. Demo, deploy, and stream responses in 3 lines of code.
+
+### 🐳 [DockerHub](https://hub.docker.com/u/bytez)
+Run models locally, in your cloud, or your customer’s cloud using our official Docker images.
+
+### 🤖 [ArXiv Agent](https://bytez.com/agent)  
 Ask anything, find everything. Get grounded answers citing real sources.
 
 ### 📰 [AI Feed](https://bytez.com/feed) 
@@ -62,5 +65,5 @@ Keep up with AI by creating your own AI feed.
 
 - 🐦 [Twitter / X](https://x.com/bytez)  
 - 💼 [LinkedIn](https://linkedin.com/company/bytez)
-- 💬 [Join the Discord](https://discord.com/invite/Z723PfCFWf)
+- 💬 [Discord](https://discord.com/invite/Z723PfCFWf)
 - ⚡ [Hugging Face](https://huggingface.co/bytez-ai)  
