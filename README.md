@@ -20,11 +20,11 @@ Welcome to Bytez. We make it easy to discover and understand AI papers and deplo
 Bytez is your one-stop platform for:
 
 - 🔬 **440k+ Interactive Papers**  
-- 🤖 **120k+ Serverless Models**
+- 🤖 **150k+ Serverless Models**
 
 Accessible through:
 - 🧠 A **Model API** with a unified protocol
-- ⚡ An **Agent** grounded in 440k+ AI papers and 120k+ models
+- ⚡ An **Agent** grounded in 440k+ AI papers and 150k+ models
 
 No infra. No orchestration. Just plug, play, and build.
 
@@ -51,7 +51,15 @@ Ask anything, find everything. Get grounded answers citing real sources.
 Keep up with AI by creating your own AI feed.
 
 ---
+## 🚀 Bytez AI Grant
 
+We're giving away **$100,000 in free inference** to build your AI Startup
+- Credits apply to [150,000+ open & closed source models](https://bytez.com/models) (qwen, deepseek, flux, anthropic, etc)
+- Apply in 30 seconds
+
+Build something massive. [Apply here](https://docs.google.com/forms/d/e/1FAIpQLSfpm9hHTKRLTBrudOnikqM47etOhIhXiTbf0bBeFbhpqw9VZg/viewform).
+
+---
 ## 🔊 The Bytez Brief — *AI Research Weekly Podcast*
 
 🎧 Every week, we break down trending papers in AI so you don’t have to.
