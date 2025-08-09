@@ -62,7 +62,9 @@ export default class Client {
         !res.ok &&
         res.headers.get("content-type") !== "application/json"
       ) {
-        throw new Error(res.statusText);
+        const { error } = await res.json().catch(console.error);
+
+        throw new Error(error || res.statusText);
       }
 
       if (
