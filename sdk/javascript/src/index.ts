@@ -15,9 +15,6 @@ export default class Bytez {
   #client: Client;
 
   list = {
-    /** List your auto-scaling clusters */
-    clusters: (): Promise<Response> =>
-      this.#client.request("list/clusters") as Promise<Response>,
     /** Lists available models, and provides basic information about each one, such as RAM required */
     models: (options?: ListModels): Promise<Response> =>
       this.#client.request(

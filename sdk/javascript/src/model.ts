@@ -3,7 +3,7 @@ import Client from "./client";
 
 // interfaces
 import Inference from "./interface/inference";
-import { Create, Update, ModelRunOutput, Details } from "./interface/Model";
+import { ModelRunOutput, Details } from "./interface/Model";
 import { Response, RequestBody } from "./interface/Client";
 
 export default class Model {
@@ -38,27 +38,7 @@ export default class Model {
   params: Inference | undefined;
   /** details about the model */
   details: Details;
-  /**
-   * For open-source models, `create` an auto-scaling cluster to run this model
-   *
-   * @param options Cluster configuration
-   */
-  create = (options?: Create): Promise<Response> =>
-    this.#client.request(this.id, "PUT", options) as Promise<Response>;
 
-  /** For open-source models, `read` your cluster */
-  read = (): Promise<Response> =>
-    this.#client.request(this.id, "GET") as Promise<Response>;
-  /**
-   * For open-source models, `update` your cluster
-   *
-   * @param options Cluster configuration
-   */
-  update = (options?: Update): Promise<Response> =>
-    this.#client.request(this.id, "PATCH", options) as Promise<Response>;
-  /** For open-source models, `delete` your cluster */
-  delete = (): Promise<Response> =>
-    this.#client.request(this.id, "DELETE") as Promise<Response>;
   /**
    * `Run` model by passing in an `input`, and optionally passing in `params` and/or a `stream` flag.
    *
@@ -104,91 +84,7 @@ export default class Model {
       }
     }
 
-    switch (this.details.task) {
-      // require "text" as input
-      case "sentence-similarity":
-      case "fill-mask":
-      case "text-to-speech":
-      case "text-to-audio":
-      case "text-to-image":
-      case "translation":
-      case "summarization":
-      case "text-to-video":
-      case "feature-extraction":
-      case "text-classification":
-      case "token-classification":
-      case "text2text-generation":
-      case "text-generation": {
-        postBody["text"] = input;
-        break;
-      }
-      //
-      // require "messages" as input
-      case "chat": {
-        postBody["messages"] = input;
-        break;
-      }
-      //
-      // requires media as input ('image', 'audio',"video'?)
-      //
-      case "video-classification":
-      case "automatic-speech-recognition":
-      case "audio-classification":
-      case "mask-generation":
-      case "image-to-text":
-      case "object-detection":
-      case "depth-estimation":
-      case "image-segmentation":
-      case "image-classification":
-      case "image-feature-extraction": {
-        if (input?.startsWith("http")) {
-          postBody["url"] = input;
-        } else if (input?.startsWith("data")) {
-          postBody["base64"] = input;
-        }
-      }
-      //
-      // multi-input
-      case "question-answering": {
-        postBody["context"] = input?.context;
-        postBody["question"] = input?.question;
-
-        break;
-      }
-      case "document-question-answering":
-      case "visual-question-answering": {
-        postBody["question"] = input?.question;
-
-        postBody["url"] = input?.url;
-        postBody["base64"] = input?.base64;
-        break;
-      }
-      case "zero-shot-object-detection":
-      case "zero-shot-image-classification": {
-        postBody["candidate_labels"] = input?.candidate_labels;
-
-        // needs image
-        postBody["url"] = input?.url;
-        postBody["base64"] = input?.base64;
-        break;
-      }
-      case "zero-shot-classification": {
-        postBody["candidate_labels"] = input?.candidate_labels;
-        postBody["text"] = input?.text;
-
-        break;
-      }
-      //
-      // several task variants exist
-      // so we cannot make assumptions on input, as it widely varies by model? so do nothing
-      // does not require input
-      case "unconditional-image-generation": {
-        break;
-      }
-      default: {
-        postBody["input"] = input;
-      }
-    }
+    postBody["input"] = input;
 
     return this.#client.request(this.id, "POST", postBody, this.#providerKey);
   }

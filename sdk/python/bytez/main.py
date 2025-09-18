@@ -2,6 +2,7 @@ from typing import Optional, Dict
 from .client import Client
 from .model import Model
 
+
 class Bytez:
     """
     API Client for interfacing with the Bytez API.
@@ -24,10 +25,6 @@ class Bytez:
         def __init__(self, parent):
             self._parent = parent  # Store reference to the main Bytez instance
 
-        def clusters(self):
-            """List your auto-scaling clusters."""
-            return self._parent._list_clusters()
-
         def models(self, options: Optional[Dict[str, str]] = None):
             """Lists available models and provides basic information about each."""
             return self._parent._list_models(options)
@@ -35,10 +32,6 @@ class Bytez:
         def tasks(self):
             """List available tasks."""
             return self._parent._list_tasks()
-
-    def _list_clusters(self):
-        """Hidden function to list clusters."""
-        return self._client.request("list/clusters")
 
     def _list_models(self, options: Optional[Dict[str, str]] = None):
         """Hidden function to list models."""
