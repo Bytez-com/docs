@@ -68,17 +68,6 @@ We're giving away **$100,000 in free inference** to build your AI Startup
 
 Build something massive. [Apply here](https://docs.google.com/forms/d/e/1FAIpQLSfpm9hHTKRLTBrudOnikqM47etOhIhXiTbf0bBeFbhpqw9VZg/viewform).
 
----
-
-## 🔊 The Bytez Brief — _AI Research Weekly Podcast_
-
-🎧 Every week, we break down trending papers in AI so you don’t have to.
-
-- [All Episodes](https://open.spotify.com/show/1ioahel9NAWYqt252zAkwk?si=7fd90a40ea9b40e3)
-- [Deep Dives & Paper Summaries](./podcast.md)
-
----
-
 ## 🌐 Connect With Us
 
 - 🐦 [Twitter / X](https://x.com/bytez)
