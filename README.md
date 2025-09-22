@@ -63,7 +63,7 @@ Keep up with AI by creating your own AI feed.
 
 We're giving away **$100,000 in free inference** to build your AI Startup
 
-- Credits apply to [150,000+ open & closed source models](https://bytez.com/models) (qwen, deepseek, flux, anthropic, etc)
+- Credits apply to [170,000+ open & closed source models](https://bytez.com/models) (qwen, deepseek, flux, anthropic, etc)
 - Apply in 30 seconds
 
 Build something massive. [Apply here](https://docs.google.com/forms/d/e/1FAIpQLSfpm9hHTKRLTBrudOnikqM47etOhIhXiTbf0bBeFbhpqw9VZg/viewform).
