@@ -35,7 +35,7 @@
   - [Text to Speech](#text-to-speech)
   - [Video Classification](#video-classification)
   - [Object Detection](#object-detection)
-  - [Text to Text Generation](#text-to-text-generation)
+  - [Text to Text Generation](#text2text-generation)
   - [Zero-Shot Image Classification](#zero-shot-image-classification)
   - [Zero-Shot Classification](#zero-shot-classification)
   - [Document Question Answering](#document-question-answering)
@@ -49,6 +49,7 @@
 - [Feedback](#feedback)
 
 ## Basic Usage
+
 ```js
 import Bytez from "bytez.js";
 
@@ -61,7 +62,7 @@ const model = client.model("openai-community/gpt2");
 await model.load();
 
 const output = await model.run("Once upon a time there was a", {
-// huggingface params
+  // huggingface params
   max_new_tokens: 20,
   min_new_tokens: 5
 });
@@ -70,6 +71,7 @@ console.log(output);
 ```
 
 Streaming usage (only text-generation models support streaming currently)
+
 ```js
 const stream = await model.run("Jack and Jill", { stream: true });
 const textStream = stream.pipeThrough(new TextDecoderStream());
@@ -137,12 +139,12 @@ Progress is printed as it executes.
 await model.load();
 ```
 
-The options argument is *optional* and has two properties, concurrency, and timeout.
+The options argument is _optional_ and has two properties, concurrency, and timeout.
 
 ```js
 await model.load({
   concurrency: 1,
-  timeout: 300,
+  timeout: 300
 });
 ```
 
@@ -194,7 +196,7 @@ Run inference with HuggingFace parameters.
 ```js
 const output = await model.run("Once upon a time there was a", {
   max_new_tokens: 20,
-  min_new_tokens: 5,
+  min_new_tokens: 5
 });
 
 console.log(output);
@@ -602,7 +604,9 @@ const model = client.model("ainize/bart-base-cnn");
 
 await model.load();
 
-const { output: [{ summary_text }] } = await model.run(inputText, {
+const {
+  output: [{ summary_text }]
+} = await model.run(inputText, {
   max_length: 40
 });
 
@@ -675,7 +679,9 @@ const model = client.model("Helsinki-NLP/opus-mt-en-zh");
 
 await model.load();
 
-const { output: [{ translation_text }]} = await model.run(inputText);
+const {
+  output: [{ translation_text }]
+} = await model.run(inputText);
 
 console.log(translation_text);
 ```
@@ -1051,7 +1057,9 @@ const model = client.model("google/flan-t5-base");
 
 await model.load();
 
-const { output: [{ generated_text }] } = await model.run(
+const {
+  output: [{ generated_text }]
+} = await model.run(
   "Once upon a time there was a small little man who",
   modelParams
 );
@@ -1345,12 +1353,12 @@ const client = new Bytez("YOUR_BYTEZ_KEY_HERE");
 const messages = [
   {
     role: "system",
-    content: "You are a friendly chatbot",
+    content: "You are a friendly chatbot"
   },
   {
     role: "user",
-    content: "What is the capital of England?",
-  },
+    content: "What is the capital of England?"
+  }
 ];
 
 const model = client.model("microsoft/Phi-3-mini-4k-instruct");

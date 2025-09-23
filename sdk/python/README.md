@@ -35,7 +35,7 @@
   - [Text to Speech](#text-to-speech)
   - [Video Classification](#video-classification)
   - [Object Detection](#object-detection)
-  - [Text to Text Generation](#text-to-text-generation)
+  - [Text to Text Generation](#text2text-generation)
   - [Zero-Shot Image Classification](#zero-shot-image-classification)
   - [Zero-Shot Classification](#zero-shot-classification)
   - [Document Question Answering](#document-question-answering)

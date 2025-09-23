@@ -1,0 +1,292 @@
+openapi: 3.0.3
+info:
+  title: Open Source Model API
+  description: >-
+    # 🚀 Get started here
+    ✨ Link to [Bytez Docs](https://docs.bytez.com/model-api/docs/welcome).
+  version: 1.0.0
+servers:
+  - url: https://api.bytez.com
+    description: Production server
+
+paths:
+  /models/v2/{modelId}:
+    post:
+      summary: Run Model
+      description: Runs an open/closed model. Acts serverlessly. (We manage everything behind the scenes.)
+      operationId: runModel
+      parameters:
+        - $ref: '#/components/parameters/modelId'
+      requestBody:
+        description: >
+          The required inputs vary by task. For text-based tasks like text-generation, summarization, and translation, include the "text" field. For chat tasks, use "messages". For image tasks (like image-to-text, image-classification, object-detection, etc.), supply input using either "url" or "base64". For audio tasks such as automatic-speech-recognition, provide audio using "url" or "base64". Question-based tasks like question-answering require both "question" and "context". Zero-shot tasks need "candidate_labels" and may also require "text" or "image". Some tasks, like unconditional-image-generation, may not need any input. Always refer to the specific model's task to determine the required fields.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Input text to be processed by the model (used for most NLP tasks).
+                messages:
+                  type: array
+                  description: >
+                    An array of chat messages representing the conversation history. Each message must have a `role` (`system`, `user`, or `assistant`) and `content`.
+
+                    The `content` can be:
+
+                    - A simple string
+                    - An array of content blocks where each block has a `type` (e.g. `text`, `image`, `audio`, or `video`) and the corresponding data via `text`, `url`, or `base64`.
+
+                  items:
+                    type: object
+                    required:
+                      - role
+                      - content
+                    properties:
+                      role:
+                        type: string
+                        enum: [system, user, assistant]
+                        description: The sender of the message.
+                      content:
+                        oneOf:
+                          - type: string
+                            description: Text-only message content.
+                          - type: array
+                            description: Multi-modal message content blocks.
+                            items:
+                              type: object
+                              required:
+                                - type
+                              properties:
+                                type:
+                                  type: string
+                                  enum: [text, image, audio, video]
+                                  description: The type of content block.
+                                text:
+                                  type: string
+                                  description: Text content (used with type 'text').
+                                url:
+                                  type: string
+                                  format: uri
+                                  description: HTTP URL to image/audio/video (used with type 'image/audio/video').
+                                base64:
+                                  type: string
+                                  description: Base64-encoded image/audio/video (used with type 'image/audio/video').
+                url:
+                  type: string
+                  format: uri
+                  description: URL to an image, audio, or video file (used for image/audio/video tasks).
+                base64:
+                  type: string
+                  description: Handles Base64-encoded image, audio, or video. Using URLs is recommended to avoid large payloads, which slow your requests down.
+                question:
+                  type: string
+                  description: Question text (used in question-answering tasks).
+                context:
+                  type: string
+                  description: Context paragraph (used in question-answering).
+                candidate_labels:
+                  type: array
+                  items:
+                    type: string
+                  description: List of candidate labels (used in zero-shot tasks).
+                stream:
+                  type: boolean
+                  description: Enable/disable text streaming.
+                json:
+                  type: boolean
+                  description: Similar to stream, but for media. Streams back media instead returning it in JSON format.
+                params:
+                  type: object
+                  description: Model-specific parameters. See model documentation for details.
+                  properties:
+                    min_length:
+                      type: integer
+                      description: Minimum length of the response.
+                    max_length:
+                      type: integer
+                      description: Maximum length of the response.
+                    temperature:
+                      type: number
+                      description: Sampling temperature for generation.
+
+      responses:
+        '200':
+          description: Successful response from the model.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: null
+                    description: Null if everything is fine
+                  output:
+                    description: Model output will either be a string, object, or array of items.
+                    oneOf:
+                      - type: string
+                      - type: object
+                      - type: array
+                        items: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+      security:
+        - apiKeyAuth: []
+
+  /models/v2/list/models:
+    get:
+      summary: Models
+      description: >
+        Retrieve a list of available models for various tasks. Use the query
+        parameter `task` to filter by task type, e.g. `chat`.
+      operationId: getModels
+      parameters:
+        - name: task
+          in: query
+          description: |-
+            The specific task type to filter models. Run list.tasks() for the full list. Some supported tasks include:
+            `audio-classification`, `audio-text-to-text`, `automatic-speech-recognition`, `chat`, `depth-estimation`, `document-question-answering`, `feature-extraction`, `fill-mask`, `image-classification`, `image-feature-extraction`, `image-segmentation`, `image-text-to-text`, `image-to-text`, `mask-generation`, `object-detection`, `question-answering`, `sentence-similarity`, `summarization`, `text-classification`, `text-generation`, `text-to-audio`, `text-to-image`, `text-to-speech`, `text-to-video`, `text2text-generation`, `token-classification`, `translation`, `unconditional-image-generation`, `video-classification`, `video-text-to-text`, `visual-question-answering`, `zero-shot-classification`, `zero-shot-image-classification`, `zero-shot-object-detection`.
+          required: false
+          schema:
+            type: string
+            example: chat
+      responses:
+        '200':
+          description: A successful response containing the list of models.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: null
+                    description: Null if everything is fine
+                  output:
+                    type: array
+                    description: An array of models
+                    items:
+                      type: object
+                      properties:
+                        meter:
+                          type: string
+                          example: sm-free
+                          description: The meter is based on GPU RAM required
+                        meterPrice:
+                          type: string
+                          example: '0.0006478333 / sec'
+                          description: Price per second to run model
+                        modelId:
+                          type: string
+                          example: 0-hero/Matter-0.1-Slim-7B-C
+                        params:
+                          type: number
+                          example: 7.24
+                          description: Number of parameters in billions
+                        ramRequired:
+                          type: number
+                          example: 29
+                          description: GPU RAM required in GB
+                        task:
+                          type: string
+                          example: chat
+                      required:
+                        - meter
+                        - meterPrice
+                        - modelId
+                        - params
+                        - ramRequired
+                        - task
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+      security:
+        - apiKeyAuth: []
+  /models/v2/list/tasks:
+    get:
+      summary: Tasks
+      description: Retrieve a list of tasks
+      operationId: getTasks
+      responses:
+        '200':
+          description: A successful response containing the list of tasks.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: null
+                    description: Null if everything is fine
+                  output:
+                    type: array
+                    description: An array of tasks
+                    items:
+                      type: string
+                      example:
+                        - text-generation
+                        - text-to-image
+                        - text-to-video
+                        - ...
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+      security:
+        - apiKeyAuth: []
+
+components:
+  responses:
+    RateLimitError:
+      description: Too Many Requests – You have hit the rate limit.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: 'Rate limit exceeded'
+              output:
+                type: string
+                example: null
+    Unauthorized:
+      description: Auth error - check your api key and how you're sending it.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: 'Unauthorized'
+              output:
+                type: string
+                example: null
+  parameters:
+    modelId:
+      name: modelId
+      in: path
+      required: true
+      description: The model you want to run (e.g., `openai-community/gpt2`).
+      schema:
+        type: string
+
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >
+        Set `Authorization` header to `BYTEZ_KEY` 
+
+        ```
+        'Authorization: YOUR_KEY_HERE'
+        ```

@@ -11,7 +11,7 @@ servers:
 paths:
   /models/v2/almanach/camembert-base:
     post:
-      summary: Fill Mask
+      summary: fill-mask
       description: Predict masked tokens with the `camembert-base` model.
       operationId: runFillMask
       requestBody:
@@ -42,7 +42,7 @@ paths:
 
   /models/v2/facebook/mms-tts-eng:
     post:
-      summary: Text-to-Speech
+      summary: text-to-speech
       description: Convert text to speech with `mms-tts-eng`.
       operationId: runTextToSpeech
       requestBody:
@@ -62,7 +62,7 @@ paths:
 
   /models/v2/facebook/musicgen-melody:
     post:
-      summary: Text-to-Audio
+      summary: text-to-audio
       description: Convert text to audio with `musicgen-melody`.
       operationId: runTextToAudio
       requestBody:
@@ -82,7 +82,7 @@ paths:
 
   /models/v2/stabilityai/stable-diffusion-xl-base-1.0:
     post:
-      summary: Text-to-Image
+      summary: text-to-image
       description: Generate images from text with `stable-diffusion-xl-base-1.0`.
       operationId: runTextToImage
       requestBody:
@@ -102,7 +102,7 @@ paths:
 
   /models/v2/Areeb123/En-Fr_Translation_Model:
     post:
-      summary: Translation
+      summary: translation
       description: Translate English to French with `En-Fr_Translation_Model`.
       operationId: runTranslation
       requestBody:
@@ -122,7 +122,7 @@ paths:
 
   /models/v2/ainize/bart-base-cnn:
     post:
-      summary: Summarization
+      summary: summarization
       description: Summarize text with `bart-base-cnn`.
       operationId: runSummarization
       requestBody:
@@ -142,7 +142,7 @@ paths:
 
   /models/v2/allenai/specter2_base:
     post:
-      summary: Feature Extraction
+      summary: feature-extraction
       description: Extract text features with `specter2_base`.
       operationId: runFeatureExtraction
       requestBody:
@@ -164,7 +164,7 @@ paths:
 
   /models/v2/AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon:
     post:
-      summary: Text Classification
+      summary: text-classification
       description: Classify sentiment with `distilbert-base-uncased-finetuned-sentiment-amazon`.
       operationId: runTextClassification
       requestBody:
@@ -184,7 +184,7 @@ paths:
 
   /models/v2/2rtl3/mn-xlm-roberta-base-named-entity:
     post:
-      summary: Token Classification
+      summary: token-classification
       description: Named-entity recognition with `mn-xlm-roberta-base-named-entity`.
       operationId: runTokenClassification
       requestBody:
@@ -213,7 +213,7 @@ paths:
 
   /models/v2/bigscience/mt0-small:
     post:
-      summary: Text-to-Text Generation
+      summary: text2text-generation
       description: Perform text-to-text transformations with `mt0-small`.
       operationId: runText2TextGeneration
       requestBody:
@@ -233,7 +233,7 @@ paths:
 
   /models/v2/openai-community/gpt2:
     post:
-      summary: Text Generation
+      summary: text-generation
       description: Generate text with `gpt2`.
       operationId: runTextGeneration
       requestBody:
@@ -258,43 +258,11 @@ components:
       type: object
       properties:
         text: { type: string, description: Input text for NLP tasks. }
-        messages:
-          type: array
-          description: Conversation history.
-          items:
-            type: object
-            required: [role, content]
-            properties:
-              role: { type: string, enum: [system, user, assistant] }
-              content:
-                oneOf:
-                  - type: string
-                  - type: array
-                    items:
-                      type: object
-                      required: [type]
-                      properties:
-                        type: { type: string, enum: [text, image, audio, video] }
-                        text: { type: string }
-                        url: { type: string, format: uri }
-                        base64: { type: string }
-        url: { type: string, format: uri, description: URL to image/audio/video. }
-        base64: { type: string, description: Base64-encoded image/audio/video. }
-        question: { type: string, description: Question text (QA tasks). }
-        context: { type: string, description: Context paragraph (QA tasks). }
-        candidate_labels:
-          type: array
-          items: { type: string }
-          description: Candidate labels (zero-shot).
         stream: { type: boolean, description: Enable text streaming. }
         json: { type: boolean, description: Stream media instead of JSON. }
         params:
           type: object
           description: Model-specific parameters.
-          properties:
-            min_length: { type: integer }
-            max_length: { type: integer }
-            temperature: { type: number }
 
   requestBodies:
     UniversalRequestBody:

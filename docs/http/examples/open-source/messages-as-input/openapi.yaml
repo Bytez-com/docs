@@ -9,7 +9,7 @@ servers:
 paths:
   '/models/v2/openai/gpt-4o-audio-preview':
     post:
-      summary: Chat
+      summary: chat
       description: Interact with OpenAI's GPT-4 model for chat and multi-modal tasks.
       operationId: chatWithGPT4
       # Parameters like Authorization/Provider-key removed, handled by securitySchemes + security keyword

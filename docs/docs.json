@@ -41,45 +41,71 @@
               {
                 "group": "Understand the API",
                 "icon": "head-side-gear",
+                "pages": ["model-api/docs/under-the-hood"]
+              },
+              {
+                "group": "Language Models",
+                "icon": "microchip-ai",
                 "pages": [
-                  "model-api/docs/under-the-hood",
-                  "model-api/docs/clusters"
+                  "/model-api/docs/task/chat",
+                  "/model-api/docs/task/text-generation",
+                  "/model-api/docs/task/text2text-generation",
+                  "/model-api/docs/task/sentence-similarity",
+                  "/model-api/docs/task/feature-extraction",
+                  "/model-api/docs/task/zero-shot-classification",
+                  "/model-api/docs/task/text-classification",
+                  "/model-api/docs/task/token-classification",
+                  "/model-api/docs/task/summarization",
+                  "/model-api/docs/task/question-answering",
+                  "/model-api/docs/task/translation",
+                  "/model-api/docs/task/fill-mask"
                 ]
               },
               {
-                "group": "Tasks",
+                "group": "Language Models (Multimodal)",
                 "icon": "microchip-ai",
                 "pages": [
-                  "/model-api/docs/task/audio-classification",
-                  "/model-api/docs/task/automatic-speech-recognition",
-                  "/model-api/docs/task/chat",
-                  "/model-api/docs/task/depth-estimation",
-                  "/model-api/docs/task/document-question-answering",
-                  "/model-api/docs/task/feature-extraction",
-                  "/model-api/docs/task/fill-mask",
+                  "/model-api/docs/task/chat-multi-modal-audio/page",
+                  "/model-api/docs/task/chat-multi-modal-image",
+                  "/model-api/docs/task/chat-multi-modal-video"
+                ]
+              },
+              {
+                "group": "Image Models",
+                "icon": "microchip-ai",
+                "pages": [
+                  "/model-api/docs/task/text-to-image",
+                  "/model-api/docs/task/text-to-video",
+                  "/model-api/docs/task/image-to-text",
+                  "/model-api/docs/task/object-detection",
+                  "/model-api/docs/task/zero-shot-object-detection",
                   "/model-api/docs/task/image-classification",
+                  "/model-api/docs/task/video-classification",
+                  "/model-api/docs/task/zero-shot-image-classification",
                   "/model-api/docs/task/image-feature-extraction",
                   "/model-api/docs/task/image-segmentation",
-                  "/model-api/docs/task/image-to-text",
+                  "/model-api/docs/task/depth-estimation",
                   "/model-api/docs/task/mask-generation",
-                  "/model-api/docs/task/object-detection",
-                  "/model-api/docs/task/question-answering",
-                  "/model-api/docs/task/sentence-similarity",
-                  "/model-api/docs/task/summarization",
-                  "/model-api/docs/task/text-classification",
-                  "/model-api/docs/task/text-generation",
-                  "/model-api/docs/task/text-to-image",
+                  "/model-api/docs/task/unconditional-image-generation"
+                ]
+              },
+              {
+                "group": "Audio Models",
+                "icon": "microchip-ai",
+                "pages": [
                   "/model-api/docs/task/text-to-speech",
-                  "/model-api/docs/task/text-to-text-generation",
-                  "/model-api/docs/task/text-to-video",
-                  "/model-api/docs/task/token-classification",
-                  "/model-api/docs/task/translation",
-                  "/model-api/docs/task/unconditional-image-generation",
-                  "/model-api/docs/task/video-classification",
-                  "/model-api/docs/task/visual-question-answering",
-                  "/model-api/docs/task/zero-shot-classification",
-                  "/model-api/docs/task/zero-shot-image-classification",
-                  "/model-api/docs/task/zero-shot-object-detection"
+                  "/model-api/docs/task/text-to-audio",
+                  "/model-api/docs/task/audio-classification",
+                  "/model-api/docs/task/automatic-speech-recognition"
+                ]
+              },
+              {
+                "group": "Multimodal Models",
+                "icon": "microchip-ai",
+                "pages": [
+                  "/model-api/docs/task/document-question-answering",
+
+                  "/model-api/docs/task/visual-question-answering"
                 ]
               }
             ]
@@ -96,22 +122,12 @@
               {
                 "group": "List",
                 "icon": "layer-group",
-                "pages": [
-                  "http/list/clusters",
-                  "http/list/models",
-                  "http/list/tasks"
-                ]
+                "pages": ["http/list/models", "http/list/tasks"]
               },
               {
                 "group": "Model",
                 "icon": "cube",
-                "pages": [
-                  "http/model/create",
-                  "http/model/read",
-                  "http/model/update",
-                  "http/model/delete",
-                  "http/model/run"
-                ]
+                "pages": ["http/model/run"]
               }
             ]
           },
@@ -129,12 +145,12 @@
                 ]
               },
               {
-                "group": "Multimodal",
+                "group": "Chat",
                 "pages": [
-                  "http/examples/open-source/multimodal/chat-text",
-                  "http/examples/open-source/multimodal/chat-vision",
-                  "http/examples/open-source/multimodal/chat-audio",
-                  "http/examples/open-source/multimodal/chat-video"
+                  "http/examples/open-source/chat/chat-text",
+                  "http/examples/open-source/chat/chat-vision",
+                  "http/examples/open-source/chat/chat-audio",
+                  "http/examples/open-source/chat/chat-video"
                 ]
               },
               {
@@ -166,24 +182,22 @@
                 ]
               },
               {
-                "group": "Multi‑input",
+                "group": "Multi‑input (Text Based)",
+                "pages": ["http/examples/open-source/multi-input-text/question-answering"]
+              },
+              {
+                "group": "Multi‑input (Image Based)",
                 "pages": [
-                  "http/examples/open-source/multi-input/question-answering",
-                  "http/examples/open-source/multi-input/document-question-answering",
-                  "http/examples/open-source/multi-input/visual-question-answering",
-                  "http/examples/open-source/multi-input/zero-shot-object-detection",
-                  "http/examples/open-source/multi-input/zero-shot-image-classification",
-                  "http/examples/open-source/multi-input/zero-shot-classification"
+                  "http/examples/open-source/multi-input-image/document-question-answering",
+                  "http/examples/open-source/multi-input-image/visual-question-answering",
+                  "http/examples/open-source/multi-input-image/zero-shot-object-detection",
+                  "http/examples/open-source/multi-input-image/zero-shot-image-classification",
+                  "http/examples/open-source/multi-input-image/zero-shot-classification"
                 ]
               },
               {
                 "group": "Resources",
-                "pages": [
-                  "company/about",
-                  "company/blog",
-                  "company/solutions",
-                  "company/roadmap"
-                ]
+                "pages": ["company/about", "company/blog", "company/solutions", "company/roadmap"]
               }
             ]
           }

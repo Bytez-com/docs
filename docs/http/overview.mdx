@@ -6,73 +6,12 @@ icon: 'stars'
 
 # Quickstart
 
-## Overview of CRUD Operations
+Run Inference (POST) - Execute a Model
 
-The API supports Create, Read, Update, and Delete (CRUD) operations for managing and running open-source models on Bytez.
-
-### Create (PUT) - Create a Model Cluster
-
-- `Endpoint`: PUT `/models/v2/openai-community/{model}`
-- `Purpose`: Create an auto-scaling cluster for a specified model.
-- `Request Body`:
-
-```json json
-{
-  "capacity": {
-    "max": 5,
-    "desired": 3
-  },
-  "timeout": 3600
-}
-```
-
-- `Response`: Confirms successful cluster creation.
-
-### Read (GET) - Retrieve Model Cluster Information
-
-- `Endpoint`: GET `/models/v2/openai-community/{model}`
-- `Purpose`: Fetch information about the specified model cluster.
-- `Response`:
-
-```json json
-{
-  "cluster": {
-    "status": "running",
-    "capacity": {
-      "max": 5,
-      "desired": 3
-    }
-  }
-}
-```
-
-### Update (PATCH) - Modify an Existing Model Cluster
-
-- `Endpoint`: PATCH `/models/v2/openai-community/{model}`
-- `Purpose`: Update capacity or configuration of a model cluster.
-- `Request Body`:
-
-```json json
-{
-  "capacity": {
-    "desired": 4
-  }
-}
-```
-
-- `Response`: Confirms successful cluster update.
-
-### Delete (DELETE) - Remove a Model Cluster
-
-- `Endpoint`: DELETE `/models/v2/openai-community/{model}`
-- `Purpose`: Delete the specified model cluster.
-- `Response`: Confirms successful deletion.
-
-````Run Inference (POST) - Execute a Model
-- `Endpoint`: POST /models/v2/openai-community/{model}
+- `Endpoint`: POST `/models/v2/openai-community/{model}`
 - `Purpose`: Run inference on an open-source model.
-- `Request Body`:
-```json json
+
+```json Request Body
 {
   "text": "Hello, how are you?",
   "stream": false,
@@ -81,11 +20,9 @@ The API supports Create, Read, Update, and Delete (CRUD) operations for managing
     "max_length": 50
   }
 }
-````
+```
 
-- `Response`:
-
-```json
+```json Response
 {
   "output": "I am doing well, thank you!"
 }
@@ -96,7 +33,7 @@ The API supports Create, Read, Update, and Delete (CRUD) operations for managing
 # Unified Input Formats
 
 <Tip>
-  Bytez simplifies building with 40k+ `Open Source` and `Closed Source` AI models by standardizing
+  Bytez simplifies building with 170k+ `Open Source` and `Closed Source` AI models by standardizing
   inputs across 33 ML tasks. This consistency eliminates the need to adjust for varying input
   structures, allowing seamless integration for `text`, `messages`, `image`, or `multiple` inputs.
 </Tip>
@@ -120,11 +57,11 @@ For models that process `text`:
 }
 ```
 
-Tasks: `Fill Mask`, `Summarization`, `Text-to-Speech`, `Translation`, `Text Generation`, etc.
+Tasks: `fill-mask`, `summarization`, `text-to-speech`, `translation`, `text-generation`
 
 ### Messages
 
-For `chat` and `multi-modal` tasks:
+For `chat`, `audio-text-to-text`, `image-text-to-text`, and `video-text-to-text` tasks:
 
 ```json json
 {
@@ -135,7 +72,7 @@ For `chat` and `multi-modal` tasks:
 }
 ```
 
-Tasks: `Chat`.
+Tasks: `chat`, `audio-text-to-text`, `image-text-to-text`, and `video-text-to-text`
 
 ### Image
 
@@ -144,7 +81,7 @@ For image processing, use either:
 `URL`:
 
 ```json json
-{ "image_url": "https://example.com/image.jpg" }
+{ "url": "https://example.com/image.jpg" }
 ```
 
 `Base64`:
@@ -153,7 +90,7 @@ For image processing, use either:
 { "base64": "data:image/webp;base64,..." }
 ```
 
-Tasks: `Image Classification`, `Object Detection`, `Image-to-Text`.
+Tasks: `image-classification`, `object-detection`, `image-to-Text`.
 
 ### Multi-Input
 
@@ -162,10 +99,10 @@ For models needing both `text` and `image` or `audio` or `video`:
 ```json json
 {
   "text": "What's in the image?",
-  "image_url": "https://example.com/image.jpg"
+  "url": "https://example.com/image.jpg"
 }
 ```
 
-Tasks: `Visual Question Answering`, `Zero-Shot Classification`, etc.
+Tasks: `visual-question-answering`, `zero-shot-classification`, etc.
 
 This unified schema accelerates development and ensures compatibility across diverse AI tasks.

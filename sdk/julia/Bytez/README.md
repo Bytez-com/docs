@@ -35,7 +35,7 @@
   - [Text to Speech](#text-to-speech)
   - [Video Classification](#video-classification)
   - [Object Detection](#object-detection)
-  - [Text to Text Generation](#text-to-text-generation)
+  - [Text to Text Generation](#text2text-generation)
   - [Zero-Shot Image Classification](#zero-shot-image-classification)
   - [Zero-Shot Classification](#zero-shot-classification)
   - [Document Question Answering](#document-question-answering)
@@ -49,6 +49,7 @@
 - [Feedback](#feedback)
 
 ## Basic Usage
+
 ```jl
 using Bytez
 
@@ -78,6 +79,7 @@ println(generated_text)
 ```
 
 Streaming usage (only text-generation models support streaming currently)
+
 ```jl
 using Bytez
 
@@ -107,6 +109,7 @@ end
 ```
 
 ## Installation
+
 1. Run the command `julia`
 2. Press `]`
 3. Run the command below
@@ -114,6 +117,7 @@ end
 ```bash
 add Bytez
 ```
+
 4. Ctrl + D to exit julia
 
 ## Authentication and Getting Your Key
@@ -163,7 +167,7 @@ Progress is printed as it executes.
 model.load();
 ```
 
-The options argument is *optional* and has two properties, concurrency, and timeout.
+The options argument is _optional_ and has two properties, concurrency, and timeout.
 
 ```jl
 model.load(Dict(
