@@ -1,43 +1,58 @@
 ---
 title: 'unconditional-image-generation'
+description: Randomly generate images without an input
 icon: 'image'
-description:
-  Generate images without specific conditions or inputs for applications in art generation, creative
-  design, and data augmentation
 mode: 'wide'
 ---
 
-<Accordion defaultOpen title="Basic usage">
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("afshr/cam_finetune");
-
-    await model.create()
-
-    const { error, output } = await model.run();
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("afshr/cam_finetune")
-
-    model.create()
-
-    output, error = model.run()
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/afshr/cam_finetune' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json'
-    ```
-
-  </CodeGroup>
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Generate images without specific conditions or inputs for applications in art generation, creative design, and data augmentation
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('afshr/cam_finetune');
+			
+			// provide the model with input
+			const input = undefined;
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("afshr/cam_finetune")
+			
+			# provide the model with input
+			input = undefined
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/afshr/cam_finetune' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

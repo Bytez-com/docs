@@ -1,54 +1,60 @@
 ---
 title: 'text-generation'
+description: Generate text from an initial prompt for applications like story generation, dialogue systems, and creative writing
 icon: 'message-text'
-description: Generate text from an initial prompt for applications like story generation, dialogue
-  systems, and creative writing
 mode: 'wide'
 ---
 
-<Accordion defaultOpen title="Basic usage">
-  Send a prompt to a model to generate text:
-
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("Qwen/Qwen2-7B-Instruct");
-
-    await model.create()
-
-    const { error, output } = await model.run(
-      "Once upon a time there was a beautiful home where",
-      { max_new_tokens: 200, min_new_tokens: 50, temperature: 0.5 }
-    );
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("Qwen/Qwen2-7B-Instruct")
-
-    model.create()
-
-    output, error = model.run(
-      "Once upon a time there was a beautiful home where",
-      { "max_new_tokens": 200, "min_new_tokens": 50, "temperature": 0.5 }
-    )
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/Qwen/Qwen2-7B-Instruct' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json' \
-    --data '{
-      "text": "Once upon a time there was a beautiful home where",
-      "params": { "max_new_tokens": 200, "min_new_tokens": 50, "temperature": 0.5 }
-    }'
-    ```
-
-  </CodeGroup>
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send a prompt to a model to generate text
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('openai-community/gpt2');
+			
+			// provide the model with input
+			const input = "Once upon a time there was a beautiful home where";
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("openai-community/gpt2")
+			
+			# provide the model with input
+			input = "Once upon a time there was a beautiful home where"
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/openai-community/gpt2' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "text": "Once upon a time there was a beautiful home where"
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

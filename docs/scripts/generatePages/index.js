@@ -19,16 +19,17 @@ async function main() {
       docExamples,
     },
   ] of Object.entries(MODEL_DOCS_OBJECT)) {
-    const tasksToProcess = [
-      'chat',
-      // 'audio-text-to-text',
-      // 'image-text-to-text',
-      // 'video-text-to-text',
-    ];
+    // const tasksToProcess = [
+    //   'chat',
+    //   // 'audio-text-to-text',
+    //   // 'image-text-to-text',
+    //   // 'video-text-to-text',
+    // ];
 
-    if (!tasksToProcess.includes(task)) {
-      continue;
-    }
+    // if (!tasksToProcess.includes(task)) {
+    //   continue;
+    // }
+
     console.log('Generating pages for task: ', task);
 
     const taskSnippets = [];

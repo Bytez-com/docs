@@ -1,55 +1,73 @@
 ---
 title: 'summarization'
+description: Summarization involves creating concise summaries of longer texts. Use cases include news summarization, document summarization, and generating abstracts
 icon: 'align-justify'
-description:
-  Summarization involves creating concise summaries of longer texts. Use cases include news
-  summarization, document summarization, and generating abstracts
 mode: 'wide'
 ---
 
-<Accordion defaultOpen title="Basic usage">
-  Generate a summary:
-
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("ainize/bart-base-cnn");
-
-    await model.create()
-
-    const { error, output } = await model.run(
-      "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.",
-      { max_length: 40 }
-    );
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("ainize/bart-base-cnn")
-
-    model.create()
-
-    output, error = model.run(
-      "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.",
-      { "max_length": 40 }
-    )
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/ainize/bart-base-cnn' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json' \
-    --data '{
-      "text": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.",
-      "params": { "max_length": 40 }
-    }'
-    ```
-
-  </CodeGroup>
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Generate a summary
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('ainize/bart-base-cnn');
+			
+			// provide the model with input
+			const input = "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.";
+			
+			// provide the model with params
+			const params = {
+			  "max_length": 40
+			};
+			
+			// send to the model
+			const { error, output } = await model.run(input, params);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("ainize/bart-base-cnn")
+			
+			# provide the model with input
+			input = "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct."
+			
+			# provide the model with params
+			params = {
+			  "max_length": 40
+			}
+			
+			# send to the model
+			error, output = model.run(input, params)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/ainize/bart-base-cnn' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "text": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.",
+			  "params": {
+			    "max_length": 40
+			  }
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

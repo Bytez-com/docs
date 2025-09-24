@@ -1,54 +1,67 @@
 ---
 title: 'automatic-speech-recognition'
+description: Convert spoken language into written text for transcription services, voice assistants, and accessibility features
 icon: 'file-music'
-description:
-  Convert spoken language into written text for transcription services, voice assistants, and
-  accessibility features.
 mode: 'wide'
 ---
 
-import Base64 from '/snippets/base64.mdx';
-
-<Accordion defaultOpen title="Basic usage">
-  Send an audio file to an ASR model to generate text.
-
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("facebook/data2vec-audio-base-960h");
-
-    await model.create()
-
-    const audio = "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
-    const { error, output } = await model.run({ url: audio });
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("facebook/data2vec-audio-base-960h")
-
-    model.create()
-
-    audio = "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
-    output, error = model.run({ "url": audio })
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/facebook/data2vec-audio-base-960h' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json' \
-    --data '{
-      "url": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
-    }'
-    ```
-
-  </CodeGroup>
-  <Base64 type="audio" />
-
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send an audio file to an ASR model to generate text
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('facebook/data2vec-audio-base-960h');
+			
+			// provide the model with input
+			const input = {
+			  "url": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
+			};
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("facebook/data2vec-audio-base-960h")
+			
+			# provide the model with input
+			input = {
+			  "url": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
+			}
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/facebook/data2vec-audio-base-960h' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "url": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/automatic-speech-recognition/input.flac"
+			}'
+			```
+			You can send the **audio** via `url` or `base64` data URL.
+			
+			We recommend `url` for better performance, as `base64` increases payload size.
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

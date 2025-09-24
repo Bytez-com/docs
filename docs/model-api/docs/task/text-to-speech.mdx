@@ -1,91 +1,60 @@
 ---
 title: 'text-to-speech'
+description: Convert text into natural-sounding speech for applications like virtual assistants, accessibility features, and content creation
 icon: 'volume-high'
-description:
-  Convert text into natural-sounding speech for applications like virtual assistants, accessibility
-  features, and content creation
 mode: 'wide'
 ---
 
 <AccordionGroup>
-  <Accordion defaultOpen title="Basic usage">
-    Send a text input to generate an audio output:
-
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      const sdk = new Bytez("BYTEZ_KEY");
-      const model = sdk.model("suno/bark-small");
-
-      const { error, output } = await model.run("Hello, how are you today?");
-
-      console.log({ error, output });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      sdk = Bytez("BYTEZ_KEY")
-      model = sdk.model("suno/bark-small")
-
-      output, error = model.run("Hello, how are you today?")
-
-      print({ "error": error, "output": output })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/suno/bark-small' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-        "text": "Hello, how are you today?"
-      }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-    <Accordion title="Stream">
-    Instead receiving an audio file in JSON format, you opt to stream back the data URL:
-
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      const sdk = new Bytez("BYTEZ_KEY");
-      const model = sdk.model("suno/bark-small");
-      const text = "Hello, how are you today?"
-      const stream = true
-
-      const readStream = await model.run(text, stream);
-
-      // the stream returns the base64 data url
-      for await (const chunk of readStream) {
-        console.log(chunk)
-      }
-      ```
-      ```python python
-      from bytez import Bytez
-
-      sdk = Bytez("BYTEZ_KEY")
-      model = sdk.model("suno/bark-small")
-      text = "Hello, how are you today?"
-      stream = True
-
-      readStream = model.run(messages, stream)
-
-      # the stream returns the base64 data url
-      for chunk in readStream:
-        print(chunk)
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/suno/bark-small' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-        "text": "Hello, how are you today?",
-        "json": false
-      }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send a text input to generate an audio output
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('suno/bark-small');
+			
+			// provide the model with input
+			const input = "Hello, how are you today?";
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("suno/bark-small")
+			
+			# provide the model with input
+			input = "Hello, how are you today?"
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/suno/bark-small' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "text": "Hello, how are you today?"
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
 </AccordionGroup>

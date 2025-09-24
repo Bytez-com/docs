@@ -1,48 +1,60 @@
 ---
 title: 'translation'
+description: Translate text from one language to another for multilingual communication, content localization, and language learning
 icon: 'language'
-description:
-  Translate text from one language to another for multilingual communication, content localization,
-  and language learning
 mode: 'wide'
 ---
 
-<Accordion defaultOpen title="Basic usage">
-  Send a text input to translate it into another language:
-
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("Helsinki-NLP/opus-mt-en-zh");
-
-    await model.create()
-
-    const { error, output } = await model.run("Hello, how are you? Beautiful day today, isn't it?");
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("Helsinki-NLP/opus-mt-en-zh")
-
-    model.create()
-
-    output, error = model.run("Hello, how are you? Beautiful day today, isn't it?")
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/Helsinki-NLP/opus-mt-en-zh' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json' \
-    --data '{
-      "text": "Hello, how are you? Beautiful day today, isn't it?"
-    }'
-    ```
-
-  </CodeGroup>
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send a text input to translate it into another language
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('Helsinki-NLP/opus-mt-en-zh');
+			
+			// provide the model with input
+			const input = "Hello, how are you? Beautiful day today, isn't it?";
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("Helsinki-NLP/opus-mt-en-zh")
+			
+			# provide the model with input
+			input = "Hello, how are you? Beautiful day today, isn't it?"
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/Helsinki-NLP/opus-mt-en-zh' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "text": "Hello, how are you? Beautiful day today, isn't it?"
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

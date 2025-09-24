@@ -1,56 +1,67 @@
 ---
 title: 'question-answering'
+description: Answer questions based on a given context for applications like customer support, information retrieval, and educational tools
 icon: 'comments-question'
-description:
-  Answer questions based on a given context for applications like customer support, information
-  retrieval, and educational tools
 mode: 'wide'
 ---
 
-<Accordion defaultOpen title="Basic usage">
-  Send a question with context to a model to generate an answer:
-
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("cloudqi/deepset/roberta-base-squad2");
-
-    await model.create()
-
-    const { error, output } = await model.run({
-      question: "Where does Holly live?",
-      context: "My name is Holly and I live in NYC"
-    });
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("cloudqi/deepset/roberta-base-squad2")
-
-    model.create()
-
-    output, error = model.run({
-      "question": "Where does Holly live?",
-      "context": "My name is Holly and I live in NYC"
-    })
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/cloudqi/deepset/roberta-base-squad2' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json' \
-    --data '{
-      "question": "Where does Holly live?",
-      "context": "My name is Holly and I live in NYC"
-    }'
-    ```
-
-  </CodeGroup>
-
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send a question with context to a model to generate an answer
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('deepset/roberta-base-squad2');
+			
+			// provide the model with input
+			const input = {
+			  "question": "Where does Holly live?",
+			  "context": "My name is Holly and I live in NYC"
+			};
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("deepset/roberta-base-squad2")
+			
+			# provide the model with input
+			input = {
+			  "question": "Where does Holly live?",
+			  "context": "My name is Holly and I live in NYC"
+			}
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/deepset/roberta-base-squad2' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "question": "Where does Holly live?",
+			  "context": "My name is Holly and I live in NYC"
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>
