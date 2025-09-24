@@ -61,6 +61,8 @@ async function main() {
 
     const accordions = [];
 
+    let defaultOpen = true;
+
     for (const taskSnippet of taskSnippets) {
       const { exampleTitle, exampleDescription, js, py, curl } = taskSnippet;
       const accordion = toAccordion({
@@ -69,10 +71,14 @@ async function main() {
         supportsUrlInput,
         supportsBase64Input,
         mediaInputType,
+        defaultOpen,
         js,
         py,
         curl,
       });
+
+      // we only want the first one to be open
+      defaultOpen = false;
 
       accordions.push(accordion);
     }
@@ -105,6 +111,7 @@ function toAccordion({
   supportsUrlInput,
   supportsBase64Input,
   mediaInputType,
+  defaultOpen,
   js,
   py,
   curl,
@@ -137,7 +144,7 @@ We recommend \`url\` for better performance, as \`base64\` increases payload siz
 
   const Accordion = new Component({
     name: 'Accordion',
-    props: { defaultOpen: undefined, title: exampleTitle },
+    props: { defaultOpen, title: exampleTitle },
     children: [
       exampleDescription,
       new Component({
@@ -156,7 +163,7 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
     params,
     stream,
     (sectionsAsString) => {
-      if (params) {
+      if (paramsExist(params)) {
         return sectionsAsString;
       }
       return sectionsAsString.replace(
@@ -166,9 +173,9 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
       );
     },
     [
-      { tokenId: `'$MODEL_ID'`, replaceWith: modelId },
-      { tokenId: `'$INPUT'`, replaceWith: JSON.stringify(requestInput) },
-      { tokenId: `'$PARAMS_PAYLOAD'`, replaceWith: JSON.stringify(params) },
+      { tokenId: `'$MODEL_ID'`, replaceWith: `'${modelId}'` },
+      { tokenId: `'$INPUT'`, replaceWith: JSON.stringify(requestInput, null, 2) },
+      { tokenId: `'$PARAMS_PAYLOAD'`, replaceWith: JSON.stringify(params, null, 2) },
     ]
   );
 
@@ -177,7 +184,7 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
     params,
     stream,
     (sectionsAsString) => {
-      if (params) {
+      if (paramsExist(params)) {
         return sectionsAsString;
       }
       // notice how we're removing params
@@ -187,9 +194,9 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
       );
     },
     [
-      { tokenId: `"$MODEL_ID"`, replaceWith: modelId },
-      { tokenId: `"$INPUT"`, replaceWith: JSON.stringify(requestInput) },
-      { tokenId: `"$PARAMS_PAYLOAD"`, replaceWith: JSON.stringify(params) },
+      { tokenId: `"$MODEL_ID"`, replaceWith: `"${modelId}"` },
+      { tokenId: `"$INPUT"`, replaceWith: JSON.stringify(requestInput, null, 2) },
+      { tokenId: `"$PARAMS_PAYLOAD"`, replaceWith: JSON.stringify(params, null, 2) },
     ]
   );
 
@@ -209,7 +216,7 @@ function formatCurl(modelId, requestInput, params, stream) {
 
   const body = {
     ...requestInput,
-    params: params && Object.keys(params).length > 0 ? params : undefined,
+    params: paramsExist(params) ? params : undefined,
     // do not include stream in the json if it's false, as it is redundant
     stream: stream || undefined,
   };
@@ -261,7 +268,7 @@ function formatIntoSections(templateString, params, stream) {
 
   const linesBeforeParamsSection = lines.slice(0, paramsSectionIndex);
 
-  if (!params) {
+  if (!paramsExist(params)) {
     const nonStreamingWithOutParamsString = [
       ...linesBeforeParamsSection,
       ...lines.slice(nonStreamingSectionIndex + 1, streamingSectionIndex),
@@ -296,6 +303,10 @@ function updateTemplateIds(string, replacements) {
   }
 
   return updatedString;
+}
+
+function paramsExist(params) {
+  return params && Object.keys(params).length > 0;
 }
 
 if (require.main === module) {

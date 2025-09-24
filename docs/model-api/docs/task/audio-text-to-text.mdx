@@ -6,7 +6,7 @@ mode: 'wide'
 ---
 
 <AccordionGroup>
-	<Accordion defaultOpen title="Basic usage">
+	<Accordion defaultOpen="true" title="Basic usage">
 		Send a conversation to a model to generate text from text and audio
 		<CodeGroup>
 			```javascript javascript
@@ -16,16 +16,27 @@ mode: 'wide'
 			const sdk = new Bytez('BYTEZ_KEY');
 			
 			// choose your model
-			const model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct);
+			const model = sdk.model('Qwen/Qwen2-Audio-7B-Instruct');
 			
 			// provide the model with input
-			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]};
-			
-			// provide the model with params
-			const params = {};
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			];
 			
 			// send to the model
-			const { error, output } = await model.run(input, params);
+			const { error, output } = await model.run(input);
 			
 			// observe the output
 			console.log({ error, output });
@@ -38,16 +49,27 @@ mode: 'wide'
 			sdk = Bytez("BYTEZ_KEY")
 			
 			# choose your model
-			model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct)
+			model = sdk.model("Qwen/Qwen2-Audio-7B-Instruct")
 			
 			# provide the model with input
-			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]}
-			
-			# provide the model with params
-			params = {}
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			]
 			
 			# send to the model
-			error, output = model.run(input, params)
+			error, output = model.run(input)
 			
 			# observe the output
 			print({"error": error, "output": output})
@@ -77,7 +99,7 @@ mode: 'wide'
 			```
 		</CodeGroup>
 	</Accordion>
-	<Accordion defaultOpen title="Add params">
+	<Accordion defaultOpen="false" title="Add params">
 		
 		<CodeGroup>
 			```javascript javascript
@@ -87,13 +109,29 @@ mode: 'wide'
 			const sdk = new Bytez('BYTEZ_KEY');
 			
 			// choose your model
-			const model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct);
+			const model = sdk.model('Qwen/Qwen2-Audio-7B-Instruct');
 			
 			// provide the model with input
-			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]};
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			];
 			
 			// provide the model with params
-			const params = {"temperature":0};
+			const params = {
+			  "temperature": 0
+			};
 			
 			// send to the model
 			const { error, output } = await model.run(input, params);
@@ -109,13 +147,29 @@ mode: 'wide'
 			sdk = Bytez("BYTEZ_KEY")
 			
 			# choose your model
-			model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct)
+			model = sdk.model("Qwen/Qwen2-Audio-7B-Instruct")
 			
 			# provide the model with input
-			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]}
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			]
 			
 			# provide the model with params
-			params = {"temperature":0}
+			params = {
+			  "temperature": 0
+			}
 			
 			# send to the model
 			error, output = model.run(input, params)
@@ -151,7 +205,7 @@ mode: 'wide'
 			```
 		</CodeGroup>
 	</Accordion>
-	<Accordion defaultOpen title="Stream text">
+	<Accordion defaultOpen="false" title="Stream text">
 		
 		<CodeGroup>
 			```javascript javascript
@@ -161,29 +215,30 @@ mode: 'wide'
 			const sdk = new Bytez('BYTEZ_KEY');
 			
 			// choose your model
-			const model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct);
+			const model = sdk.model('Qwen/Qwen2-Audio-7B-Instruct');
 			
 			// provide the model with input
-			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]};
-			
-			// provide the model with params
-			const params = {};
-			
-			// set streaming to "true"
-			const stream = true;
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			];
 			
 			// send to the model
-			const readStream = await model.run(messages, params, stream);
-			
-			let text = '';
-			
-			for await (const chunk of readStream) {
-			  text += chunk;
-			  console.log(chunk);
-			}
+			const { error, output } = await model.run(input);
 			
 			// observe the output
-			console.log({ text });
+			console.log({ error, output });
 			
 			```
 			```python python
@@ -193,28 +248,30 @@ mode: 'wide'
 			sdk = Bytez("BYTEZ_KEY")
 			
 			# choose your model
-			model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct)
+			model = sdk.model("Qwen/Qwen2-Audio-7B-Instruct")
 			
 			# provide the model with input
-			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]}
-			
-			# provide the model with params
-			params = {}
-			
-			# set streaming to "true"
-			stream = True
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			]
 			
 			# send to the model
-			readStream = model.run(input, params, stream)
-			
-			text = ""
-			for chunk in readStream:
-			    tokens = chunk.decode("utf-8")
-			    text += tokens
-			    print(tokens)
+			error, output = model.run(input)
 			
 			# observe the output
-			print({"text": text})
+			print({"error": error, "output": output})
 			
 			```
 			```bash http
@@ -242,7 +299,7 @@ mode: 'wide'
 			```
 		</CodeGroup>
 	</Accordion>
-	<Accordion defaultOpen title="Add params + Stream text">
+	<Accordion defaultOpen="false" title="Add params + Stream text">
 		
 		<CodeGroup>
 			```javascript javascript
@@ -252,13 +309,29 @@ mode: 'wide'
 			const sdk = new Bytez('BYTEZ_KEY');
 			
 			// choose your model
-			const model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct);
+			const model = sdk.model('Qwen/Qwen2-Audio-7B-Instruct');
 			
 			// provide the model with input
-			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]};
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			];
 			
 			// provide the model with params
-			const params = {"temperature":0};
+			const params = {
+			  "temperature": 0
+			};
 			
 			// set streaming to "true"
 			const stream = true;
@@ -284,13 +357,29 @@ mode: 'wide'
 			sdk = Bytez("BYTEZ_KEY")
 			
 			# choose your model
-			model = sdk.model(Qwen/Qwen2-Audio-7B-Instruct)
+			model = sdk.model("Qwen/Qwen2-Audio-7B-Instruct")
 			
 			# provide the model with input
-			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this audio"},{"type":"audio","url":"https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"}]}]}
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this audio"
+			      },
+			      {
+			        "type": "audio",
+			        "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3"
+			      }
+			    ]
+			  }
+			]
 			
 			# provide the model with params
-			params = {"temperature":0}
+			params = {
+			  "temperature": 0
+			}
 			
 			# set streaming to "true"
 			stream = True

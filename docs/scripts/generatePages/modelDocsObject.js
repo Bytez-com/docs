@@ -123,22 +123,20 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'system',
-                content: 'You are a friendly chatbot',
-              },
-              {
-                role: 'assistant',
-                content: "Hello, I'm a friendly bot",
-              },
-              {
-                role: 'user',
-                content: 'Hello bot, what is the capital of England?',
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'system',
+              content: 'You are a friendly chatbot',
+            },
+            {
+              role: 'assistant',
+              content: "Hello, I'm a friendly bot",
+            },
+            {
+              role: 'user',
+              content: 'Hello bot, what is the capital of England?',
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -174,22 +172,20 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'system',
-                content: 'You are a friendly chatbot',
-              },
-              {
-                role: 'assistant',
-                content: "Hello, I'm a friendly bot",
-              },
-              {
-                role: 'user',
-                content: 'Hello bot, what is the capital of England?',
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'system',
+              content: 'You are a friendly chatbot',
+            },
+            {
+              role: 'assistant',
+              content: "Hello, I'm a friendly bot",
+            },
+            {
+              role: 'user',
+              content: 'Hello bot, what is the capital of England?',
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -225,22 +221,20 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'system',
-                content: 'You are a friendly chatbot',
-              },
-              {
-                role: 'assistant',
-                content: "Hello, I'm a friendly bot",
-              },
-              {
-                role: 'user',
-                content: 'Hello bot, what is the capital of England?',
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'system',
+              content: 'You are a friendly chatbot',
+            },
+            {
+              role: 'assistant',
+              content: "Hello, I'm a friendly bot",
+            },
+            {
+              role: 'user',
+              content: 'Hello bot, what is the capital of England?',
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -276,22 +270,20 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'system',
-                content: 'You are a friendly chatbot',
-              },
-              {
-                role: 'assistant',
-                content: "Hello, I'm a friendly bot",
-              },
-              {
-                role: 'user',
-                content: 'Hello bot, what is the capital of England?',
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'system',
+              content: 'You are a friendly chatbot',
+            },
+            {
+              role: 'assistant',
+              content: "Hello, I'm a friendly bot",
+            },
+            {
+              role: 'user',
+              content: 'Hello bot, what is the capital of England?',
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -455,20 +447,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this audio' },
-                  {
-                    type: 'audio',
-                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this audio' },
+                {
+                  type: 'audio',
+                  url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -503,20 +493,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this audio' },
-                  {
-                    type: 'audio',
-                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this audio' },
+                {
+                  type: 'audio',
+                  url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -550,20 +538,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this audio' },
-                  {
-                    type: 'audio',
-                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this audio' },
+                {
+                  type: 'audio',
+                  url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -597,20 +583,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this audio' },
-                  {
-                    type: 'audio',
-                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this audio' },
+                {
+                  type: 'audio',
+                  url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -656,20 +640,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this image' },
-                  {
-                    type: 'image',
-                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this image' },
+                {
+                  type: 'image',
+                  url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -704,20 +686,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this image' },
-                  {
-                    type: 'image',
-                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this image' },
+                {
+                  type: 'image',
+                  url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -751,20 +731,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this image' },
-                  {
-                    type: 'image',
-                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this image' },
+                {
+                  type: 'image',
+                  url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -798,20 +776,18 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this image' },
-                  {
-                    type: 'image',
-                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
-                  },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this image' },
+                {
+                  type: 'image',
+                  url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -857,17 +833,15 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this video' },
-                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this video' },
+                { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -899,17 +873,15 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this video' },
-                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this video' },
+                { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -940,17 +912,15 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this video' },
-                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this video' },
+                { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
@@ -981,17 +951,15 @@ const MODEL_DOCS_OBJECT = {
             mintlify: true,
             dockerhub: false,
           },
-          requestInput: {
-            input: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: 'Describe this video' },
-                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
-                ],
-              },
-            ],
-          },
+          requestInput: [
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Describe this video' },
+                { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+              ],
+            },
+          ],
           requestInputHttp: {
             messages: [
               {
