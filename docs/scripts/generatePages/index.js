@@ -20,10 +20,10 @@ async function main() {
     },
   ] of Object.entries(MODEL_DOCS_OBJECT)) {
     const tasksToProcess = [
-      // 'text-generation',
-      'audio-text-to-text',
-      'image-text-to-text',
-      'video-text-to-text',
+      'chat',
+      // 'audio-text-to-text',
+      // 'image-text-to-text',
+      // 'video-text-to-text',
     ];
 
     if (!tasksToProcess.includes(task)) {
