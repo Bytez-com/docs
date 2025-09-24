@@ -116,19 +116,19 @@
       {
         "tab": "HTTP Reference",
         "pages": [
-          "http/overview",
+          "http-reference/overview",
           {
             "group": "Endpoints",
             "pages": [
               {
                 "group": "List",
                 "icon": "layer-group",
-                "pages": ["http/list/models", "http/list/tasks"]
+                "pages": ["http-reference/list/models", "http-reference/list/tasks"]
               },
               {
                 "group": "Model",
                 "icon": "cube",
-                "pages": ["http/model/run"]
+                "pages": ["http-reference/model/run"]
               }
             ]
           },
@@ -138,62 +138,62 @@
               {
                 "group": "Closed Source",
                 "pages": [
-                  "http/examples/closed-source/openai",
-                  "http/examples/closed-source/google",
-                  "http/examples/closed-source/cohere",
-                  "http/examples/closed-source/anthropic",
-                  "http/examples/closed-source/mistral"
+                  "http-reference/examples/closed-source/openai",
+                  "http-reference/examples/closed-source/google",
+                  "http-reference/examples/closed-source/cohere",
+                  "http-reference/examples/closed-source/anthropic",
+                  "http-reference/examples/closed-source/mistral"
                 ]
               },
               {
                 "group": "Chat",
                 "pages": [
-                  "http/examples/open-source/chat/chat-text",
-                  "http/examples/open-source/chat/chat-vision",
-                  "http/examples/open-source/chat/chat-audio",
-                  "http/examples/open-source/chat/chat-video"
+                  "http-reference/examples/open-source/chat/chat-text",
+                  "http-reference/examples/open-source/chat/chat-vision",
+                  "http-reference/examples/open-source/chat/chat-audio",
+                  "http-reference/examples/open-source/chat/chat-video"
                 ]
               },
               {
                 "group": "Text as Input",
                 "pages": [
-                  "http/examples/open-source/text-as-input/fill-mask",
-                  "http/examples/open-source/text-as-input/text-to-speech",
-                  "http/examples/open-source/text-as-input/text-to-audio",
-                  "http/examples/open-source/text-as-input/text-to-image",
-                  "http/examples/open-source/text-as-input/translation",
-                  "http/examples/open-source/text-as-input/summarization",
-                  "http/examples/open-source/text-as-input/feature-extraction",
-                  "http/examples/open-source/text-as-input/text-classification",
-                  "http/examples/open-source/text-as-input/token-classification",
-                  "http/examples/open-source/text-as-input/text2text-generation",
-                  "http/examples/open-source/text-as-input/text-generation"
+                  "http-reference/examples/open-source/text-as-input/fill-mask",
+                  "http-reference/examples/open-source/text-as-input/text-to-speech",
+                  "http-reference/examples/open-source/text-as-input/text-to-audio",
+                  "http-reference/examples/open-source/text-as-input/text-to-image",
+                  "http-reference/examples/open-source/text-as-input/translation",
+                  "http-reference/examples/open-source/text-as-input/summarization",
+                  "http-reference/examples/open-source/text-as-input/feature-extraction",
+                  "http-reference/examples/open-source/text-as-input/text-classification",
+                  "http-reference/examples/open-source/text-as-input/token-classification",
+                  "http-reference/examples/open-source/text-as-input/text2text-generation",
+                  "http-reference/examples/open-source/text-as-input/text-generation"
                 ]
               },
               {
                 "group": "Image as Input",
                 "pages": [
-                  "http/examples/open-source/image-as-input/image-to-text",
-                  "http/examples/open-source/image-as-input/image-classification",
-                  "http/examples/open-source/image-as-input/segmentation",
-                  "http/examples/open-source/image-as-input/depth-estimation",
-                  "http/examples/open-source/image-as-input/object-detection",
-                  "http/examples/open-source/image-as-input/mask-generation",
-                  "http/examples/open-source/image-as-input/image-feature-extraction"
+                  "http-reference/examples/open-source/image-as-input/image-to-text",
+                  "http-reference/examples/open-source/image-as-input/image-classification",
+                  "http-reference/examples/open-source/image-as-input/segmentation",
+                  "http-reference/examples/open-source/image-as-input/depth-estimation",
+                  "http-reference/examples/open-source/image-as-input/object-detection",
+                  "http-reference/examples/open-source/image-as-input/mask-generation",
+                  "http-reference/examples/open-source/image-as-input/image-feature-extraction"
                 ]
               },
               {
                 "group": "Multi‑input (Text Based)",
-                "pages": ["http/examples/open-source/multi-input-text/question-answering"]
+                "pages": ["http-reference/examples/open-source/multi-input-text/question-answering"]
               },
               {
                 "group": "Multi‑input (Image Based)",
                 "pages": [
-                  "http/examples/open-source/multi-input-image/document-question-answering",
-                  "http/examples/open-source/multi-input-image/visual-question-answering",
-                  "http/examples/open-source/multi-input-image/zero-shot-object-detection",
-                  "http/examples/open-source/multi-input-image/zero-shot-image-classification",
-                  "http/examples/open-source/multi-input-image/zero-shot-classification"
+                  "http-reference/examples/open-source/multi-input-image/document-question-answering",
+                  "http-reference/examples/open-source/multi-input-image/visual-question-answering",
+                  "http-reference/examples/open-source/multi-input-image/zero-shot-object-detection",
+                  "http-reference/examples/open-source/multi-input-image/zero-shot-image-classification",
+                  "http-reference/examples/open-source/multi-input-image/zero-shot-classification"
                 ]
               },
               {

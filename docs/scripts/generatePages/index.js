@@ -18,7 +18,7 @@ async function main() {
       mediaInputType,
       docExamples,
     },
-  ] of Object.entries(MODEL_DOCS_OBJECT)) {
+  ] of Object.entries(MODEL_DOCS_OBJECT.tasks)) {
     // const tasksToProcess = [
     //   'chat',
     //   // 'audio-text-to-text',
