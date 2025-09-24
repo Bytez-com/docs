@@ -1,7 +1,10 @@
 /* eslint-disable max-len */
-const INPUT_MAP = {
+const MODEL_DOCS_OBJECT = {
   'text-generation': {
-    exampleModel: 'openai-community/gpt2',
+    exampleModel: 'microsoft/Phi-3-mini-128k-instruct',
+    description:
+      'Generate text from an initial prompt for applications like story generation, dialogue systems, and creative writing',
+    icon: 'message-text',
     docExamples: {
       shouldSucceed: [
         {
@@ -108,6 +111,9 @@ const INPUT_MAP = {
   },
   chat: {
     exampleModel: 'Qwen/Qwen3-4B',
+    description:
+      'Generate text from an initial message chain for applications like story generation, dialogue systems, and creative writing',
+    icon: 'comments',
     docExamples: {
       shouldSucceed: [
         {
@@ -154,7 +160,7 @@ const INPUT_MAP = {
             stream: false,
           },
           mintlifyProps: {
-            exampleTitle: '',
+            exampleTitle: 'Basic usage',
             exampleDescription: '',
           },
           dockerhubProps: {
@@ -434,8 +440,587 @@ const INPUT_MAP = {
       ],
     },
   },
+  'audio-text-to-text': {
+    exampleModel: 'Qwen/Qwen3-4B',
+    description:
+      'Generate text from an initial message chain that may contain audio for applications like story generation, dialogue systems, and creative writing',
+    icon: 'comments',
+    docExamples: {
+      shouldSucceed: [
+        {
+          testName: 'Basic usage, non streaming, no params',
+          testDescription: 'Send a conversation to a model to generate text from text and audio',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          params: {},
+          options: {
+            stream: false,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Basic usage',
+            exampleDescription:
+              'Send a conversation to a model to generate text from text and audio',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, non streaming, with params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          params: { temperature: 0 },
+          options: {
+            stream: false,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Add params',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, with streaming, no params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          params: {},
+          options: {
+            stream: true,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Stream text',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, with streaming, with params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this audio' },
+                  {
+                    type: 'audio',
+                    url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                  },
+                ],
+              },
+            ],
+          },
+          params: { temperature: 0 },
+          options: {
+            stream: true,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Add params + Stream text',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+      ],
+      shouldFail: [],
+    },
+  },
+  'image-text-to-text': {
+    exampleModel: 'Qwen/Qwen3-4B',
+    description:
+      'Generate text from an initial message chain that may contain images for applications like story generation, dialogue systems, and creative writing',
+    icon: 'comments',
+    docExamples: {
+      shouldSucceed: [
+        {
+          testName: 'Basic usage, non streaming, no params',
+          testDescription: 'Send a conversation to a model to generate text from text and audio',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          params: {},
+          options: {
+            stream: false,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Basic usage',
+            exampleDescription:
+              'Send a conversation to a model to generate text from text and audio',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, non streaming, with params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          params: { temperature: 0 },
+          options: {
+            stream: false,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Add params',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, with streaming, no params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          params: {},
+          options: {
+            stream: true,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Stream text',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, with streaming, with params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this image' },
+                  {
+                    type: 'image',
+                    url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                  },
+                ],
+              },
+            ],
+          },
+          params: { temperature: 0 },
+          options: {
+            stream: true,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Add params + Stream text',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+      ],
+      shouldFail: [],
+    },
+  },
+  'video-text-to-text': {
+    exampleModel: 'Qwen/Qwen3-4B',
+    description:
+      'Generate text from an initial message chain that may contain videos for applications like story generation, dialogue systems, and creative writing',
+    icon: 'comments',
+    docExamples: {
+      shouldSucceed: [
+        {
+          testName: 'Basic usage, non streaming, no params',
+          testDescription: 'Send a conversation to a model to generate text from text and audio',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          params: {},
+          options: {
+            stream: false,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Basic usage',
+            exampleDescription:
+              'Send a conversation to a model to generate text from text and audio',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, non streaming, with params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          params: { temperature: 0 },
+          options: {
+            stream: false,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Add params',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, with streaming, no params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          params: {},
+          options: {
+            stream: true,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Stream text',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+        {
+          testName: 'Basic usage, with streaming, with params',
+          testDescription: 'Send a conversation to a model to generate text',
+          docsExample: {
+            mintlify: true,
+            dockerhub: false,
+          },
+          requestInput: {
+            input: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          requestInputHttp: {
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: 'Describe this video' },
+                  { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                ],
+              },
+            ],
+          },
+          params: { temperature: 0 },
+          options: {
+            stream: true,
+          },
+          mintlifyProps: {
+            exampleTitle: 'Add params + Stream text',
+            exampleDescription: '',
+          },
+          dockerhubProps: {
+            description: '',
+          },
+        },
+      ],
+      shouldFail: [],
+    },
+  },
   'sentence-similarity': {
     exampleModel: 'sentence-transformers/all-MiniLM-L6-v2',
+    description:
+      'Measure how similar two sentences are for applications like duplicate question detection, paraphrase detection, and text clustering',
+    icon: 'waves-sine',
     docExamples: {
       shouldSucceed: [
         {
@@ -544,6 +1129,9 @@ const INPUT_MAP = {
   },
   'fill-mask': {
     exampleModel: 'almanach/camembert-base',
+    description:
+      'Predict missing words in a sentence for tasks like text completion, language modeling, and text generation',
+    icon: 'mask',
     docExamples: {
       shouldSucceed: [
         {
@@ -650,6 +1238,9 @@ const INPUT_MAP = {
   },
   'text-to-speech': {
     exampleModel: 'suno/bark-small',
+    description:
+      'Convert text into natural-sounding speech for applications like virtual assistants, accessibility features, and content creation',
+    icon: 'volume-high',
     docExamples: {
       shouldSucceed: [
         {
@@ -756,6 +1347,8 @@ const INPUT_MAP = {
   },
   'text-to-audio': {
     exampleModel: 'facebook/musicgen-stereo-small',
+    description: 'Send a text input to generate an audio output',
+    icon: 'volume-high',
     docExamples: {
       shouldSucceed: [
         {
@@ -862,6 +1455,8 @@ const INPUT_MAP = {
   },
   'text-to-image': {
     exampleModel: 'dreamlike-art/dreamlike-photoreal-2.0',
+    description: 'Generate images using text',
+    icon: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -968,6 +1563,9 @@ const INPUT_MAP = {
   },
   translation: {
     exampleModel: 'Helsinki-NLP/opus-mt-en-zh',
+    description:
+      'Translate text from one language to another for multilingual communication, content localization, and language learning',
+    icon: 'language',
     docExamples: {
       shouldSucceed: [
         {
@@ -1074,6 +1672,9 @@ const INPUT_MAP = {
   },
   summarization: {
     exampleModel: 'ainize/bart-base-cnn',
+    description:
+      'Summarization involves creating concise summaries of longer texts. Use cases include news summarization, document summarization, and generating abstracts',
+    icon: 'align-justify',
     docExamples: {
       shouldSucceed: [
         {
@@ -1184,6 +1785,9 @@ const INPUT_MAP = {
   },
   'text-to-video': {
     exampleModel: 'ali-vilab/text-to-video-ms-1.7b',
+    description:
+      'Generate videos from textual descriptions for applications like content creation, entertainment, and education',
+    icon: 'video',
     docExamples: {
       shouldSucceed: [
         {
@@ -1292,6 +1896,8 @@ const INPUT_MAP = {
   },
   'feature-extraction': {
     exampleModel: 'nomic-ai/nomic-embed-text-v1.5',
+    description: 'Convert text into vectors (embeddings) that capture semantic meaning',
+    icon: 'vector-square',
     docExamples: {
       shouldSucceed: [
         {
@@ -1402,6 +2008,9 @@ const INPUT_MAP = {
   },
   'text-classification': {
     exampleModel: 'AdamCodd/distilbert-base-uncased-finetuned-sentiment-amazon',
+    description:
+      'Categorize text into predefined classes for applications like sentiment analysis, spam detection, and topic classification',
+    icon: 'input-text',
     docExamples: {
       shouldSucceed: [
         {
@@ -1510,6 +2119,9 @@ const INPUT_MAP = {
   },
   'token-classification': {
     exampleModel: 'dslim/bert-base-NER',
+    description:
+      'Identify and categorize tokens in text for Named Entity Recognition (NER), Part-of-Speech tagging, and other NLP tasks',
+    icon: 'vector-square',
     docExamples: {
       shouldSucceed: [
         {
@@ -1618,6 +2230,9 @@ const INPUT_MAP = {
   },
   'text2text-generation': {
     exampleModel: 'google/flan-t5-base',
+    description:
+      'Generate text from input text for applications like text completion, content generation, and dialogue systems',
+    icon: 'text-size',
     docExamples: {
       shouldSucceed: [
         {
@@ -1726,6 +2341,12 @@ const INPUT_MAP = {
   },
   'video-classification': {
     exampleModel: 'ahmedabdo/video-classifier',
+    description:
+      'Categorize videos into predefined classes for applications in video content analysis, security surveillance, and media organization',
+    icon: 'video',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'video',
     docExamples: {
       shouldSucceed: [
         {
@@ -1998,6 +2619,12 @@ const INPUT_MAP = {
   },
   'automatic-speech-recognition': {
     exampleModel: 'facebook/data2vec-audio-base-960h',
+    description:
+      'Convert spoken language into written text for transcription services, voice assistants, and accessibility features',
+    icon: 'file-music',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'audio',
     docExamples: {
       shouldSucceed: [
         {
@@ -2272,6 +2899,12 @@ const INPUT_MAP = {
   },
   'audio-classification': {
     exampleModel: 'aaraki/wav2vec2-base-finetuned-ks',
+    description:
+      'Classify audio clips into predefined categories such as speech emotion, sound detection, and music genres',
+    icon: 'music-magnifying-glass',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'audio',
     docExamples: {
       shouldSucceed: [
         {
@@ -2547,6 +3180,12 @@ const INPUT_MAP = {
   },
   'mask-generation': {
     exampleModel: 'facebook/sam-vit-base',
+    description:
+      'Generate masks for objects in images for tasks like image segmentation, medical imaging, and computer vision applications',
+    icon: 'draw-polygon',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -2821,6 +3460,12 @@ const INPUT_MAP = {
   },
   'image-to-text': {
     exampleModel: 'Salesforce/blip-image-captioning-base',
+    description:
+      'Generate textual descriptions from images for tasks like image captioning, content generation, and accessibility features',
+    icon: 'comment-image',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -3094,6 +3739,12 @@ const INPUT_MAP = {
   },
   'object-detection': {
     exampleModel: 'facebook/detr-resnet-50',
+    description:
+      'Identify and locate objects in images for applications like security systems, autonomous driving, and retail analytics',
+    icon: 'binoculars',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -3368,6 +4019,12 @@ const INPUT_MAP = {
   },
   'depth-estimation': {
     exampleModel: 'vinvino02/glpn-nyu',
+    description:
+      'Predict object distances from a camera using depth estimation models for robotics, AR, and autonomous vehicles',
+    icon: 'layer-group',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -3642,6 +4299,12 @@ const INPUT_MAP = {
   },
   'image-segmentation': {
     exampleModel: 'sayeed99/segformer-b3-fashion',
+    description:
+      'Divide an image into multiple segments for applications like medical imaging, object detection, and computer vision tasks',
+    icon: 'shapes',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -3916,6 +4579,12 @@ const INPUT_MAP = {
   },
   'image-classification': {
     exampleModel: 'google/vit-base-patch16-224',
+    description:
+      'Categorize images into predefined classes for tasks like object recognition, medical imaging, and security systems',
+    icon: 'image',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -4190,6 +4859,12 @@ const INPUT_MAP = {
   },
   'image-feature-extraction': {
     exampleModel: 'nomic-ai/nomic-embed-vision-v1',
+    description:
+      'Extract features from images for tasks like object detection, image classification, and image retrieval',
+    icon: 'vector-square',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -4464,6 +5139,9 @@ const INPUT_MAP = {
   },
   'question-answering': {
     exampleModel: 'deepset/roberta-base-squad2',
+    description:
+      'Answer questions based on a given context for applications like customer support, information retrieval, and educational tools',
+    icon: 'comments-question',
     docExamples: {
       shouldSucceed: [
         {
@@ -4580,6 +5258,12 @@ const INPUT_MAP = {
   },
   'document-question-answering': {
     exampleModel: 'cloudqi/CQI_Visual_Question_Awnser_PT_v0',
+    description:
+      'Answer questions based on document content for tasks like contract analysis, document understanding, and information retrieval',
+    icon: 'file-invoice',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'document image',
     docExamples: {
       shouldSucceed: [
         {
@@ -4887,6 +5571,12 @@ const INPUT_MAP = {
   },
   'visual-question-answering': {
     exampleModel: 'Salesforce/blip-vqa-base',
+    description:
+      'Answer questions based on image content for applications like interactive learning, accessibility features, and content analysis',
+    icon: 'comments-question-check',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -5196,6 +5886,12 @@ const INPUT_MAP = {
   },
   'zero-shot-object-detection': {
     exampleModel: 'google/owlv2-base-patch16-finetuned',
+    description:
+      'Detect objects in images without prior training on those specific objects. Use cases include novel object detection, transfer learning, and few-shot learning',
+    icon: 'scanner-image',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -5505,6 +6201,12 @@ const INPUT_MAP = {
   },
   'zero-shot-image-classification': {
     exampleModel: 'BilelDJ/clip-hugging-face-finetuned',
+    description:
+      'Classify images into categories not seen during training for applications like novel object recognition, transfer learning, and few-shot learning',
+    icon: 'file-image',
+    supportsUrlInput: true,
+    supportsBase64Input: true,
+    mediaInputType: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -5814,6 +6516,9 @@ const INPUT_MAP = {
   },
   'zero-shot-classification': {
     exampleModel: 'facebook/bart-large-mnli',
+    description:
+      'Classify text into categories not seen during training for applications like intent detection, content moderation, and dynamic classification',
+    icon: 'magnifying-glass',
     docExamples: {
       shouldSucceed: [
         {
@@ -5953,6 +6658,8 @@ const INPUT_MAP = {
   },
   'unconditional-image-generation': {
     exampleModel: 'afshr/cam_finetune',
+    description: 'Randomly generate images without an input',
+    icon: 'image',
     docExamples: {
       shouldSucceed: [
         {
@@ -6015,4 +6722,4 @@ const INPUT_MAP = {
   },
 };
 
-module.exports = { INPUT_MAP };
+module.exports = { MODEL_DOCS_OBJECT };

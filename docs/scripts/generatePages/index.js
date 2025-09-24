@@ -1,18 +1,24 @@
 const fsSync = require('fs');
 const fs = require('fs').promises;
-const { INPUT_MAP } = require('./inputMap');
+const { Component } = require('./Component');
+const { MODEL_DOCS_OBJECT } = require('./modelDocsObject');
 const jsTemplate = fsSync.readFileSync(`${__dirname}/jsTemplate.js`).toString();
 const pyTemplate = fsSync.readFileSync(`${__dirname}/pyTemplate.py`).toString();
 
 async function main() {
-  // await modifyInputMap();
-
-  for (const [task, { exampleModel: modelId, docExamples, http, sdk }] of Object.entries(
-    INPUT_MAP
-  )) {
-    if (task !== 'object-detection') {
-      continue;
-    }
+  for (const [
+    task,
+    {
+      description,
+      icon,
+      exampleModel: modelId,
+      supportsUrlInput,
+      supportsBase64Input,
+      mediaInputType,
+      docExamples,
+    },
+  ] of Object.entries(MODEL_DOCS_OBJECT)) {
+    console.log('Generating pages for task: ', task);
 
     const taskSnippets = [];
 
@@ -28,7 +34,6 @@ async function main() {
       } = test;
 
       if (mintlify) {
-        console.log('On test: ', testName);
         const { exampleTitle, exampleDescription } = mintlifyProps;
 
         const { js, py, curl } = await generateCodeSnippets(
@@ -42,7 +47,96 @@ async function main() {
         taskSnippets.push({ exampleTitle, exampleDescription, js, py, curl });
       }
     }
+
+    const accordions = [];
+
+    for (const taskSnippet of taskSnippets) {
+      const { exampleTitle, exampleDescription, js, py, curl } = taskSnippet;
+      const accordion = toAccordion({
+        exampleTitle,
+        exampleDescription,
+        supportsUrlInput,
+        supportsBase64Input,
+        mediaInputType,
+        js,
+        py,
+        curl,
+      });
+
+      accordions.push(accordion);
+    }
+
+    const AccordionGroup = new Component({ name: 'AccordionGroup', children: accordions });
+
+    const headerLines = [
+      //
+      `---`,
+      `title: '${task}'`,
+      `description: ${description}`,
+      `icon: '${icon}'`,
+      `mode: 'wide'`,
+      `---`,
+    ];
+
+    const header = headerLines.join('\n');
+
+    const treeString = AccordionGroup.toString();
+
+    const taskPage = `${header}\n\n${treeString}`;
+
+    await fs.writeFile(`${__dirname}/../../model-api/docs/task/${task}.mdx`, taskPage);
   }
+}
+
+function toAccordion({
+  exampleTitle,
+  exampleDescription,
+  supportsUrlInput,
+  supportsBase64Input,
+  mediaInputType,
+  js,
+  py,
+  curl,
+}) {
+  const codeGroupItems = [];
+
+  for (const { snippet, renderAs, label } of [
+    { snippet: js, renderAs: 'javascript', label: 'javascript' },
+    { snippet: py, renderAs: 'python', label: 'python' },
+    { snippet: curl, renderAs: 'bash', label: 'http' },
+  ]) {
+    const codeGroupItem = `
+\`\`\`${renderAs} ${label}
+${snippet}
+\`\`\`
+`.trim();
+
+    codeGroupItems.push(codeGroupItem);
+  }
+
+  const codeGroupsString = codeGroupItems.join('\n');
+
+  const shouldHaveBase64Details = supportsUrlInput && supportsBase64Input;
+
+  const base64Details = `
+You can send the **${mediaInputType}** via \`url\` or \`base64\` data URL.
+
+We recommend \`url\` for better performance, as \`base64\` increases payload size.
+`.trim();
+
+  const Accordion = new Component({
+    name: 'Accordion',
+    props: { defaultOpen: undefined, title: exampleTitle },
+    children: [
+      exampleDescription,
+      new Component({
+        name: 'CodeGroup',
+        children: [codeGroupsString, ...(shouldHaveBase64Details ? [base64Details] : [])],
+      }),
+    ],
+  });
+
+  return Accordion;
 }
 
 async function generateCodeSnippets(modelId, requestInput, requestInputHttp, params, stream) {
@@ -88,9 +182,7 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
     ]
   );
 
-  const curl = formatCurl(modelId, params, requestInputHttp, params, stream);
-
-  console.log(curl);
+  const curl = formatCurl(modelId, requestInputHttp, params, stream);
 
   return {
     js,
@@ -99,17 +191,17 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
   };
 }
 
-function formatCurl(modelId, params, requestInput, params, stream) {
-  if (requestInput.constructor.name !== 'Object'){
-    throw new Error(`requestInput is not an object!`)
+function formatCurl(modelId, requestInput, params, stream) {
+  if (requestInput.constructor.name !== 'Object') {
+    throw new Error(`requestInput is not an object!`);
   }
-  
+
   const body = {
     ...requestInput,
     params: params && Object.keys(params).length > 0 ? params : undefined,
     // do not include stream in the json if it's false, as it is redundant
-    stream: stream || undefined
-  }
+    stream: stream || undefined,
+  };
 
   const lines = [
     `curl -X POST 'https://api.bytez.com/models/v2/${modelId}' \\`,
@@ -120,7 +212,7 @@ function formatCurl(modelId, params, requestInput, params, stream) {
 
   const finalString = lines.join('\n');
 
-  return finalString
+  return finalString;
 }
 
 function formatIntoCodeSnippet(template, params, stream, onBeforeUpdateTemplateIds, replacements) {
@@ -131,10 +223,6 @@ function formatIntoCodeSnippet(template, params, stream, onBeforeUpdateTemplateI
   return finalString;
 }
 
-// this needs to handle 3 cases
-// 1. no params, no streaming
-// 2. params, with streaming
-// 3. streaming with params
 function formatIntoSections(templateString, params, stream) {
   const lines = templateString.split('\n');
 
@@ -199,51 +287,6 @@ function updateTemplateIds(string, replacements) {
   return updatedString;
 }
 
-// async function modifyInputMap() {
-//   for (const [task, { http, sdk }] of Object.entries(INPUT_MAP)) {
-//     for (const tests of [http.shouldSucceed, http.shouldFail, sdk.shouldSucceed, sdk.shouldFail]) {
-//       for (let i = 0; i < tests.length; i++) {
-//         tests[i] = {
-//           testName: '',
-//           testDescription: '',
-//           docsExample: {
-//             mintlify: false,
-//             dockerhub: false,
-//           },
-//           requestInput: tests[i],
-//           params: {},
-//           options: { stream: false },
-
-//           mintlifyProps: {
-//             exampleTitle: '',
-//             exampleDescription: '',
-//           },
-//           dockerhubProps: {
-//             description: '',
-//           },
-//         };
-//       }
-
-//       const a = 2;
-//     }
-
-//     const a = 2;
-
-//     const tempSdk = sdk;
-//     const tempHttp = http;
-
-//     delete INPUT_MAP[task].sdk;
-//     delete INPUT_MAP[task].http;
-
-//     INPUT_MAP[task].docExamples = { shouldSucceed: [], shouldFail: [] };
-//     INPUT_MAP[task].sdk = sdk;
-//     INPUT_MAP[task].http = http;
-//   }
-
-//   await fs.writeFile(`${__dirname}/newInputMap.json`, JSON.stringify(INPUT_MAP, null, 2));
-
-//   debugger;
-// }
 if (require.main === module) {
   main();
 }
