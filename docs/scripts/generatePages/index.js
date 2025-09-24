@@ -9,6 +9,7 @@ async function main() {
   for (const [
     task,
     {
+      title,
       description,
       icon,
       exampleModel: modelId,
@@ -18,6 +19,16 @@ async function main() {
       docExamples,
     },
   ] of Object.entries(MODEL_DOCS_OBJECT)) {
+    const tasksToProcess = [
+      // 'text-generation',
+      'audio-text-to-text',
+      'image-text-to-text',
+      'video-text-to-text',
+    ];
+
+    if (!tasksToProcess.includes(task)) {
+      continue;
+    }
     console.log('Generating pages for task: ', task);
 
     const taskSnippets = [];
@@ -71,7 +82,7 @@ async function main() {
     const headerLines = [
       //
       `---`,
-      `title: '${task}'`,
+      `title: '${title || task}'`,
       `description: ${description}`,
       `icon: '${icon}'`,
       `mode: 'wide'`,

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 const MODEL_DOCS_OBJECT = {
   'text-generation': {
-    exampleModel: 'microsoft/Phi-3-mini-128k-instruct',
+    exampleModel: 'openai-community/gpt2',
     description:
       'Generate text from an initial prompt for applications like story generation, dialogue systems, and creative writing',
     icon: 'message-text',
@@ -441,7 +441,8 @@ const MODEL_DOCS_OBJECT = {
     },
   },
   'audio-text-to-text': {
-    exampleModel: 'Qwen/Qwen3-4B',
+    exampleModel: 'Qwen/Qwen2-Audio-7B-Instruct',
+    title: 'chat (audio-text-to-text)',
     description:
       'Generate text from an initial message chain that may contain audio for applications like story generation, dialogue systems, and creative writing',
     icon: 'comments',
@@ -641,7 +642,8 @@ const MODEL_DOCS_OBJECT = {
     },
   },
   'image-text-to-text': {
-    exampleModel: 'Qwen/Qwen3-4B',
+    exampleModel: 'google/gemma-3-4b-it',
+    title: 'chat (image-text-to-text)',
     description:
       'Generate text from an initial message chain that may contain images for applications like story generation, dialogue systems, and creative writing',
     icon: 'comments',
@@ -841,7 +843,8 @@ const MODEL_DOCS_OBJECT = {
     },
   },
   'video-text-to-text': {
-    exampleModel: 'Qwen/Qwen3-4B',
+    exampleModel: 'llava-hf/LLaVA-NeXT-Video-7B-hf',
+    title: 'chat (video-text-to-text)',
     description:
       'Generate text from an initial message chain that may contain videos for applications like story generation, dialogue systems, and creative writing',
     icon: 'comments',

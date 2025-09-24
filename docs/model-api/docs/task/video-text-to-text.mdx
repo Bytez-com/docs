@@ -1,0 +1,339 @@
+---
+title: 'chat (video-text-to-text)'
+description: Generate text from an initial message chain that may contain videos for applications like story generation, dialogue systems, and creative writing
+icon: 'comments'
+mode: 'wide'
+---
+
+<AccordionGroup>
+	<Accordion defaultOpen title="Basic usage">
+		Send a conversation to a model to generate text from text and audio
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf);
+			
+			// provide the model with input
+			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]};
+			
+			// provide the model with params
+			const params = {};
+			
+			// send to the model
+			const { error, output } = await model.run(input, params);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf)
+			
+			# provide the model with input
+			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]}
+			
+			# provide the model with params
+			params = {}
+			
+			# send to the model
+			error, output = model.run(input, params)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this video"
+			        },
+			        {
+			          "type": "video",
+			          "url": "https://example.com/path-to-video.mp4"
+			        }
+			      ]
+			    }
+			  ]
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen title="Add params">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf);
+			
+			// provide the model with input
+			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]};
+			
+			// provide the model with params
+			const params = {"temperature":0};
+			
+			// send to the model
+			const { error, output } = await model.run(input, params);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf)
+			
+			# provide the model with input
+			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]}
+			
+			# provide the model with params
+			params = {"temperature":0}
+			
+			# send to the model
+			error, output = model.run(input, params)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this video"
+			        },
+			        {
+			          "type": "video",
+			          "url": "https://example.com/path-to-video.mp4"
+			        }
+			      ]
+			    }
+			  ],
+			  "params": {
+			    "temperature": 0
+			  }
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen title="Stream text">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf);
+			
+			// provide the model with input
+			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]};
+			
+			// provide the model with params
+			const params = {};
+			
+			// set streaming to "true"
+			const stream = true;
+			
+			// send to the model
+			const readStream = await model.run(messages, params, stream);
+			
+			let text = '';
+			
+			for await (const chunk of readStream) {
+			  text += chunk;
+			  console.log(chunk);
+			}
+			
+			// observe the output
+			console.log({ text });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf)
+			
+			# provide the model with input
+			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]}
+			
+			# provide the model with params
+			params = {}
+			
+			# set streaming to "true"
+			stream = True
+			
+			# send to the model
+			readStream = model.run(input, params, stream)
+			
+			text = ""
+			for chunk in readStream:
+			    tokens = chunk.decode("utf-8")
+			    text += tokens
+			    print(tokens)
+			
+			# observe the output
+			print({"text": text})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this video"
+			        },
+			        {
+			          "type": "video",
+			          "url": "https://example.com/path-to-video.mp4"
+			        }
+			      ]
+			    }
+			  ],
+			  "stream": true
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen title="Add params + Stream text">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf);
+			
+			// provide the model with input
+			const input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]};
+			
+			// provide the model with params
+			const params = {"temperature":0};
+			
+			// set streaming to "true"
+			const stream = true;
+			
+			// send to the model
+			const readStream = await model.run(messages, params, stream);
+			
+			let text = '';
+			
+			for await (const chunk of readStream) {
+			  text += chunk;
+			  console.log(chunk);
+			}
+			
+			// observe the output
+			console.log({ text });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model(llava-hf/LLaVA-NeXT-Video-7B-hf)
+			
+			# provide the model with input
+			input = {"input":[{"role":"user","content":[{"type":"text","text":"Describe this video"},{"type":"video","url":"https://example.com/path-to-video.mp4"}]}]}
+			
+			# provide the model with params
+			params = {"temperature":0}
+			
+			# set streaming to "true"
+			stream = True
+			
+			# send to the model
+			readStream = model.run(input, params, stream)
+			
+			text = ""
+			for chunk in readStream:
+			    tokens = chunk.decode("utf-8")
+			    text += tokens
+			    print(tokens)
+			
+			# observe the output
+			print({"text": text})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this video"
+			        },
+			        {
+			          "type": "video",
+			          "url": "https://example.com/path-to-video.mp4"
+			        }
+			      ]
+			    }
+			  ],
+			  "params": {
+			    "temperature": 0
+			  },
+			  "stream": true
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

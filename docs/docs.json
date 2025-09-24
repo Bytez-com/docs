@@ -65,9 +65,9 @@
                 "group": "Language Models (Multimodal)",
                 "icon": "microchip-ai",
                 "pages": [
-                  "/model-api/docs/task/chat-multi-modal-audio",
-                  "/model-api/docs/task/chat-multi-modal-image",
-                  "/model-api/docs/task/chat-multi-modal-video"
+                  "/model-api/docs/task/audio-text-to-text",
+                  "/model-api/docs/task/image-text-to-text",
+                  "/model-api/docs/task/video-text-to-text"
                 ]
               },
               {
