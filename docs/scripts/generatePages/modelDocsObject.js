@@ -1,11 +1,95 @@
 /* eslint-disable max-len */
 const MODEL_DOCS_OBJECT = {
+  // serves as the preamble for the api
+  openapiSpec: {
+    openapi: '3.0.3',
+    info: {
+      title: 'Open Source AI Models API – Multimodal',
+      description:
+        'API for running open-source AI models that take text, vision, audio, and video as input.',
+      version: '1.0.0',
+    },
+    servers: [
+      {
+        url: 'https://api.bytez.com',
+        description: 'Production server',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        apiKeyAuth: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'Authorization',
+          description:
+            "Set `Authorization` header to `BYTEZ_KEY` \n``` 'Authorization: YOUR_BYTEZ_KEY_HERE' ```\n",
+        },
+      },
+    },
+  },
   tasks: {
     'text-generation': {
       exampleModel: 'openai-community/gpt2',
       description:
         'Generate text from an initial prompt for applications like story generation, dialogue systems, and creative writing',
       icon: 'message-text',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text prompt to generate text from.',
+              example: 'Once upon a time there was a beautiful home where',
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+            params: {
+              type: 'object',
+              description: 'Model-specific parameters.',
+              properties: {
+                min_length: {
+                  type: 'integer',
+                  description: 'Minimum length of the generated text.',
+                  example: 10,
+                },
+                max_length: {
+                  type: 'integer',
+                  description: 'Maximum length of the generated text.',
+                  example: 100,
+                },
+                temperature: {
+                  type: 'number',
+                  format: 'float',
+                  description: 'Sampling temperature. Higher values = more random output.',
+                  example: 0.7,
+                },
+              },
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'The generated text completion.',
+              example:
+                'Once upon a time there was a beautiful home where a woman, who, after a long journey, had been able to return to her family...',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -115,6 +199,111 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate text from an initial message chain for applications like story generation, dialogue systems, and creative writing',
       icon: 'comments',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            messages: {
+              type: 'array',
+              description: 'Conversation history.',
+              items: {
+                type: 'object',
+                required: ['role', 'content'],
+                properties: {
+                  role: {
+                    type: 'string',
+                    enum: ['system', 'user', 'assistant'],
+                  },
+                  content: {
+                    oneOf: [
+                      {
+                        type: 'string',
+                      },
+                      {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          required: ['type', 'text'],
+                          properties: {
+                            type: {
+                              type: 'string',
+                              enum: ['text'],
+                            },
+                            text: {
+                              type: 'string',
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+              example: [
+                {
+                  role: 'system',
+                  content: 'You are a friendly chatbot',
+                },
+                {
+                  role: 'assistant',
+                  content: "Hello, I'm a friendly bot",
+                },
+                {
+                  role: 'user',
+                  content: 'Hello bot, what is the capital of England?',
+                },
+              ],
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+            params: {
+              type: 'object',
+              description: 'Model-specific parameters.',
+              properties: {
+                min_length: {
+                  type: 'integer',
+                  description: 'Minimum length of the generated text.',
+                  example: 10,
+                },
+                max_length: {
+                  type: 'integer',
+                  description: 'Maximum length of the generated text.',
+                  example: 100,
+                },
+                temperature: {
+                  type: 'number',
+                  format: 'float',
+                  description: 'Sampling temperature. Higher values = more random output.',
+                  example: 0.5,
+                },
+              },
+            },
+          },
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'array',
+              format: 'uri',
+              description: 'The output message generated by the model',
+              example: {
+                role: 'assistant',
+                content: 'Aaaaaaaargh matey',
+              },
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -439,6 +628,116 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate text from an initial message chain that may contain audio for applications like story generation, dialogue systems, and creative writing',
       icon: 'comments',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            messages: {
+              type: 'array',
+              description: 'Conversation history.',
+              example: [
+                {
+                  role: 'user',
+                  content: [
+                    { type: 'text', text: 'Describe this audio' },
+                    {
+                      type: 'audio',
+                      url: 'https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3',
+                    },
+                  ],
+                },
+              ],
+              items: {
+                type: 'object',
+                required: ['role', 'content'],
+                properties: {
+                  role: {
+                    type: 'string',
+                    enum: ['system', 'user', 'assistant'],
+                  },
+                  content: {
+                    oneOf: [
+                      {
+                        type: 'string',
+                      },
+                      {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          required: ['type'],
+                          properties: {
+                            type: {
+                              type: 'string',
+                              enum: ['text', 'audio'],
+                            },
+                            text: {
+                              type: 'string',
+                            },
+                            url: {
+                              type: 'string',
+                              format: 'uri',
+                            },
+                            base64: {
+                              type: 'string',
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+            params: {
+              type: 'object',
+              description: 'Model-specific parameters.',
+              properties: {
+                min_length: {
+                  type: 'integer',
+                  description: 'Minimum length of the generated text.',
+                  example: 10,
+                },
+                max_length: {
+                  type: 'integer',
+                  description: 'Maximum length of the generated text.',
+                  example: 100,
+                },
+                temperature: {
+                  type: 'number',
+                  format: 'float',
+                  description: 'Sampling temperature. Higher values = more random output.',
+                  example: 0.5,
+                },
+              },
+            },
+          },
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'array',
+              format: 'uri',
+              description: 'The output message generated by the model',
+              example: {
+                role: 'assistant',
+                content: 'Aaaaaaaargh matey',
+              },
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -632,6 +931,116 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate text from an initial message chain that may contain images for applications like story generation, dialogue systems, and creative writing',
       icon: 'comments',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            messages: {
+              type: 'array',
+              description: 'Conversation history.',
+              example: [
+                {
+                  role: 'user',
+                  content: [
+                    { type: 'text', text: 'Describe this image' },
+                    {
+                      type: 'image',
+                      url: 'https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*',
+                    },
+                  ],
+                },
+              ],
+              items: {
+                type: 'object',
+                required: ['role', 'content'],
+                properties: {
+                  role: {
+                    type: 'string',
+                    enum: ['system', 'user', 'assistant'],
+                  },
+                  content: {
+                    oneOf: [
+                      {
+                        type: 'string',
+                      },
+                      {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          required: ['type'],
+                          properties: {
+                            type: {
+                              type: 'string',
+                              enum: ['text', 'image'],
+                            },
+                            text: {
+                              type: 'string',
+                            },
+                            url: {
+                              type: 'string',
+                              format: 'uri',
+                            },
+                            base64: {
+                              type: 'string',
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+            params: {
+              type: 'object',
+              description: 'Model-specific parameters.',
+              properties: {
+                min_length: {
+                  type: 'integer',
+                  description: 'Minimum length of the generated text.',
+                  example: 10,
+                },
+                max_length: {
+                  type: 'integer',
+                  description: 'Maximum length of the generated text.',
+                  example: 100,
+                },
+                temperature: {
+                  type: 'number',
+                  format: 'float',
+                  description: 'Sampling temperature. Higher values = more random output.',
+                  example: 0.5,
+                },
+              },
+            },
+          },
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'array',
+              format: 'uri',
+              description: 'The output message generated by the model',
+              example: {
+                role: 'assistant',
+                content: 'Aaaaaaaargh matey',
+              },
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -825,6 +1234,113 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate text from an initial message chain that may contain videos for applications like story generation, dialogue systems, and creative writing',
       icon: 'comments',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            messages: {
+              type: 'array',
+              description: 'Conversation history.',
+              example: [
+                {
+                  role: 'user',
+                  content: [
+                    { type: 'text', text: 'Describe this video' },
+                    { type: 'video', url: 'https://example.com/path-to-video.mp4' },
+                  ],
+                },
+              ],
+              items: {
+                type: 'object',
+                required: ['role', 'content'],
+                properties: {
+                  role: {
+                    type: 'string',
+                    enum: ['system', 'user', 'assistant'],
+                  },
+                  content: {
+                    oneOf: [
+                      {
+                        type: 'string',
+                      },
+                      {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          required: ['type'],
+                          properties: {
+                            type: {
+                              type: 'string',
+                              enum: ['text', 'video'],
+                            },
+                            text: {
+                              type: 'string',
+                            },
+                            url: {
+                              type: 'string',
+                              format: 'uri',
+                            },
+                            base64: {
+                              type: 'string',
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+            params: {
+              type: 'object',
+              description: 'Model-specific parameters.',
+              properties: {
+                min_length: {
+                  type: 'integer',
+                  description: 'Minimum length of the generated text.',
+                  example: 10,
+                },
+                max_length: {
+                  type: 'integer',
+                  description: 'Maximum length of the generated text.',
+                  example: 100,
+                },
+                temperature: {
+                  type: 'number',
+                  format: 'float',
+                  description: 'Sampling temperature. Higher values = more random output.',
+                  example: 0.5,
+                },
+              },
+            },
+          },
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'array',
+              format: 'uri',
+              description: 'The output message generated by the model',
+              example: {
+                role: 'assistant',
+                content: 'Aaaaaaaargh matey',
+              },
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -993,6 +1509,36 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Measure how similar two sentences are for applications like duplicate question detection, paraphrase detection, and text clustering',
       icon: 'waves-sine',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'search_document: Turn this text into a vector',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the vector for the text',
+              example: [0.1, 0.2, 0.3, 0.4],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1104,6 +1650,39 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Predict missing words in a sentence for tasks like text completion, language modeling, and text generation',
       icon: 'mask',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'Hello <mask>',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'The generated mask predictions',
+              example: [
+                { score: 0.85, token: 83, token_str: 'world', sequence: 'Hello world!' },
+                { score: 0.1, token: 84, token_str: 'there', sequence: 'Hello there!' },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1213,6 +1792,36 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Convert text into natural-sounding speech for applications like virtual assistants, accessibility features, and content creation',
       icon: 'volume-high',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'Hello, how are you today?',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the generated audio link',
+              example: 'https://api.bytez.com/audio/1234567890',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1321,6 +1930,36 @@ const MODEL_DOCS_OBJECT = {
       exampleModel: 'facebook/musicgen-stereo-small',
       description: 'Send a text input to generate an audio output',
       icon: 'volume-high',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'Moody jazz music with saxophones',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the generated audio link',
+              example: 'https://api.bytez.com/audio/1234567890',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1429,6 +2068,36 @@ const MODEL_DOCS_OBJECT = {
       exampleModel: 'dreamlike-art/dreamlike-photoreal-2.0',
       description: 'Generate images using text',
       icon: 'image',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'A beautiful landscape with mountains and a river',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the generated image link',
+              example: 'https://api.bytez.com/image/1234567890',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1538,6 +2207,40 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Translate text from one language to another for multilingual communication, content localization, and language learning',
       icon: 'language',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'Hello',
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the translated text',
+              example: 'Bonjour',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1647,6 +2350,40 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Summarization involves creating concise summaries of longer texts. Use cases include news summarization, document summarization, and generating abstracts',
       icon: 'align-justify',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: `The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. It was the first structure to reach a height of 300 metres. Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.`,
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the summary',
+              example: 'The Eiffel Tower is the tallest structure in Paris.',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1760,6 +2497,36 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate videos from textual descriptions for applications like content creation, entertainment, and education',
       icon: 'video',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'A cat playing with a rose',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the generated video link',
+              example: 'https://api.bytez.com/video/1234567890',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1870,6 +2637,36 @@ const MODEL_DOCS_OBJECT = {
       exampleModel: 'nomic-ai/nomic-embed-text-v1.5',
       description: 'Convert text into vectors (embeddings) that capture semantic meaning',
       icon: 'vector-square',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'search_document: Turn this text into a vector',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with extracted features',
+              example: [0.1, 0.2, 0.3, 0.4],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -1983,6 +2780,36 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Categorize text into predefined classes for applications like sentiment analysis, spam detection, and topic classification',
       icon: 'input-text',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'We are furious with the results of the experiment!',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the classification',
+              example: 'negative',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -2094,6 +2921,39 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Identify and categorize tokens in text for Named Entity Recognition (NER), Part-of-Speech tagging, and other NLP tasks',
       icon: 'vector-square',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'John Doe is a software engineer at Google',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with classified tokens',
+              example: [
+                { token: 'John', label: 'PERSON' },
+                { token: 'Google', label: 'LOCATION' },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -2205,6 +3065,40 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate text from input text for applications like text completion, content generation, and dialogue systems',
       icon: 'text-size',
+      supportsTextStreaming: true,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              description: 'The input text',
+              example: 'Once upon a time there was a beautiful home where',
+            },
+            stream: {
+              type: 'boolean',
+              description: 'Enable text streaming.',
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with generated text',
+              example: 'Once upon a time there was a beautiful home where there was a happy cat',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -2316,9 +3210,51 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Categorize videos into predefined classes for applications in video content analysis, security surveillance, and media organization',
       icon: 'video',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'video',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://cdn.bytez.com/model/example/meditate.mp4`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with video-classification scores and labels',
+              example: [
+                {
+                  score: 0.838,
+                  label: 'meditating',
+                },
+                {
+                  score: 0.252,
+                  label: 'brushing hair',
+                },
+                {
+                  score: 0.138,
+                  label: 'reading book',
+                },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -2594,9 +3530,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Convert spoken language into written text for transcription services, voice assistants, and accessibility features',
       icon: 'file-music',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'audio',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the textual translation of the audio',
+              example: 'Down',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -2875,9 +3840,51 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Classify audio clips into predefined categories such as speech emotion, sound detection, and music genres',
       icon: 'music-magnifying-glass',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'audio',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with audio-classification scores and labels',
+              example: [
+                {
+                  score: 0.9293771982192993,
+                  label: 'neutral',
+                },
+                {
+                  score: 0.06843611598014832,
+                  label: 'sad',
+                },
+                {
+                  score: 0.0007334386464208364,
+                  label: 'happy',
+                },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -3156,9 +4163,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate masks for objects in images for tasks like image segmentation, medical imaging, and computer vision applications',
       icon: 'draw-polygon',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the mask image URL',
+              example: 'https://api.bytez.com/mask-result.png',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -3437,9 +4473,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Generate textual descriptions from images for tasks like image captioning, content generation, and accessibility features',
       icon: 'comment-image',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg`,
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with a generated caption',
+              example: 'A blind man walking a dog',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -3717,9 +4782,44 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Identify and locate objects in images for applications like security systems, autonomous driving, and retail analytics',
       icon: 'binoculars',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with detected objects',
+              example: [
+                {
+                  score: 0.992,
+                  label: 'cat',
+                  box: { xmin: 0, ymin: 1, xmax: 997, ymax: 656 },
+                },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -3999,9 +5099,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Predict object distances from a camera using depth estimation models for robotics, AR, and autonomous vehicles',
       icon: 'layer-group',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with depth estimation results (URL to the result)',
+              example: 'https://api.bytez.com/depth-map-result.png',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -4281,9 +5410,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Divide an image into multiple segments for applications like medical imaging, object detection, and computer vision tasks',
       icon: 'shapes',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with segmentation results (URL to the result)',
+              example: 'https://api.bytez.com/segmentation-result.png',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -4562,9 +5720,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Categorize images into predefined classes for tasks like object recognition, medical imaging, and security systems',
       icon: 'image',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with a classification label',
+              example: 'Cat',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -4843,9 +6030,38 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Extract features from images for tasks like object detection, image classification, and image retrieval',
       icon: 'vector-square',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg`,
+            },
+          },
+          required: ['url'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with extracted features',
+              example: [0.23, 0.45, 0.89, 0.67],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -5124,6 +6340,39 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Answer questions based on a given context for applications like customer support, information retrieval, and educational tools',
       icon: 'comments-question',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            question: {
+              type: 'string',
+              example: `Who's the lead character?`,
+            },
+            context: {
+              type: 'string',
+              example: `Ron, the hero, looked at Greybeard and smote him asunder`,
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the answer',
+              example: 'Ron',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -5243,9 +6492,42 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Answer questions based on document content for tasks like contract analysis, document understanding, and information retrieval',
       icon: 'file-invoice',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'document image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            question: {
+              type: 'string',
+              example: `Whats the total cost?`,
+            },
+            url: {
+              type: 'string',
+              example: `https://templates.invoicehome.com/invoice-template-us-neat-750px.png`,
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the answer from the document',
+              example: '$154.06',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -5557,9 +6839,42 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Answer questions based on image content for applications like interactive learning, accessibility features, and content analysis',
       icon: 'comments-question-check',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            question: {
+              type: 'string',
+              example: `Whats the total cost?`,
+            },
+            image: {
+              type: 'string',
+              example: `https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9`,
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the answer to the visual question',
+              example: 'octopus',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -5872,9 +7187,44 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Detect objects in images without prior training on those specific objects. Use cases include novel object detection, transfer learning, and few-shot learning',
       icon: 'scanner-image',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9`,
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with detected objects, scores, labels, and boxes',
+              example: [
+                {
+                  score: 0.838,
+                  label: 'octopus',
+                  box: { xmin: 0, ymin: -2, xmax: 990, ymax: 665 },
+                },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -6187,9 +7537,48 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Classify images into categories not seen during training for applications like novel object recognition, transfer learning, and few-shot learning',
       icon: 'file-image',
+      supportsTextStreaming: false,
       supportsUrlInput: true,
       supportsBase64Input: true,
       mediaInputType: 'image',
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            url: {
+              type: 'string',
+              example: `https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9`,
+            },
+            candidate_labels: {
+              type: 'array',
+              example: ['octopus', 'cat', 'lizard'],
+              items: { type: 'string' },
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with image-classification scores and labels',
+              example: [
+                {
+                  score: 0.838,
+                  label: 'octopus',
+                },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -6502,6 +7891,45 @@ const MODEL_DOCS_OBJECT = {
       description:
         'Classify text into categories not seen during training for applications like intent detection, content moderation, and dynamic classification',
       icon: 'magnifying-glass',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              example: `One day I will see the world`,
+            },
+            candidate_labels: {
+              type: 'array',
+              example: ['travel', 'cooking', 'dancing'],
+              items: { type: 'string' },
+            },
+          },
+          required: ['text'],
+        },
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with text-classification scores and labels',
+              example: [
+                {
+                  score: 0.838,
+                  label: 'travel',
+                },
+              ],
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -6643,6 +8071,26 @@ const MODEL_DOCS_OBJECT = {
       exampleModel: 'afshr/cam_finetune',
       description: 'Randomly generate images without an input',
       icon: 'image',
+      supportsTextStreaming: false,
+      openapiSpec: {
+        requestBodyContentSchema: {},
+        responseBodyContentSchema: {
+          type: 'object',
+          required: ['error', 'output'],
+          properties: {
+            error: {
+              type: 'string',
+              nullable: true,
+              description: 'Null on success; otherwise an error message.',
+            },
+            output: {
+              type: 'string',
+              description: 'Successful response with the generated image link',
+              example: 'https://api.bytez.com/image/1234567890',
+            },
+          },
+        },
+      },
       docExamples: {
         shouldSucceed: [
           {
@@ -6705,5 +8153,11 @@ const MODEL_DOCS_OBJECT = {
     },
   },
 };
+
+for (const [task, object] of Object.entries(MODEL_DOCS_OBJECT.tasks)) {
+  if (!object.openapiSpec) {
+    const a = 2;
+  }
+}
 
 module.exports = { MODEL_DOCS_OBJECT };

@@ -2,8 +2,10 @@ const fsSync = require('fs');
 const fs = require('fs').promises;
 const { Component } = require('./Component');
 const { MODEL_DOCS_OBJECT } = require('./modelDocsObject');
-const jsTemplate = fsSync.readFileSync(`${__dirname}/jsTemplate.js`).toString();
-const pyTemplate = fsSync.readFileSync(`${__dirname}/pyTemplate.py`).toString();
+const { constructOpenApiSpec } = require('./constructOpenApiSpec');
+
+const JS_TEMPLATE = fsSync.readFileSync(`${__dirname}/jsTemplate.js`).toString();
+const PY_TEMPLATE = fsSync.readFileSync(`${__dirname}/pyTemplate.py`).toString();
 
 async function main() {
   for (const [
@@ -19,12 +21,41 @@ async function main() {
       docExamples,
     },
   ] of Object.entries(MODEL_DOCS_OBJECT.tasks)) {
-    // const tasksToProcess = [
-    //   'chat',
-    //   // 'audio-text-to-text',
-    //   // 'image-text-to-text',
-    //   // 'video-text-to-text',
-    // ];
+    const tasksToProcess = [
+      // 'text-generation',
+      // 'chat',
+      // 'audio-text-to-text',
+      // 'image-text-to-text',
+      // 'video-text-to-text',
+      // 'fill-mask',
+      // 'text-to-speech',
+      // 'text-to-audio',
+      // 'text-to-image',
+      // 'translation',
+      // 'summarization',
+      // 'feature-extraction',
+      // 'text-classification',
+      // 'token-classification',
+      // 'text2text-generation',
+      // 'question-answering',
+      // 'document-question-answering',
+      // 'visual-question-answering',
+      // 'zero-shot-object-detection',
+      // 'zero-shot-image-classification',
+      // 'zero-shot-classification',
+      // 'image-to-text',
+      // 'image-classification',
+      // 'image-segmentation',
+      // 'object-detection',
+      // 'mask-generation',
+      // 'image-feature-extraction',
+      // 'sentence-similarity',
+      // 'text-to-video',
+      // 'video-classification',
+      // 'automatic-speech-recognition',
+      // 'audio-classification',
+      // 'unconditional-image-generation',
+    ];
 
     // if (!tasksToProcess.includes(task)) {
     //   continue;
@@ -86,24 +117,54 @@ async function main() {
 
     const AccordionGroup = new Component({ name: 'AccordionGroup', children: accordions });
 
-    const headerLines = [
-      //
-      `---`,
-      `title: '${title || task}'`,
-      `description: ${description}`,
-      `icon: '${icon}'`,
-      `mode: 'wide'`,
-      `---`,
-    ];
-
-    const header = headerLines.join('\n');
-
     const treeString = AccordionGroup.toString();
+
+    const header = constructPageHeader({ title, task, description, icon });
 
     const taskPage = `${header}\n\n${treeString}`;
 
     await fs.writeFile(`${__dirname}/../../model-api/docs/task/${task}.mdx`, taskPage);
+
+    // now we make the HTTP spec
+    const httpDir = `${__dirname}/../../http-reference/examples/open-source/${task}`;
+
+    await fs.mkdir(httpDir, { recursive: true });
+
+    const restTaskPage = [`---`, `openapi: post /models/v2/${modelId}`, `---`].join('\n');
+
+    await fs.writeFile(`${httpDir}/${task}.mdx`, restTaskPage);
+
+    const openApiSpec = constructOpenApiSpec(task, {
+      title,
+      description,
+      icon,
+      exampleModel: modelId,
+      supportsUrlInput,
+      supportsBase64Input,
+      mediaInputType,
+      docExamples,
+    });
+
+    await fs.writeFile(`${httpDir}/openapi.json`, JSON.stringify(openApiSpec, null, 2));
+
+    const a = 2;
   }
+}
+
+function constructPageHeader({ title, task, description, icon }) {
+  const headerLines = [
+    //
+    `---`,
+    `title: '${title || task}'`,
+    `description: ${description}`,
+    `icon: '${icon}'`,
+    `mode: 'wide'`,
+    `---`,
+  ];
+
+  const header = headerLines.join('\n');
+
+  return header;
 }
 
 function toAccordion({
@@ -160,7 +221,7 @@ We recommend \`url\` for better performance, as \`base64\` increases payload siz
 
 async function generateCodeSnippets(modelId, requestInput, requestInputHttp, params, stream) {
   const js = formatIntoCodeSnippet(
-    jsTemplate,
+    JS_TEMPLATE,
     params,
     stream,
     (sectionsAsString) => {
@@ -181,7 +242,7 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
   );
 
   const py = formatIntoCodeSnippet(
-    pyTemplate,
+    PY_TEMPLATE,
     params,
     stream,
     (sectionsAsString) => {

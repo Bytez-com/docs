@@ -1,0 +1,113 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Source AI Models API – Multimodal",
+    "description": "API for running open-source AI models that take text, vision, audio, and video as input.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bytez.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Set `Authorization` header to `BYTEZ_KEY` \n``` 'Authorization: YOUR_BYTEZ_KEY_HERE' ```\n"
+      }
+    }
+  },
+  "paths": {
+    "/models/v2/openai-community/gpt2": {
+      "post": {
+        "summary": "text-generation",
+        "description": "Generate text from an initial prompt for applications like story generation, dialogue systems, and creative writing",
+        "operationId": "text-generation",
+        "requestBody": {
+          "description": "Schema for text-generation models",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The input text prompt to generate text from.",
+                    "example": "Once upon a time there was a beautiful home where"
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "description": "Enable text streaming."
+                  },
+                  "params": {
+                    "type": "object",
+                    "description": "Model-specific parameters.",
+                    "properties": {
+                      "min_length": {
+                        "type": "integer",
+                        "description": "Minimum length of the generated text.",
+                        "example": 10
+                      },
+                      "max_length": {
+                        "type": "integer",
+                        "description": "Maximum length of the generated text.",
+                        "example": 100
+                      },
+                      "temperature": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Sampling temperature. Higher values = more random output.",
+                        "example": 0.7
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful text-generation response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "output"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Null on success; otherwise an error message."
+                    },
+                    "output": {
+                      "type": "string",
+                      "description": "The generated text completion.",
+                      "example": "Once upon a time there was a beautiful home where a woman, who, after a long journey, had been able to return to her family..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

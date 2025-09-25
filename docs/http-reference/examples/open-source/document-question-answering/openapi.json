@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Source AI Models API – Multimodal",
+    "description": "API for running open-source AI models that take text, vision, audio, and video as input.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bytez.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Set `Authorization` header to `BYTEZ_KEY` \n``` 'Authorization: YOUR_BYTEZ_KEY_HERE' ```\n"
+      }
+    }
+  },
+  "paths": {
+    "/models/v2/cloudqi/CQI_Visual_Question_Awnser_PT_v0": {
+      "post": {
+        "summary": "document-question-answering",
+        "description": "Answer questions based on document content for tasks like contract analysis, document understanding, and information retrieval",
+        "operationId": "document-question-answering",
+        "requestBody": {
+          "description": "Schema for document-question-answering models",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "example": "Whats the total cost?"
+                  },
+                  "url": {
+                    "type": "string",
+                    "example": "https://templates.invoicehome.com/invoice-template-us-neat-750px.png"
+                  }
+                },
+                "required": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful document-question-answering response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "output"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Null on success; otherwise an error message."
+                    },
+                    "output": {
+                      "type": "string",
+                      "description": "Successful response with the answer from the document",
+                      "example": "$154.06"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

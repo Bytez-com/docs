@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Source AI Models API – Multimodal",
+    "description": "API for running open-source AI models that take text, vision, audio, and video as input.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bytez.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Set `Authorization` header to `BYTEZ_KEY` \n``` 'Authorization: YOUR_BYTEZ_KEY_HERE' ```\n"
+      }
+    }
+  },
+  "paths": {
+    "/models/v2/Salesforce/blip-vqa-base": {
+      "post": {
+        "summary": "visual-question-answering",
+        "description": "Answer questions based on image content for applications like interactive learning, accessibility features, and content analysis",
+        "operationId": "visual-question-answering",
+        "requestBody": {
+          "description": "Schema for visual-question-answering models",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "example": "Whats the total cost?"
+                  },
+                  "image": {
+                    "type": "string",
+                    "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                  }
+                },
+                "required": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful visual-question-answering response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "output"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Null on success; otherwise an error message."
+                    },
+                    "output": {
+                      "type": "string",
+                      "description": "Successful response with the answer to the visual question",
+                      "example": "octopus"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

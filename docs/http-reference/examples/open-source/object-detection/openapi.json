@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Source AI Models API – Multimodal",
+    "description": "API for running open-source AI models that take text, vision, audio, and video as input.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bytez.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Set `Authorization` header to `BYTEZ_KEY` \n``` 'Authorization: YOUR_BYTEZ_KEY_HERE' ```\n"
+      }
+    }
+  },
+  "paths": {
+    "/models/v2/facebook/detr-resnet-50": {
+      "post": {
+        "summary": "object-detection",
+        "description": "Identify and locate objects in images for applications like security systems, autonomous driving, and retail analytics",
+        "operationId": "object-detection",
+        "requestBody": {
+          "description": "Schema for object-detection models",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "example": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful object-detection response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "output"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Null on success; otherwise an error message."
+                    },
+                    "output": {
+                      "type": "string",
+                      "description": "Successful response with detected objects",
+                      "example": [
+                        {
+                          "score": 0.992,
+                          "label": "cat",
+                          "box": {
+                            "xmin": 0,
+                            "ymin": 1,
+                            "xmax": 997,
+                            "ymax": 656
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

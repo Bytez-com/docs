@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Source AI Models API – Multimodal",
+    "description": "API for running open-source AI models that take text, vision, audio, and video as input.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bytez.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Set `Authorization` header to `BYTEZ_KEY` \n``` 'Authorization: YOUR_BYTEZ_KEY_HERE' ```\n"
+      }
+    }
+  },
+  "paths": {
+    "/models/v2/google/vit-base-patch16-224": {
+      "post": {
+        "summary": "image-classification",
+        "description": "Categorize images into predefined classes for tasks like object recognition, medical imaging, and security systems",
+        "operationId": "image-classification",
+        "requestBody": {
+          "description": "Schema for image-classification models",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "example": "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful image-classification response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error",
+                    "output"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Null on success; otherwise an error message."
+                    },
+                    "output": {
+                      "type": "string",
+                      "description": "Successful response with a classification label",
+                      "example": "Cat"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  }
+}
