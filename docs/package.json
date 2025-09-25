@@ -8,7 +8,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11"
   },
   "scripts": {
-    "start": "sudo mintlify dev --port 4000",
+    "start": "mintlify dev --port 4000",
     "format": "prettier \"**/*.{css,js,ts,tsx,md,mdx}\" --write",
     "format:check": "prettier \"**/*.{css,js,ts,tsx,md,mdx}\" --check"
   }

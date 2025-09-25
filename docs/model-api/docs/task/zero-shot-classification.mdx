@@ -1,55 +1,79 @@
 ---
-title: 'Zero Shot Classification'
+title: 'zero-shot-classification'
+description: Classify text into categories not seen during training for applications like intent detection, content moderation, and dynamic classification
 icon: 'magnifying-glass'
-description:
-  Classify text into categories not seen during training for applications like intent detection,
-  content moderation, and dynamic classification
 mode: 'wide'
 ---
 
-<Accordion defaultOpen title="Basic usage">
-  Send a text input and a set of candidate labels to receive classification results:
-
-  <CodeGroup>
-    ```javascript javascript
-    import Bytez from 'bytez.js'
-
-    const sdk = new Bytez("BYTEZ_KEY");
-    const model = sdk.model("facebook/bart-large-mnli");
-
-    await model.create()
-
-    const { error, output } = await model.run({
-      text: "One day I will see the world",
-      candidate_labels: ["travel", "cooking", "dancing"]
-    });
-
-    console.log({ error, output })
-    ```
-    ```python python
-    from bytez import Bytez
-
-    sdk = Bytez("BYTEZ_KEY")
-    model = sdk.model("facebook/bart-large-mnli")
-
-    model.create()
-
-    output, error = model.run({
-      "text": "One day I will see the world",
-      "candidate_labels": ["travel", "cooking", "dancing"]
-    })
-
-    print({ "error": error, "output": output })
-    ```
-    ```bash http
-    curl -X POST 'https://api.bytez.com/models/v2/facebook/bart-large-mnli' \
-    -H 'Authorization: Key BYTEZ_KEY' \
-    -H 'Content-Type: application/json' \
-    --data '{
-      "text": "One day I will see the world",
-      "candidate_labels": ["travel", "cooking", "dancing"]
-    }'
-    ```
-
-  </CodeGroup>
-</Accordion>
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send a text prompt to generate a video output
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('facebook/bart-large-mnli');
+			
+			// provide the model with input
+			const input = {
+			  "text": "One day I will see the world",
+			  "candidate_labels": [
+			    "travel",
+			    "cooking",
+			    "dancing"
+			  ]
+			};
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("facebook/bart-large-mnli")
+			
+			# provide the model with input
+			input = {
+			  "text": "One day I will see the world",
+			  "candidate_labels": [
+			    "travel",
+			    "cooking",
+			    "dancing"
+			  ]
+			}
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/facebook/bart-large-mnli' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "text": "One day I will see the world",
+			  "candidate_labels": [
+			    "travel",
+			    "cooking",
+			    "dancing"
+			  ]
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

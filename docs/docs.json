@@ -41,45 +41,77 @@
               {
                 "group": "Understand the API",
                 "icon": "head-side-gear",
+                "pages": ["model-api/docs/under-the-hood"]
+              },
+              {
+                "group": "Chat Models",
+                "icon": "comments",
                 "pages": [
-                  "model-api/docs/under-the-hood",
-                  "model-api/docs/clusters"
+                  "/model-api/docs/task/chat",
+                  "/model-api/docs/task/chat-closed-source",
+                  "/model-api/docs/task/audio-text-to-text",
+                  "/model-api/docs/task/image-text-to-text",
+                  "/model-api/docs/task/video-text-to-text"
                 ]
               },
               {
-                "group": "Tasks",
-                "icon": "microchip-ai",
+                "group": "Language Models",
+                "icon": "message-text",
                 "pages": [
-                  "/model-api/docs/task/audio-classification",
-                  "/model-api/docs/task/automatic-speech-recognition",
-                  "/model-api/docs/task/chat",
-                  "/model-api/docs/task/depth-estimation",
-                  "/model-api/docs/task/document-question-answering",
+                  "/model-api/docs/task/text-generation",
+                  "/model-api/docs/task/text2text-generation",
+                  "/model-api/docs/task/sentence-similarity",
                   "/model-api/docs/task/feature-extraction",
-                  "/model-api/docs/task/fill-mask",
+                  "/model-api/docs/task/zero-shot-classification",
+                  "/model-api/docs/task/text-classification",
+                  "/model-api/docs/task/token-classification",
+                  "/model-api/docs/task/summarization",
+                  "/model-api/docs/task/question-answering",
+                  "/model-api/docs/task/translation",
+                  "/model-api/docs/task/fill-mask"
+                ]
+              },
+              {
+                "group": "Image Models",
+                "icon": "image",
+                "pages": [
+                  "/model-api/docs/task/text-to-image",
+                  "/model-api/docs/task/image-to-text",
+                  "/model-api/docs/task/object-detection",
+                  "/model-api/docs/task/zero-shot-object-detection",
                   "/model-api/docs/task/image-classification",
+                  "/model-api/docs/task/zero-shot-image-classification",
                   "/model-api/docs/task/image-feature-extraction",
                   "/model-api/docs/task/image-segmentation",
-                  "/model-api/docs/task/image-to-text",
+                  "/model-api/docs/task/depth-estimation",
                   "/model-api/docs/task/mask-generation",
-                  "/model-api/docs/task/object-detection",
-                  "/model-api/docs/task/question-answering",
-                  "/model-api/docs/task/sentence-similarity",
-                  "/model-api/docs/task/summarization",
-                  "/model-api/docs/task/text-classification",
-                  "/model-api/docs/task/text-generation",
-                  "/model-api/docs/task/text-to-image",
-                  "/model-api/docs/task/text-to-speech",
-                  "/model-api/docs/task/text-to-text-generation",
+                  "/model-api/docs/task/unconditional-image-generation"
+                ]
+              },
+              {
+                "group": "Video Models",
+                "icon": "video",
+                "pages": [
                   "/model-api/docs/task/text-to-video",
-                  "/model-api/docs/task/token-classification",
-                  "/model-api/docs/task/translation",
-                  "/model-api/docs/task/unconditional-image-generation",
-                  "/model-api/docs/task/video-classification",
-                  "/model-api/docs/task/visual-question-answering",
-                  "/model-api/docs/task/zero-shot-classification",
-                  "/model-api/docs/task/zero-shot-image-classification",
-                  "/model-api/docs/task/zero-shot-object-detection"
+                  "/model-api/docs/task/video-classification"
+                ]
+              },
+              {
+                "group": "Audio Models",
+                "icon": "volume-high",
+                "pages": [
+                  "/model-api/docs/task/text-to-speech",
+                  "/model-api/docs/task/text-to-audio",
+                  "/model-api/docs/task/audio-classification",
+                  "/model-api/docs/task/automatic-speech-recognition"
+                ]
+              },
+              {
+                "group": "Multimodal Models",
+                "icon": "file-invoice",
+                "pages": [
+                  "/model-api/docs/task/document-question-answering",
+                  "/model-api/docs/task/visual-question-answering"
                 ]
               }
             ]
@@ -89,29 +121,19 @@
       {
         "tab": "HTTP Reference",
         "pages": [
-          "http/overview",
+          "http-reference/overview",
           {
             "group": "Endpoints",
             "pages": [
               {
                 "group": "List",
                 "icon": "layer-group",
-                "pages": [
-                  "http/list/clusters",
-                  "http/list/models",
-                  "http/list/tasks"
-                ]
+                "pages": ["http-reference/list/models", "http-reference/list/tasks"]
               },
               {
                 "group": "Model",
                 "icon": "cube",
-                "pages": [
-                  "http/model/create",
-                  "http/model/read",
-                  "http/model/update",
-                  "http/model/delete",
-                  "http/model/run"
-                ]
+                "pages": ["http-reference/model/run"]
               }
             ]
           },
@@ -119,71 +141,83 @@
             "group": "Examples",
             "pages": [
               {
+                "group": "Chat Models",
+                "pages": [
+                  "http-reference/examples/open-source/chat/chat",
+                  "http-reference/examples/open-source/audio-text-to-text/audio-text-to-text",
+                  "http-reference/examples/open-source/image-text-to-text/image-text-to-text",
+                  "http-reference/examples/open-source/video-text-to-text/video-text-to-text"
+                ]
+              },
+              {
+                "group": "Language Models",
+                "pages": [
+                  "http-reference/examples/open-source/text-generation/text-generation",
+                  "http-reference/examples/open-source/text2text-generation/text2text-generation",
+                  "http-reference/examples/open-source/sentence-similarity/sentence-similarity",
+                  "http-reference/examples/open-source/feature-extraction/feature-extraction",
+                  "http-reference/examples/open-source/zero-shot-classification/zero-shot-classification",
+                  "http-reference/examples/open-source/text-classification/text-classification",
+                  "http-reference/examples/open-source/token-classification/token-classification",
+                  "http-reference/examples/open-source/summarization/summarization",
+                  "http-reference/examples/open-source/question-answering/question-answering",
+                  "http-reference/examples/open-source/translation/translation",
+                  "http-reference/examples/open-source/fill-mask/fill-mask"
+                ]
+              },
+              {
+                "group": "Image Models",
+                "pages": [
+                  "http-reference/examples/open-source/text-to-image/text-to-image",
+                  "http-reference/examples/open-source/image-to-text/image-to-text",
+                  "http-reference/examples/open-source/object-detection/object-detection",
+                  "http-reference/examples/open-source/zero-shot-object-detection/zero-shot-object-detection",
+                  "http-reference/examples/open-source/image-classification/image-classification",
+                  "http-reference/examples/open-source/zero-shot-image-classification/zero-shot-image-classification",
+                  "http-reference/examples/open-source/image-feature-extraction/image-feature-extraction",
+                  "http-reference/examples/open-source/image-segmentation/image-segmentation",
+                  "http-reference/examples/open-source/depth-estimation/depth-estimation",
+                  "http-reference/examples/open-source/mask-generation/mask-generation",
+                  "http-reference/examples/open-source/unconditional-image-generation/unconditional-image-generation"
+                ]
+              },
+              {
+                "group": "Video Models",
+                "pages": [
+                  "http-reference/examples/open-source/text-to-video/text-to-video",
+                  "http-reference/examples/open-source/video-classification/video-classification"
+                ]
+              },
+              {
+                "group": "Audio Models",
+                "pages": [
+                  "http-reference/examples/open-source/text-to-speech/text-to-speech",
+                  "http-reference/examples/open-source/text-to-audio/text-to-audio",
+                  "http-reference/examples/open-source/audio-classification/audio-classification",
+                  "http-reference/examples/open-source/automatic-speech-recognition/automatic-speech-recognition"
+                ]
+              },
+              {
+                "group": "Multimodal Models",
+                "pages": [
+                  "http-reference/examples/open-source/document-question-answering/document-question-answering",
+                  "http-reference/examples/open-source/visual-question-answering/visual-question-answering"
+                ]
+              },
+              {
                 "group": "Closed Source",
                 "pages": [
-                  "http/examples/closed-source/openai",
-                  "http/examples/closed-source/google",
-                  "http/examples/closed-source/cohere",
-                  "http/examples/closed-source/anthropic",
-                  "http/examples/closed-source/mistral"
+                  "http-reference/examples/closed-source/openai",
+                  "http-reference/examples/closed-source/google",
+                  "http-reference/examples/closed-source/cohere",
+                  "http-reference/examples/closed-source/anthropic",
+                  "http-reference/examples/closed-source/mistral"
                 ]
               },
-              {
-                "group": "Multimodal",
-                "pages": [
-                  "http/examples/open-source/multimodal/chat-text",
-                  "http/examples/open-source/multimodal/chat-vision",
-                  "http/examples/open-source/multimodal/chat-audio",
-                  "http/examples/open-source/multimodal/chat-video"
-                ]
-              },
-              {
-                "group": "Text as Input",
-                "pages": [
-                  "http/examples/open-source/text-as-input/fill-mask",
-                  "http/examples/open-source/text-as-input/text-to-speech",
-                  "http/examples/open-source/text-as-input/text-to-audio",
-                  "http/examples/open-source/text-as-input/text-to-image",
-                  "http/examples/open-source/text-as-input/translation",
-                  "http/examples/open-source/text-as-input/summarization",
-                  "http/examples/open-source/text-as-input/feature-extraction",
-                  "http/examples/open-source/text-as-input/text-classification",
-                  "http/examples/open-source/text-as-input/token-classification",
-                  "http/examples/open-source/text-as-input/text2text-generation",
-                  "http/examples/open-source/text-as-input/text-generation"
-                ]
-              },
-              {
-                "group": "Image as Input",
-                "pages": [
-                  "http/examples/open-source/image-as-input/image-to-text",
-                  "http/examples/open-source/image-as-input/image-classification",
-                  "http/examples/open-source/image-as-input/segmentation",
-                  "http/examples/open-source/image-as-input/depth-estimation",
-                  "http/examples/open-source/image-as-input/object-detection",
-                  "http/examples/open-source/image-as-input/mask-generation",
-                  "http/examples/open-source/image-as-input/image-feature-extraction"
-                ]
-              },
-              {
-                "group": "Multi‑input",
-                "pages": [
-                  "http/examples/open-source/multi-input/question-answering",
-                  "http/examples/open-source/multi-input/document-question-answering",
-                  "http/examples/open-source/multi-input/visual-question-answering",
-                  "http/examples/open-source/multi-input/zero-shot-object-detection",
-                  "http/examples/open-source/multi-input/zero-shot-image-classification",
-                  "http/examples/open-source/multi-input/zero-shot-classification"
-                ]
-              },
+
               {
                 "group": "Resources",
-                "pages": [
-                  "company/about",
-                  "company/blog",
-                  "company/solutions",
-                  "company/roadmap"
-                ]
+                "pages": ["company/about", "company/blog", "company/solutions", "company/roadmap"]
               }
             ]
           }

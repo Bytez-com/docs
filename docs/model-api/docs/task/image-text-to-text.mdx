@@ -1,0 +1,428 @@
+---
+title: 'chat (image-text-to-text)'
+description: Generate text from an initial message chain that may contain images for applications like story generation, dialogue systems, and creative writing
+icon: 'comments'
+mode: 'wide'
+---
+
+<AccordionGroup>
+	<Accordion defaultOpen="true" title="Basic usage">
+		Send a conversation to a model to generate text from text and audio
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('google/gemma-3-4b-it');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			];
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("google/gemma-3-4b-it")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			]
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/google/gemma-3-4b-it' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this image"
+			        },
+			        {
+			          "type": "image",
+			          "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			        }
+			      ]
+			    }
+			  ]
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen="false" title="Add params">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('google/gemma-3-4b-it');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			];
+			
+			// provide the model with params
+			const params = {
+			  "temperature": 0
+			};
+			
+			// send to the model
+			const { error, output } = await model.run(input, params);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("google/gemma-3-4b-it")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			]
+			
+			# provide the model with params
+			params = {
+			  "temperature": 0
+			}
+			
+			# send to the model
+			error, output = model.run(input, params)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/google/gemma-3-4b-it' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this image"
+			        },
+			        {
+			          "type": "image",
+			          "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			        }
+			      ]
+			    }
+			  ],
+			  "params": {
+			    "temperature": 0
+			  }
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen="false" title="Stream text">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('google/gemma-3-4b-it');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			];
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("google/gemma-3-4b-it")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			]
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/google/gemma-3-4b-it' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this image"
+			        },
+			        {
+			          "type": "image",
+			          "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			        }
+			      ]
+			    }
+			  ],
+			  "stream": true
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen="false" title="Add params + Stream text">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('google/gemma-3-4b-it');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			];
+			
+			// provide the model with params
+			const params = {
+			  "temperature": 0
+			};
+			
+			// set streaming to "true"
+			const stream = true;
+			
+			// send to the model
+			const readStream = await model.run(messages, params, stream);
+			
+			let text = '';
+			
+			for await (const chunk of readStream) {
+			  text += chunk;
+			  console.log(chunk);
+			}
+			
+			// observe the output
+			console.log({ text });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("google/gemma-3-4b-it")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "user",
+			    "content": [
+			      {
+			        "type": "text",
+			        "text": "Describe this image"
+			      },
+			      {
+			        "type": "image",
+			        "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			      }
+			    ]
+			  }
+			]
+			
+			# provide the model with params
+			params = {
+			  "temperature": 0
+			}
+			
+			# set streaming to "true"
+			stream = True
+			
+			# send to the model
+			readStream = model.run(input, params, stream)
+			
+			text = ""
+			for chunk in readStream:
+			    tokens = chunk.decode("utf-8")
+			    text += tokens
+			    print(tokens)
+			
+			# observe the output
+			print({"text": text})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/google/gemma-3-4b-it' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "user",
+			      "content": [
+			        {
+			          "type": "text",
+			          "text": "Describe this image"
+			        },
+			        {
+			          "type": "image",
+			          "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*"
+			        }
+			      ]
+			    }
+			  ],
+			  "params": {
+			    "temperature": 0
+			  },
+			  "stream": true
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+</AccordionGroup>

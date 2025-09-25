@@ -1,594 +1,416 @@
 ---
-title: 'Chat'
-description: 'Using multi-modal models is easy'
+title: 'chat'
+description: Generate text from an initial message chain for applications like story generation, dialogue systems, and creative writing
 icon: 'comments'
 mode: 'wide'
 ---
 
 <AccordionGroup>
-  <Accordion defaultOpen title="Chat completion">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("microsoft/Phi-3-mini-4k-instruct");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        { role: "system", content: "You are a friendly chatbot" },
-        { role: "assistant", content: "Hello, I'm a friendly bot" },
-        { role: "user", content: "Hello bot, what is the capital of England?" },
-      ]
-      // send to model
-      const { error, output } = await model.run(messages);
-
-      console.log({ error, output });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("microsoft/Phi-3-mini-4k-instruct")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"},
-      ]
-      # send to model
-      output, error = model.run(messages)
-
-      print({ "error": error, "output": output })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/microsoft/Phi-3-mini-4k-instruct' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            { "role": "system", "content": "You are a friendly chatbot" },
-            { "role": "assistant", "content": "Hello, I\'m a friendly bot" },
-            { "role": "user", "content": "Hello bot, what is the capital of England?" }
-          ]
-        }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Add params">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("microsoft/Phi-3-mini-4k-instruct");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        { role: "system", content: "You are a friendly chatbot" },
-        { role: "assistant", content: "Hello, I'm a friendly bot" },
-        { role: "user", content: "Hello bot, what is the capital of England?" },
-      ]
-      const params = { temperature: 0 }
-      // send to model
-      const { error, output } = await model.run(messages, params);
-
-      console.log({ error, output });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("microsoft/Phi-3-mini-4k-instruct")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"},
-      ]
-      params = { "temperature": 0 }
-      # send to model
-      output, error = model.run(messages, params)
-
-      print({ "error": error, "output": output })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/microsoft/Phi-3-mini-4k-instruct' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            { "role": "system", "content": "You are a friendly chatbot" },
-            { "role": "assistant", "content": "Hello, I\'m a friendly bot" },
-            { "role": "user", "content": "Hello bot, what is the capital of England?" }
-          ],
-          "params": { "temperature": 0 }
-        }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Stream text">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("microsoft/Phi-3-mini-4k-instruct");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        { role: "system", content: "You are a friendly chatbot" },
-        { role: "assistant", content: "Hello, I'm a friendly bot" },
-        { role: "user", content: "Hello bot, what is the capital of England?" },
-      ]
-      const stream = true
-      // send to model
-      const readStream = await model.run(messages, stream);
-
-      let text = ''
-
-      for await (const chunk of readStream) {
-        text += chunk
-        console.log(chunk)
-      }
-
-      console.log({ text });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("microsoft/Phi-3-mini-4k-instruct")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"},
-      ]
-      stream = True
-      # send to model
-      readStream = model.run(messages, stream)
-
-      text = ""
-
-      for chunk in readStream:
-        tokens = chunk.decode("utf-8")
-        text += tokens
-        print(tokens)
-
-      print({ "text": text })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/microsoft/Phi-3-mini-4k-instruct' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            { "role": "system", "content": "You are a friendly chatbot" },
-            { "role": "assistant", "content": "Hello, I\'m a friendly bot" },
-            { "role": "user", "content": "Hello bot, what is the capital of England?" }
-          ],
-          "stream": true
-        }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Add params + Stream text">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("microsoft/Phi-3-mini-4k-instruct");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        { role: "system", content: "You are a friendly chatbot" },
-        { role: "assistant", content: "Hello, I'm a friendly bot" },
-        { role: "user", content: "Hello bot, what is the capital of England?" },
-      ]
-      const params = { temperature: 0 }
-      const stream = true
-      // send to model
-      const readStream = await model.run(messages, params, stream);
-
-      let text = ''
-
-      for await (const chunk of readStream) {
-        text += chunk
-        console.log(chunk)
-      }
-
-      console.log({ text });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("microsoft/Phi-3-mini-4k-instruct")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"},
-      ]
-      params = { "temperature": 0 }
-      stream = True
-      # send to model
-      readStream = model.run(messages, params, stream)
-
-      text = ""
-
-      for chunk in readStream:
-        tokens = chunk.decode("utf-8")
-        text += tokens
-        print(tokens)
-
-      print({ "text": text })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/microsoft/Phi-3-mini-4k-instruct' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            { "role": "system", "content": "You are a friendly chatbot" },
-            { "role": "assistant", "content": "Hello, I\'m a friendly bot" },
-            { "role": "user", "content": "Hello bot, what is the capital of England?" }
-          ],
-          "params": { "temperature": 0 },
-          "stream": true
-        }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Multi-modal: Vision">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("meta-llama/Llama-3.2-11B-Vision-Instruct");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        {
-          role: "user",
-          content: [
-            { type: "text": text: "Describe this image" },
-            { type: "image": url: "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
-          ]
-        }
-      ]
-      // send to model
-      const { error, output } = await model.run(messages);
-
-      console.log({ error, output });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("meta-llama/Llama-3.2-11B-Vision-Instruct")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {
-          "role": "user",
-          "content": [
-            { "type": "text": "text": "Describe this image" },
-            { "type": "image": "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
-          ]
-        }
-      ]
-      # send to model
-      output, error = model.run(messages)
-
-      print({ "error": error, "output": output })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/meta-llama/Llama-3.2-11B-Vision-Instruct' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            {
-              "role": "user",
-              "content": [
-                { "type": "text", "text": "Describe this image" },
-                { "type": "image", "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
-              ]
-            }
-          ]
-        }'
-      ```
-    </CodeGroup>
-
-    You can send images as either an HTTP URL or a base64 data URL.
-
-    <CodeGroup>
-      ```json URL
-      {
-        "role": "user",
-        "content": [
-          { "type": "text", "text": "Describe this image" },
-          { "type": "image", "url": "https://hips.hearstapps.com/hmg-prod/images/how-to-keep-ducks-call-ducks-1615457181.jpg?crop=0.670xw:1.00xh;0.157xw,0&resize=980:*" }
-        ]
-      }
-      ```
-      ```json Base64
-      {
-        "role": "user",
-        "content": [
-          { "type": "text", "text": "Describe this image" },
-          { "type": "image", "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..." }
-        ]
-      }
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Multi-modal: Audio">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("Qwen/Qwen2-Audio-7B-Instruct");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        {
-          role: "user",
-          content: [
-            { type: "text": text: "Describe this audio" },
-            { type: "audio": url: "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3" }
-          ]
-        }
-      ]
-      // send to model
-      const { error, output } = await model.run(messages);
-
-      console.log({ error, output });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("Qwen/Qwen2-Audio-7B-Instruct")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {
-          "role": "user",
-          "content": [
-            { "type": "text": "text": "Describe this audio" },
-            { "type": "audio": "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3" }
-          ]
-        }
-      ]
-      # send to model
-      output, error = model.run(messages)
-
-      print({ "error": error, "output": output })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/Qwen/Qwen2-Audio-7B-Instruct' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            {
-              "role": "user",
-              "content": [
-                { "type": "text": "text": "Describe this audio" },
-                { "type": "audio", "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3" }
-              ]
-            }
-          ]
-        }'
-      ```
-    </CodeGroup>
-
-    You can send audio as either an HTTP URL or a base64 data URL.
-
-    <CodeGroup>
-      ```json URL
-      {
-        "role": "user",
-        "content": [
-          { "type": "text", "text": "Describe this audio" },
-          { "type": "audio", "url": "https://dn720307.ca.archive.org/0/items/various-bird-sounds/Various%20Bird%20Sounds.mp3" }
-        ]
-      }
-      ```
-      ```json Base64
-      {
-        "role": "user",
-        "content": [
-          { "type": "text", "text": "Describe this audio" },
-          { "type": "audio", "base64": "data:audio/mp3;base64,iVBORw0KGgoAAAANSUhEUgAA..." }
-        ]
-      }
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Multi-modal: Video">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-      // choose your chat model
-      const model = sdk.model("llava-hf/LLaVA-NeXT-Video-7B-hf");
-      // init the model
-      await model.create();
-      // provide the model your chat session
-      const messages = [
-        {
-          role: "user",
-          content: [
-            { type: "text": text: "Describe this video" },
-            { type: "video": url: "https://example.com/path-to-video.mp4" }
-          ]
-        }
-      ]
-      // send to model
-      const { error, output } = await model.run(messages);
-
-      console.log({ error, output });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-      # choose your chat model
-      model = sdk.model("llava-hf/LLaVA-NeXT-Video-7B-hf")
-      # init the model
-      model.create()
-      # provide the model your chat session
-      messages = [
-        {
-          "role": "user",
-          "content": [
-            { "type": "text": "text": "Describe this video" },
-            { "type": "video": "url": "https://example.com/path-to-video.mp4" }
-          ]
-        }
-      ]
-      # send to model
-      output, error = model.run(messages)
-
-      print({ "error": error, "output": output })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            {
-              "role": "user",
-              "content": [
-                { "type": "text": "text": "Describe this video" },
-                { "type": "video", "url": "https://example.com/path-to-video.mp4" }
-              ]
-            }
-          ]
-        }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-  <Accordion title="Closed-source models (OpenAI, Anthropic, etc)">
-    <CodeGroup>
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      // insert your key
-      const sdk = new Bytez("BYTEZ_KEY");
-
-      // choose your chat model + insert your provider key
-      //
-      // const model = sdk.model("google/gemini-2.0-flash", "YOUR_GEMINI_KEY");
-      const model = sdk.model("openai/gpt-4o", "YOUR_OPEN_AI_KEY");
-
-      // provide the model your chat session
-      const messages = [
-        { role: "system", content: "You are a friendly chatbot" },
-        { role: "assistant", content: "Hello, I'm a friendly bot" },
-        { role: "user", content: "Hello bot, what is the capital of England?" },
-      ]
-      // send to model
-      const { error, output, provider } = await model.run(messages);
-
-      // `provider` is the raw OpenAI output
-      console.log({ error, output, provider });
-      ```
-      ```python python
-      from bytez import Bytez
-
-      # insert your key
-      sdk = Bytez("BYTEZ_KEY")
-
-      # choose your chat model
-      #
-      # model = sdk.model("google/gemini-2.0-flash", "YOUR_GEMINI_KEY")
-      model = sdk.model("openai/gpt-4o", "YOUR_OPEN_AI_KEY")
-
-      # provide the model your chat session
-      messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"},
-      ]
-      # send to model
-      output, error, provider = model.run(messages)
-
-      # `provider` is the raw OpenAI output
-      print({ "error": error, "output": output, "provider": provider })
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/openai/gpt-4o' \
-      -H 'Authorization: Key BYTEZ_KEY' \
-      -H 'provider-key: YOUR_OPEN_AI_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-          "messages": [
-            { "role": "system", "content": "You are a friendly chatbot" },
-            { "role": "assistant", "content": "Hello, Im a friendly bot" },
-            { "role": "user", "content": "Hello bot, what is the capital of England?" }
-          ]
-        }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
+	<Accordion defaultOpen="true" title="Basic usage">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('Qwen/Qwen3-4B');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			];
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("Qwen/Qwen3-4B")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			]
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/Qwen/Qwen3-4B' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "system",
+			      "content": "You are a friendly chatbot"
+			    },
+			    {
+			      "role": "assistant",
+			      "content": "Hello, I'm a friendly bot"
+			    },
+			    {
+			      "role": "user",
+			      "content": "Hello bot, what is the capital of England?"
+			    }
+			  ]
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen="false" title="Add params">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('Qwen/Qwen3-4B');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			];
+			
+			// provide the model with params
+			const params = {
+			  "temperature": 0
+			};
+			
+			// send to the model
+			const { error, output } = await model.run(input, params);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("Qwen/Qwen3-4B")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			]
+			
+			# provide the model with params
+			params = {
+			  "temperature": 0
+			}
+			
+			# send to the model
+			error, output = model.run(input, params)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/Qwen/Qwen3-4B' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "system",
+			      "content": "You are a friendly chatbot"
+			    },
+			    {
+			      "role": "assistant",
+			      "content": "Hello, I'm a friendly bot"
+			    },
+			    {
+			      "role": "user",
+			      "content": "Hello bot, what is the capital of England?"
+			    }
+			  ],
+			  "params": {
+			    "temperature": 0
+			  }
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen="false" title="Stream text">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('Qwen/Qwen3-4B');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			];
+			
+			// send to the model
+			const { error, output } = await model.run(input);
+			
+			// observe the output
+			console.log({ error, output });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("Qwen/Qwen3-4B")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			]
+			
+			# send to the model
+			error, output = model.run(input)
+			
+			# observe the output
+			print({"error": error, "output": output})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/Qwen/Qwen3-4B' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "system",
+			      "content": "You are a friendly chatbot"
+			    },
+			    {
+			      "role": "assistant",
+			      "content": "Hello, I'm a friendly bot"
+			    },
+			    {
+			      "role": "user",
+			      "content": "Hello bot, what is the capital of England?"
+			    }
+			  ],
+			  "stream": true
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
+	<Accordion defaultOpen="false" title="Add params + Stream text">
+		
+		<CodeGroup>
+			```javascript javascript
+			import Bytez from 'bytez.js';
+			
+			// insert your key
+			const sdk = new Bytez('BYTEZ_KEY');
+			
+			// choose your model
+			const model = sdk.model('Qwen/Qwen3-4B');
+			
+			// provide the model with input
+			const input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			];
+			
+			// provide the model with params
+			const params = {
+			  "temperature": 0
+			};
+			
+			// set streaming to "true"
+			const stream = true;
+			
+			// send to the model
+			const readStream = await model.run(messages, params, stream);
+			
+			let text = '';
+			
+			for await (const chunk of readStream) {
+			  text += chunk;
+			  console.log(chunk);
+			}
+			
+			// observe the output
+			console.log({ text });
+			
+			```
+			```python python
+			from bytez import Bytez
+			
+			# insert your key
+			sdk = Bytez("BYTEZ_KEY")
+			
+			# choose your model
+			model = sdk.model("Qwen/Qwen3-4B")
+			
+			# provide the model with input
+			input = [
+			  {
+			    "role": "system",
+			    "content": "You are a friendly chatbot"
+			  },
+			  {
+			    "role": "assistant",
+			    "content": "Hello, I'm a friendly bot"
+			  },
+			  {
+			    "role": "user",
+			    "content": "Hello bot, what is the capital of England?"
+			  }
+			]
+			
+			# provide the model with params
+			params = {
+			  "temperature": 0
+			}
+			
+			# set streaming to "true"
+			stream = True
+			
+			# send to the model
+			readStream = model.run(input, params, stream)
+			
+			text = ""
+			for chunk in readStream:
+			    tokens = chunk.decode("utf-8")
+			    text += tokens
+			    print(tokens)
+			
+			# observe the output
+			print({"text": text})
+			
+			```
+			```bash http
+			curl -X POST 'https://api.bytez.com/models/v2/Qwen/Qwen3-4B' \
+			-H 'Authorization: BYTEZ_KEY' \
+			-H 'Content-Type: application/json' \
+			--data '{
+			  "messages": [
+			    {
+			      "role": "system",
+			      "content": "You are a friendly chatbot"
+			    },
+			    {
+			      "role": "assistant",
+			      "content": "Hello, I'm a friendly bot"
+			    },
+			    {
+			      "role": "user",
+			      "content": "Hello bot, what is the capital of England?"
+			    }
+			  ],
+			  "params": {
+			    "temperature": 0
+			  },
+			  "stream": true
+			}'
+			```
+		</CodeGroup>
+	</Accordion>
 </AccordionGroup>

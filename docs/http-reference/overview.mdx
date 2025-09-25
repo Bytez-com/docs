@@ -1,0 +1,108 @@
+---
+title: Overview
+description: 'An Overview of CRUD Operations & Unified Input Schemas for SOTA AI models'
+icon: 'stars'
+---
+
+# Quickstart
+
+Run Inference (POST) - Execute a Model
+
+- `Endpoint`: POST `/models/v2/openai-community/{model}`
+- `Purpose`: Run inference on an open-source model.
+
+```json Request Body
+{
+  "text": "Hello, how are you?",
+  "stream": false,
+  "params": {
+    "min_length": 10,
+    "max_length": 50
+  }
+}
+```
+
+```json Response
+{
+  "output": "I am doing well, thank you!"
+}
+```
+
+---
+
+# Unified Input Formats
+
+<Tip>
+  Bytez simplifies building with 170k+ `Open Source` and `Closed Source` AI models by standardizing
+  inputs across 33 ML tasks. This consistency eliminates the need to adjust for varying input
+  structures, allowing seamless integration for `text`, `messages`, `image`, or `multiple` inputs.
+</Tip>
+
+## Why Standardization?
+
+- Reduces integration complexity.
+- Enables task/provider switching without reformatting inputs.
+
+## Input Schemas
+
+### Text
+
+For models that process `text`:
+
+```json json
+{
+  "text": "Input text",
+  "stream": false,
+  "params": { "max_length": 100, "temperature": 0.7 }
+}
+```
+
+Tasks: `fill-mask`, `summarization`, `text-to-speech`, `translation`, `text-generation`
+
+### Messages
+
+For `chat`, `audio-text-to-text`, `image-text-to-text`, and `video-text-to-text` tasks:
+
+```json json
+{
+  "messages": [
+    { "role": "system", "content": "You are a helpful assistant." },
+    { "role": "user", "content": "What's the weather like today?" }
+  ]
+}
+```
+
+Tasks: `chat`, `audio-text-to-text`, `image-text-to-text`, and `video-text-to-text`
+
+### Image
+
+For image processing, use either:
+
+`URL`:
+
+```json json
+{ "url": "https://example.com/image.jpg" }
+```
+
+`Base64`:
+
+```json json
+{ "base64": "data:image/webp;base64,..." }
+```
+
+Tasks: `image-classification`, `object-detection`, `image-to-Text`.
+
+### Multi-Input
+
+For models needing both `text` and `image` or `audio` or `video`:
+
+```json json
+{
+  "text": "What's in the image?",
+  "url": "https://example.com/image.jpg"
+}
+```
+
+Tasks: `visual-question-answering`, `zero-shot-classification`, etc.
+
+This unified schema accelerates development and ensures compatibility across diverse AI tasks.

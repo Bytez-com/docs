@@ -1,0 +1,70 @@
+---
+title: 'chat (closed-source)'
+description: 'Using chat and chat multi-modal models with closed source providers (OpenAI, Anthropic, etc) is easy'
+icon: 'comments'
+mode: 'wide'
+---
+
+<CodeGroup>
+  ```javascript javascript
+  import Bytez from "bytez.js";
+
+// insert your key
+const sdk = new Bytez("BYTEZ_KEY");
+
+// choose your chat model + insert your provider key
+// const model = sdk.model("google/gemini-2.0-flash", "YOUR_GEMINI_KEY");
+const model = sdk.model("openai/gpt-4o", "YOUR_OPEN_AI_KEY");
+
+// provide the model your chat session
+const messages = [
+{ role: "system", content: "You are a friendly chatbot" },
+{ role: "assistant", content: "Hello, I'm a friendly bot" },
+{ role: "user", content: "Hello bot, what is the capital of England?" },
+]
+// send to model
+const { error, output, provider } = await model.run(messages);
+
+// `provider` is the raw OpenAI output
+console.log({ error, output, provider });
+
+````
+```python python
+from bytez import Bytez
+
+# insert your key
+sdk = Bytez("BYTEZ_KEY")
+
+# choose your chat model
+#
+# model = sdk.model("google/gemini-2.0-flash", "YOUR_GEMINI_KEY")
+model = sdk.model("openai/gpt-4o", "YOUR_OPEN_AI_KEY")
+
+# provide the model your chat session
+messages = [
+  {"role": "system", "content": "You are a friendly chatbot"},
+  {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+  {"role": "user", "content": "Hello bot, what is the capital of England?"},
+]
+# send to model
+output, error, provider = model.run(messages)
+
+# `provider` is the raw OpenAI output
+print({ "error": error, "output": output, "provider": provider })
+````
+
+```bash http
+curl -X POST 'https://api.bytez.com/models/v2/openai/gpt-4o' \
+-H 'Authorization: BYTEZ_KEY' \
+-H 'provider-key: YOUR_OPEN_AI_KEY' \
+-H 'Content-Type: application/json' \
+--data '{
+    "messages": [
+      { "role": "system", "content": "You are a friendly chatbot" },
+      { "role": "assistant", "content": "Hello, Im a friendly bot" },
+      { "role": "user", "content": "Hello bot, what is the capital of England?" }
+    ]
+  }'
+```
+
+</CodeGroup>
