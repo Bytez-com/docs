@@ -8154,10 +8154,4 @@ const MODEL_DOCS_OBJECT = {
   },
 };
 
-for (const [task, object] of Object.entries(MODEL_DOCS_OBJECT.tasks)) {
-  if (!object.openapiSpec) {
-    const a = 2;
-  }
-}
-
 module.exports = { MODEL_DOCS_OBJECT };
