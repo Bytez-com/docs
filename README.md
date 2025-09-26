@@ -20,12 +20,12 @@ Welcome to Bytez. We make it easy to discover and understand AI papers and deplo
 Bytez is your one-stop platform for:
 
 - 🔬 **440k+ Interactive Papers**
-- 🤖 **170k+ Serverless Models**
+- 🤖 **175k+ Serverless Models**
 
 Accessible through:
 
 - 🧠 A **Model API** with a unified protocol
-- ⚡ An **Agent** grounded in 440k+ AI papers and 170k+ models
+- ⚡ An **Agent** grounded in 440k+ AI papers and 175k+ models
 
 No infra. No orchestration. Just plug, play, and build.
 
@@ -43,7 +43,7 @@ Search, demo, and deploy SOTA models across 33 ML tasks.
 
 ### 🔗 [API Docs](https://docs.bytez.com)
 
-1 key. 170k+ serverless AI models. Demo, deploy, and stream responses in 3 lines of code.
+1 key. 175k+ serverless AI models. Demo, deploy, and stream responses in 3 lines of code.
 
 ### 🐳 [DockerHub](https://hub.docker.com/u/bytez)
 
