@@ -718,8 +718,8 @@ const MODEL_DOCS_OBJECT = {
                 },
               },
             },
-            required: ['messages'],
           },
+          required: ['messages'],
         },
         responseBodyContentSchema: {
           type: 'object',
@@ -1132,8 +1132,8 @@ const MODEL_DOCS_OBJECT = {
                 },
               },
             },
-            required: ['messages'],
           },
+          required: ['messages'],
         },
         responseBodyContentSchema: {
           type: 'object',
@@ -1546,8 +1546,8 @@ const MODEL_DOCS_OBJECT = {
                 },
               },
             },
-            required: ['messages'],
           },
+          required: ['messages'],
         },
         responseBodyContentSchema: {
           type: 'object',

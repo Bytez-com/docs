@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "mintlify dev --port 4000",
+    "broken-links": "mintlify broken-links",
+    "openapi-check": "mintlify openapi-check",
     "format": "prettier \"**/*.{css,js,ts,tsx,md,mdx}\" --write",
     "format:check": "prettier \"**/*.{css,js,ts,tsx,md,mdx}\" --check"
   }
