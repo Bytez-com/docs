@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:audio/wav;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -65,20 +69,56 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with audio-classification scores and labels",
                       "example": [
                         {
-                          "score": 0.9293771982192993,
-                          "label": "neutral"
+                          "score": 0.12049942463636398,
+                          "label": "no"
                         },
                         {
-                          "score": 0.06843611598014832,
-                          "label": "sad"
+                          "score": 0.11662919074296951,
+                          "label": "down"
                         },
                         {
-                          "score": 0.0007334386464208364,
-                          "label": "happy"
+                          "score": 0.1127392128109932,
+                          "label": "_unknown_"
+                        },
+                        {
+                          "score": 0.10831832140684128,
+                          "label": "stop"
+                        },
+                        {
+                          "score": 0.10017725080251694,
+                          "label": "go"
+                        },
+                        {
+                          "score": 0.09701883047819138,
+                          "label": "left"
+                        },
+                        {
+                          "score": 0.07834923267364502,
+                          "label": "on"
+                        },
+                        {
+                          "score": 0.07112456858158112,
+                          "label": "right"
+                        },
+                        {
+                          "score": 0.06147514656186104,
+                          "label": "off"
+                        },
+                        {
+                          "score": 0.04827316105365753,
+                          "label": "yes"
+                        },
+                        {
+                          "score": 0.047529637813568115,
+                          "label": "up"
+                        },
+                        {
+                          "score": 0.03786593675613403,
+                          "label": "_silence_"
                         }
                       ]
                     }
@@ -87,7 +127,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

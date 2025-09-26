@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://cdn.bytez.com/model/example/meditate.mp4"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:video/mp4;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -65,20 +69,16 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with video-classification scores and labels",
                       "example": [
                         {
-                          "score": 0.838,
-                          "label": "meditating"
+                          "score": 0.635999858379364,
+                          "label": "LABEL_0"
                         },
                         {
-                          "score": 0.252,
-                          "label": "brushing hair"
-                        },
-                        {
-                          "score": 0.138,
-                          "label": "reading book"
+                          "score": 0.364000141620636,
+                          "label": "LABEL_1"
                         }
                       ]
                     }
@@ -87,7 +87,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

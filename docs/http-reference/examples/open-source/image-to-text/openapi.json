@@ -38,10 +38,14 @@
                   "url": {
                     "type": "string",
                     "example": "https://as1.ftcdn.net/v2/jpg/03/03/55/82/1000_F_303558268_YNUQp9NNMTE0X4zrj314mbWcDHd1pZPD.jpg"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/jpg;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
-                  "text"
+                  "url"
                 ]
               }
             }
@@ -74,7 +78,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

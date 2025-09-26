@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/mask-generation/mask-generation-input.png"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/png;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -65,16 +69,102 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "object",
                       "description": "Successful response with the mask image URL",
-                      "example": "https://api.bytez.com/mask-result.png"
+                      "properties": {
+                        "input_image_dimensions": {
+                          "type": "object",
+                          "properties": {
+                            "width": {
+                              "type": "number",
+                              "example": 1264
+                            },
+                            "height": {
+                              "type": "number",
+                              "example": 770
+                            }
+                          },
+                          "example": {
+                            "width": 1264,
+                            "height": 770
+                          }
+                        },
+                        "masks": {
+                          "type": "array",
+                          "example": [
+                            [
+                              [
+                                0,
+                                0,
+                                0
+                              ]
+                            ],
+                            [
+                              [
+                                1,
+                                1,
+                                1
+                              ]
+                            ],
+                            [
+                              [
+                                1,
+                                0,
+                                1
+                              ]
+                            ]
+                          ]
+                        },
+                        "scores": {
+                          "type": "array",
+                          "example": [
+                            0.996,
+                            0.999,
+                            0.601
+                          ]
+                        }
+                      },
+                      "example": {
+                        "input_image_dimensions": {
+                          "width": 1264,
+                          "height": 770
+                        },
+                        "masks": [
+                          [
+                            [
+                              0,
+                              0,
+                              0
+                            ]
+                          ],
+                          [
+                            [
+                              1,
+                              1,
+                              1
+                            ]
+                          ],
+                          [
+                            [
+                              1,
+                              0,
+                              1
+                            ]
+                          ]
+                        ],
+                        "scores": [
+                          0.996,
+                          0.999,
+                          0.601
+                        ]
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

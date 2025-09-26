@@ -14,21 +14,14 @@ mode: 'wide'
     Using Python 3.9+, JavaScript, or Julia, install the appropriate package:
 
     <CodeGroup>
-      ```bash python
-        pip install bytez
-      ```
-
       ```bash javascript
-        // use your fav package manager
+        // use your favorite package manager
         npm i bytez.js
         yarn add bytez.js
       ```
 
-      ```julia julia
-      // Run the command julia
-      // Press ]
-      // Run the command below
-      add Bytez
+      ```bash python
+        pip install bytez
       ```
     </CodeGroup>
 
@@ -43,26 +36,22 @@ mode: 'wide'
     2. Use your Bytez Key in requests
 
     <CodeGroup>
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      const sdk = new Bytez("BYTEZ_KEY");
+      ```
+
       ```python python
       from bytez import Bytez
 
       sdk = Bytez("BYTEZ_KEY")
       ```
 
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      const sdk = new Bytez("BYTEZ_KEY");
-      ```
-      ```julia julia
-      using Bytez
-
-      sdk = Bytez.init("BYTEZ_KEY");
-      ```
       ```bash http
       # add an Authorization header, with value "Key {BYTEZ_KEY}"
       curl -X GET "https://api.bytez.com/models/v2/some-endpoint" \
-        -H "Authorization: Key BYTEZ_KEY"
+        -H "Authorization: BYTEZ_KEY"
       ```
     </CodeGroup>
 
@@ -78,7 +67,7 @@ mode: 'wide'
       ```bash http
       # add a "provider-key" header, and set its value to "{KEY}"
       curl -X GET "https://api.bytez.com/models/v2/some-endpoint" \
-        -H "Authorization: Key BYTEZ_KEY" \
+        -H "Authorization: BYTEZ_KEY" \
         -H "provider-key: {your-key}"
       ```
     </CodeGroup>
@@ -101,17 +90,6 @@ mode: 'wide'
       Running is a model is easy. Just select the model and pass it an input
 
     <CodeGroup>
-      ```python python
-      from bytez import Bytez
-
-      sdk = Bytez("BYTEZ_KEY")
-      model_id = "openai-community/gpt-2"
-      model = sdk.model(model_id)
-
-      output, error = model.run("Once upon a time")
-
-      print(output)
-      ```
 
       ```javascript javascript
       import Bytez from "bytez.js";
@@ -124,9 +102,22 @@ mode: 'wide'
 
       console.log({ error, output });
       ```
+
+      ```python python
+      from bytez import Bytez
+
+      sdk = Bytez("BYTEZ_KEY")
+      model_id = "openai-community/gpt-2"
+      model = sdk.model(model_id)
+
+      output, error = model.run("Once upon a time")
+
+      print(output)
+      ```
+
       ```bash http
       curl -X POST "https://api.bytez.com/models/v2/openai-community/gpt-2" \
-      -H "Authorization: Key BYTEZ_KEY" \
+      -H "Authorization: BYTEZ_KEY" \
       -H "Content-Type: application/json" \
       --data '{ "text": "Once upon a time" }'
       ```
@@ -138,7 +129,7 @@ mode: 'wide'
 </Card>
 
   </Accordion>
-  <Accordion icon="4" title="List tasks, models, and running models">
+  <Accordion icon="4" title="List tasks and models">
       You can list all the tasks, models, and running models using the API.
 
       ### Tasks
@@ -146,6 +137,16 @@ mode: 'wide'
       A `task` defines a specific function a model performs (e.g., object-detection). Multiple models might be available for the same task. To list all tasks supported by Bytez, run the following command:
 
         <CodeGroup>
+          ```javascript javascript
+          import Bytez from "bytez.js";
+
+          const sdk = new Bytez("BYTEZ_KEY");
+
+          const { error, output } = await sdk.list.tasks()
+
+          console.log({ error, output });
+          ```
+
           ```python python
           from bytez import Bytez
 
@@ -156,18 +157,9 @@ mode: 'wide'
           print(output)
           ```
 
-          ```javascript javascript
-          import Bytez from "bytez.js";
-
-          const sdk = new Bytez("BYTEZ_KEY");
-
-          const { error, output } = await sdk.list.tasks()
-
-          console.log({ error, output });
-          ```
           ```bash http
           curl -X GET "https://api.bytez.com/models/v2/list/tasks" \
-            -H "Authorization: Key BYTEZ_KEY"
+            -H "Authorization: BYTEZ_KEY"
           ```
 
     </CodeGroup>
@@ -176,6 +168,16 @@ mode: 'wide'
       A `model` refers to a software function with unique identifier. `Models` execute `tasks`. For example, the model `google/vit-base-patch16-224` executes `image-classification`. To list all open-source models supported by Bytez, run the following command:
 
           <CodeGroup>
+          ```javascript javascript
+          import Bytez from "bytez.js";
+
+          const sdk = new Bytez("BYTEZ_KEY");
+
+          const { error, output } = await sdk.list.models()
+
+          console.log({ error, output });
+          ```
+
           ```python python
           from bytez import Bytez
 
@@ -186,50 +188,10 @@ mode: 'wide'
           print(output)
           ```
 
-          ```javascript javascript
-          import Bytez from "bytez.js";
-
-          const sdk = new Bytez("BYTEZ_KEY");
-
-          const { error, output } = await sdk.list.models()
-
-          console.log({ error, output });
-          ```
           ```bash http
           curl -X GET "https://api.bytez.com/models/v2/list/models" \
-            -H "Authorization: Key BYTEZ_KEY"
+            -H "Authorization: BYTEZ_KEY"
           ```
-
-    </CodeGroup>
-
-    ### Clusters
-
-    A `cluster` represents the auto-scaling GPU infrastructure Bytez provisions specifically for running an open-source model serverlessly. It's created automatically when needed and scales with demand. To list your active clusters, run the following command:
-
-    <CodeGroup>
-      ```python python
-      from bytez import Bytez
-
-      sdk = Bytez("BYTEZ_KEY")
-
-      output, error = sdk.list.clusters()
-
-      print(output)
-      ```
-
-      ```javascript javascript
-      import Bytez from "bytez.js";
-
-      const sdk = new Bytez("BYTEZ_KEY");
-
-      const { error, output } = await sdk.list.clusters()
-
-      console.log({ error, output });
-      ```
-      ```bash http
-      curl -X GET "https://api.bytez.com/models/v2/list/clusters" \
-        -H "Authorization: Key BYTEZ_KEY"
-      ```
 
     </CodeGroup>
 

@@ -66,16 +66,21 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with the classification",
-                      "example": "negative"
+                      "example": [
+                        {
+                          "label": "negative",
+                          "score": 0.8025179505348206
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

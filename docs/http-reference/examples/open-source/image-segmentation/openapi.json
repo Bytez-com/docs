@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/jpg;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -65,16 +69,32 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "object",
                       "description": "Successful response with segmentation results (URL to the result)",
-                      "example": "https://api.bytez.com/segmentation-result.png"
+                      "example": [
+                        {
+                          "label": "unlabelled",
+                          "score": null,
+                          "mask_png": "iVBORw0KGgoAAAANSUhEUgAAAn8AAAHgCAAAAADx/"
+                        },
+                        {
+                          "label": "top, t-shirt, sweatshirt",
+                          "score": null,
+                          "mask_png": "iVBORw0KGgoAAAANSUhEUgAAAn8AAAHgCAAAAADx/"
+                        },
+                        {
+                          "label": "sleeve",
+                          "score": null,
+                          "mask_png": "iVBORw0KGgoAAAANSUhEUgAAAn8AAAHgCAAAAADx/"
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

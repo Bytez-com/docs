@@ -42,10 +42,15 @@
                   "url": {
                     "type": "string",
                     "example": "https://templates.invoicehome.com/invoice-template-us-neat-750px.png"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/png;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
-                  "text"
+                  "question",
+                  "url"
                 ]
               }
             }
@@ -69,16 +74,23 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with the answer from the document",
-                      "example": "$154.06"
+                      "example": [
+                        {
+                          "score": 0.997048556804657,
+                          "answer": "$154.06",
+                          "start": 75,
+                          "end": 75
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

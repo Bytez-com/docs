@@ -66,16 +66,40 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with classified tokens",
                       "example": [
                         {
-                          "token": "John",
-                          "label": "PERSON"
+                          "entity": "B-PER",
+                          "score": 0.9996556043624878,
+                          "index": 1,
+                          "word": "John",
+                          "start": 0,
+                          "end": 4
                         },
                         {
-                          "token": "Google",
-                          "label": "LOCATION"
+                          "entity": "I-PER",
+                          "score": 0.999683141708374,
+                          "index": 2,
+                          "word": "Do",
+                          "start": 5,
+                          "end": 7
+                        },
+                        {
+                          "entity": "I-PER",
+                          "score": 0.9945255517959595,
+                          "index": 3,
+                          "word": "##e",
+                          "start": 7,
+                          "end": 8
+                        },
+                        {
+                          "entity": "B-ORG",
+                          "score": 0.9984006285667419,
+                          "index": 9,
+                          "word": "Google",
+                          "start": 35,
+                          "end": 41
                         }
                       ]
                     }
@@ -84,7 +108,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

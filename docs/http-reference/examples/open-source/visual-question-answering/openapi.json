@@ -37,15 +37,24 @@
                 "properties": {
                   "question": {
                     "type": "string",
-                    "example": "Whats the total cost?"
+                    "example": "What animal is this?"
                   },
-                  "image": {
+                  "url": {
                     "type": "string",
                     "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/webp;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
+                "example": {
+                  "question": "What animal is this?",
+                  "url": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                },
                 "required": [
-                  "text"
+                  "question",
+                  "image"
                 ]
               }
             }
@@ -69,16 +78,20 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
-                      "description": "Successful response with the answer to the visual question",
-                      "example": "octopus"
+                      "type": "array",
+                      "description": "Successful response with the answers to the visual question",
+                      "example": [
+                        {
+                          "answer": "octopus"
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {
