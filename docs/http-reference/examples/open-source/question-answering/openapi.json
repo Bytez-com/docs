@@ -45,7 +45,8 @@
                   }
                 },
                 "required": [
-                  "text"
+                  "question",
+                  "context"
                 ]
               }
             }
@@ -69,16 +70,21 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
-                      "description": "Successful response with the answer",
-                      "example": "Ron"
+                      "type": "object",
+                      "description": "Successful response with the answer, score, and start and end indices",
+                      "example": {
+                        "score": 0.2002170979976654,
+                        "start": 0,
+                        "end": 3,
+                        "answer": "Ron"
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

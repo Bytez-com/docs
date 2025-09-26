@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://www.padoniavets.com/sites/default/files/field/image/cats-and-dogs.jpg"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/jpg;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -65,16 +69,37 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
-                      "description": "Successful response with a classification label",
-                      "example": "Cat"
+                      "type": "array",
+                      "description": "Successful response with the classification labels",
+                      "example": [
+                        {
+                          "label": "beagle",
+                          "score": 0.5398777723312378
+                        },
+                        {
+                          "label": "Egyptian cat",
+                          "score": 0.12709936499595642
+                        },
+                        {
+                          "label": "English foxhound",
+                          "score": 0.04305768758058548
+                        },
+                        {
+                          "label": "tabby, tabby cat",
+                          "score": 0.03387906029820442
+                        },
+                        {
+                          "label": "Walker hound, Walker foxhound",
+                          "score": 0.02507072128355503
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

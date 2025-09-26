@@ -38,10 +38,32 @@
                   "url": {
                     "type": "string",
                     "example": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9"
+                  },
+                  "candidate_labels": {
+                    "type": "array",
+                    "example": [
+                      "squid",
+                      "octopus",
+                      "human",
+                      "cat"
+                    ]
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/webp;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
+                "example": {
+                  "url": "https://ocean.si.edu/sites/default/files/styles/3_2_largest/public/2023-11/Screen_Shot_2018-04-16_at_1_42_56_PM.png.webp?itok=Icvi-ek9",
+                  "candidate_labels": [
+                    "squid",
+                    "octopus",
+                    "human",
+                    "cat"
+                  ]
+                },
                 "required": [
-                  "text"
+                  "url"
                 ]
               }
             }
@@ -65,7 +87,7 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with detected objects, scores, labels, and boxes",
                       "example": [
                         {
@@ -85,7 +107,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

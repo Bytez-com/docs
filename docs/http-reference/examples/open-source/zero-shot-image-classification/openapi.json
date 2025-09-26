@@ -49,10 +49,15 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/webp;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
-                  "text"
+                  "url",
+                  "candidate_labels"
                 ]
               }
             }
@@ -76,12 +81,20 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with image-classification scores and labels",
                       "example": [
                         {
-                          "score": 0.838,
+                          "score": 0.3334539234638214,
+                          "label": "cat"
+                        },
+                        {
+                          "score": 0.3332984447479248,
                           "label": "octopus"
+                        },
+                        {
+                          "score": 0.3332476019859314,
+                          "label": "lizard"
                         }
                       ]
                     }
@@ -90,7 +103,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

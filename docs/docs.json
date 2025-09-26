@@ -16,7 +16,10 @@
     "mdx": {
       "server": "https://api.bytez.com"
     },
-    "playground": { "proxy": false }
+    "playground": {
+      "display": "interactive",
+      "proxy": false
+    }
   },
   "navbar": {
     "links": [
@@ -41,7 +44,7 @@
               {
                 "group": "Understand the API",
                 "icon": "head-side-gear",
-                "pages": ["model-api/docs/under-the-hood"]
+                "pages": ["model-api/docs/understand-the-api"]
               },
               {
                 "group": "Chat Models",

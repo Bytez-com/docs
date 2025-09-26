@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://huggingface.co/datasets/huggingfacejs/tasks/resolve/main/audio-classification/audio.wav"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:audio/wav;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -74,7 +78,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

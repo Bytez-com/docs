@@ -38,6 +38,10 @@
                   "url": {
                     "type": "string",
                     "example": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg"
+                  },
+                  "base64": {
+                    "type": "string",
+                    "example": "data:image/jpg;base64,...BASE_64_GOES_HERE (Only use this is you are not using a url)"
                   }
                 },
                 "required": [
@@ -65,17 +69,17 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
+                      "type": "array",
                       "description": "Successful response with detected objects",
                       "example": [
                         {
-                          "score": 0.992,
+                          "score": 0.9996581077575684,
                           "label": "cat",
                           "box": {
-                            "xmin": 0,
-                            "ymin": 1,
-                            "xmax": 997,
-                            "ymax": 656
+                            "xmin": 255,
+                            "ymin": 175,
+                            "xmax": 1110,
+                            "ymax": 1531
                           }
                         }
                       ]
@@ -85,7 +89,7 @@
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {

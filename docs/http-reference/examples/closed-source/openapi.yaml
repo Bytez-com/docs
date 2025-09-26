@@ -246,7 +246,7 @@ components:
       in: header
       name: Authorization
       description: >
-        Set `Authorization` header to `Key BYTEZ_KEY` (e.g. 'Authorization': 'Key ABC123')
+        Set `Authorization` header to `BYTEZ_KEY` (e.g. 'Authorization': 'Key ABC123')
     providerKeyAuth:
       type: apiKey
       in: header

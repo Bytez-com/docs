@@ -31,7 +31,7 @@ function constructOpenApiSpec(task) {
                 },
               },
             },
-            403: {
+            401: {
               description: "Auth error - check your api key and how you're sending it.",
               content: {
                 'application/json': {

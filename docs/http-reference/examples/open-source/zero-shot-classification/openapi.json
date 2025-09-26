@@ -52,7 +52,8 @@
                   }
                 },
                 "required": [
-                  "text"
+                  "text",
+                  "candidate_labels"
                 ]
               }
             }
@@ -76,21 +77,28 @@
                       "description": "Null on success; otherwise an error message."
                     },
                     "output": {
-                      "type": "string",
-                      "description": "Successful response with text-classification scores and labels",
-                      "example": [
-                        {
-                          "score": 0.838,
-                          "label": "travel"
-                        }
-                      ]
+                      "type": "object",
+                      "description": "Successful response with text-classification sequence, labels, and scores",
+                      "example": {
+                        "sequence": "One day I will see the world",
+                        "labels": [
+                          "travel",
+                          "dancing",
+                          "cooking"
+                        ],
+                        "scores": [
+                          0.9941015839576721,
+                          0.0031261409167200327,
+                          0.002772255800664425
+                        ]
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "403": {
+          "401": {
             "description": "Auth error - check your api key and how you're sending it.",
             "content": {
               "application/json": {
