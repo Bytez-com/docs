@@ -26,7 +26,7 @@ console.log({ error, output });
 const stream = true;
 
 // send to the model
-const readStream = await model.run(messages, params, stream);
+const readStream = await model.run(input, params, stream);
 
 let text = '';
 

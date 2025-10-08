@@ -234,11 +234,21 @@ mode: 'wide'
 			  }
 			];
 			
+			// set streaming to "true"
+			const stream = true;
+			
 			// send to the model
-			const { error, output } = await model.run(input);
+			const readStream = await model.run(input, stream);
+			
+			let text = '';
+			
+			for await (const chunk of readStream) {
+			  text += chunk;
+			  console.log(chunk);
+			}
 			
 			// observe the output
-			console.log({ error, output });
+			console.log({ text });
 			
 			```
 			```python python
@@ -267,11 +277,20 @@ mode: 'wide'
 			  }
 			]
 			
+			# set streaming to "true"
+			stream = True
+			
 			# send to the model
-			error, output = model.run(input)
+			readStream = model.run(input, stream)
+			
+			text = ""
+			for chunk in readStream:
+			    tokens = chunk.decode("utf-8")
+			    text += tokens
+			    print(tokens)
 			
 			# observe the output
-			print({"error": error, "output": output})
+			print({"text": text})
 			
 			```
 			```bash http
@@ -337,7 +356,7 @@ mode: 'wide'
 			const stream = true;
 			
 			// send to the model
-			const readStream = await model.run(messages, params, stream);
+			const readStream = await model.run(input, params, stream);
 			
 			let text = '';
 			

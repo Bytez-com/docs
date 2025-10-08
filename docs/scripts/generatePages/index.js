@@ -79,6 +79,10 @@ async function main() {
       if (mintlify) {
         const { exampleTitle, exampleDescription } = mintlifyProps;
 
+        // if (exampleTitle !== 'Stream text') {
+        //   continue;
+        // }
+
         const { js, py, curl } = await generateCodeSnippets(
           modelId,
           requestInput,
@@ -146,9 +150,10 @@ async function main() {
     });
 
     await fs.writeFile(`${httpDir}/openapi.json`, JSON.stringify(openApiSpec, null, 2));
-
-    const a = 2;
   }
+
+  console.log('DONE');
+  debugger;
 }
 
 function constructPageHeader({ title, task, description, icon }) {
@@ -228,11 +233,20 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
       if (paramsExist(params)) {
         return sectionsAsString;
       }
-      return sectionsAsString.replace(
-        // notice how we're removing params
-        `const { error, output } = await model.run(input, params);`,
-        `const { error, output } = await model.run(input);`
-      );
+
+      const replacedString = sectionsAsString
+        .replace(
+          // notice how we're removing params
+          `const { error, output } = await model.run(input, params);`,
+          `const { error, output } = await model.run(input);`
+        )
+        // notice how we're removing params, this is for the streaming case
+        .replace(
+          `const readStream = await model.run(input, params, stream);`,
+          `const readStream = await model.run(input, stream);`
+        );
+
+      return replacedString;
     },
     [
       { tokenId: `'$MODEL_ID'`, replaceWith: `'${modelId}'` },
@@ -249,11 +263,20 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
       if (paramsExist(params)) {
         return sectionsAsString;
       }
-      // notice how we're removing params
-      return sectionsAsString.replace(
-        `error, output = model.run(input, params)`,
-        `error, output = model.run(input)`
-      );
+
+      const replacedString = sectionsAsString
+        .replace(
+          // notice how we're removing params
+          `error, output = model.run(input, params)`,
+          `error, output = model.run(input)`
+        )
+        // notice how we're removing params, this is for the streaming case
+        .replace(
+          `readStream = model.run(input, params, stream)`,
+          `readStream = model.run(input, stream)`
+        );
+
+      return replacedString;
     },
     [
       { tokenId: `"$MODEL_ID"`, replaceWith: `"${modelId}"` },
@@ -330,7 +353,7 @@ function formatIntoSections(templateString, params, stream) {
 
   const linesBeforeParamsSection = lines.slice(0, paramsSectionIndex);
 
-  if (!paramsExist(params)) {
+  if (!paramsExist(params) && !stream) {
     const nonStreamingWithOutParamsString = [
       ...linesBeforeParamsSection,
       ...lines.slice(nonStreamingSectionIndex + 1, streamingSectionIndex),
@@ -339,7 +362,26 @@ function formatIntoSections(templateString, params, stream) {
     return nonStreamingWithOutParamsString;
   }
 
-  if (!stream) {
+  if (!paramsExist(params) && stream) {
+    const streamingWithOutParamsString = [
+      ...linesBeforeParamsSection,
+      ...lines.slice(streamingSectionIndex + 1),
+    ].join('\n');
+
+    return streamingWithOutParamsString;
+  }
+
+  if (paramsExist(params) && stream) {
+    const streamingWithParamsString = [
+      ...linesBeforeParamsSection,
+      ...lines.slice(paramsSectionIndex + 1, nonStreamingSectionIndex),
+      ...lines.slice(streamingSectionIndex + 1),
+    ].join('\n');
+
+    return streamingWithParamsString;
+  }
+
+  if (paramsExist(params) && !stream) {
     const nonStreamingWithParamsString = [
       ...linesBeforeParamsSection,
       ...lines.slice(paramsSectionIndex + 1, nonStreamingSectionIndex),
@@ -349,13 +391,7 @@ function formatIntoSections(templateString, params, stream) {
     return nonStreamingWithParamsString;
   }
 
-  const streamingWithParamsString = [
-    ...linesBeforeParamsSection,
-    ...lines.slice(paramsSectionIndex + 1, nonStreamingSectionIndex),
-    ...lines.slice(streamingSectionIndex + 1),
-  ].join('\n');
-
-  return streamingWithParamsString;
+  throw new Error('Unmatched case, this should never happen, there should only be 4 cases');
 }
 
 function updateTemplateIds(string, replacements) {
