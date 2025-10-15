@@ -19,6 +19,8 @@ e.g. If you are trying to run `openai/davinci-002` with unlimited rate limits, `
 
 If it were an `anthropic` model it would be an Anthropic key.
 
+**NOTE:** Logprobs are supported for all models!
+
 <AccordionGroup>
 
   <Accordion defaultOpen="true" title="Basic usage (Open Source)">
@@ -39,7 +41,6 @@ If it were an `anthropic` model it would be an Anthropic key.
         model: "openai-community/gpt2",
         prompt: "Write a short poem about AI",
         temperature: 0.7,
-        top_p: 1,
         max_tokens: 150
       });
 
@@ -58,7 +59,6 @@ If it were an `anthropic` model it would be an Anthropic key.
           model="openai-community/gpt2",
           prompt="Write a short poem about AI",
           temperature=0.7,
-          top_p=1,
           max_tokens=150
       )
       print(response)
@@ -71,7 +71,6 @@ If it were an `anthropic` model it would be an Anthropic key.
         "model": "openai-community/gpt2",
         "prompt": "Write a short poem about AI",
         "temperature": 0.7,
-        "top_p": 1,
         "max_tokens": 150
       }'
       ```
@@ -98,16 +97,18 @@ If it were an `anthropic` model it would be an Anthropic key.
         prompt: "Write a short poem about AI",
         max_tokens: 150,
         temperature: 0.7,
-        top_p: 1,
         stream: true
       });
 
       let text = '';
       for await (const event of stream) {
-        if (event.type === "response.output_text.delta") {
-          text += event.delta;
-          console.log(event.delta);
+        if (event.choices[0].finish_reason) {
+          break;
         }
+
+        const content = event.choices[0].text;
+        text += content;
+        console.log(content);
       }
 
       console.log({ text });
@@ -121,19 +122,23 @@ If it were an `anthropic` model it would be an Anthropic key.
           default_headers={"Authorization": "BYTEZ_KEY"},
       )
 
-      stream = client.completions.stream(
+      stream = client.completions.create(
           model="openai-community/gpt2",
           prompt="Write a short poem about AI",
           max_tokens=150,
           temperature=0.7,
-          top_p=1
+          stream=True
       )
 
       text = ""
       for event in stream:
-          if event.type == "response.output_text.delta":
-              text += event.delta
-              print(event.delta)
+          if event.choices[0].finish_reason:
+              break
+
+          content = event.choices[0].text
+
+          text += content
+          print(content)
 
       print({"text": text})
       ```
@@ -146,72 +151,7 @@ If it were an `anthropic` model it would be an Anthropic key.
         "prompt": "Write a short poem about AI",
         "max_tokens": 150,
         "temperature": 0.7,
-        "top_p": 1,
         "stream": true
-      }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-
-  <Accordion defaultOpen="false" title="Custom params (Open Source)">
-
-    <CodeGroup>
-      ```javascript javascript
-      import OpenAI from "openai";
-
-      const client = new OpenAI({
-        apiKey: "BYTEZ_KEY",
-        baseURL: "https://api.bytez.com/models/v2/openai/v1",
-        defaultHeaders: {
-          Authorization: "BYTEZ_KEY"
-        }
-      });
-
-      const response = await client.completions.create({
-        model: "openai-community/gpt2",
-        prompt: "Write a haiku about space exploration",
-        max_tokens: 120,
-        temperature: 0.3,
-        top_p: 0.9,
-        frequency_penalty: 0.5,
-        presence_penalty: 0.2
-      });
-
-      console.log(response);
-      ```
-      ```python python
-      from openai import OpenAI
-
-      client = OpenAI(
-          api_key="BYTEZ_KEY",
-          base_url="https://api.bytez.com/models/v2/openai/v1",
-          default_headers={"Authorization": "BYTEZ_KEY"},
-      )
-
-      response = client.completions.create(
-          model="openai-community/gpt2",
-          prompt="Write a haiku about space exploration",
-          max_tokens=120,
-          temperature=0.3,
-          top_p=0.9,
-          frequency_penalty=0.5,
-          presence_penalty=0.2
-      )
-      print(response)
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/openai/v1/completions' \
-      -H 'Authorization: BYTEZ_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-        "model": "openai-community/gpt2",
-        "prompt": "Write a haiku about space exploration",
-        "max_tokens": 120,
-        "temperature": 0.3,
-        "top_p": 0.9,
-        "frequency_penalty": 0.5,
-        "presence_penalty": 0.2
       }'
       ```
     </CodeGroup>
@@ -237,7 +177,6 @@ If it were an `anthropic` model it would be an Anthropic key.
         model: "openai/davinci-002",
         prompt: "Write a short poem about AI",
         temperature: 0.7,
-        top_p: 1,
         max_tokens: 150
       });
 
@@ -256,7 +195,6 @@ If it were an `anthropic` model it would be an Anthropic key.
           model="openai/davinci-002",
           prompt="Write a short poem about AI",
           temperature=0.7,
-          top_p=1,
           max_tokens=150
       )
       print(response)
@@ -270,7 +208,6 @@ If it were an `anthropic` model it would be an Anthropic key.
         "model": "openai/davinci-002",
         "prompt": "Write a short poem about AI",
         "temperature": 0.7,
-        "top_p": 1,
         "max_tokens": 150
       }'
       ```
@@ -298,16 +235,18 @@ If it were an `anthropic` model it would be an Anthropic key.
         prompt: "Write a short poem about AI",
         max_tokens: 150,
         temperature: 0.7,
-        top_p: 1,
         stream: true
       });
 
       let text = '';
       for await (const event of stream) {
-        if (event.type === "response.output_text.delta") {
-          text += event.delta;
-          console.log(event.delta);
+        if (event.choices[0].finish_reason) {
+          break;
         }
+
+        const content = event.choices[0].text;
+        text += content;
+        console.log(content);
       }
 
       console.log({ text });
@@ -321,19 +260,23 @@ If it were an `anthropic` model it would be an Anthropic key.
           default_headers={"Authorization": "BYTEZ_KEY", "provider-key": "PROVIDER_KEY"},
       )
 
-      stream = client.completions.stream(
+      stream = client.completions.create(
           model="openai/davinci-002",
           prompt="Write a short poem about AI",
           max_tokens=150,
           temperature=0.7,
-          top_p=1
+          stream=True
       )
 
       text = ""
       for event in stream:
-          if event.type == "response.output_text.delta":
-              text += event.delta
-              print(event.delta)
+          if event.choices[0].finish_reason:
+              break
+
+          content = event.choices[0].text
+
+          text += content
+          print(content)
 
       print({"text": text})
       ```
@@ -347,74 +290,7 @@ If it were an `anthropic` model it would be an Anthropic key.
         "prompt": "Write a short poem about AI",
         "max_tokens": 150,
         "temperature": 0.7,
-        "top_p": 1,
         "stream": true
-      }'
-      ```
-    </CodeGroup>
-
-  </Accordion>
-
-  <Accordion defaultOpen="false" title="Custom params (Closed Source)">
-
-    <CodeGroup>
-      ```javascript javascript
-      import OpenAI from "openai";
-
-      const client = new OpenAI({
-        apiKey: "BYTEZ_KEY",
-        baseURL: "https://api.bytez.com/models/v2/openai/v1",
-        defaultHeaders: {
-          Authorization: "BYTEZ_KEY",
-          "provider-key": "PROVIDER_KEY"
-        }
-      });
-
-      const response = await client.completions.create({
-        model: "openai/davinci-002",
-        prompt: "Write a haiku about space exploration",
-        max_tokens: 120,
-        temperature: 0.3,
-        top_p: 0.9,
-        frequency_penalty: 0.5,
-        presence_penalty: 0.2
-      });
-
-      console.log(response);
-      ```
-      ```python python
-      from openai import OpenAI
-
-      client = OpenAI(
-          api_key="BYTEZ_KEY",
-          base_url="https://api.bytez.com/models/v2/openai/v1",
-          default_headers={"Authorization": "BYTEZ_KEY", "provider-key": "PROVIDER_KEY"},
-      )
-
-      response = client.completions.create(
-          model="openai/davinci-002",
-          prompt="Write a haiku about space exploration",
-          max_tokens=120,
-          temperature=0.3,
-          top_p=0.9,
-          frequency_penalty=0.5,
-          presence_penalty=0.2
-      )
-      print(response)
-      ```
-      ```bash http
-      curl -X POST 'https://api.bytez.com/models/v2/openai/v1/completions' \
-      -H 'Authorization: BYTEZ_KEY' \
-      -H 'provider-key: PROVIDER_KEY' \
-      -H 'Content-Type: application/json' \
-      --data '{
-        "model": "openai/davinci-002",
-        "prompt": "Write a haiku about space exploration",
-        "max_tokens": 120,
-        "temperature": 0.3,
-        "top_p": 0.9,
-        "frequency_penalty": 0.5,
-        "presence_penalty": 0.2
       }'
       ```
     </CodeGroup>

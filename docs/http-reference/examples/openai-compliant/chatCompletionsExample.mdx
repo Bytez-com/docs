@@ -17,6 +17,8 @@ e.g. If you are trying to run `anthropic/claude-sonnet-4-5`, `provider-key` will
 
 For unlimited rate limits you will need to supply a header `provider-key`.
 
+**NOTE:** Logprobs are supported for all models!
+
 <AccordionGroup>
   <Accordion defaultOpen="true" title="Basic usage (Open Source)">
 
@@ -41,7 +43,9 @@ For unlimited rate limits you will need to supply a header `provider-key`.
 
       const response = await client.chat.completions.create({
         model: "Qwen/Qwen3-4B",
-        messages
+        messages,
+        max_tokens: 150,
+        temperature: 0.7
       });
 
       console.log(response);
@@ -56,14 +60,13 @@ For unlimited rate limits you will need to supply a header `provider-key`.
       )
 
       messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"}
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"},
       ]
 
       response = client.chat.completions.create(
-          model="Qwen/Qwen3-4B",
-          messages=messages
+          model="Qwen/Qwen3-4B", messages=messages, temperature=0.7, max_tokens=150
       )
 
       print(response)
@@ -78,7 +81,9 @@ For unlimited rate limits you will need to supply a header `provider-key`.
           {"role": "system", "content": "You are a friendly chatbot"},
           {"role": "assistant", "content": "Hello, I'm a friendly bot"},
           {"role": "user", "content": "Hello bot, what is the capital of England?"}
-        ]
+        ],
+        "temperature": 0.7,
+        "max_tokens": 150,
       }'
       ```
     </CodeGroup>
@@ -108,15 +113,20 @@ For unlimited rate limits you will need to supply a header `provider-key`.
       const stream = await client.chat.completions.create({
         model: "Qwen/Qwen3-4B",
         messages,
+        max_tokens: 150,
+        temperature: 0.7,
         stream: true
       });
 
       let text = '';
       for await (const event of stream) {
-        if (event.type === "response.output_text.delta") {
-          text += event.delta;
-          console.log(event.delta);
+        if (event.choices[0].finish_reason) {
+          break;
         }
+
+        const content = event.choices[0].delta.content;
+        text += content;
+        console.log(content);
       }
 
       console.log({ text });
@@ -131,21 +141,28 @@ For unlimited rate limits you will need to supply a header `provider-key`.
       )
 
       messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"}
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"},
       ]
 
-      stream = client.chat.completions.stream(
+      stream = client.chat.completions.create(
           model="Qwen/Qwen3-4B",
-          messages=messages
+          messages=messages,
+          temperature=0.7,
+          max_tokens=150,
+          stream=True,
       )
 
       text = ""
       for event in stream:
-          if event.type == "response.output_text.delta":
-              text += event.delta
-              print(event.delta)
+          if event.choices[0].finish_reason:
+              break
+
+          content = event.choices[0].delta.content
+
+          text += content
+          print(content)
 
       print({"text": text})
       ```
@@ -160,6 +177,8 @@ For unlimited rate limits you will need to supply a header `provider-key`.
           {"role": "assistant", "content": "Hello, I'm a friendly bot"},
           {"role": "user", "content": "Hello bot, what is the capital of England?"}
         ],
+        "temperature": 0.7,
+        "max_tokens": 150,
         "stream": true
       }'
       ```
@@ -190,7 +209,9 @@ For unlimited rate limits you will need to supply a header `provider-key`.
 
         const response = await client.chat.completions.create({
           model: "openai/gpt-4",
-          messages
+          messages,
+          max_tokens: 150,
+          temperature: 0.7
         });
 
         console.log(response);
@@ -205,14 +226,13 @@ For unlimited rate limits you will need to supply a header `provider-key`.
         )
 
         messages = [
-          {"role": "system", "content": "You are a friendly chatbot"},
-          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-          {"role": "user", "content": "Hello bot, what is the capital of England?"}
+            {"role": "system", "content": "You are a friendly chatbot"},
+            {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+            {"role": "user", "content": "Hello bot, what is the capital of England?"},
         ]
 
         response = client.chat.completions.create(
-            model="openai/gpt-4",
-            messages=messages
+            model="openai/gpt-4", messages=messages, temperature=0.7, max_tokens=150
         )
 
         print(response)
@@ -228,12 +248,14 @@ For unlimited rate limits you will need to supply a header `provider-key`.
             {"role": "system", "content": "You are a friendly chatbot"},
             {"role": "assistant", "content": "Hello, I'm a friendly bot"},
             {"role": "user", "content": "Hello bot, what is the capital of England?"}
-          ]
+          ],
+          "temperature": 0.7,
+          "max_tokens": 150,
         }'
         ```
       </CodeGroup>
 
-    </Accordion>
+  </Accordion>
 
   <Accordion defaultOpen="false" title="Streaming (Closed Source)">
 
@@ -259,15 +281,20 @@ For unlimited rate limits you will need to supply a header `provider-key`.
       const stream = await client.chat.completions.create({
         model: "openai/gpt-4",
         messages,
+        max_tokens: 150,
+        temperature: 0.7,
         stream: true
       });
 
       let text = '';
       for await (const event of stream) {
-        if (event.type === "response.output_text.delta") {
-          text += event.delta;
-          console.log(event.delta);
+        if (event.choices[0].finish_reason) {
+          break;
         }
+
+        const content = event.choices[0].delta.content;
+        text += content;
+        console.log(content);
       }
 
       console.log({ text });
@@ -282,21 +309,28 @@ For unlimited rate limits you will need to supply a header `provider-key`.
       )
 
       messages = [
-        {"role": "system", "content": "You are a friendly chatbot"},
-        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
-        {"role": "user", "content": "Hello bot, what is the capital of England?"}
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"},
       ]
 
-      stream = client.chat.completions.stream(
+      stream = client.chat.completions.create(
           model="openai/gpt-4",
-          messages=messages
+          messages=messages,
+          temperature=0.7,
+          max_tokens=150,
+          stream=True,
       )
 
       text = ""
       for event in stream:
-          if event.type == "response.output_text.delta":
-              text += event.delta
-              print(event.delta)
+          if event.choices[0].finish_reason:
+              break
+
+          content = event.choices[0].delta.content
+
+          text += content
+          print(content)
 
       print({"text": text})
       ```
@@ -312,6 +346,8 @@ For unlimited rate limits you will need to supply a header `provider-key`.
           {"role": "assistant", "content": "Hello, I'm a friendly bot"},
           {"role": "user", "content": "Hello bot, what is the capital of England?"}
         ],
+        "temperature": 0.7,
+        "max_tokens": 150,
         "stream": true
       }'
       ```
