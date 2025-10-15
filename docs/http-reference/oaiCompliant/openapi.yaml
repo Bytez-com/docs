@@ -11,8 +11,21 @@ paths:
   /models/v2/openai/v1/chat/completions:
     post:
       summary: Chat Completions
-      description: Sends messages to an OpenAI compatible model and returns a completion. Provides completions for all open source models that are 'text-generation', 'chat', 'audio-text-to-text', 'image-text-to-text', 'video-text-to-text', it also supports the closed source providers, "openai", "anthropic", "mistral", "cohere", and "google".
+      description: Sends a prompt to an OpenAI compatible completion model and returns a completion. Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers `openai`, `anthropic`, `mistral`, `cohere`, and `google`. To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-4`
       operationId: runModel
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token for authentication
+          required: true
+          schema:
+            type: string
+        - name: provider-key
+          in: header
+          description: Optional provider key for running requests against closed source models. Required for providers `anthropic` and `cohere`. Removes rate limits for the other providers.
+          required: false
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -22,7 +35,7 @@ paths:
               properties:
                 model:
                   type: string
-                  description: The ID of the model to run (e.g., "Qwen/Qwen3-1.7B", "openai/gpt-4")
+                  description: The ID of the model to run (e.g., `Qwen/Qwen3-1.7B`, `openai/gpt-4`)
                 messages:
                   type: array
                   description: Conversation messages (OpenAI chat format)
@@ -67,7 +80,7 @@ paths:
                     description: Unique ID for this completion
                   object:
                     type: string
-                    description: Type of returned object (usually "chat.completion")
+                    description: Type of returned object (usually `chat.completion`)
                   created:
                     type: integer
                     description: Unix timestamp of completion
@@ -96,8 +109,21 @@ paths:
   /models/v2/openai/v1/completions:
     post:
       summary: Completions
-      description: Sends a prompt to an OpenAI compatible text completion model and returns generated text. Provides completions for all open source models that are 'text-generation', 'chat', 'audio-text-to-text', 'image-text-to-text', 'video-text-to-text', it also supports the closed source providers, "openai", "anthropic", "mistral", "cohere", and "google".
+      description: Sends a prompt to an OpenAI compatible completion model and returns a completion. Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers `openai`, `anthropic`, `mistral`, `cohere`, and `google`. To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-4`
       operationId: runTextCompletion
+      parameters:
+        - name: Authorization
+          in: header
+          description: Token for authentication
+          required: true
+          schema:
+            type: string
+        - name: provider-key
+          in: header
+          description: Optional provider key for running requests against closed source models. Required for providers `anthropic` and `cohere`. Removes rate limits for the other providers.
+          required: false
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -107,7 +133,7 @@ paths:
               properties:
                 model:
                   type: string
-                  description: The ID of the completion model to run (e.g., "text-davinci-003")
+                  description: The ID of the completion model to run (e.g., `text-davinci-003`)
                 prompt:
                   type: string
                   description: The input text prompt

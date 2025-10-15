@@ -5,12 +5,20 @@ icon: 'robot'
 mode: 'wide'
 ---
 
-Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
+Provides chat completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
 
 To specify a provider, prefix the model with the provider, e.g. `gpt-4` should be passed in as `openai/gpt4`
 
+We provide free api access to models from `openai`, `mistral`, and `google`.
+
+You will need to supply a header `provider-key` in order to make requests to `anthropic`, and `cohere` models.
+
+e.g. If you are trying to run `anthropic/claude-sonnet-4-5` this will be an Anthropic key.
+
+For unlimited rate limits you will need to supply a header `provider-key`.
+
 <AccordionGroup>
-  <Accordion defaultOpen="true" title="Basic usage">
+  <Accordion defaultOpen="true" title="Basic usage (Open Source)">
 
     <CodeGroup>
       ```javascript javascript
@@ -19,7 +27,10 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
       const client = new OpenAI({
         apiKey: "BYTEZ_KEY",
         baseURL: "https://api.bytez.com/models/v2/openai/v1",
-        defaultHeaders: { Authorization: "BYTEZ_KEY" }
+        defaultHeaders: {
+          Authorization: "BYTEZ_KEY",
+          "provider-key": "PROVIDER_KEY"
+        }
       });
 
       const messages = [
@@ -41,7 +52,7 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
       client = OpenAI(
           api_key="BYTEZ_KEY",
           base_url="https://api.bytez.com/models/v2/openai/v1",
-          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+          default_headers={"Authorization": "BYTEZ_KEY"},
       )
 
       messages = [
@@ -59,7 +70,7 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
       ```
       ```bash http
       curl -X POST 'https://api.bytez.com/models/v2/openai/v1/chat/completions' \
-      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Authorization: BYTEZ_KEY' \
       -H 'Content-Type: application/json' \
       --data '{
         "model": "Qwen/Qwen3-4B",
@@ -74,7 +85,7 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
 
   </Accordion>
 
-  <Accordion defaultOpen="false" title="Streaming">
+  <Accordion defaultOpen="false" title="Streaming (Open Source)">
 
     <CodeGroup>
       ```javascript javascript
@@ -83,8 +94,16 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
       const client = new OpenAI({
         apiKey: "BYTEZ_KEY",
         baseURL: "https://api.bytez.com/models/v2/openai/v1",
-        defaultHeaders: { Authorization: "BYTEZ_KEY" }
+        defaultHeaders: {
+          Authorization: "BYTEZ_KEY"
+        }
       });
+
+      const messages = [
+        { role: "system", content: "You are a friendly chatbot" },
+        { role: "assistant", content: "Hello, I'm a friendly bot" },
+        { role: "user", content: "Hello bot, what is the capital of England?" }
+      ];
 
       const stream = await client.chat.completions.create({
         model: "Qwen/Qwen3-4B",
@@ -108,8 +127,14 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
       client = OpenAI(
           api_key="BYTEZ_KEY",
           base_url="https://api.bytez.com/models/v2/openai/v1",
-          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+          default_headers={"Authorization": "BYTEZ_KEY"},
       )
+
+      messages = [
+        {"role": "system", "content": "You are a friendly chatbot"},
+        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+        {"role": "user", "content": "Hello bot, what is the capital of England?"}
+      ]
 
       stream = client.chat.completions.stream(
           model="Qwen/Qwen3-4B",
@@ -126,11 +151,167 @@ To specify a provider, prefix the model with the provider, e.g. `gpt-4` should b
       ```
       ```bash http
       curl -N -X POST 'https://api.bytez.com/models/v2/openai/v1/chat/completions' \
-      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Authorization: BYTEZ_KEY' \
       -H 'Content-Type: application/json' \
       --data '{
         "model": "Qwen/Qwen3-4B",
-        "messages": [...],
+        "messages": [
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"}
+        ],
+        "stream": true
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion defaultOpen="false" title="Basic usage (Closed Source)">
+
+      <CodeGroup>
+        ```javascript javascript
+        import OpenAI from "openai";
+
+        const client = new OpenAI({
+          apiKey: "BYTEZ_KEY",
+          baseURL: "https://api.bytez.com/models/v2/openai/v1",
+          defaultHeaders: {
+            Authorization: "BYTEZ_KEY",
+            "provider-key": "PROVIDER_KEY"
+          }
+        });
+
+        const messages = [
+          { role: "system", content: "You are a friendly chatbot" },
+          { role: "assistant", content: "Hello, I'm a friendly bot" },
+          { role: "user", content: "Hello bot, what is the capital of England?" }
+        ];
+
+        const response = await client.chat.completions.create({
+          model: "openai/gpt-4",
+          messages
+        });
+
+        console.log(response);
+        ```
+        ```python python
+        from openai import OpenAI
+
+        client = OpenAI(
+            api_key="BYTEZ_KEY",
+            base_url="https://api.bytez.com/models/v2/openai/v1",
+            default_headers={"Authorization": "BYTEZ_KEY", "provider-key": "PROVIDER_KEY"},
+        )
+
+        messages = [
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"}
+        ]
+
+        response = client.chat.completions.create(
+            model="openai/gpt-4",
+            messages=messages
+        )
+
+        print(response)
+        ```
+        ```bash http
+        curl -X POST 'https://api.bytez.com/models/v2/openai/v1/chat/completions' \
+        -H 'Authorization: BYTEZ_KEY' \
+        -H 'provider-key: PROVIDER_KEY' \
+        -H 'Content-Type: application/json' \
+        --data '{
+          "model": "openai/gpt-4",
+          "messages": [
+            {"role": "system", "content": "You are a friendly chatbot"},
+            {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+            {"role": "user", "content": "Hello bot, what is the capital of England?"}
+          ]
+        }'
+        ```
+      </CodeGroup>
+
+    </Accordion>
+
+  <Accordion defaultOpen="false" title="Streaming (Closed Source)">
+
+    <CodeGroup>
+      ```javascript javascript
+      import OpenAI from "openai";
+
+      const client = new OpenAI({
+        apiKey: "BYTEZ_KEY",
+        baseURL: "https://api.bytez.com/models/v2/openai/v1",
+        defaultHeaders: {
+          Authorization: "BYTEZ_KEY",
+          "provider-key": "PROVIDER_KEY"
+        }
+      });
+
+      const messages = [
+        { role: "system", content: "You are a friendly chatbot" },
+        { role: "assistant", content: "Hello, I'm a friendly bot" },
+        { role: "user", content: "Hello bot, what is the capital of England?" }
+      ];
+
+      const stream = await client.chat.completions.create({
+        model: "openai/gpt-4",
+        messages,
+        stream: true
+      });
+
+      let text = '';
+      for await (const event of stream) {
+        if (event.type === "response.output_text.delta") {
+          text += event.delta;
+          console.log(event.delta);
+        }
+      }
+
+      console.log({ text });
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1",
+          default_headers={"Authorization": "BYTEZ_KEY", "provider-key": "PROVIDER_KEY"},
+      )
+
+      messages = [
+        {"role": "system", "content": "You are a friendly chatbot"},
+        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+        {"role": "user", "content": "Hello bot, what is the capital of England?"}
+      ]
+
+      stream = client.chat.completions.stream(
+          model="openai/gpt-4",
+          messages=messages
+      )
+
+      text = ""
+      for event in stream:
+          if event.type == "response.output_text.delta":
+              text += event.delta
+              print(event.delta)
+
+      print({"text": text})
+      ```
+      ```bash http
+      curl -N -X POST 'https://api.bytez.com/models/v2/openai/v1/chat/completions' \
+      -H 'Authorization: BYTEZ_KEY' \
+      -H 'provider-key: PROVIDER_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "openai/gpt-4",
+        "messages": [
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"}
+        ],
         "stream": true
       }'
       ```
