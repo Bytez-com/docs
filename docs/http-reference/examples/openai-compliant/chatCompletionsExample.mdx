@@ -5,7 +5,7 @@ icon: 'robot'
 mode: 'wide'
 ---
 
-Provides chat completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
+Provides chat completions for all open source models that are `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports chat completions models from the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
 
 To specify a provider, prefix the model with the provider, e.g. `gpt-4` should be passed in as `openai/gpt4`
 
@@ -13,7 +13,7 @@ We provide free api access to models from `openai`, `mistral`, and `google`.
 
 You will need to supply a header `provider-key` in order to make requests to `anthropic`, and `cohere` models.
 
-e.g. If you are trying to run `anthropic/claude-sonnet-4-5` this will be an Anthropic key.
+e.g. If you are trying to run `anthropic/claude-sonnet-4-5`, `provider-key` will be an Anthropic key.
 
 For unlimited rate limits you will need to supply a header `provider-key`.
 

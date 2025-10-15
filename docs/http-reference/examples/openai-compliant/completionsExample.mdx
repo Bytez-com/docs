@@ -5,17 +5,19 @@ icon: 'robot'
 mode: 'wide'
 ---
 
-Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
+Provides completions for all open source models that are `text-generation`, it also supports completions models from the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
 
-To specify a provider, prefix the model with the provider, e.g. `gpt-4` should be passed in as `openai/gpt4`
+To specify a provider, prefix the model with the provider, e.g. `davinci-002` should be passed in as `openai/davinci-002`
 
 We provide free api access to models from `openai`, `mistral`, and `google`.
 
 You will need to supply a header `provider-key` in order to make requests to `anthropic`, and `cohere` models.
 
-e.g. If you are trying to run `anthropic/claude-sonnet-4-5` this will be an Anthropic key.
-
 For unlimited rate limits you will need to supply a header `provider-key`.
+
+e.g. If you are trying to run `openai/davinci-002` with unlimited rate limits, `provider-key` will be an Open AI key.
+
+If it were an `anthropic` model it would be an Anthropic key.
 
 <AccordionGroup>
 
