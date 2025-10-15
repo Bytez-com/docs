@@ -1,0 +1,161 @@
+openapi: 3.1.0
+info:
+  title: OpenAI Compatible Models API
+  description: API endpoint compatible with OpenAI completions for running models.
+  version: 1.0.0
+
+servers:
+  - url: https://api.bytez.com
+
+paths:
+  /models/v2/openai/v1/chat/completions:
+    post:
+      summary: Chat Completions
+      description: Sends messages to an OpenAI compatible model and returns a completion. Provides completions for all open source models that are 'text-generation', 'chat', 'audio-text-to-text', 'image-text-to-text', 'video-text-to-text', it also supports the closed source providers, "openai", "anthropic", "mistral", "cohere", and "google".
+      operationId: runModel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The ID of the model to run (e.g., "Qwen/Qwen3-1.7B", "openai/gpt-4")
+                messages:
+                  type: array
+                  description: Conversation messages (OpenAI chat format)
+                  items:
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                        enum: [system, user, assistant]
+                        description: The role of the message sender
+                      content:
+                        type: string
+                        description: The message text
+                    required:
+                      - role
+                      - content
+                temperature:
+                  type: number
+                  description: Sampling temperature
+                  default: 0.7
+                top_p:
+                  type: number
+                  description: Nucleus sampling probability
+                  default: 1
+                stream:
+                  type: boolean
+                  description: Whether to stream responses
+                  default: false
+              required:
+                - model
+                - messages
+      responses:
+        '200':
+          description: Successful model completion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique ID for this completion
+                  object:
+                    type: string
+                    description: Type of returned object (usually "chat.completion")
+                  created:
+                    type: integer
+                    description: Unix timestamp of completion
+                  choices:
+                    type: array
+                    description: Generated completions
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                        message:
+                          type: object
+                          properties:
+                            role:
+                              type: string
+                            content:
+                              type: string
+                        finish_reason:
+                          type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /models/v2/openai/v1/completions:
+    post:
+      summary: Completions
+      description: Sends a prompt to an OpenAI compatible text completion model and returns generated text. Provides completions for all open source models that are 'text-generation', 'chat', 'audio-text-to-text', 'image-text-to-text', 'video-text-to-text', it also supports the closed source providers, "openai", "anthropic", "mistral", "cohere", and "google".
+      operationId: runTextCompletion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The ID of the completion model to run (e.g., "text-davinci-003")
+                prompt:
+                  type: string
+                  description: The input text prompt
+                max_tokens:
+                  type: integer
+                  description: Maximum number of tokens to generate
+                  default: 256
+                temperature:
+                  type: number
+                  description: Sampling temperature
+                  default: 0.7
+                top_p:
+                  type: number
+                  description: Nucleus sampling probability
+                  default: 1
+                stream:
+                  type: boolean
+                  description: Whether to stream responses
+                  default: false
+              required:
+                - model
+                - prompt
+      responses:
+        '200':
+          description: Successful text completion
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  object:
+                    type: string
+                  created:
+                    type: integer
+                  choices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                        text:
+                          type: string
+                        finish_reason:
+                          type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error

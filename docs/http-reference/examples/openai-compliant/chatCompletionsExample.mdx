@@ -1,0 +1,141 @@
+---
+title: 'Chat Completions'
+description: Use OpenAI-compatible endpoints for chat and text completions via OpenAI clients, supporting streaming and custom parameters.
+icon: 'robot'
+mode: 'wide'
+---
+
+Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
+
+To specify a provider, prefix the model with the provider, e.g. `gpt-4` should be passed in as `openai/gpt4`
+
+<AccordionGroup>
+  <Accordion defaultOpen="true" title="Basic usage">
+
+    <CodeGroup>
+      ```javascript javascript
+      import OpenAI from "openai";
+
+      const client = new OpenAI({
+        apiKey: "BYTEZ_KEY",
+        baseUrl: "https://api.bytez.com/models/v2/openai/v1",
+        defaultHeaders: { Authorization: "BYTEZ_KEY" }
+      });
+
+      const messages = [
+        { role: "system", content: "You are a friendly chatbot" },
+        { role: "assistant", content: "Hello, I'm a friendly bot" },
+        { role: "user", content: "Hello bot, what is the capital of England?" }
+      ];
+
+      const response = await client.chat.completions.create({
+        model: "Qwen/Qwen3-4B",
+        messages
+      });
+
+      console.log(response);
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1",
+          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+      )
+
+      messages = [
+        {"role": "system", "content": "You are a friendly chatbot"},
+        {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+        {"role": "user", "content": "Hello bot, what is the capital of England?"}
+      ]
+
+      response = client.chat.completions.create(
+          model="Qwen/Qwen3-4B",
+          messages=messages
+      )
+
+      print(response)
+      ```
+      ```bash http
+      curl -X POST 'https://api.bytez.com/models/v2/openai/v1/chat/completions' \
+      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "Qwen/Qwen3-4B",
+        "messages": [
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "assistant", "content": "Hello, I'm a friendly bot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"}
+        ]
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion defaultOpen="false" title="Streaming">
+
+    <CodeGroup>
+      ```javascript javascript
+      import OpenAI from "openai";
+
+      const client = new OpenAI({
+        apiKey: "BYTEZ_KEY",
+        baseUrl: "https://api.bytez.com/models/v2/openai/v1",
+        defaultHeaders: { Authorization: "BYTEZ_KEY" }
+      });
+
+      const stream = await client.chat.completions.create({
+        model: "Qwen/Qwen3-4B",
+        messages,
+        stream: true
+      });
+
+      let text = '';
+      for await (const event of stream) {
+        if (event.type === "response.output_text.delta") {
+          text += event.delta;
+          console.log(event.delta);
+        }
+      }
+
+      console.log({ text });
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1",
+          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+      )
+
+      stream = client.chat.completions.stream(
+          model="Qwen/Qwen3-4B",
+          messages=messages
+      )
+
+      text = ""
+      for event in stream:
+          if event.type == "response.output_text.delta":
+              text += event.delta
+              print(event.delta)
+
+      print({"text": text})
+      ```
+      ```bash http
+      curl -N -X POST 'https://api.bytez.com/models/v2/openai/v1/chat/completions' \
+      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "Qwen/Qwen3-4B",
+        "messages": [...],
+        "stream": true
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+</AccordionGroup>

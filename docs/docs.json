@@ -47,6 +47,14 @@
                 "pages": ["model-api/docs/understand-the-api"]
               },
               {
+                "group": "Open AI Completions",
+                "icon": "code",
+                "pages": [
+                  "http-reference/examples/openai-compliant/chatCompletionsExample",
+                  "http-reference/examples/openai-compliant/completionsExample"
+                ]
+              },
+              {
                 "group": "Chat Models",
                 "icon": "comments",
                 "pages": [
@@ -137,12 +145,27 @@
                 "group": "Model",
                 "icon": "cube",
                 "pages": ["http-reference/model/run"]
+              },
+              {
+                "group": "OAI Compliant Endpoints",
+                "icon": "code",
+                "pages": [
+                  "http-reference/oaiCompliant/chatCompletions",
+                  "http-reference/oaiCompliant/completions"
+                ]
               }
             ]
           },
           {
             "group": "Examples",
             "pages": [
+              {
+                "group": "Open AI Completions",
+                "pages": [
+                  "http-reference/examples/openai-compliant/chatCompletionsExample",
+                  "http-reference/examples/openai-compliant/completionsExample"
+                ]
+              },
               {
                 "group": "Chat Models",
                 "pages": [

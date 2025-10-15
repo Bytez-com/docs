@@ -1,0 +1,197 @@
+---
+title: 'Completions'
+description: Use OpenAI-compatible endpoints for chat and text completions via OpenAI clients, supporting streaming and custom parameters.
+icon: 'robot'
+mode: 'wide'
+---
+
+Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers, `openai`, `anthropic`, `mistral`, `cohere`, and `google`.
+
+To specify a provider, prefix the model with the provider, e.g. `gpt-4` should be passed in as `openai/gpt4`
+
+<AccordionGroup>
+
+  <Accordion defaultOpen="true" title="Basic usage">
+
+    <CodeGroup>
+      ```javascript javascript
+      import OpenAI from "openai";
+
+      const client = new OpenAI({
+        apiKey: "BYTEZ_KEY",
+        baseUrl: "https://api.bytez.com/models/v2/openai/v1",
+        defaultHeaders: { Authorization: "BYTEZ_KEY" }
+      });
+
+      const response = await client.completions.create({
+        model: "openai/text-davinci-003",
+        prompt: "Write a short poem about AI",
+        temperature: 0.7,
+        top_p: 1,
+        max_tokens: 150
+      });
+
+      console.log(response);
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1",
+          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+      )
+
+      response = client.completions.create(
+          model="openai/text-davinci-003",
+          prompt="Write a short poem about AI",
+          temperature=0.7,
+          top_p=1,
+          max_tokens=150
+      )
+      print(response)
+      ```
+      ```bash http
+      curl -X POST 'https://api.bytez.com/models/v2/openai/v1/completions' \
+      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "openai/text-davinci-003",
+        "prompt": "Write a short poem about AI",
+        "temperature": 0.7,
+        "top_p": 1,
+        "max_tokens": 150
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion defaultOpen="false" title="Streaming">
+
+    <CodeGroup>
+      ```javascript javascript
+      import OpenAI from "openai";
+
+      const client = new OpenAI({
+        apiKey: "BYTEZ_KEY",
+        baseUrl: "https://api.bytez.com/models/v2/openai/v1",
+        defaultHeaders: { Authorization: "BYTEZ_KEY" }
+      });
+
+      const stream = await client.completions.create({
+        model: "openai/text-davinci-003",
+        prompt: "Write a short poem about AI",
+        max_tokens: 150,
+        temperature: 0.7,
+        top_p: 1,
+        stream: true
+      });
+
+      let text = '';
+      for await (const event of stream) {
+        if (event.type === "response.output_text.delta") {
+          text += event.delta;
+          console.log(event.delta);
+        }
+      }
+
+      console.log({ text });
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1",
+          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+      )
+
+      stream = client.completions.stream(
+          model="openai/text-davinci-003",
+          prompt="Write a short poem about AI",
+          max_tokens=150,
+          temperature=0.7,
+          top_p=1
+      )
+
+      text = ""
+      for event in stream:
+          if event.type == "response.output_text.delta":
+              text += event.delta
+              print(event.delta)
+
+      print({"text": text})
+      ```
+      ```bash http
+      curl -N -X POST 'https://api.bytez.com/models/v2/openai/v1/completions' \
+      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "openai/text-davinci-003",
+        "prompt": "Write a short poem about AI",
+        "max_tokens": 150,
+        "temperature": 0.7,
+        "top_p": 1,
+        "stream": true
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion defaultOpen="false" title="Custom params">
+
+    <CodeGroup>
+      ```javascript javascript
+      const response = await client.completions.create({
+        model: "openai/text-davinci-003",
+        prompt: "Write a haiku about space exploration",
+        max_tokens: 120,
+        temperature: 0.3,
+        top_p: 0.9,
+        frequency_penalty: 0.5,
+        presence_penalty: 0.2
+      });
+
+      console.log(response);
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1",
+          defaultHeaders={"Authorization": "BYTEZ_KEY"},
+      )
+
+      response = client.completions.create(
+          model="openai/text-davinci-003",
+          prompt="Write a haiku about space exploration",
+          max_tokens=120,
+          temperature=0.3,
+          top_p=0.9,
+          frequency_penalty=0.5,
+          presence_penalty=0.2
+      )
+      print(response)
+      ```
+      ```bash http
+      curl -X POST 'https://api.bytez.com/models/v2/openai/v1/completions' \
+      -H 'Authorization: Bearer BYTEZ_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "openai/text-davinci-003",
+        "prompt": "Write a haiku about space exploration",
+        "max_tokens": 120,
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "frequency_penalty": 0.5,
+        "presence_penalty": 0.2
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+</AccordionGroup>
