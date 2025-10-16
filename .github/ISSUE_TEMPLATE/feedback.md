@@ -6,7 +6,7 @@ labels: ["enhancement", "needs-triage"]
 assignees: ["inf3rnus"]
 ---
 
-## 🧩 Summary
+## 🧩 Feedback
 
 A clear and concise description of your feedback.
 
