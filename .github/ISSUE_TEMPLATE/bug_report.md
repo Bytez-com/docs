@@ -14,12 +14,7 @@ A clear and concise description of what the bug is. Include what you expected to
 
 ## 🔁 Steps to Reproduce
 
-Please describe exactly how to reproduce the problem:
-
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
-4. See the error
+Please describe how to reproduce the problem:
 
 If applicable, include example input, commands, or code snippets:
 
