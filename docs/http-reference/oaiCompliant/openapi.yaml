@@ -52,14 +52,14 @@ paths:
                     required:
                       - role
                       - content
+                max_tokens:
+                  type: integer
+                  description: Maximum number of tokens to generate
+                  default: 256
                 temperature:
                   type: number
                   description: Sampling temperature
                   default: 0.7
-                top_p:
-                  type: number
-                  description: Nucleus sampling probability
-                  default: 1
                 stream:
                   type: boolean
                   description: Whether to stream responses
@@ -145,10 +145,6 @@ paths:
                   type: number
                   description: Sampling temperature
                   default: 0.7
-                top_p:
-                  type: number
-                  description: Nucleus sampling probability
-                  default: 1
                 stream:
                   type: boolean
                   description: Whether to stream responses
