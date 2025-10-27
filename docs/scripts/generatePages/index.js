@@ -267,8 +267,8 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
       const replacedString = sectionsAsString
         .replace(
           // notice how we're removing params
-          `error, output = model.run(input, params)`,
-          `error, output = model.run(input)`
+          `result = model.run(input, params)`,
+          `result = model.run(input)`
         )
         // notice how we're removing params, this is for the streaming case
         .replace(

@@ -51,10 +51,10 @@ mode: 'wide'
 			}
 			
 			# send to the model
-			error, output = model.run(input, params)
+			result = model.run(input, params)
 			
 			# observe the output
-			print({"error": error, "output": output})
+			print({"error": result.error, "output": result.output})
 			
 			```
 			```bash http

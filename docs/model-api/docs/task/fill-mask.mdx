@@ -41,10 +41,10 @@ mode: 'wide'
 			input = "The capital of France is <mask>."
 			
 			# send to the model
-			error, output = model.run(input)
+			result = model.run(input, params)
 			
 			# observe the output
-			print({"error": error, "output": output})
+			print({"error": result.error, "output": result.output})
 			
 			```
 			```bash http
