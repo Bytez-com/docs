@@ -15,10 +15,10 @@ params = "$PARAMS_PAYLOAD"
 # $NON_STREAMING_SECTION
 
 # send to the model
-error, output = model.run(input, params)
+result = model.run(input, params)
 
 # observe the output
-print({"error": error, "output": output})
+print({"error": result.error, "output": result.output})
 
 # $STREAMING_SECTION
 
@@ -29,6 +29,7 @@ stream = True
 readStream = model.run(input, params, stream)
 
 text = ""
+
 for chunk in readStream:
     tokens = chunk.decode("utf-8")
     text += tokens

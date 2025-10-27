@@ -107,12 +107,12 @@ mode: 'wide'
       from bytez import Bytez
 
       sdk = Bytez("BYTEZ_KEY")
-      model_id = "openai-community/gpt-2"
-      model = sdk.model(model_id)
 
-      output, error = model.run("Once upon a time")
+      model = sdk.model("openai-community/gpt-2")
 
-      print(output)
+      result = model.run("Once upon a time")
+
+      print(result.output)
       ```
 
       ```bash http
@@ -152,9 +152,9 @@ mode: 'wide'
 
           sdk = Bytez("BYTEZ_KEY")
 
-          output, error = sdk.list.tasks()
+          result = sdk.list.tasks()
 
-          print(output)
+          print(result.output)
           ```
 
           ```bash http
@@ -183,9 +183,9 @@ mode: 'wide'
 
           sdk = Bytez("BYTEZ_KEY")
 
-          output, error = sdk.list.models()
+          result = sdk.list.models()
 
-          print(output)
+          print(result.output)
           ```
 
           ```bash http
