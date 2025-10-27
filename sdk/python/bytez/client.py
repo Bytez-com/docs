@@ -1,4 +1,7 @@
 import json, requests
+from collections import namedtuple
+
+Response = namedtuple('Response', ['output', 'error', 'provider'], defaults=[None])
 
 class Client:
     """
@@ -38,7 +41,7 @@ class Client:
             response = requests.request(
                 method,
                 self.host + path,
-                headers = ( { **self.headers, 'provider-key': provider_key } if provider_key is not None else self.headers ),
+                headers = ( { **self.headers, "provider-key": provider_key } if provider_key is not None else self.headers ),
                 # drop null values from being sent
                 data = json.dumps({k: v for k, v in post_body.items() if v is not None}) if post_body else None,
                 stream = stream
@@ -48,8 +51,7 @@ class Client:
                 return response.iter_lines(decode_unicode=True)
             else:
                 results = response.json()
-                provider = results.get('provider')
 
-                return [results.get('output'), results.get('error'), provider] if provider else [results.get('output'), results.get('error')]
+                return Response(output=results.get('output'), error=results.get('error'), provider=results.get('provider'))
         except Exception as error:
-            return [None, str(error)]
+            return Response(error=str(error))

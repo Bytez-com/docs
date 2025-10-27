@@ -43,6 +43,7 @@ def main():
     # Step 3: Run sdist and bdist_wheel
     subprocess.run(["python", "setup.py", "sdist", "bdist_wheel"], check=True)
 
+    # ensure your creds are in ~/.pypirc
     # Step 4: Upload with twine
     subprocess.run(
         [
@@ -51,9 +52,6 @@ def main():
             "twine",
             "upload",
             "dist/*",
-            "--username",
-            "__token__",
-            f"--password={os.environ.get('PYPI_TOKEN')}",
         ],
         check=True,
     )

@@ -29,7 +29,7 @@ class Model:
 
     def _initialize(self):
         """Fetch model details and set up internal state."""
-        output, _ = self._bytez.list.models({"modelId": self.id})
+        result = self._bytez.list.models({"modelId": self.id})
         media_generators = {
             "text-to-audio",
             "text-to-image",
@@ -37,7 +37,7 @@ class Model:
             "text-to-speech",
         }
 
-        self.details = output[0] if output else {}
+        self.details = result.output[0] if result.output else {}
         self._is_generating_media = self.details.get("task") in media_generators
         self._ready = True
 

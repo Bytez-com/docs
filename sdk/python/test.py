@@ -9,6 +9,7 @@ bytez = Bytez(KEY, True)
 modelId = "openai-community/gpt2"
 model = bytez.model(modelId)
 
+print("Running tests")
 
 class TestTextGeneration(unittest.IsolatedAsyncioTestCase):
     """Tests for text generation models in a fixed order."""
@@ -19,30 +20,30 @@ class TestTextGeneration(unittest.IsolatedAsyncioTestCase):
 
     def test_list_models(self):
         """Test listing models."""
-        output, error = bytez.list.models()
+        result = bytez.list.models()
 
-        self.assertIsNone(error)
-        self.assertIsInstance(output, list, "should return an array of models")
-        self.assertNotEqual(len(output), 0, "array should not be empty")
+        self.assertIsNone(result.error)
+        self.assertIsInstance(result.output, list, "should return an array of models")
+        self.assertNotEqual(len(result.output), 0, "array should not be empty")
 
     def test_runs_a_model(self):
         """Test running a model."""
-        output, error = model.run("Jack and jill")
+        result = model.run("Jack and jill")
 
-        self.assertIsNone(error)
-        self.assertIsInstance(output, str, "returns output")
+        self.assertIsNone(result.error)
+        self.assertIsInstance(result.output, str, "returns output")
 
     def test_runs_model_with_params(self):
         """Test running a model with parameters."""
         input_text = "Jack and Jill "
-        output, error = model.run(
+        result = model.run(
             input_text, {"min_new_tokens": 1, "max_new_tokens": 1}
         )
 
-        self.assertIsNone(error)
-        self.assertIsInstance(output, str, "returns output")
+        self.assertIsNone(result.error)
+        self.assertIsInstance(result.output, str, "returns output")
         self.assertEqual(
-            len(output.split(" ")),
+            len(result.output.split(" ")),
             len(input_text.strip().split(" ")) + 1,
             "returns output",
         )
@@ -63,15 +64,15 @@ class TestTextGeneration(unittest.IsolatedAsyncioTestCase):
 
     def test_stream_false_does_not_stream(self):
         """Test that `stream=False` does not return a stream."""
-        output, error = model.run("Jack and jill", stream=False)
+        result = model.run("Jack and jill", stream=False)
 
-        self.assertIsNone(error)
-        self.assertIsInstance(output, str, "returns output")
+        self.assertIsNone(result.error)
+        self.assertIsInstance(result.output, str, "returns output")
 
-        output, error = model.run("Jack and jill", {"max_length": 100}, stream=False)
+        result = model.run("Jack and jill", {"max_length": 100}, stream=False)
 
-        self.assertIsNone(error)
-        self.assertIsInstance(output, str, "returns output")
+        self.assertIsNone(result.error)
+        self.assertIsInstance(result.output, str, "returns output")
 
 
 if __name__ == "__main__":
