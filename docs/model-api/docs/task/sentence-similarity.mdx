@@ -41,7 +41,7 @@ mode: 'wide'
 			input = "Turn this sentence into a vector"
 			
 			# send to the model
-			result = model.run(input, params)
+			result = model.run(input)
 			
 			# observe the output
 			print({"error": result.error, "output": result.output})
