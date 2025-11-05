@@ -1,7 +1,7 @@
 import json, requests
 from collections import namedtuple
 
-Response = namedtuple('Response', ['output', 'error', 'provider'], defaults=[None])
+Response = namedtuple('Response', ['output', 'error', 'provider'], defaults=[None, None, None])
 
 class Client:
     """
