@@ -41,7 +41,7 @@ mode: 'wide'
 			input = "We are furious with the results of the experiment!"
 			
 			# send to the model
-			result = model.run(input, params)
+			result = model.run(input)
 			
 			# observe the output
 			print({"error": result.error, "output": result.output})

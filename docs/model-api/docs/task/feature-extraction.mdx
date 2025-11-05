@@ -41,7 +41,7 @@ mode: 'wide'
 			input = "search_document: Turn this text into a vector"
 			
 			# send to the model
-			result = model.run(input, params)
+			result = model.run(input)
 			
 			# observe the output
 			print({"error": result.error, "output": result.output})
