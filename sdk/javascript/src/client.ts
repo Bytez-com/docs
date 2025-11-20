@@ -74,8 +74,8 @@ export default class Client {
         // in browsers, return readable text stream
         // in node, return node readable stream
         return this.#isBrowser
-          ? res.body
-          : this.#Readable.fromWeb(res.body as any);
+          ? res.body.pipeThrough(new TextDecoderStream())
+          : this.#Readable.fromWeb(res.body as any, { encoding: "utf8" });
       } else {
         return await res.json();
       }

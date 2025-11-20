@@ -83,10 +83,9 @@ describe.skip("text generation", async () => {
     let testPass = false;
     // console.log(textStream);
 
-    for await (const chunk of readStream.setEncoding("utf8")) {
-      // console.log({ chunk });
+    for await (const tokens of readStream) {
       if (testPass === false) {
-        testPass = typeof chunk === "string";
+        testPass = typeof tokens === "string";
         assert(testPass, "streams output");
       }
     }
@@ -95,9 +94,9 @@ describe.skip("text generation", async () => {
 
     testPass = false;
 
-    for await (const chunk of readStream.setEncoding("utf8")) {
+    for await (const tokens of readStream) {
       if (testPass === false) {
-        testPass = typeof chunk === "string";
+        testPass = typeof tokens === "string";
         assert(testPass, "streams output");
       }
     }
@@ -107,13 +106,13 @@ describe.skip("text generation", async () => {
     const browserClient = new Bytez(process.env.BYTEZ_KEY ?? "", true, true);
     const model = browserClient.model("openai-community/gpt2");
     const readStream = await model.run("Jack and jill", true);
-    const textStream = readStream.pipeThrough(new TextDecoderStream());
+
     let testPass = false;
 
-    for await (const chunk of textStream) {
-      // console.log({ chunk });
+    for await (const tokens of readStream) {
+      // console.log({ tokens });
       if (testPass === false) {
-        testPass = typeof chunk === "string";
+        testPass = typeof tokens === "string";
 
         assert(testPass, "streams output");
       }

@@ -10,11 +10,9 @@ import { Response } from "./interface/Client";
  */
 export default class Bytez {
   constructor(apiKey: string, dev = false, browser?: boolean) {
-    this.key = apiKey;
     this.#client = new Client(apiKey, dev, browser);
   }
   #client: Client;
-  key = "";
   list = {
     /** Lists available models, and provides basic information about each one, such as RAM required */
     models: (options?: ListModels): Promise<Response> =>

@@ -30,10 +30,10 @@ const readStream = await model.run(input, params, stream);
 
 let text = '';
 
-for await (const chunk of readStream) {
-  const chunkText = chunk.toString();
-  console.log(chunkText);
-  text += chunkText;
+for await (const tokens of readStream) {
+  text += tokens;
+
+  console.log(tokens);
 }
 
 // observe the output

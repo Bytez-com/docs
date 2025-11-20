@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="bytez",
-    version="2.0.4",
+    version="3.0.1",
     packages=find_packages(),
     description="Python API client for Bytez service",
     long_description=open("./README.md").read(),

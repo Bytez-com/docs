@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, Union, Any
 from .client import Client
 
 
@@ -41,31 +41,62 @@ class Model:
         self._is_generating_media = self.details.get("task") in media_generators
         self._ready = True
 
-    def run(self, input=None, params: Optional[Dict] = None, stream: bool = False):
+    def run(
+        self,
+        input: Any = None,
+        params: Union[Dict, bool, None] = None,
+        stream: bool = False
+    ):
         """
-        `Run` the model by passing an `input`, and optionally passing `params` and/or a `stream` flag.
+        Execute the model with the given input.
 
-        Execute this function in one of four ways:
-        1. `run(input)` → Returns JSON `{ error, output }`
-        2. `run(input, params={...})` → Returns JSON `{ error, output }`
-        3. `run(input, stream=True)` → Streams output if applicable
-        4. `run(input, params={...}, stream=True)` → Uses params and streams if applicable
+        This method supports flexible argument passing. You can pass parameters usually,
+        or pass a boolean as the second argument as a shorthand for streaming.
 
         Args:
-            input (any, optional): Input data (e.g., text, URL, base64).
-            params (dict, optional): Model parameters.
-            stream (bool, optional): Whether to stream the output.
+            input (Any): The input data (text, URL, base64, etc).
+            params (Dict | bool, optional): Model parameters (e.g. temp, top_p) OR a boolean flag for streaming.
+            stream (bool, optional): Explicitly set the stream flag.
+
+        Examples:
+            >>> # 1. Standard run
+            >>> model.run("Hello world")
+
+            >>> # 2. With Parameters
+            >>> model.run("Hello world", {"temperature": 0.5})
+
+            >>> # 3. Shorthand Streaming (pass True as 2nd arg)
+            >>> model.run("Hello world", True)
+
+            >>> # 4. Explicit Streaming with Parameters
+            >>> model.run("Hello world", {"temperature": 0.5}, stream=True)
 
         Returns:
-            dict | iter: Model output (stream or JSON response).
+            dict | iter: Model output (JSON response or an iterable stream).
         """
         if self._ready is False:
             self._initialize()
 
+        request_params = None
+        request_stream = stream
+
+        # Check what the user passed into the second argument ('params')
+        if isinstance(params, bool):
+            # User passed `model.run(input, True)` -> Treat param as stream flag
+            request_stream = params
+            request_params = None
+        elif isinstance(params, dict):
+            # User passed `model.run(input, {...})` -> Standard usage
+            request_params = params
+            # We keep request_stream as whatever the 3rd arg is (default False)
+        else:
+            # User passed explicit None or something else; trust the named args
+            request_params = params
+
         post_body = {
-            "params": params,
-            "stream": stream,
-            "json": False if self._is_generating_media and stream else None,
+            "params": request_params,
+            "stream": request_stream,
+            "json": False if self._is_generating_media and request_stream else None,
         }
 
         post_body["input"] = input

@@ -235,10 +235,10 @@ mode: 'wide'
 			
 			let text = '';
 			
-			for await (const chunk of readStream) {
-			  const chunkText = chunk.toString();
-			  console.log(chunkText);
-			  text += chunkText;
+			for await (const tokens of readStream) {
+			  text += tokens;
+			
+			  console.log(tokens);
 			}
 			
 			// observe the output
@@ -278,9 +278,9 @@ mode: 'wide'
 			
 			text = ""
 			
-			for chunk in readStream:
-			    tokens = chunk.decode("utf-8")
+			for tokens in readStream:
 			    text += tokens
+			
 			    print(tokens)
 			
 			# observe the output
@@ -352,10 +352,10 @@ mode: 'wide'
 			
 			let text = '';
 			
-			for await (const chunk of readStream) {
-			  const chunkText = chunk.toString();
-			  console.log(chunkText);
-			  text += chunkText;
+			for await (const tokens of readStream) {
+			  text += tokens;
+			
+			  console.log(tokens);
 			}
 			
 			// observe the output
@@ -400,9 +400,9 @@ mode: 'wide'
 			
 			text = ""
 			
-			for chunk in readStream:
-			    tokens = chunk.decode("utf-8")
+			for tokens in readStream:
 			    text += tokens
+			
 			    print(tokens)
 			
 			# observe the output

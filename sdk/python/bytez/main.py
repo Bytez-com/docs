@@ -16,7 +16,6 @@ class Bytez:
             api_key (str): Your Bytez API key.
             dev (bool): Whether to use the development environment.
         """
-        self.key = api_key
         self._client = Client(api_key, dev)
         self.list = self._List(self)  # Initialize the list object
 

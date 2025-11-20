@@ -48,7 +48,9 @@ class Client:
             )
 
             if stream:
-                return response.iter_lines(decode_unicode=True)
+                response.encoding = "utf-8"
+
+                return (line for line in response.iter_lines(decode_unicode=True) if line)
             else:
                 results = response.json()
 

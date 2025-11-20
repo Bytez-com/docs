@@ -30,9 +30,9 @@ readStream = model.run(input, params, stream)
 
 text = ""
 
-for chunk in readStream:
-    tokens = chunk.decode("utf-8")
+for tokens in readStream:
     text += tokens
+
     print(tokens)
 
 # observe the output
