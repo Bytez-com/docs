@@ -31,8 +31,9 @@ const readStream = await model.run(input, params, stream);
 let text = '';
 
 for await (const chunk of readStream) {
-  text += chunk;
-  console.log(chunk);
+  const chunkText = chunk.toString();
+  console.log(chunkText);
+  text += chunkText;
 }
 
 // observe the output

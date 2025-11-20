@@ -236,8 +236,9 @@ mode: 'wide'
 			let text = '';
 			
 			for await (const chunk of readStream) {
-			  text += chunk;
-			  console.log(chunk);
+			  const chunkText = chunk.toString();
+			  console.log(chunkText);
+			  text += chunkText;
 			}
 			
 			// observe the output
@@ -352,8 +353,9 @@ mode: 'wide'
 			let text = '';
 			
 			for await (const chunk of readStream) {
-			  text += chunk;
-			  console.log(chunk);
+			  const chunkText = chunk.toString();
+			  console.log(chunkText);
+			  text += chunkText;
 			}
 			
 			// observe the output
