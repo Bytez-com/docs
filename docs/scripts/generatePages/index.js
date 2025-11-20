@@ -273,7 +273,7 @@ async function generateCodeSnippets(modelId, requestInput, requestInputHttp, par
         // notice how we're removing params, this is for the streaming case
         .replace(
           `readStream = model.run(input, params, stream)`,
-          `readStream = model.run(input, stream)`
+          `readStream = model.run(input, stream=stream)`
         );
 
       return replacedString;

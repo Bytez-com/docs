@@ -281,7 +281,7 @@ mode: 'wide'
 			stream = True
 			
 			# send to the model
-			readStream = model.run(input, stream)
+			readStream = model.run(input, stream=stream)
 			
 			text = ""
 			
