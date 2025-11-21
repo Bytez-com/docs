@@ -197,9 +197,9 @@ const MODEL_DOCS_OBJECT = {
       },
     },
     chat: {
+      title: "Get started",
       exampleModel: 'Qwen/Qwen3-4B',
-      description:
-        'Generate text from an initial message chain for applications like story generation, dialogue systems, and creative writing',
+      description: 'Use the latest AI chat models',
       icon: 'comments',
       supportsTextStreaming: true,
       openapiSpec: {
@@ -627,9 +627,9 @@ const MODEL_DOCS_OBJECT = {
     },
     'audio-text-to-text': {
       exampleModel: 'Qwen/Qwen2-Audio-7B-Instruct',
-      title: 'chat (audio-text-to-text)',
+      title: 'Multimodal - Audio',
       description:
-        'Generate text from an initial message chain that may contain audio for applications like story generation, dialogue systems, and creative writing',
+        'Chat with AI models using text and audio. Also known as audio-text-to-text',
       icon: 'comments',
       supportsTextStreaming: true,
       openapiSpec: {
@@ -1041,9 +1041,9 @@ const MODEL_DOCS_OBJECT = {
     },
     'image-text-to-text': {
       exampleModel: 'google/gemma-3-4b-it',
-      title: 'chat (image-text-to-text)',
+      title: 'Multimodal - Vision',
       description:
-        'Generate text from an initial message chain that may contain images for applications like story generation, dialogue systems, and creative writing',
+        'Chat with AI models using text and images. Also known as image-text-to-text',
       icon: 'comments',
       supportsTextStreaming: true,
       openapiSpec: {
@@ -1455,9 +1455,9 @@ const MODEL_DOCS_OBJECT = {
     },
     'video-text-to-text': {
       exampleModel: 'llava-hf/LLaVA-NeXT-Video-7B-hf',
-      title: 'chat (video-text-to-text)',
+      title: 'Multimodal - Video',
       description:
-        'Generate text from an initial message chain that may contain videos for applications like story generation, dialogue systems, and creative writing',
+        'Chat with AI models using text and videos. Also known as video-text-to-text',
       icon: 'comments',
       supportsTextStreaming: true,
       openapiSpec: {

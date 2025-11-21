@@ -25,7 +25,7 @@
     "/models/v2/Qwen/Qwen2-Audio-7B-Instruct": {
       "post": {
         "summary": "audio-text-to-text",
-        "description": "Generate text from an initial message chain that may contain audio for applications like story generation, dialogue systems, and creative writing",
+        "description": "Chat with AI models using text and audio. Also known as audio-text-to-text",
         "operationId": "audio-text-to-text",
         "requestBody": {
           "description": "Schema for audio-text-to-text models",

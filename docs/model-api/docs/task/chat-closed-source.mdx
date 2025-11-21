@@ -1,5 +1,5 @@
 ---
-title: 'chat (closed-source)'
+title: 'Closed source models'
 description: 'Using chat and chat multi-modal models with closed source providers (OpenAI, Anthropic, etc)'
 icon: 'comments'
 mode: 'wide'
@@ -47,10 +47,10 @@ messages = [
   {"role": "user", "content": "Hello bot, what is the capital of England?"},
 ]
 # send to model
-output, error, provider = model.run(messages)
+result = model.run(messages)
 
 # `provider` is the raw OpenAI output
-print({ "error": error, "output": output, "provider": provider })
+print({ "error": result.error, "output": result.output, "provider": result.provider })
 ````
 
 ```bash http

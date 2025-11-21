@@ -25,7 +25,7 @@
     "/models/v2/google/gemma-3-4b-it": {
       "post": {
         "summary": "image-text-to-text",
-        "description": "Generate text from an initial message chain that may contain images for applications like story generation, dialogue systems, and creative writing",
+        "description": "Chat with AI models using text and images. Also known as image-text-to-text",
         "operationId": "image-text-to-text",
         "requestBody": {
           "description": "Schema for image-text-to-text models",

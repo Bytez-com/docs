@@ -25,7 +25,7 @@
     "/models/v2/llava-hf/LLaVA-NeXT-Video-7B-hf": {
       "post": {
         "summary": "video-text-to-text",
-        "description": "Generate text from an initial message chain that may contain videos for applications like story generation, dialogue systems, and creative writing",
+        "description": "Chat with AI models using text and videos. Also known as video-text-to-text",
         "operationId": "video-text-to-text",
         "requestBody": {
           "description": "Schema for video-text-to-text models",

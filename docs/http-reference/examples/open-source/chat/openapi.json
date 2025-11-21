@@ -25,7 +25,7 @@
     "/models/v2/Qwen/Qwen3-4B": {
       "post": {
         "summary": "chat",
-        "description": "Generate text from an initial message chain for applications like story generation, dialogue systems, and creative writing",
+        "description": "Use the latest AI chat models",
         "operationId": "chat",
         "requestBody": {
           "description": "Schema for chat models",

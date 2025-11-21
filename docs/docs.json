@@ -59,10 +59,10 @@
                 "icon": "comments",
                 "pages": [
                   "/model-api/docs/task/chat",
-                  "/model-api/docs/task/chat-closed-source",
                   "/model-api/docs/task/audio-text-to-text",
                   "/model-api/docs/task/image-text-to-text",
-                  "/model-api/docs/task/video-text-to-text"
+                  "/model-api/docs/task/video-text-to-text",
+                  "/model-api/docs/task/chat-closed-source"
                 ]
               },
               {
