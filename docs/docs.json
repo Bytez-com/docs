@@ -44,7 +44,7 @@
               {
                 "group": "Understand the API",
                 "icon": "head-side-gear",
-                "pages": ["model-api/docs/understand-the-api"]
+                "pages": ["model-api/docs/understand-the-api", "model-api/docs/billing"]
               },
               {
                 "group": "Open AI Completions",

@@ -44,8 +44,6 @@ Now, let's dive into the specific ways we handle requests under the hood for ope
 
     **Key Takeaway:** For closed-source models, we act as a router and standardization layer. You interact with a **single, unified protocol**, making it easy to switch between models providers or use multiple providers without changing your code structure. The inference itself happens on the provider's infrastructure.
 
-    **Billing**: We don't charge anything for closed source models. Billing for closed-source models is based on the provider's pricing. They'll bill you based on the API key you provide.
-
   </Accordion>
   <Accordion icon="lock-keyhole-open" title="Open‑Source Models –  Serverless GPU Inference">
     When you run an **open‑source** model, Bytez handles all the heavy lifting for you.

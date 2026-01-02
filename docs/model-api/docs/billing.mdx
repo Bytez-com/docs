@@ -1,0 +1,272 @@
+---
+title: 'Billing & Credits'
+description: 'How billing works for open and closed models'
+icon: 'credit-card'
+mode: 'wide'
+---
+
+Bytez uses a credit-based system. Credits are consumed when you run models, and how they're consumed depends on whether you're using closed-source or open-source models.
+
+## Plans
+
+<CardGroup cols={2}>
+  <Card title="Free" icon="gift">
+    {`$0 / month - Get $1 in free credits`}
+
+    - Run open models up to 7B parameters
+    - Access all closed model providers
+    - 1 concurrent request (open models)
+    - 10 requests/second (closed models)
+    - Credits refresh every 4 weeks
+
+  </Card>
+  <Card title="Pay-as-you-go" icon="rocket">
+      {`$3 /  month - Get $5 in credits`}
+
+    - Run open models up to 120B parameters
+    - Access all closed model providers
+    - Rate limits scale with credits purchased
+    - Unlimited closed model requests
+    - Add credits anytime
+
+  </Card>
+</CardGroup>
+
+## How Credits Work
+
+Credits are a unified currency across all models on Bytez. When you run a model, credits are deducted from your balance based on usage.
+
+| Model Type    | How Credits Are Consumed                                          |
+| ------------- | ----------------------------------------------------------------- |
+| Closed models | Based on provider pricing (per token, per image, per video, etc.) |
+| Open models   | Per second of inference                                           |
+
+Your credits purchased in the last 4 weeks determine two things:
+
+1. **Which open models you can access** - Larger open models require more credits purchased to unlock
+2. **Your rate limits** - More credits purchased unlocks more concurrent requests
+
+<Info>
+  Adding credits immediately unlocks higher tiers. You don't need to wait for the next billing
+  cycle.
+</Info>
+
+### Credit Unlock Thresholds
+
+| Credits Purchased (last 4 weeks) | Open Model Access | Concurrent Requests (7B) |
+| -------------------------------- | ----------------- | ------------------------ |
+| $0 (Free)                        | Up to 7B          | 1                        |
+| $3+                              | Up to 7B          | 4                        |
+| $10+                             | Up to 35B         | 4                        |
+| $25+                             | Up to 70B         | 10                       |
+| $50+                             | Up to 120B        | 20                       |
+| $100+                            | Up to 120B        | 40                       |
+| $500+                            | Up to 120B        | 200                      |
+| $1,000+                          | Up to 120B        | 400                      |
+
+<Warning>Credits expire 4 weeks after purchase. Use them or lose them!</Warning>
+
+---
+
+## Closed Model Billing
+
+For closed-source models (OpenAI, Anthropic, Google, Mistral, Cohere), we pass through the provider's pricing plus a small platform fee.
+
+```
+Your cost = Provider price + 2% platform fee
+```
+
+Providers charge differently depending on the model and modality - per token for text, per image for image generation, per second for video, etc. We pass through whatever the provider charges.
+
+**Example:** If OpenAI charges {`$0.000001`} per M tokens, you pay {`$0.00000102`} per M tokens.
+
+<Accordion title="Why the 2% fee?">
+  The platform fee covers:
+  - Unified API translation and standardization
+  - Request routing and load balancing
+  - Usage tracking and analytics
+  - Support and reliability infrastructure
+
+You get a single API, single billing, and single format across all providers.
+
+</Accordion>
+
+### What's included
+
+- **Pass-through pricing** - Pay only for what the provider charges
+- **No minimum** - No monthly minimums or commitments
+- **Real-time pricing** - We pass through provider rates as they change
+
+---
+
+## Open Model Billing
+
+Open-source models run on our **serverless GPU infrastructure**. You're billed per second of inference time - no cold start fees, no idle charges.
+
+```
+Your cost = Inference time (seconds) x Rate for model size
+```
+
+### Pricing by Model Size
+
+Bigger models use more VRAM, so they cost more per second:
+
+| Model Size | Per Second | Per Hour |
+| ---------- | ---------- | -------- |
+| 7B         | $0.000072  | ~$0.26   |
+| 15B        | $0.000108  | ~$0.39   |
+| 35B        | $0.000144  | ~$0.52   |
+| 70B        | $0.000216  | ~$0.78   |
+| 120B       | $0.00036   | ~$1.30   |
+
+<Accordion title="How we calculate pricing">
+  Our base rate is **$0.0000045/GB-second** of VRAM used.
+
+For comparison:
+
+- **Bytez:** $0.0000045/GB-sec (with Nvidia GPUs)
+- **AWS Lambda:** $0.0000167/GB-sec (CPUs only)
+
+That's **3.7x cheaper** than AWS Lambda, and you get serverless Nvidia GPUs, not just serverless CPUs.
+
+</Accordion>
+
+### What's included
+
+- **Per-second billing** - Billed in 1-second increments
+- **No cold start fees** - You don't pay while the model loads
+- **No idle charges** - You don't pay when not running inference
+- **No reserved instances** - No commitments, no minimums
+
+---
+
+## Auto-Reload
+
+Auto-reload automatically tops up your credit balance when it runs low, so your API calls never fail unexpectedly.
+
+### How it works
+
+| Setting       | Default | Description                                   |
+| ------------- | ------- | --------------------------------------------- |
+| Threshold     | $3      | Reload triggers when balance drops below this |
+| Reload amount | $10     | Amount added to your balance                  |
+| Monthly max   | $100    | Maximum auto-reload spend per month           |
+
+<Steps>
+  <Step title="Balance drops below threshold">
+    When your credit balance falls below $3 (default), auto-reload activates
+  </Step>
+  <Step title="Card is charged">
+    Your saved payment method is charged $10 (default reload amount)
+  </Step>
+  <Step title="Credits are added">$10 in credits is immediately added to your balance</Step>
+  <Step title="Monthly cap enforced">
+    Auto-reload stops if you've hit your monthly maximum ($100 default)
+  </Step>
+</Steps>
+
+### If Auto-Reload is Disabled
+
+When auto-reload is off and your credits run out, you may get an API response like this:
+
+```json
+{
+  "status": 402,
+  "error": "Payment Required",
+  "message": "Insufficient credits. Please add credits to continue."
+}
+```
+
+<Warning>
+  If you're running production workloads, we recommend enabling auto-reload to prevent unexpected
+  failures.
+</Warning>
+
+### Configuring Auto-Reload
+
+You can enable, disable, or adjust auto-reload settings in your [API Dashboard](https://bytez.com/api/billing).
+
+
+
+---
+
+## Auto-Scaling (Open Models)
+
+By default, if you exceed your open model rate limits, requests are rejected with a rate-limit error.
+
+If you want your rate limits to automatically scale with your traffic in production, add `autoScale: true` to your request:
+
+```javascript
+const response = await fetch('https://api.bytez.com/v1/chat/completions', {
+  method: 'POST',
+  headers: {
+    'Authorization': API_KEY,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    model: 'meta-llama/Llama-3-70b',
+    messages: [...],
+    autoScale: true
+  })
+});
+```
+
+When enabled, the system auto-purchases extra credits required to keep auto-scaling. You can control your **Max Monthly Spend** in your [API Dashboard](https://bytez.com/api/billing) to cap costs. This way you can auto-scale and control your budget.
+
+<Info>
+For closed models, you get unlimited rate limits on a pay-as-you-go basis - no auto-scaling needed.
+</Info>
+
+## Billing Cycle
+
+<AccordionGroup>
+  <Accordion title="Free Plan">
+    - **Billing:** None
+    - **Credits:** {`$1`} free credits, refreshed every 4 weeks
+    - **Expiration:** Credits expire 4 weeks after grant
+  </Accordion>
+  <Accordion title="Pay-as-you-go Plan">
+    - **Billing:** {`$3/month`} charged on signup date
+    - **Credits:** $5 in credits granted each
+    billing cycle
+    - **Expiration:** All credits expire 4 weeks after grant
+  </Accordion>
+</AccordionGroup>
+
+### Adding Credits Mid-Cycle
+
+You can add credits at any time. When you do:
+
+1. **Immediate access** - Higher model tiers and rate limits unlock instantly
+2. **No proration** - You get the full credit amount immediately
+3. **Credits stack** - Purchased credits add to your existing balance
+
+<Info>
+  **Example:** You're on `Pay-as-you-go` with {`$2`} remaining. You add {`$25`}. Your new balance is {`$27`},
+  which immediately unlocks 70B models and 10 concurrent requests.
+</Info>
+
+---
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What happens if I run out of credits mid-request?">
+    In-flight requests will complete. Only new requests will fail with a 402 error.
+  </Accordion>
+  <Accordion title="Can I get a refund on unused credits?">
+    Credits are non-refundable and expire 4 weeks after purchase.
+  </Accordion>
+  <Accordion title="How do I track my usage?">
+    Visit your [API Dashboard](https://bytez.com/api/billing) to see real-time usage, credit
+    balance, and request history.
+  </Accordion>
+  <Accordion title="Why do bigger models require more credits purchased?">
+    Larger models require more GPU resources (VRAM). Requiring a minimum purchase threshold ensures
+    you have enough credits to complete meaningful workloads without running out mid-task.
+  </Accordion>
+  <Accordion title="Is there volume pricing?">
+    For high-volume usage (>{`$1,000`}/month), contact us at [team@bytez.com](mailto:team@bytez.com) for
+    custom pricing.
+  </Accordion>
+</AccordionGroup>
