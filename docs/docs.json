@@ -42,6 +42,7 @@
               "model-api/docs/welcome",
               "model-api/docs/get-started",
               {
+                "expanded": true,
                 "group": "Understand the API",
                 "icon": "head-side-gear",
                 "pages": ["model-api/docs/understand-the-api", "model-api/docs/billing"]

@@ -9,6 +9,7 @@
     "typescript": "^5.9.3"
   },
   "scripts": {
+    "dev": "yarn start",
     "start": "mintlify dev --port 4000",
     "broken-links": "mintlify broken-links",
     "openapi-check": "mintlify openapi-check",
