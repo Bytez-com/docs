@@ -125,7 +125,8 @@
                   "/model-api/docs/task/document-question-answering",
                   "/model-api/docs/task/visual-question-answering"
                 ]
-              }
+              },
+              "model-api/docs/containers"
             ]
           }
         ]
