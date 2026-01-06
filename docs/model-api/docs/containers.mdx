@@ -1,7 +1,7 @@
 ---
-title: "Containers"
-description: "Run open models locally, offline, and on edge devices"
-icon: "docker"
+title: 'Containers'
+description: 'Run open models locally, offline, and on edge devices'
+icon: 'docker'
 ---
 
 Every open-source model on Bytez is available as a Docker image. Pull it, run it, and make requests to `localhost`.
@@ -18,18 +18,33 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     <Tip>
     Find model IDs at [bytez.com/models](https://bytez.com/models) or via the [List Models API](/http-reference/list/models).
     </Tip>
+
   </Accordion>
 
   <Accordion title="Start a Container" icon="play">
     ```bash
-    docker run -it \
+    docker run -d \
       -e KEY=YOUR_BYTEZ_KEY \
       -e PORT=8000 \
       -p 8000:8000 \
       bytez/qwen_qwen3-4b
     ```
 
-    Get your API key at [bytez.com/settings](https://bytez.com/settings).
+    This runs the container in the background. Get your API key at [bytez.com/api/key](https://bytez.com/api/key).
+
+    **View logs**
+
+    ```bash
+    # Follow logs (live)
+    docker logs -f <container_id>
+
+    # View recent logs
+    docker logs <container_id>
+    ```
+
+    <Tip>
+    To run attached and watch logs directly, replace `-d` with `-it`. Press `Ctrl+C` to stop.
+    </Tip>
 
     **Environment Variables**
 
@@ -46,14 +61,26 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     | `--gpus all` | Enable GPU acceleration (requires NVIDIA drivers + CUDA) |
     | `-v /local/path:/server/model` | Mount a local directory for weight caching |
     | `-p HOST:CONTAINER` | Map container port to host port |
+
   </Accordion>
 
   <Accordion title="Common Configurations" icon="gear">
     **Run on GPU**
 
     ```bash
-    docker run -it \
+    docker run -d \
       --gpus all \
+      -e KEY=YOUR_BYTEZ_KEY \
+      -e PORT=8000 \
+      -p 8000:8000 \
+      bytez/qwen_qwen3-4b
+    ```
+
+    **Run on CPU**
+
+    ```bash
+    docker run -d \
+      -e DEVICE=cpu \
       -e KEY=YOUR_BYTEZ_KEY \
       -e PORT=8000 \
       -p 8000:8000 \
@@ -65,7 +92,7 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     Avoid re-downloading weights on every run by mounting a local directory:
 
     ```bash
-    docker run -it \
+    docker run -d \
       --gpus all \
       -v /path/to/cache:/server/model \
       -e HF_HOME=/server/model \
@@ -79,16 +106,6 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     If you're going to create the same model container multiple times, then for large models (70B+), caching is highly recommended. Downloads can take hours otherwise.
     </Warning>
 
-    **Force CPU-Only**
-
-    ```bash
-    docker run -it \
-      -e DEVICE=cpu \
-      -e KEY=YOUR_BYTEZ_KEY \
-      -e PORT=8000 \
-      -p 8000:8000 \
-      bytez/qwen_qwen3-4b
-    ```
   </Accordion>
 
   <Accordion title="Run Inference" icon="bolt">
@@ -144,6 +161,7 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     <Card title="Full HTTP Reference" icon="book" href="/http-reference/overview">
       See complete request/response params and examples for all 30+ task types.
     </Card>
+
   </Accordion>
 
   <Accordion title="Run Offline (Air-Gapped)" icon="wifi-slash">
@@ -152,7 +170,7 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     **Step 1: Run the container once to download weights**
 
     ```bash
-    docker run \
+    docker run -d \
       -e KEY=YOUR_BYTEZ_KEY \
       -e PORT=8000 \
       -p 8000:8000 \
@@ -160,7 +178,11 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
       bytez/qwen_qwen3-4b
     ```
 
-    Wait for the model to fully load (you'll see logs indicating it's ready). Then press `Ctrl+C` to stop the container.
+    Wait for the model to fully load (check with `docker logs -f my-model`). Once ready, stop it:
+
+    ```bash
+    docker stop my-model
+    ```
 
     **Step 2: Save as a new image**
 
@@ -171,7 +193,7 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     **Step 3: Run offline (no internet needed)**
 
     ```bash
-    docker run \
+    docker run -d \
       -e KEY=YOUR_BYTEZ_KEY \
       -e PORT=8000 \
       -p 8000:8000 \
@@ -191,6 +213,7 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     # Load on another machine
     docker load -i my-model-offline.tar
     ```
+
   </Accordion>
 
   <Accordion title="Troubleshooting" icon="wrench">
@@ -209,6 +232,7 @@ Every open-source model on Bytez is available as a Docker image. Pull it, run it
     **Model only works with specific DEVICE setting**
 
     Some models only support `auto`, `cuda`, or `cpu`. If one doesn't work, try another.
+
   </Accordion>
 </AccordionGroup>
 
