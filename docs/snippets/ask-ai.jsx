@@ -2,10 +2,8 @@ import { useState } from 'react';
 
 export const AskAI = () => {
   const [question, setQuestion] = useState('');
-
   const basePrompt = 'Search https://docs.bytez.com and answer: ';
   const encodedPrompt = encodeURIComponent(basePrompt + question);
-
   const links = [
     { name: 'ChatGPT', url: `https://chatgpt.com/?q=${encodedPrompt}` },
     { name: 'Claude', url: `https://claude.ai/new?q=${encodedPrompt}` },
@@ -33,7 +31,6 @@ export const AskAI = () => {
       <p style={{ margin: '0 0 16px 0', opacity: 0.7, fontSize: '0.9rem' }}>
         Get instant answers from our docs
       </p>
-
       <input
         type="text"
         placeholder="How do I run a model?"
@@ -58,6 +55,7 @@ export const AskAI = () => {
         {links.map(({ name, url }) => (
           <a
             key={name}
+            title={question ? undefined : 'Ask a question first'}
             href={question ? url : '#'}
             target="_blank"
             rel="noopener noreferrer"
@@ -74,7 +72,7 @@ export const AskAI = () => {
               fontWeight: 500,
               fontSize: '0.9rem',
               opacity: question ? 1 : 0.5,
-              cursor: question ? 'pointer' : 'not-allowed',
+              cursor: question ? 'pointer' : 'text',
               transition: 'all 0.2s',
             }}
           >
