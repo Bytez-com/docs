@@ -52,7 +52,8 @@
                 "icon": "code",
                 "pages": [
                   "http-reference/examples/openai-compliant/chatCompletionsExample",
-                  "http-reference/examples/openai-compliant/completionsExample"
+                  "http-reference/examples/openai-compliant/completionsExample",
+                  "http-reference/examples/openai-compliant/responsesExample"
                 ]
               },
               {
@@ -165,7 +166,8 @@
                 "group": "Open AI Completions",
                 "pages": [
                   "http-reference/examples/openai-compliant/chatCompletionsExample",
-                  "http-reference/examples/openai-compliant/completionsExample"
+                  "http-reference/examples/openai-compliant/completionsExample",
+                  "http-reference/examples/openai-compliant/responsesExample"
                 ]
               },
               {

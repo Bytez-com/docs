@@ -1,0 +1,208 @@
+---
+title: 'Responses'
+description: Use the OpenAI-compatible Responses endpoint via OpenAI clients, supporting streaming, tool calling, and reasoning ("thinking") parameters.
+icon: 'robot'
+mode: 'wide'
+---
+
+Provides Responses for all closed source providers: `openai`, and `anthropic`.
+
+The Responses API is the unified successor to Chat Completions: you send `input` (text, images, files, tool outputs, etc.) and receive a `response` object that can contain messages, tool calls, and (for reasoning models) reasoning items.
+
+**Note**, anthropic does not yet support tool calls.
+
+To specify a provider, prefix the model with the provider. For example, `gpt-5.1` should be passed as `openai/gpt-5.1`.
+
+## Thinking (Reasoning) parameters
+
+Some OpenAI reasoning models (e.g. `openai/gpt-5.x`, `openai/o3`, `openai/o4-mini`) support the `reasoning` object:
+
+- `reasoning.effort`: `"none" | "low" | "medium" | "high" | ...` (model-dependent)
+- `reasoning.summary`: `"none" | "auto" | "detailed"` (optional)
+
+All Anthropic models should support thinking.
+
+⚠️ `max_output_tokens` limits **reasoning tokens + visible output tokens**, so if you increase `reasoning.effort`, consider raising `max_output_tokens`.
+
+<AccordionGroup>
+  <Accordion defaultOpen="false" title="Basic usage (Closed Source + Thinking)">
+
+      <CodeGroup>
+        ```javascript javascript
+        import OpenAI from "openai";
+
+        const client = new OpenAI({
+          apiKey: "BYTEZ_KEY",
+          baseURL: "https://api.bytez.com/models/v2/openai/v1"
+        });
+
+        const response = await client.responses.create({
+          model: "openai/gpt-5.1",
+          input: [
+            { role: "system", content: "You are a friendly chatbot" },
+            { role: "user", content: "Hello bot, what is the capital of England?" }
+          ],
+
+          // Thinking controls (OpenAI reasoning models only)
+          reasoning: {
+            effort: "medium",   // try: "none" | "low" | "medium" | "high" (model-dependent)
+            summary: "auto"     // "none" | "auto" | "detailed"
+          },
+
+          // Caps reasoning + visible output tokens together
+          max_output_tokens: 300
+        });
+
+        console.log("Answer:", response.output_text);
+
+        // Optional: read a reasoning summary item (if requested & returned)
+        const reasoningItem = response.output?.find((it) => it.type === "reasoning");
+        if (reasoningItem?.summary?.length) {
+          console.log("Reasoning summary:", reasoningItem.summary.map(s => s.text).join("\n"));
+        }
+        ```
+        ```python python
+        from openai import OpenAI
+
+        client = OpenAI(
+            api_key="BYTEZ_KEY",
+            base_url="https://api.bytez.com/models/v2/openai/v1"
+        )
+
+        response = client.responses.create(
+            model="openai/gpt-5.1",
+            input=[
+                {"role": "system", "content": "You are a friendly chatbot"},
+                {"role": "user", "content": "Hello bot, what is the capital of England?"},
+            ],
+            reasoning={
+                "effort": "medium",
+                "summary": "auto",
+            },
+            max_output_tokens=300,
+
+        )
+
+        print("Answer:", response.output_text)
+
+        reasoning_items = [it for it in response.output if it.type == "reasoning"]
+        if reasoning_items and getattr(reasoning_items[0], "summary", None):
+            print("Reasoning summary:", reasoning_items[0].summary[0].text)
+        ```
+        ```bash http
+        curl -X POST 'https://api.bytez.com/models/v2/openai/v1/responses' \
+        -H 'Authorization: BYTEZ_KEY' \
+        -H 'provider-key: PROVIDER_KEY' \
+        -H 'Content-Type: application/json' \
+        --data '{
+          "model": "openai/gpt-5.1",
+          "input": [
+            {"role": "system", "content": "You are a friendly chatbot"},
+            {"role": "user", "content": "Hello bot, what is the capital of England?"}
+          ],
+          "reasoning": { "effort": "medium", "summary": "auto" },
+          "max_output_tokens": 300
+        }'
+        ```
+      </CodeGroup>
+
+  </Accordion>
+
+  <Accordion defaultOpen="false" title="Streaming (Closed Source + Thinking + Reasoning Summary Events)">
+
+    <CodeGroup>
+      ```javascript javascript
+      import OpenAI from "openai";
+
+      const client = new OpenAI({
+        apiKey: "BYTEZ_KEY",
+        baseURL: "https://api.bytez.com/models/v2/openai/v1"
+      });
+
+      const stream = await client.responses.create({
+        model: "openai/gpt-5.1",
+        input: [
+          { role: "system", content: "You are a friendly chatbot" },
+          { role: "user", content: "Hello bot, what is the capital of England?" }
+        ],
+        reasoning: { effort: "medium", summary: "auto" },
+        max_output_tokens: 400,
+        stream: true
+      });
+
+      let text = "";
+      let reasoningSummary = "";
+
+      for await (const event of stream) {
+        if (event.type === "response.output_text.delta") {
+          text += event.delta;
+          process.stdout.write(event.delta);
+        }
+
+        // Optional: stream reasoning summary text (if enabled by reasoning.summary)
+        if (event.type === "response.reasoning_summary_text.delta") {
+          reasoningSummary += event.delta;
+        }
+
+        if (event.type === "response.completed") break;
+      }
+
+      console.log("\n\nFinal:", { text });
+      if (reasoningSummary) console.log("\nReasoning summary:\n", reasoningSummary);
+      ```
+      ```python python
+      from openai import OpenAI
+
+      client = OpenAI(
+          api_key="BYTEZ_KEY",
+          base_url="https://api.bytez.com/models/v2/openai/v1"
+      )
+
+      stream = client.responses.create(
+          model="openai/gpt-5.1",
+          input=[
+              {"role": "system", "content": "You are a friendly chatbot"},
+              {"role": "user", "content": "Hello bot, what is the capital of England?"},
+          ],
+          reasoning={"effort": "medium", "summary": "auto"},
+          max_output_tokens=400,
+          stream=True,
+      )
+
+      text = ""
+      reasoning_summary = ""
+
+      for event in stream:
+          if event.type == "response.output_text.delta":
+              text += event.delta
+              print(event.delta, end="", flush=True)
+          elif event.type == "response.reasoning_summary_text.delta":
+              reasoning_summary += event.delta
+          elif event.type == "response.completed":
+              break
+
+      print("\n\nFinal:", {"text": text})
+      if reasoning_summary:
+          print("\nReasoning summary:\n", reasoning_summary)
+      ```
+      ```bash http
+      curl -N -X POST 'https://api.bytez.com/models/v2/openai/v1/responses' \
+      -H 'Authorization: BYTEZ_KEY' \
+      -H 'provider-key: PROVIDER_KEY' \
+      -H 'Content-Type: application/json' \
+      --data '{
+        "model": "openai/gpt-5.1",
+        "input": [
+          {"role": "system", "content": "You are a friendly chatbot"},
+          {"role": "user", "content": "Hello bot, what is the capital of England?"}
+        ],
+        "reasoning": { "effort": "medium", "summary": "auto" },
+        "max_output_tokens": 400,
+        "stream": true
+      }'
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+</AccordionGroup>
