@@ -154,7 +154,8 @@
                 "icon": "code",
                 "pages": [
                   "http-reference/oaiCompliant/chatCompletions",
-                  "http-reference/oaiCompliant/completions"
+                  "http-reference/oaiCompliant/completions",
+                  "http-reference/oaiCompliant/responses"
                 ]
               }
             ]

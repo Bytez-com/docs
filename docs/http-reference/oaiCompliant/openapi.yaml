@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: OpenAI Compatible Models API
-  description: API endpoint compatible with OpenAI completions for running models.
-  version: 1.0.0
+  description: API endpoints compatible with OpenAI Chat Completions, Completions, and the newer Responses API for running models.
+  version: 1.1.0
 
 servers:
   - url: https://api.bytez.com
@@ -11,7 +11,7 @@ paths:
   /models/v2/openai/v1/chat/completions:
     post:
       summary: Chat Completions
-      description: Sends a prompt to an OpenAI compatible completion model and returns a completion. Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers `openai`, `anthropic`, `mistral`, `cohere`, and `google`. To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-4`
+      description: Sends a prompt to an OpenAI compatible chat completion model and returns a completion. Provides completions for open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, and also supports closed source providers `openai`, `anthropic`, `mistral`, `cohere`, and `google`. To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-4`.
       operationId: runModel
       parameters:
         - name: Authorization
@@ -20,87 +20,19 @@ paths:
           required: true
           schema:
             type: string
-        - name: provider-key
-          in: header
-          description: Optional provider key for running requests against closed source models. Required for providers `anthropic` and `cohere`. Removes rate limits for the other providers.
-          required: false
-          schema:
-            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                model:
-                  type: string
-                  description: The ID of the model to run (e.g., `Qwen/Qwen3-1.7B`, `openai/gpt-4`)
-                messages:
-                  type: array
-                  description: Conversation messages (OpenAI chat format)
-                  items:
-                    type: object
-                    properties:
-                      role:
-                        type: string
-                        enum: [system, user, assistant]
-                        description: The role of the message sender
-                      content:
-                        type: string
-                        description: The message text
-                    required:
-                      - role
-                      - content
-                max_tokens:
-                  type: integer
-                  description: Maximum number of tokens to generate
-                  default: 256
-                temperature:
-                  type: number
-                  description: Sampling temperature
-                  default: 0.7
-                stream:
-                  type: boolean
-                  description: Whether to stream responses
-                  default: false
-              required:
-                - model
-                - messages
+              $ref: '#/components/schemas/ChatCompletionsRequest'
       responses:
         '200':
           description: Successful model completion
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Unique ID for this completion
-                  object:
-                    type: string
-                    description: Type of returned object (usually `chat.completion`)
-                  created:
-                    type: integer
-                    description: Unix timestamp of completion
-                  choices:
-                    type: array
-                    description: Generated completions
-                    items:
-                      type: object
-                      properties:
-                        index:
-                          type: integer
-                        message:
-                          type: object
-                          properties:
-                            role:
-                              type: string
-                            content:
-                              type: string
-                        finish_reason:
-                          type: string
+                $ref: '#/components/schemas/ChatCompletionsResponse'
         '400':
           description: Bad request
         '500':
@@ -109,7 +41,7 @@ paths:
   /models/v2/openai/v1/completions:
     post:
       summary: Completions
-      description: Sends a prompt to an OpenAI compatible completion model and returns a completion. Provides completions for all open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, it also supports the closed source providers `openai`, `anthropic`, `mistral`, `cohere`, and `google`. To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-4`
+      description: Sends a prompt to an OpenAI compatible completion model and returns a completion. Provides completions for open source models that are `text-generation`, `chat`, `audio-text-to-text`, `image-text-to-text`, `video-text-to-text`, and also supports closed source providers `openai`, `anthropic`, `mistral`, `cohere`, and `google`. To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-4`.
       operationId: runTextCompletion
       parameters:
         - name: Authorization
@@ -118,10 +50,37 @@ paths:
           required: true
           schema:
             type: string
-        - name: provider-key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionsRequest'
+      responses:
+        '200':
+          description: Successful text completion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletionsResponse'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /models/v2/openai/v1/responses:
+    post:
+      summary: Responses
+      description: >
+        Sends input to an OpenAI compatible Responses model and returns a unified response object.
+        Supports text and chat-style input, streaming, tools, and (for supported reasoning models) "thinking" via the `reasoning` object.
+        To send a request to a closed source provider, prefix your model with their provider name, e.g. `openai/gpt-5.1`.
+      operationId: runResponses
+      parameters:
+        - name: Authorization
           in: header
-          description: Optional provider key for running requests against closed source models. Required for providers `anthropic` and `cohere`. Removes rate limits for the other providers.
-          required: false
+          description: Token for authentication
+          required: true
           schema:
             type: string
       requestBody:
@@ -129,55 +88,358 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                model:
-                  type: string
-                  description: The ID of the completion model to run (e.g., `text-davinci-003`)
-                prompt:
-                  type: string
-                  description: The input text prompt
-                max_tokens:
-                  type: integer
-                  description: Maximum number of tokens to generate
-                  default: 256
-                temperature:
-                  type: number
-                  description: Sampling temperature
-                  default: 0.7
-                stream:
-                  type: boolean
-                  description: Whether to stream responses
-                  default: false
-              required:
-                - model
-                - prompt
+              $ref: '#/components/schemas/ResponsesRequest'
       responses:
         '200':
-          description: Successful text completion
+          description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  object:
-                    type: string
-                  created:
-                    type: integer
-                  choices:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        index:
-                          type: integer
-                        text:
-                          type: string
-                        finish_reason:
-                          type: string
+                $ref: '#/components/schemas/ResponsesResponse'
         '400':
           description: Bad request
         '500':
           description: Internal server error
+
+components:
+  schemas:
+    # ---------------------------
+    # Chat Completions
+    # ---------------------------
+    ChatMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant]
+          description: The role of the message sender
+        content:
+          type: string
+          description: The message text
+      required: [role, content]
+
+    ChatCompletionsRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The ID of the model to run (e.g., `Qwen/Qwen3-1.7B`, `openai/gpt-4`)
+        messages:
+          type: array
+          description: Conversation messages (OpenAI chat format)
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        max_tokens:
+          type: integer
+          description: Maximum number of tokens to generate
+          default: 256
+        temperature:
+          type: number
+          description: Sampling temperature
+          default: 0.7
+        stream:
+          type: boolean
+          description: Whether to stream responses
+          default: false
+        top_p:
+          type: number
+          description: Nucleus sampling parameter
+        presence_penalty:
+          type: number
+          description: Penalize new tokens based on whether they appear in the text so far
+        frequency_penalty:
+          type: number
+          description: Penalize new tokens based on their existing frequency in the text so far
+        logprobs:
+          type: boolean
+          description: Whether to return log probabilities of output tokens (if supported)
+        top_logprobs:
+          type: integer
+          description: Number of most likely tokens to return at each position (if logprobs is true)
+      required: [model, messages]
+
+    ChatCompletionsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID for this completion
+        object:
+          type: string
+          description: Type of returned object (usually `chat.completion`)
+        created:
+          type: integer
+          description: Unix timestamp of completion
+        choices:
+          type: array
+          description: Generated completions
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              message:
+                type: object
+                properties:
+                  role:
+                    type: string
+                  content:
+                    type: string
+              finish_reason:
+                type: string
+
+    # ---------------------------
+    # Completions
+    # ---------------------------
+    CompletionsRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The ID of the completion model to run (e.g., `text-davinci-003`)
+        prompt:
+          type: string
+          description: The input text prompt
+        max_tokens:
+          type: integer
+          description: Maximum number of tokens to generate
+          default: 256
+        temperature:
+          type: number
+          description: Sampling temperature
+          default: 0.7
+        stream:
+          type: boolean
+          description: Whether to stream responses
+          default: false
+        top_p:
+          type: number
+          description: Nucleus sampling parameter
+        presence_penalty:
+          type: number
+          description: Penalize new tokens based on whether they appear in the text so far
+        frequency_penalty:
+          type: number
+          description: Penalize new tokens based on their existing frequency in the text so far
+        logprobs:
+          type: integer
+          description: Include the log probabilities on the `logprobs` most likely output tokens (legacy-style)
+      required: [model, prompt]
+
+    CompletionsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: integer
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              text:
+                type: string
+              finish_reason:
+                type: string
+
+    # ---------------------------
+    # Responses
+    # ---------------------------
+    ResponsesInputMessage:
+      type: object
+      description: Chat-style input item (role + content).
+      properties:
+        role:
+          type: string
+          enum: [system, user, assistant, developer, tool]
+          description: The role of the message sender
+        content:
+          oneOf:
+            - type: string
+              description: Plain text content
+            - type: array
+              description: Multi-part content (text, images, etc.) - provider/model dependent
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: Content part type (e.g. `input_text`, `input_image`)
+                  text:
+                    type: string
+                    description: Text for `input_text` parts
+                  image_url:
+                    type: string
+                    description: URL or data URL for `input_image` parts
+      required: [role, content]
+
+    ReasoningConfig:
+      type: object
+      description: Optional "thinking" controls for supported reasoning models.
+      properties:
+        effort:
+          type: string
+          description: Reasoning effort level. Exact allowed values may be model-dependent.
+          example: medium
+        summary:
+          type: string
+          description: Whether/how to return a reasoning summary (not full chain-of-thought).
+          enum: [none, auto, detailed]
+          default: none
+
+    ToolDefinition:
+      type: object
+      description: Tool definition (function calling compatible). Exact shape may vary by provider.
+      properties:
+        type:
+          type: string
+          enum: [function]
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            parameters:
+              type: object
+              description: JSON Schema for tool parameters
+      required: [type, function]
+
+    ResponsesRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The ID of the model to run (e.g., `anthropic/claude-opus-4-5`, `openai/gpt-5.1`)
+        input:
+          description: >
+            The input to the model. Can be a string (simple prompt) or an array of chat-style messages.
+            For richer multimodal inputs, use the array form with multi-part `content`.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                $ref: '#/components/schemas/ResponsesInputMessage'
+        max_output_tokens:
+          type: integer
+          description: Maximum number of tokens to generate (counts reasoning + visible output for reasoning models)
+          default: 256
+        temperature:
+          type: number
+          description: Sampling temperature
+          default: 0.7
+        stream:
+          type: boolean
+          description: Whether to stream SSE events
+          default: false
+        reasoning:
+          $ref: '#/components/schemas/ReasoningConfig'
+        tools:
+          type: array
+          description: Optional tool definitions for function/tool calling
+          items:
+            $ref: '#/components/schemas/ToolDefinition'
+        tool_choice:
+          description: Tool selection behavior
+          oneOf:
+            - type: string
+              enum: [auto, none, required]
+            - type: object
+              description: Force a specific tool (provider/model dependent)
+        metadata:
+          type: object
+          description: Arbitrary key/value metadata to attach to the request
+          additionalProperties: true
+        user:
+          type: string
+          description: End-user identifier (if supported)
+        include:
+          type: array
+          description: >
+            Optional list of extra fields to include in the response (e.g. logprobs).
+            Example values may include `message.output_text.logprobs` (provider/model dependent).
+          items:
+            type: string
+        top_logprobs:
+          type: integer
+          description: Number of most likely tokens to return at each position (if logprobs are included)
+      required: [model, input]
+
+    ResponsesOutputTextItem:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [output_text]
+        text:
+          type: string
+
+    ResponsesReasoningItem:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [reasoning]
+        summary:
+          type: array
+          description: Optional reasoning summary items (when `reasoning.summary` is enabled)
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [summary_text]
+              text:
+                type: string
+
+    ResponsesMessageItem:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [message]
+        role:
+          type: string
+        content:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ResponsesOutputTextItem'
+      required: [type, role, content]
+
+    ResponsesResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID for this response
+        object:
+          type: string
+          description: Type of returned object (usually `response`)
+        created:
+          type: integer
+          description: Unix timestamp of response creation
+        model:
+          type: string
+          description: Model used to generate the response
+        output:
+          type: array
+          description: Output items (messages, reasoning summaries, tool calls, etc.)
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ResponsesMessageItem'
+              - $ref: '#/components/schemas/ResponsesReasoningItem'
+        output_text:
+          type: string
+          description: Convenience field containing concatenated output text (when applicable)
+        usage:
+          type: object
+          description: Token usage details (shape may vary by provider)
+          additionalProperties: true
+      required: [id, object, created, model]
