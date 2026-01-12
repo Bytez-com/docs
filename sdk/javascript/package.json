@@ -13,6 +13,7 @@
     "build": "pkgroll",
     "dev": "tsx src/index.node.ts",
     "test": "tsx ./tests/tasks.test.ts",
+    "test:unit": "node --test 'src/**/*.test.ts'",
     "lint": "eslint ./src/*.ts",
     "update": "yarn upgrade-interactive"
   },
