@@ -102,10 +102,7 @@ paths:
                   type: object
                   description: Model-specific parameters. See model documentation for details.
                   properties:
-                    min_length:
-                      type: integer
-                      description: Minimum length of the response.
-                    max_length:
+                    max_new_tokens:
                       type: integer
                       description: Maximum length of the response.
                     temperature:

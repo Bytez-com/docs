@@ -129,7 +129,7 @@ components:
           description: Conversation messages (OpenAI chat format)
           items:
             $ref: '#/components/schemas/ChatMessage'
-        max_tokens:
+        max_completion_tokens:
           type: integer
           description: Maximum number of tokens to generate
           default: 256
