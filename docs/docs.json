@@ -57,6 +57,11 @@
                 ]
               },
               {
+                "group": "Closed Source Params",
+                "icon": "terminal",
+                "pages": ["model-api/docs/closed-source-params"]
+              },
+              {
                 "group": "Chat Models",
                 "icon": "comments",
                 "pages": [

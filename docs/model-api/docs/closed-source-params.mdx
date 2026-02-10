@@ -1,0 +1,267 @@
+---
+title: 'Provider specific params'
+description: 'Using closed source models with params'
+icon: 'brackets'
+mode: 'wide'
+---
+
+[Don't care about the details? Please see the examples below](#examples)
+
+## Passing provider-specific parameters
+
+Bytez forwards parameters directly to the underlying model provider.
+This allows you to pass **any supported parameters** as defined in the
+official provider API docs:
+
+    Parameters are supplied as the **second argument** to `model.run(...)` with SDKs, or as
+    fields in the REST body when using **curl/HTTP**. Bytez does not modify or restrict
+    provider-specific options — it passes them through verbatim.
+
+    Always check the provider docs [below](#expanded-list-of-links-to-provider-supported-params) for the most accurate and up-to-date list
+    of supported options and parameter behavior.
+
+    The raw response from the provider is included in the `provider` property of the object returned by our API.
+
+## Expanded list of links to provider supported params
+
+<AccordionGroup>
+  <Accordion title="OpenAI">
+    - **Responses API**  
+      https://developers.openai.com/api/reference/resources/responses/methods/create
+
+      _chat · summarization · translation · token-classification · text-classification · image-text-to-text · image-to-text · text-to-image · text-to-video · text-to-speech · text-to-audio · automatic-speech-recognition_
+    - **Chat Completions API**
+      https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
+
+      _chat · summarization · translation · audio-text-to-text · image-text-to-text · video-text-to-text_
+
+  </Accordion>
+
+  <Accordion title="Google">
+    - **Generate Content API**
+
+      https://ai.google.dev/api/generate-content
+
+      _chat · summarization · translation · text-classification · image-text-to-text · image-to-text ·
+      text-to-image · text-to-video_
+
+  </Accordion>
+  <Accordion title="Anthropic">
+    - **Messages API** 
+    
+      https://platform.claude.com/docs/en/api/messages/create
+
+      _chat · summarization · translation · text-classification · image-text-to-text · image-to-text_
+
+  </Accordion>
+
+  <Accordion title="Mistral">
+    - **Chat Completions API**
+
+      https://docs.mistral.ai/api/endpoint/chat#operation-chat_completion_v1_chat_completions_post
+
+      _chat · summarization · translation · text-classification · token-classification_
+
+    - **Embeddings API**
+
+      https://docs.mistral.ai/api/endpoint/embeddings
+
+      _feature-extraction · sentence-similarity_
+
+    - **OCR API**
+
+      https://docs.mistral.ai/api/endpoint/ocr#operation-ocr_v1_ocr_post
+
+      _image-to-text_
+
+    - **Audio Transcriptions API**
+
+      https://docs.mistral.ai/api/endpoint/audio/transcriptions#operation-audio_api_v1_transcriptions_post
+
+      _automatic-speech-recognition · audio-text-to-text_
+
+  </Accordion>
+
+  <Accordion title="Cohere">
+    - **Chat API**
+
+      https://docs.cohere.com/reference/chat
+
+      _chat_
+
+  </Accordion>
+</AccordionGroup>
+
+## Examples (Non-Exhaustive)
+
+<AccordionGroup defaultOpen>
+  <Accordion title="Example using provider parameters (OpenAI + Chat)">
+    <CodeGroup>
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      // insert your key
+      const sdk = new Bytez("BYTEZ_KEY");
+
+      // choose your model
+      const model = sdk.model("openai/o4-mini-deep-research");
+
+      // send to the model
+      const { error, output, provider } = await model.run(
+        "Best places to eat vietnamese food near melbourne florida, only search 5 websites",
+        {
+          tools: [
+            {
+              type: "web_search"
+            }
+          ]
+        });
+
+      console.log({ error, output });
+      console.log(provider);
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion title="Example using provider parameters (OpenAI + text-to-video)">
+    <CodeGroup>
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      // insert your key
+      const sdk = new Bytez("BYTEZ_KEY");
+
+      // choose your model
+      const model = sdk.model("openai/sora-2-pro");
+
+      // send to the model
+      const { error, output, provider } = await model.run(
+        "Best places to eat vietnamese food near melbourne florida, only search 5 websites",
+        {
+          // generate a 7 second video instead of the default 4 second video
+          seconds: 7
+        });
+
+      console.log({ error, output });
+      console.log(provider);
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion title="Example using provider parameters (Google + Chat)">
+    <CodeGroup>
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      // insert your key
+      const sdk = new Bytez("BYTEZ_KEY");
+
+      // choose your model
+      const model = sdk.model("google/gemini-2.5-pro");
+
+      // provide the model your chat session
+      const messages = [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: [
+                "What is the latest model available?",
+                "Compute the sum of the first 50 prime numbers using code execution.",
+                "Then compare two roast chicken recipes and their cooking times."
+              ].join(" ")
+            }
+          ]
+        }
+      ];
+
+      // send to model with provider-specific parameters
+      const { error, output, provider } = await model.run(messages, {
+        max_new_tokens: 1024 * 16,
+        tools: [
+          { googleSearch: {} },
+          { urlContext: {} },
+          { codeExecution: {} }
+        ],
+        urls: ["https://www.google.com"]
+      });
+
+      console.log({ error, output });
+      console.log(provider);
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion title="Example using provider parameters (Google + Chat + Thinking)">
+    <CodeGroup>
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      // insert your key
+      const sdk = new Bytez("BYTEZ_KEY");
+
+      // choose your model
+      const model = sdk.model("gemini-3-pro-preview");
+
+      // provide the model your chat session
+      const messages = [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "How does AI work?"
+            }
+          ]
+        }
+      ];
+
+      // send to model with provider-specific parameters
+      const { error, output, provider } = await model.run(messages, {
+        max_new_tokens: 1024 * 16,
+        thinkingConfig: {
+          thinkingLevel: "low",
+        }
+      });
+
+      console.log({ error, output });
+      console.log(provider);
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+  <Accordion title="Example using provider parameters (Anthropic + Chat)">
+    <CodeGroup>
+      ```javascript javascript
+      import Bytez from "bytez.js";
+
+      // insert your key
+      const sdk = new Bytez("BYTEZ_KEY");
+
+      // choose your model
+      const model = sdk.model("openai/o4-mini-deep-research");
+
+      // send to the model
+      const { error, output, provider } = await model.run(
+        "Best places to eat vietnamese food near melbourne florida, only search 5 websites",
+        {
+          tools: [
+            {
+              type: "web_search"
+            }
+          ]
+        });
+
+      console.log({ error, output });
+      console.log(provider);
+      ```
+    </CodeGroup>
+
+  </Accordion>
+
+</AccordionGroup>
