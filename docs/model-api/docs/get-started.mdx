@@ -95,7 +95,7 @@ mode: 'wide'
       import Bytez from "bytez.js";
 
       const sdk = new Bytez("BYTEZ_KEY");
-      const modelId = "openai-community/gpt-2"
+      const modelId = "openai-community/gpt2"
       const model = sdk.model(model_id)
 
       const { error, output } = await model.run("Once upon a time")
@@ -108,7 +108,7 @@ mode: 'wide'
 
       sdk = Bytez("BYTEZ_KEY")
 
-      model = sdk.model("openai-community/gpt-2")
+      model = sdk.model("openai-community/gpt2")
 
       result = model.run("Once upon a time")
 
@@ -116,7 +116,7 @@ mode: 'wide'
       ```
 
       ```bash http
-      curl -X POST "https://api.bytez.com/models/v2/openai-community/gpt-2" \
+      curl -X POST "https://api.bytez.com/models/v2/openai-community/gpt2" \
       -H "Authorization: BYTEZ_KEY" \
       -H "Content-Type: application/json" \
       --data '{ "text": "Once upon a time" }'
