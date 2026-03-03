@@ -1,0 +1,64 @@
+---
+title: 'Request a model'
+description: 'How to request a model'
+icon: 'send'
+mode: 'wide'
+---
+
+Bytez is able to automatically process any model on Huggingface. To request a model, you must hit our endpoint at:
+
+`https://api.bytez.com/models/v2/request/{modelId}`
+
+## Request a model
+
+Example model ID:
+
+`Finisha-F-scratch/Lamina-basic`
+
+Endpoint used in the examples below:
+
+`https://api.bytez.com/models/v2/request/Finisha-F-scratch/Lamina-basic`
+
+<CodeGroup>
+
+```javascript title="JavaScript"
+const url = 'https://api.bytez.com/models/v2/request/Finisha-F-scratch/Lamina-basic';
+
+fetch(url, {
+  method: 'POST',
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Response:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+```
+
+```python title="Python"
+import requests
+
+url = "https://api.bytez.com/models/v2/request/Finisha-F-scratch/Lamina-basic"
+
+response = requests.post(url)
+
+print("Status Code:", response.status_code)
+print("Response JSON:", response.json())
+```
+
+```bash title="curl"
+curl -X POST \
+  https://api.bytez.com/models/v2/request/Finisha-F-scratch/Lamina-basic
+```
+
+</CodeGroup>
+
+### Expected Response
+
+```json
+{
+  "error": null,
+  "output": "Job queued"
+}
+```

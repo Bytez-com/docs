@@ -132,7 +132,8 @@
                   "/model-api/docs/task/visual-question-answering"
                 ]
               },
-              "model-api/docs/containers"
+              "model-api/docs/containers",
+              "model-api/docs/requestAModel"
             ]
           }
         ]
