@@ -3,6 +3,8 @@ import Model from "./model";
 // interfaces
 import { ListModels } from "./interface/List";
 import { Response } from "./interface/Client";
+// utils
+import { buildListModelsPath } from "./utils/query";
 
 /**
  * API Client for interfacing with the Bytez API.
@@ -16,11 +18,7 @@ export default class Bytez {
   list = {
     /** Lists available models, and provides basic information about each one, such as RAM required */
     models: (options?: ListModels): Promise<Response> =>
-      this.#client.request(
-        `list/models${options?.task ? `?task=${options.task}` : ""}${
-          options?.modelId ? `?modelId=${options.modelId}` : ""
-        }`
-      ) as Promise<Response>,
+      this.#client.request(buildListModelsPath(options)) as Promise<Response>,
     /** List available tasks */
     tasks: (): Promise<Response> =>
       this.#client.request("list/tasks") as Promise<Response>
